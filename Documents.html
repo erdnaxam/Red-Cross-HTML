@@ -4,67 +4,598 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mes Documents</title>
-    <link rel="stylesheet" href="Style.css"> <!-- Assure-toi que le chemin est correct -->
-    <!-- Lien vers Font Awesome pour les icônes (comme dans l'exemple précédent) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* ============================================= */
+        /* === Variables Globales & Reset === */
+        /* ============================================= */
+        :root {
+            --color-primary: #8B5CF6;
+            --color-primary-darker: #7C3AED;
+            --color-primary-light: #EDE9FE;
+            --color-secondary: #22C55E;
+            --color-dark: #1A1F2C;
+            --color-light: #F9FAFB;
+            --color-gray: #6B7280;
+            --color-gray-light: #E5E7EB;
+            --color-border-input: #d1d5db;
+            --color-destructive: #dc2626;
+            --color-destructive-hover: #b91c1c;
+            --color-white: #ffffff;
+            --color-blue-link: #007bff;
+
+            --font-primary: 'Inter', system-ui, -apple-system, sans-serif;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.07);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+            --radius: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            color: var(--color-dark);
+            background-color: var(--color-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ============================================= */
+        /* === Styles Typographiques Globaux === */
+        /* ============================================= */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 1.875rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+        }
+
+        h2.section-title {
+            font-size: clamp(1.75rem, 3vw, 2.5rem);
+            position: relative;
+            margin-bottom: 3rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            height: 4px;
+            width: 60px;
+            background-color: var(--color-primary);
+        }
+        .section-title.centered { text-align: center; }
+        .section-title.centered::after { left: 50%; transform: translateX(-50%); }
+
+        p {
+            margin-bottom: 1rem;
+            color: var(--color-gray);
+        }
+        p:last-child {
+            margin-bottom: 0;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--color-blue-link);
+            transition: var(--transition);
+        }
+        a:hover {
+            color: var(--color-primary-darker);
+            text-decoration: underline;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* ============================================= */
+        /* === Layout & Container === */
+        /* ============================================= */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        main > .container {
+            padding-top: 2rem;
+            padding-bottom: 2rem;
+        }
+
+        /* ============================================= */
+        /* === Header / Navigation === */
+        /* ============================================= */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--color-white);
+            padding: 1rem 0;
+            box-shadow: var(--shadow-sm);
+            z-index: 100;
+            transition: var(--transition);
+        }
+
+        .header.scrolled {
+            padding: 0.5rem 0;
+            box-shadow: var(--shadow);
+        }
+
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-dark);
+        }
+
+        .logo span {
+            color: var(--color-primary);
+        }
+
+        nav {
+            /* Styles spécifiques pour la balise nav */
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--color-dark);
+            font-weight: 500;
+            position: relative;
+            padding: 0.25rem 0;
+            text-decoration: none;
+        }
+        .nav-links a:hover {
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--color-primary);
+            transition: var(--transition);
+        }
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a.active {
+            color: var(--color-primary);
+            font-weight: 600;
+        }
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: var(--color-dark);
+        }
+
+        /* ============================================= */
+        /* === Buttons === */
+        /* ============================================= */
+        .button, .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-align: center;
+            border: 1px solid transparent;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+            white-space: nowrap;
+            gap: 0.5rem;
+            text-decoration: none;
+            line-height: 1.2;
+        }
+        .button:focus, .btn:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3);
+        }
+        .button i, .btn i {
+            font-size: 0.9em;
+            line-height: 1;
+        }
+
+        .button.button-primary, .btn {
+            background-color: var(--color-primary);
+            color: var(--color-white);
+            border-color: var(--color-primary);
+        }
+        .button.button-primary:hover, .btn:hover {
+            background-color: var(--color-primary-darker);
+            border-color: var(--color-primary-darker);
+            color: var(--color-white);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .button.button-secondary {
+            background-color: var(--color-dark);
+            color: var(--color-white);
+            border-color: var(--color-dark);
+        }
+        .button.button-secondary:hover {
+            background-color: #374151;
+            border-color: #374151;
+        }
+
+        .button.button-outline, .btn.btn-outline {
+            background-color: transparent;
+            border: 2px solid var(--color-primary);
+            color: var(--color-primary);
+        }
+        .button.button-outline:hover, .btn.btn-outline:hover {
+            background-color: var(--color-primary);
+            color: var(--color-white);
+        }
+
+        .button.button-destructive {
+            background-color: var(--color-destructive);
+            color: var(--color-white);
+            border-color: var(--color-destructive);
+        }
+        .button.button-destructive:hover {
+            background-color: var(--color-destructive-hover);
+            border-color: var(--color-destructive-hover);
+        }
+
+        .button-full { width: 100%; }
+
+        .button-large {
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+        }
+
+        .button-icon {
+            padding: 0.5rem;
+            width: 2.25rem;
+            height: 2.25rem;
+            flex-shrink: 0;
+        }
+        .button-icon i { margin: 0; font-size: 1em; }
+
+        .icon-text-button .icon {
+            margin-right: 0.5rem;
+            width: 1.25em;
+            font-size: 1em;
+            line-height: 1;
+        }
+
+        /* ============================================= */
+        /* === Cards === */
+        /* ============================================= */
+        .card {
+            background-color: var(--color-white);
+            border: 1px solid var(--color-gray-light);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
+        }
+        .card:hover {
+            /* Optionnel: légère élévation au survol */
+            /* transform: translateY(-3px); */
+            /* box-shadow: var(--shadow); */
+        }
+
+        .card-header {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--color-gray-light);
+        }
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--color-dark);
+            margin-bottom: 0.25rem;
+        }
+        .card-description {
+            font-size: 0.875rem;
+            color: var(--color-gray);
+            margin-bottom: 0;
+        }
+        .card-content {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .card-footer {
+            padding: 1rem 1.5rem;
+            background-color: var(--color-light);
+            border-top: 1px solid var(--color-gray-light);
+            display: flex;
+            gap: 0.75rem;
+            justify-content: flex-start;
+        }
+
+        /* DocumentsList.css */
+        .documents-list-container {
+            margin-top: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .document-item {
+            background-color: var(--color-white);
+            border: 1px solid var(--color-gray-light);
+            border-radius: 6px;
+            padding: 1rem 1.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            box-shadow: var(--shadow-sm);
+            transition: box-shadow 0.2s ease-in-out;
+        }
+        .document-item:hover {
+            box-shadow: var(--shadow);
+        }
+        .document-item .info {
+            flex-grow: 1;
+        }
+        .document-item .title {
+            font-weight: 600;
+            display: block;
+            margin-bottom: 0.25rem;
+            color: var(--color-dark);
+        }
+        .document-item .meta {
+            font-size: 0.85rem;
+            color: var(--color-gray);
+        }
+        .document-item .meta span:not(:last-child)::after {
+            content: "•";
+            margin: 0 0.5em;
+        }
+        .document-item .actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .document-item .actions a, .document-item .actions button {
+            padding: 0.3rem 0.6rem;
+            font-size: 0.8rem;
+        }
+
+        /* Statut Document */
+        .status-badge.completed { background-color: #dcfce7; color: #166534; border: 1px solid #a7f3d0; }
+        .status-badge.draft { background-color: #ffedd5; color: #9a3412; border: 1px solid #fed7aa; }
+
+        /* Couleurs "mises" */
+         .bg-muted { background-color: #f3f4f6; }
+         .text-primary { color: var(--color-primary); }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container { padding: 0 1rem; }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                padding: 1rem;
+                box-shadow: var(--shadow);
+                gap: 1rem;
+                border-top: 1px solid var(--color-gray-light);
+            }
+            .nav-links.show-mobile {
+                display: flex;
+            }
+            .mobile-menu-btn { display: block; }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in { animation: fadeIn 0.5s ease forwards; }
+
+    </style>
 </head>
 <body>
-    <header class="header" id="header">
-        <div class="container flex justify-between items-center">
-        <a href="#" class="logo"><span>Emploi</span>Avenir</a>
-        <nav>
-        <ul class="nav-links">
-        <li><a href="#" class="active">Accueil</a></li>
-        <li><a href="MonParcours.html">Mon Parcours</a></li>
-        <li><a href="MesCandidature.html">Mes Candidatures</a></li>
-        <li><a href="Partenaires.html">Nos partenaires</a></li>
-        <li><a href="Documents.html">Mes documents</a></li>
-        <li><a href="Profil.html">Profil</a></li>
-        </ul>
-        </nav>
-        <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+
+    <header class="header">
+        <div class="container">
+            <a href="#" class="logo">Red <span>Cross</span></a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#">Accueil</a></li>
+                    <li><a href="#" class="active">Mes Documents</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+            <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
         </div>
-    <div class="container">
-        <h1 class="page-title">Mes documents</h1>
+    </header>
 
-        <!-- Boutons d'action principaux -->
-        <div class="main-actions">
-            <button id="create-doc-btn" class="button button-primary icon-text-button large-button">
-                <i class="fas fa-plus icon"></i> <!-- Remplacement de FilePlus -->
-                <span>Créer un nouveau document</span>
-            </button>
-            <button id="help-doc-btn" class="button button-outline icon-text-button large-button">
-                <i class="fas fa-question-circle icon"></i> <!-- Remplacement de HelpCircle -->
-                <span>Aide pour mes documents</span>
-            </button>
-        </div>
+    <main>
+        <div class="container mx-auto px-4 py-6">
+            <h1 class="text-2xl font-bold mb-6 text-center">Mes documents</h1>
 
-        <!-- Zone principale du contenu des documents -->
-        <div class="documents-content-area">
-            <!-- Bannière d'information -->
-            <div class="info-banner">
-                <i class="fas fa-file-alt icon primary-icon large-icon"></i> <!-- Remplacement de FileText -->
-                <p>Tous vos documents importants sont sauvegardés ici</p>
-            </div>
+            <div class="flex flex-col md:flex-row gap-4 mb-8 max-w-xl mx-auto">
+                <button class="button button-primary py-5 h-auto text-lg flex items-center justify-center gap-2" id="createDocumentButton">
+                    <i class="fas fa-file-plus"></i>
+                    <span>Créer un nouveau document</span>
+                </button>
 
-            <!-- Liste des documents (sera remplie par JS) -->
-            <h2>Liste des documents</h2>
-            <div id="documents-list" class="documents-list-container">
-                <!-- Les éléments de document seront ajoutés ici -->
-                 <p id="no-documents-message" class="no-results" style="display: none;">Vous n'avez aucun document pour le moment.</p>
-            </div>
-
-            <!-- Bouton Télécharger tout -->
-            <div class="download-all-action">
-                <button id="download-all-btn" class="button button-outline icon-text-button large-button">
-                    <i class="fas fa-download icon"></i> <!-- Remplacement de Download -->
-                    <span>Télécharger tous mes documents</span>
+                <button class="button button-outline py-5 h-auto text-lg flex items-center justify-center gap-2 border-2" id="helpDocumentsButton">
+                    <i class="fas fa-question-circle"></i>
+                    <span>Aide pour mes documents</span>
                 </button>
             </div>
+
+            <div class="max-w-2xl mx-auto">
+                <div class="bg-muted p-4 rounded-lg mb-6 flex items-center gap-3">
+                    <i class="fas fa-file-alt text-primary fa-2x"></i>
+                    <p class="font-medium">Tous vos documents importants sont sauvegardés ici</p>
+                </div>
+
+                <div class="documents-list-container" id="documentList">
+                    <!-- Documents dynamically added here -->
+                </div>
+
+                <div class="mt-8 flex justify-center">
+                    <button class="button button-outline py-5 h-auto text-lg flex items-center justify-center gap-2 border-2" id="downloadAllButton">
+                        <i class="fas fa-download"></i>
+                        <span>Télécharger tous mes documents</span>
+                    </button>
+                </div>
+            </div>
         </div>
+    </main>
 
-    </div>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>À propos</h3>
+                    <p>Association d'aide humanitaire...</p>
+                </div>
+                <div class="footer-column">
+                    <h3>Liens utiles</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Accueil</a></li>
+                        <li><a href="#">Mes Documents</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Contact</h3>
+                    <p>Email: contact@example.com</p>
+                    <p>Téléphone: 01 23 45 67 89</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2024 Red Cross. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
 
-    <script src="script.js"></script> <!-- Assure-toi que le chemin est correct -->
+    <script>
+        // Sample documents data
+        const documents = [
+            {
+                id: "doc1",
+                title: "Mon CV",
+                type: "Curriculum Vitae",
+                date: "12/04/2025",
+                status: "completed",
+                url: "#"
+            },
+            {
+                id: "doc2",
+                title: "Lettre de motivation",
+                type: "Lettre de motivation",
+                date: "14/04/2025",
+                status: "draft",
+                url: "#"
+            },
+            {
+                id: "doc3",
+                title: "Attestation de formation",
+                type: "Document officiel",
+                date: "10/04/2025",
+                status: "completed",
+                url: "#"
+            }
+        ];
+
+        function renderDocuments() {
+            const documentListContainer = document.getElementById('documentList');
+            documentListContainer.innerHTML = '';
+
+            documents.forEach(document => {
+                const documentItemHTML = `
+                    <div class="document-item">
+                        <div class="info">
+                            <span class="title">${document.title}</span>
+                            <div class="meta">
+                                <span>${document.type}</span>
+                                <span>Date: ${document.date}</span>
+                            </div>
+                        </div>
+                        <div class="actions">
+                            <a href="${document.url}" class="button button-outline">
+                                Voir
+                            </a>
+                            <span class="badge status-badge ${document.status === 'completed' ? 'completed' : 'draft'}">
+                                ${document.status === 'completed' ? 'Complet' : 'Brouillon'}
+                            </span>
+                        </div>
+                    </div>
+                `;
+                documentListContainer.innerHTML += documentItemHTML;
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderDocuments(); // Render document list on page load
+
+            document.getElementById('createDocumentButton').addEventListener('click', () => {
+                alert("Fonctionnalité en développement");
+            });
+
+            document.getElementById('helpDocumentsButton').addEventListener('click', () => {
+                alert("Fonctionnalité en développement");
+            });
+
+            document.getElementById('downloadAllButton').addEventListener('click', () => {
+                alert("Fonctionnalité en développement");
+            });
+        });
+    </script>
+
 </body>
 </html>
