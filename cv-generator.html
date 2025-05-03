@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créez votre CV professionnel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* === Variables Globales === */
+        :root {
+            --color-primary: #007bff;
+            --color-light: #f8f9fa;
+            --color-gray-light: #ced4da;
+            --color-gray: #6c757d;
+            --color-white: #fff;
+            --radius: 0.25rem;
+            --shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+            --font-size-base: 1rem;
+        }
+
+        /* === Styles Généraux === */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--color-light);
+            color: var(--color-gray);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1140px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: var(--color-primary);
+            font-size: 2.5rem;
+        }
+
+        /* === Styles CV Content === */
+        .cv-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .cv-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* === Styles Formulaire === */
+        .cv-form {
+            padding: 20px;
+            background-color: var(--color-white);
+            border: 1px solid var(--color-gray-light);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            color: var(--color-gray);
+            margin-bottom: 5px;
+            font-size: var(--font-size-base);
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"],
+        .form-group input[type="date"],
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--color-gray-light);
+            border-radius: var(--radius);
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+            box-sizing: border-box;
+            font-size: var(--font-size-base);
+        }
+
+        .form-group input[type="text"]:focus,
+        .form-group input[type="email"]:focus,
+        .form-group input[type="tel"]:focus,
+        .form-group input[type="date"]:focus,
+        .form-group textarea:focus,
+         .form-group select:focus {
+            border-color: var(--color-primary);
+            outline: 0;
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+        }
+/* Add Skill set
+    .skillset {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .skillset {
+                grid-template-columns: 1fr; /* Une seule colonne sur les petits écrans */
+            }
+        }
+
+        .skill-data
+         {
+            border: 1px solid var(--color-gray-light);
+            border-radius: var(--radius);
+            padding: 15px;
+            margin-bottom: 15px;
+            background-color: var(--color-white);
+            display: inline-block; 
+}
+"
+/* Style d'un item */
+  /*  .item-set{
+    margin-left: 10px;
+     background-color: var(--color-white);
+            border: 1px solid var(--color-gray-light);
+            border-radius: var(--radius);
+            padding: 5px;
+            margin-bottom: 5px;
+            display: inline-block;
+
+    }
+    */
+
+
+        /* === Styles Aperçu === */
+        .cv-preview {
+            padding: 20px;
+            background-color: var(--color-white);
+            border: 1px solid var(--color-gray-light);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+        }
+
+        .cv-preview h2 {
+            text-align: center;
+            color: var(--color-primary);
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        .cv-preview h3 {
+            margin-bottom: 10px;
+            color: var(--color-primary);
+            font-size: 1.5rem;
+        }
+
+        .cv-preview h4 {
+            margin-bottom: 5px;
+            color: var(--color-gray);
+            font-size: 1.2rem;
+        }
+
+        .cv-preview p {
+            margin-bottom: 5px;
+        }
+
+        /* === Styles Expérience/Formation === */
+        .experience,
+        .formation {
+            border: 1px solid var(--color-gray-light);
+            border-radius: var(--radius);
+            padding: 15px;
+            margin-bottom: 15px;
+            background-color: var(--color-white);
+        }
+
+        /* === Styles Boutons === */
+        .btn-primary {
+            color: #fff;
+            background-color: var(--color-primary);
+            border-color: var(--color-primary);
+            padding: 10px 15px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+            border: 1px solid transparent;
+            display: inline-block;
+            font-size: var(--font-size-base);
+        }
+
+        .btn-primary:hover {
+            background-color: #0069d9;
+            border-color: #0062cc;
+        }
+
+        .btn-outline-secondary {
+            color: var(--color-gray);
+            background-color: transparent;
+            border-color: var(--color-gray-light);
+            padding: 10px 15px;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+            border: 1px solid transparent;
+            display: inline-block;
+            font-size: var(--font-size-base);
+        }
+
+        .btn-outline-secondary:hover {
+            background-color: var(--color-light);
+            border-color: var(--color-gray);
+        }
+
+        /* Styles pour le modal (popup) */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: var(--radius);
+            position: relative;
+        }
+        /* Bouton de fermeture */
+        .close {
+            position: absolute;
+            right: 10px;
+            top: 0px;
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        /* === Styles Responsive === */
+        @media (max-width: 576px) {
+            .container {
+                padding: 10px;
+            }
+
+            .cv-content {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .cv-form,
+            .cv-preview {
+                padding: 10px;
+            }
+        }
+         .skill-container{
+            padding: 15px;
+         margin-bottom: 15px;
+          border-radius: var(--radius);
+           background-color: var(--color-white);
+}
+    /* Style d'un item */
+    /*Style Input*/
+ .form-block.comp
+    {
+        margin-top: 10px;
+        display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container cv-generator">
+        <h1>Créez votre CV professionnel</h1>
+        <div class="cv-content">
+            <div class="cv-form">
+                <h2>Informations personnelles</h2>
+                <div class="form-group">
+                    <label for="name">Nom</label>
+                    <input type="text" id="name" placeholder="Votre nom" oninput="updateCV()">
+                </div>
+                <div class="form-group">
+                    <label for="title">Poste recherché</label>
+                    <input type="text" id="title" placeholder="Poste recherché" oninput="updateCV()">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="Votre adresse email" oninput="updateCV()">
+                </div>
+                <div class="form-group">
+                    <label for="phone">Téléphone</label>
+                    <input type="tel" id="phone" placeholder="Votre numéro de téléphone" oninput="updateCV()">
+                </div>
+                <div class="form-group">
+                    <label for="address">Adresse</label>
+                    <input type="text" id="address" placeholder="Votre adresse" oninput="updateCV()">
+                </div>
+
+                <h2>Expériences</h2>
+                <div id="experiences-container">
+                    <!-- Les expériences seront ajoutées ici -->
+                </div>
+                <button class="btn btn-outline-secondary" onclick="addExperience()">Ajouter une expérience</button>
+
+                <h2>Formations</h2>
+                <div id="formations-container">
+                    <!-- Formations seront ajoutées ici -->
+                </div>
+                <button class="btn btn-outline-secondary" onclick="openFormationModal()">Ajouter une formation</button>
+
+                <!-- Compétences -->
+    <h2>Compétences</h2>
+    <div id="competences-container"></div>
+    <div class="form-block comp">
+      <div class="form-group">
+        <input type="text" id="newCompetence" placeholder="Nouvelle compétence" />
+      </div>
+      <div class="form-group">
+        <select id="competenceLevel">
+          <option value="Débutant">Débutant</option>
+          <option value="Intermédiaire">Intermédiaire</option>
+          <option value="Avancé">Avancé</option>
+        </select>
+      </div>
+      <button class="btn btn-primary" onclick="addCompetence()">
+        Ajouter <i class="fas fa-plus"></i>
+      </button>
+    </div>
+    <!-- Fin Compétences -->
+
+      <!-- Langues -->
+    <h2>Langues</h2>
+    <div id="langues-container"></div>
+    <div class="form-block comp">
+      <div class="form-group">
+        <input type="text" id="newLangue" placeholder="Nouvelle langue" />
+      </div>
+      <div class="form-group">
+        <select id="langueLevel">
+          <option value="A1">A1 (Débutant)</option>
+          <option value="A2">A2 (Élémentaire)</option>
+          <option value="B1">B1 (Intermédiaire)</option>
+          <option value="B2">B2 (Intermédiaire avancé)</option>
+          <option value="C1">C1 (Autonome)</option>
+          <option value="C2">C2 (Maîtrise)</option>
+        </select>
+      </div>
+      <button class="btn btn-primary" onclick="addLangue()">
+        Ajouter <i class="fas fa-plus"></i>
+      </button>
+    </div>
+        <!-- Fin Langues -->
+            </div>
+
+            <div class="cv-preview">
+                <h2>Aperçu de votre CV</h2>
+                <p style="font-style: italic; font-weight: bold; color: darkolivegreen; text-align: center;">Remplissez le formulaire pour voir un aperçu de votre CV.</p>
+                 </div>
+
+        </div>
+        
+
+        <button class="btn btn-primary" onclick="generatePDF()">Exporter en PDF (à implémenter)</button>
+         <!-- Popup (Modal) pour ajouter une formation -->
+<div class="modal" id="formationModal" style="display: none;">
+    <div class="modal-content">
+        <span class="close" onclick="closeFormationModal()">×</span>
+        <h2>Ajouter une formation</h2>
+        <div class="form-group">
+            <label for="diplome">Diplôme / Formation*</label>
+            <input type="text" id="diplome" placeholder="BTS, Licence, Formation..." oninput="updateCV()"/>
+        </div>
+        <div class="form-group">
+            <label for="etablissement">Établissement*</label>
+            <input type="text" id="etablissement" placeholder="École, Université..." oninput="updateCV()"/>
+        </div>
+        <div class="form-group">
+            <label for="lieu">Lieu</label>
+            <input type="text" id="lieu" placeholder="Paris, France" oninput="updateCV()"/>
+        </div>
+        <div class="form-group">
+            <label for="dateDebut">Date de début*</label>
+            <input type="date" id="dateDebut" oninput="updateCV()"/>
+            <label for="enCours">En cours actuellement</label>
+            <input type="checkbox" id="enCours"/>
+        </div>
+        <div class="form-group">
+            <label for="dateFin">Date de fin</label>
+            <input type="date" id="dateFin" oninput="updateCV()"/>
+        </div>
+        <div class="form-group">
+            <label for="descriptionFormation">Description</label>
+            <textarea id="descriptionFormation" placeholder="Décrivez votre formation..." rows="3" oninput="updateCV()"></textarea>
+        </div>
+        <button class="btn btn-primary" onclick="addFormation()">Ajouter cette formation</button>
+         <button class="btn btn-outline-secondary" onclick="closeFormationModal()">Annuler</button>
+    </div>
+</div>
+    </div>
+
+    <script>
+
+        let experienceCount = 0;
+      //  Create local store to get and save in memory if page fails.
+
+        let formationCount = 0; // Add formation counter
+        let competenceCount = 0;
+        let langueCount = 0; // New array to stores
+
+        //  Code to test and imrpove the logic
+       // const storagedata = LocalStorageHelper("get")
+    
+
+       // Function to get session
+
+       function LocalStorageHelper(action, name = "data", info) {
+         console.log("LocalStorageHelper");
+
+         let itemValue = sessionStorage.getItem(name);
+            if (!itemValue)
+              itemValue = `{"compentenceList": [], "formacion": [], "experiences": []}`;
+
+         if (action === "set") {
+           let parsedInfo = JSON.parse(itemValue);
+           parsedInfo.itemInfo= info;
+              sessionStorage.setItem(itemValue,  JSON.stringify(parsedInfo)) //Save item
+              console.log("Saved "+info);
+         }
+        if (action === "get") {
+             let parsedInfo = JSON.parse(itemValue);
+          return parsedInfo;
+         }
+
+            if (action === "Clear") {
+              sessionStorage.removeItem(name); //Clear Item
+              console.log("Clear");
+            }
+        }
+
+         // Functions to show and hide formation window
+        function openFormationModal() {
+            document.getElementById('formationModal').style.display = 'flex'; // Use flex for centering
+        }
+
+        function closeFormationModal() {
+            document.getElementById('formationModal').style.display = 'none';
+        }
+  // Global function
+         function updateCV() {
+            const previewDiv = document.querySelector(".cv-preview");
+            previewDiv.innerHTML = '<h2>Aperçu de votre CV</h2>';
+           const nameValue = document.getElementById('name').value;
+           const titleValue = document.getElementById('title').value;
+           const emailValue = document.getElementById('email').value;
+           const phoneValue = document.getElementById('phone').value;
+           const addressValue = document.getElementById('address').value;
+
+              if (nameValue) {
+                 const nameElement = document.createElement('h3');
+                 nameElement.textContent = nameValue;
+                 previewDiv.appendChild(nameElement);
+             }
+
+             if (titleValue) {
+                 const titleElement = document.createElement('p');
+                 titleElement.style.fontStyle= "italic";
+                 titleElement.textContent = `Poste Recherché: ${titleValue}`;
+                 previewDiv.appendChild(titleElement);
+             }
+
+              if (emailValue) {
+                 const emailElement = document.createElement('p');
+                 emailElement.textContent = `Email: ${emailValue}`;
+                 previewDiv.appendChild(emailElement);
+             }
+
+            if (phoneValue) {
+                 const phoneElement = document.createElement('p');
+                 phoneElement.textContent = `Téléphone: ${phoneValue}`;
+                 previewDiv.appendChild(phoneElement);
+             }
+
+             if (addressValue) {
+                 const addressElement = document.createElement('p');
+                 addressElement.textContent = `Adresse: ${addressValue}`;
+                 previewDiv.appendChild(addressElement);
+             }
+
+           // Render Skills and Languages
+
+             const skillsContainer = document.getElementById('competences-container');
+                 skillsContainer.innerHTML= '<h3>Compétences</h3>';
+
+         const  langContent = `<h3>Langues</h3>`;
+          document.getElementById('langues-container').innerHTML= langContent;
+
+
+
+//Create skills and lagnuages divs
+          for (let p = 1; p <= competenceCount; p++) {
+              if (    !document.getElementById(`competenceLevel`).value
+                 ||   !document.getElementById(`newCompetence`).value ){
+              console.log("Data missing")
+                    break;
+                  };
+                     const label = document.createElement('span');
+                      label.className="item-set";
+                       label.innerHTML =  `<ul class ="skill-set" ><b>Skill: </b>${document.getElementById(`newCompetence`).value} ||  <b>Level</b>: ${document.getElementById(`competenceLevel`).value}`;
+                          if (skillsContainer)
+                                skillsContainer.appendChild(label);
+                       }
+                               console.log("Languages counter" + langueCount)
+
+
+             const langDiv = document.getElementById('langues-container')
+
+                            if(langDiv){
+                               console.log("Div Found")
+        for (let k = 1; k <= langueCount; k++) {
+         console.log("Leng count" + k )
+                    let newLangueValue = "";
+                    let langueLevelValue = "";
+
+                  newLangueValue   =  document.getElementById('newLangue').value;
+                 langueLevelValue   =document.getElementById('langueLevel').value;
+
+                 const label = document.createElement('span');
+                label.className = "skill-set";
+                if(label){
+                  label.innerHTML= `${newLangueValue}  ||  Level is ${langueLevelValue}`;
+                  langDiv.appendChild(label)
+                       console.log("Data: " ,   "" )
+                  console.log("Data create. "   )
+                  }
+                    newLangue = "" //Clear
+          }; //Clear
+        };
+console.log("Fin de todo");
+   for (let i = 1; i <= experienceCount; i++) {
+                 const jobTitle = document.getElementById(`jobTitle${i}`)?.value;
+                 const company = document.getElementById(`company${i}`)?.value;
+                 const dates = document.getElementById(`dates${i}`)?.value;
+                 const description = document.getElementById(`description${i}`)?.value;
+
+                 if (jobTitle || company || dates || description) {
+                     const experienceDiv = document.createElement('div');
+                     experienceDiv.className = 'experience';
+                     if (jobTitle) {
+                         const jobTitleElement = document.createElement('h4');
+                         jobTitleElement.textContent = jobTitle;
+                         experienceDiv.appendChild(jobTitleElement);
+                     }
+
+                     if (company) {
+                         const companyElement = document.createElement('p');
+                         companyElement.textContent = `Entreprise: ${company}`;
+                         experienceDiv.appendChild(companyElement);
+                     }
+
+                     if (dates) {
+                         const datesElement = document.createElement('p');
+                         datesElement.textContent = `Dates: ${dates}`;
+                         experienceDiv.appendChild(datesElement);
+                     }
+
+                     if (description) {
+                         const descriptionElement = document.createElement('p');
+                         descriptionElement.textContent = description;
+                         experienceDiv.appendChild(descriptionElement);
+                     }
+
+                  previewDiv.appendChild(experienceDiv);
+                }
+            }
+
+
+        }
+
+        function generatePDF() {
+            alert('Fonctionnalité d\'exportation en PDF à implémenter !');
+        }
+  function addExperience() {
+    experienceCount++;
+    const experiencesContainer = document.getElementById('experiences-container');
+    const experienceDiv = document.createElement('div');
+    experienceDiv.className = 'experience';
+    experienceDiv.id = `experience-${experienceCount}`;
+
+    experienceDiv.innerHTML = `
+        <h3>Expérience ${experienceCount}</h3>
+        <div class="form-group">
+            <label for="jobTitle${experienceCount}">Poste</label>
+            <input type="text" id="jobTitle${experienceCount}" placeholder="Poste occupé" oninput="updateCV()">
+        </div>
+        <div class="form-group">
+            <label for="company${experienceCount}">Entreprise</label>
+            <input type="text" id="company${experienceCount}" placeholder="Nom de l'entreprise" oninput="updateCV()">
+        </div>
+        <div class="form-group">
+            <label for="dates${experienceCount}">Dates</label>
+            <input type="text" id="dates${experienceCount}" placeholder="Dates d'emploi" oninput="updateCV()">
+        </div>
+        <div class="form-group">
+            <label for="description${experienceCount}">Description</label>
+            <textarea id="description${experienceCount}" placeholder="Description du poste" rows="3" oninput="updateCV()"></textarea>
+        </div>
+        <button class="btn btn-outline-secondary" onclick="removeExperience('experience-${experienceCount}')">Supprimer</button>
+    `;
+    experiencesContainer.appendChild(experienceDiv);
+      updateCV();
+  }
+        function removeExperience(experienceId) {
+             const experienceDiv = document.getElementById(experienceId);
+             experienceDiv.remove();
+            updateCV();
+         }
+        // Function to open the popup
+function openFormationModal() {
+    document.getElementById('formationModal').style.display = 'flex';
+}
+
+// Function to close the popup
+function closeFormationModal() {
+    document.getElementById('formationModal').style.display = 'none';
+}
+
+  function addFormation() {
+            //alert ("test")
+                formationCount++; // Increase formation counter
+   updateCV() // Load Data to CV
+            const formationDiv = document.createElement('div');
+            formationDiv.className = 'formation';
+            const data = `<br><label for="diplome">Diplôme :</label>   ${ document.getElementById('diplome').value} 
+        <b> -- Etudied in  </b>  ${ document.getElementById('etablissement').value} 
+
+         <em> with description :<br> ${  document.getElementById('descriptionFormation').value } 
+        </em>
+      <div>`;
+
+            formationsContainer.innerHTML += data; //Set formation
+    }
+          function removeFormation(formationId) {
+            }
+
+            function addCompetence() {
+     const skillContainer = document.getElementById('competences-container');
+
+         // Create a new element for the competency text
+         let textData = "";
+
+            const competenceLevelValue = document.getElementById('competenceLevel').value;
+            const competenceValue = document.getElementById('newCompetence').value
+            competenceCount++
+               if (  !document.getElementById("newCompetence").value &&  !document.getElementById("competenceLevel").value )
+                console.log("There are missing input ");
+
+                textData +=  " <b>Skill: </b>" +  competenceValue
+                textData +=  " - <b>Level</b> " +  competenceLevelValue
+
+                  if (skillsContainer){
+                       const competenceHTML = `
+                                 
+                                        <div > ${textData}</div>
+                                   
+                                   `
+                //  label.className="item-set";
+                  skillsContainer.innerHTML += " <div class = 'skill-data' > " +  textData + "</div>" ;
+
+                  console.log("Test"+ data);
+            } //Close if
+
+             updateCV(); //Update CV PREVIEW;
+            }
+        //Fin Comportement Competence
+
+         function addLangue() {
+  const langContainer = document.getElementById('langues-container');
+  langueCount++
+     const langueLevelValue   =  document.getElementById('langueLevel').value;
+     const newLangueValue   =  document.getElementById('newLangue').value;
+
+          if (!newLangueValue){
+           console.log("Missing newLangueValue");
+        }
+
+           if (!newLangueValue || !langueLevelValue)
+             console.log("There is missing values please check the data")
+              const label = document.createElement('span');
+                  label.className = "skill-set";
+                     label.innerHTML= newLangueValue + "   Level is" + langueLevelValue
+         //   langContainer.appendChild(label);
+            alert("ok2")
+         updateCV();  //UPDATE ALL SCREEN
+        }
+         // Fin des langues
+           /*   document.querySelector(" .btn-outline-secondary[onclick=\"addExperience()\"]").addEventListener('click', addExperience) // Add action for upload information
+             document.querySelector(" .btn-outline-secondary[onclick=\"openFormationModal()\"]").addEventListener('click', openFormationModal )
+                document.querySelector("#addButton").addEventListener("click",function(e) {e.preventDefault();addSkillset();}); //Add events //Update
+       /* document.addEventListener('DOMContentLoaded', () => {
+         //        document.querySelector(".btn-outline-secondary[onclick=\"addExperience()\"]").addEventListener('click', addExperience)
+               //         document.querySelector(".btn-outline-secondary[onclick=\"openFormationModal()\"]").addEventListener('click', openFormationModal )
+              //       updateCV(); //Update preview on page load or update
+          })
+*/
+
+  
+    </script>
+</body>
+</html>

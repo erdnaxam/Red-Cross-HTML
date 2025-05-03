@@ -147,7 +147,24 @@
         .etape-icon { width: 55px; height: 55px; border-radius: 50%; background-color: var(--color-gray-light); color: var(--color-gray); display: flex; align-items: center; justify-content: center; font-size: 1.6rem; margin-bottom: 1rem; }
         .etape-carte h3 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--color-dark); }
         .etape-carte p { font-size: 0.9rem; color: var(--color-gray); margin-bottom: 1rem; flex-grow: 1; }
-        .etape-action { background-color: var(--color-primary); color: var(--color-white); border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; cursor: pointer; margin-top: auto; transition: background-color 0.2s ease; }
+       /* .etape-action { background-color: var(--color-primary); color: var(--color-white); border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; cursor: pointer; margin-top: auto; transition: background-color 0.2s ease; }
+        .etape-action:hover { background-color: var(--color-primary-darker); } */
+         .etape-action {
+            background-color: var(--color-primary);
+            color: var(--color-white);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            margin-top: auto;
+            transition: background-color 0.2s ease;
+            text-decoration: none; /* Pour que l'effet de bouton fonctionne correctement sur un lien */
+        }
         .etape-action:hover { background-color: var(--color-primary-darker); }
 
         /* États des cartes étapes */
@@ -283,9 +300,10 @@
                 <div class="etape-icon" aria-hidden="true"><i class="fas fa-file-alt"></i></div>
                 <h3>1. Évaluation & CV</h3>
                 <p>Évaluez vos compétences et créez un CV percutant qui attire l'attention.</p>
-                <button class="etape-action" aria-label="Commencer l'étape 1 : Évaluation & CV">
+                 <!-- L'ajout du lien ici -->
+                <a href="cv-generator.html" class="etape-action" aria-label="Commencer l'étape 1 : Évaluation & CV">
                     <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                </button>
+                </a>
             </div>
             <!-- Étape 2 : Bloquée -->
             <div class="etape-carte is-locked" id="etape-2">
@@ -353,7 +371,9 @@
             const badgesContainer = document.getElementById('badges-gagnes');
             const progressSteps = document.querySelectorAll('.parcours-progress-bar .progress-step');
             const detailCards = document.querySelectorAll('.etapes-grid .etape-carte');
-            const allActionButtons = document.querySelectorAll('.etape-carte .etape-action'); // Tous les boutons flèche
+          //   const allActionButtons = document.querySelectorAll('.etape-carte .etape-action'); // Tous les boutons flèche
+          //   const allActionButtons = document.querySelectorAll('.etape-carte .etape-action'); // Tous les boutons flèche
+            const etape1Action = document.querySelector('#etape-1 .etape-action');
 
             const totalEtapes = 8;
             let etapesCompletes = 0; // L'état actuel (devrait venir du stockage local ou serveur)
@@ -394,58 +414,73 @@
                         // Étape Complétée
                         card.classList.add('is-completed');
                         if(iconElement) iconElement.className = 'fas fa-check-circle'; // Icône validée
-                        if(actionButton) actionButton.style.display = 'none'; // Cacher bouton
-                        removeActionListener(actionButton); // Retirer l'écouteur s'il existe
+                       if (actionButton) {
+                           actionButton.style.display = 'none';
+                           removeActionListener(actionButton);
+                       }
 
                     } else if (index === etapesCompletes) {
                         // Étape Active
                         card.classList.add('is-active');
                         if(iconElement) iconElement.className = 'fas fa-file-alt'; // Icône par défaut (ou spécifique à l'étape)
-                        if(actionButton) {
-                             actionButton.style.display = 'flex'; // Afficher bouton
-                             addActionListener(actionButton); // Ajouter l'écouteur s'il n'existe pas
+                        if (actionButton) {
+                            actionButton.style.display = 'flex';
+                            // Skip adding event listener to etape-1's action since it's a link now
+                            if (card.id !== 'etape-1') {
+                                addActionListener(actionButton);
+                            }
                         }
 
                     } else {
                         // Étape Bloquée
                         card.classList.add('is-locked');
                         if(iconElement) iconElement.className = 'fas fa-lock'; // Icône verrou
-                        if(actionButton) actionButton.style.display = 'none'; // Cacher bouton
-                        removeActionListener(actionButton); // Retirer l'écouteur s'il existe
+                       if (actionButton) {
+                            actionButton.style.display = 'none';
+                            removeActionListener(actionButton);
+                        }
                     }
                 });
             }
 
             // Fonction pour ajouter un écouteur d'événement (si pas déjà fait)
-            function addActionListener(button) {
+             function addActionListener(button) {
                 if (button && !button.hasAttribute('data-listener-added')) {
-                    button.addEventListener('click', handleActionClick);
+                   button.addEventListener('click', handleActionClick);
                     button.setAttribute('data-listener-added', 'true');
                 }
             }
 
             // Fonction pour retirer un écouteur d'événement
             function removeActionListener(button) {
-                 if (button && button.hasAttribute('data-listener-added')) {
+                if (button && button.hasAttribute('data-listener-added')) {
                     button.removeEventListener('click', handleActionClick);
                     button.removeAttribute('data-listener-added');
                 }
             }
 
             // Gestionnaire de clic pour les boutons d'action des étapes
-            function handleActionClick() {
-                if (etapesCompletes < totalEtapes) {
-                    etapesCompletes++; // Incrémenter la progression
-                    console.log(`Étape ${etapesCompletes} marquée comme complétée.`);
-                    // Idéalement, sauvegarder cet état (localStorage ou serveur)
-                    // localStorage.setItem('parcoursEtapesCompletes', etapesCompletes);
-                    updateProgression(); // Mettre à jour l'interface
-                    // Optionnel: Afficher une notification/feedback
-                    // alert(`Étape ${etapesCompletes} terminée ! Vous passez à l'étape ${etapesCompletes + 1}.`);
-                     // Pour une vraie application, rediriger vers le contenu de l'étape complétée ou la suivante :
-                    // window.location.href = `etape${etapesCompletes + 1}.html`; // Par exemple
-                }
-            }
+             function handleActionClick(event) {
+                event.preventDefault();  // Prevent the default action of the link
+
+                 const button = event.target.closest('.etape-action'); // Correctly find the button element
+                 if (button && etapesCompletes < totalEtapes) {
+                     etapesCompletes++;
+                     console.log(`Étape ${etapesCompletes} marquée comme complétée.`);
+                    updateProgression();
+                     // For a real app, you'd redirect to the content of the completed or next step :
+                     // window.location.href = `etape${etapesCompletes + 1}.html`; // For example
+                 }
+             }
+
+
+             // Prevent calling handeAcctionClick function when opening cv-generator page.
+           if (etape1Action) {
+              removeActionListener(etape1Action); // Ensure the event listener is removed
+              etape1Action.addEventListener('click', function(event) {
+                  window.location.href = 'cv-generator.html'; // Navigate to the cv-generator.html page
+              });
+           }
 
             // Mise à jour des badges (simple exemple)
             function updateBadges() {
@@ -489,7 +524,7 @@
                 navLinks.classList.toggle('show'); // La classe 'show' doit être définie dans le CSS
                 const isExpanded = navLinks.classList.contains('show');
                 mobileMenuBtn.setAttribute('aria-expanded', isExpanded);
-                mobileMenuBtn.setAttribute('aria-label', isExpanded ? 'Fermer le menu de navigation' : 'Ouvrir le menu de navigation');
+                mobileMenuBtn.setAttribute('aria-label', isExpanded ? 'Fermer le menu de navigation' : 'Ouvrir le menude navigation');
               });
               // Optionnel: Fermer le menu si on clique sur un lien
               navLinks.querySelectorAll('a').forEach(link => {
