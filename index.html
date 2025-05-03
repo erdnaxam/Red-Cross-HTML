@@ -136,73 +136,6 @@
       background-color: #1ea34a;
     }
     
-    /* Header */
-    .header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background-color: white;
-      padding: 1rem 0;
-      box-shadow: var(--shadow-sm);
-      z-index: 100;
-      transition: var(--transition);
-    }
-    
-    .header.scrolled {
-      padding: 0.5rem 0;
-      box-shadow: var(--shadow);
-    }
-    
-    .logo {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--color-dark);
-    }
-    
-    .logo span {
-      color: var(--color-primary);
-    }
-    
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-    }
-    
-    .nav-links a {
-      color: var(--color-dark);
-      font-weight: 500;
-      position: relative;
-    }
-    
-    .nav-links a:hover {
-      color: var(--color-primary);
-    }
-    
-    .nav-links a::after {
-      content: '';
-      position: absolute;
-      width: 0;
-      height: 2px;
-      bottom: -4px;
-      left: 0;
-      background-color: var(--color-primary);
-      transition: var(--transition);
-    }
-    
-    .nav-links a:hover::after {
-      width: 100%;
-    }
-    
-    .mobile-menu-btn {
-      display: none;
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-size: 1.5rem;
-    }
-    
     /* Hero Section */
     .hero {
       background: linear-gradient(to right, rgba(139, 92, 246, 0.1), rgba(34, 197, 94, 0.05)), url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
@@ -792,6 +725,72 @@
       padding: 0.5rem 1rem;
       cursor: pointer;
     }
+    /* Header */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    padding: 1rem 0;
+    box-shadow: var(--shadow-sm);
+    z-index: 100;
+    transition: var(--transition);
+}
+
+.header.scrolled {
+    padding: 0.5rem 0;
+    box-shadow: var(--shadow);
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-dark);
+}
+
+.logo span {
+    color: var(--color-primary);
+}
+.nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+}
+
+.nav-links a {
+    color: var(--color-dark);
+    font-weight: 500;
+    position: relative;
+}
+
+.nav-links a:hover {
+    color: var(--color-primary);
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -4px;
+    left: 0;
+    background-color: var(--color-primary);
+    transition: var(--transition);
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+
   </style>
 </head>
 
@@ -799,20 +798,19 @@
   <!-- Header -->
   <header class="header" id="header">
     <div class="container flex justify-between items-center">
-      <a href="#" class="logo"><span>Emploi</span>Avenir</a>
-      <nav>
-        <ul class="nav-links">
-          <li><a href="#" class="active">Accueil</a></li>
-          <li><a href="#about">À propos</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#contact">Contact</a></li>
-          <li><a href="#" id="loginBtn">Connexion</a></li>
-        </ul>
-      </nav>
-      <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+    <a href="#" class="logo"><span>Emploi</span>Avenir</a>
+    <nav>
+    <ul class="nav-links">
+    <li><a href="#" class="active">Accueil</a></li>
+    <li><a href="MonParcours.html">Mon Parcours</a></li>
+    <li><a href="MesCandidature.html">Mes Candidatures</a></li>
+    <li><a href="Partenaires.html">Nos partenaires</a></li>
+    <li><a href="Documents.html">Mes documents</a></li>
+    <li><a href="Profil.html">Profil</a></li>
+    </ul>
+    </nav>
+    <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
     </div>
-  </header>
-
   <!-- Hero Section -->
   <section class="hero" id="hero">
     <div class="container">

@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes Candidatures</title>
+    <!-- Lien vers Font Awesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* --- Styles Généraux --- */
+        :root {
+            --primary-color: #2563eb; /* blue-600 */
+            --muted-fg-color: #6b7280; /* gray-500 */
+            --card-bg-color: #ffffff;
+            --body-bg-color: #f9fafb; /* gray-50 */
+            --border-color: #e5e7eb; /* gray-200 */
+            --input-border-color: #d1d5db; /* gray-300 */
+            --destructive-color: #dc2626; /* red-600 */
+            --destructive-hover-color: #b91c1c; /* red-700 */
+            --primary-text-color: #1f2937; /* gray-800 */
+            --button-primary-bg: #1f2937;
+            --button-primary-hover-bg: #374151;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            line-height: 1.6;
+            color: var(--primary-text-color);
+            background-color: var(--body-bg-color);
+        }
+
+        .container {
+            max-width: 64rem; /* Ajusté pour le contenu */
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        /* --- En-tête de page --- */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem; /* mb-6 */
+        }
+
+        .page-title {
+            font-size: 1.5rem; /* text-2xl */
+            font-weight: 700;
+        }
+
+        /* --- Grille des candidatures --- */
+        .application-grid {
+            display: grid;
+            grid-template-columns: 1fr; /* Une colonne par défaut */
+            gap: 1rem; /* gap-4 */
+        }
+
+        /* --- Carte de candidature --- */
+        .card {
+            background-color: var(--card-bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+            overflow: hidden; /* Important pour la mise en page flex */
+        }
+
+        .application-card-content {
+            display: flex;
+            flex-direction: column; /* Empilé par défaut */
+        }
+        @media (min-width: 768px) { /* md: breakpoint */
+            .application-card-content {
+                flex-direction: row;
+                align-items: stretch; /* Pour que les enfants aient la même hauteur */
+            }
+        }
+
+        .application-card-main {
+            padding: 1rem 1.5rem; /* p-4 md:p-6 */
+            flex-grow: 1;
+        }
+
+        .application-card-header {
+            display: flex;
+            flex-direction: column; /* Empilé par défaut */
+            justify-content: space-between;
+            gap: 1rem; /* gap-4 */
+            margin-bottom: 1rem; /* mb-4 */
+        }
+         @media (min-width: 768px) {
+             .application-card-header {
+                 flex-direction: row;
+                 align-items: center;
+             }
+         }
+
+        .application-card-title {
+            font-size: 1.125rem; /* text-xl */
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem; /* gap-2 */
+        }
+        .application-card-title i {
+            color: var(--muted-fg-color);
+            font-size: 0.9em; /* Taille icône */
+        }
+
+        .application-card-company {
+            display: flex;
+            align-items: center;
+            color: var(--muted-fg-color);
+            margin-top: 0.25rem; /* mt-1 */
+            font-size: 0.9rem;
+        }
+        .application-card-company i {
+             width: 1rem; /* h-4 w-4 */
+             margin-right: 0.25rem; /* mr-1 */
+             font-size: 0.9em;
+        }
+
+        .application-card-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem; /* gap-3 */
+            flex-wrap: wrap; /* Pour retour à la ligne si besoin */
+        }
+
+        .application-card-date {
+             display: flex;
+             align-items: center;
+             color: var(--muted-fg-color);
+             font-size: 0.9rem;
+        }
+        .application-card-date i {
+            width: 1rem; /* h-4 w-4 */
+            margin-right: 0.25rem; /* mr-1 */
+            font-size: 0.9em;
+        }
+
+        .application-card-notes {
+            font-size: 0.875rem; /* text-sm */
+            color: var(--muted-fg-color);
+            margin-top: 0.5rem; /* mt-2 */
+        }
+        .application-card-contact {
+             margin-top: 0.75rem; /* mt-3 */
+             font-size: 0.875rem; /* text-sm */
+        }
+        .application-card-contact p { margin: 0.1rem 0; }
+        .application-card-contact strong { font-weight: 600; }
+
+        /* Actions sur la carte */
+        .application-card-actions {
+            padding: 1rem 1.5rem; /* p-4 md:p-6 */
+            display: flex;
+            flex-direction: row; /* Sur mobile: horizontal */
+            gap: 0.75rem; /* gap-3 */
+            justify-content: flex-end; /* Alignés à droite sur mobile */
+            background-color: var(--body-bg-color); /* Léger fond */
+        }
+        @media (min-width: 768px) {
+            .application-card-actions {
+                flex-direction: column; /* Vertical sur grand écran */
+                border-left: 1px solid var(--border-color);
+                justify-content: center; /* Centré verticalement */
+                width: 12rem; /* Largeur fixe approx */
+                flex-shrink: 0; /* Empêche de rétrécir */
+                background-color: transparent; /* Pas de fond sur grand écran */
+            }
+        }
+
+        .application-card-actions .action-buttons {
+             display: flex;
+             gap: 0.5rem; /* gap-2 */
+        }
+
+        /* --- Badges --- */
+        .badge {
+            display: inline-block;
+            padding: 0.25em 0.6em;
+            font-size: 0.75rem;
+            font-weight: 500;
+            line-height: 1;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: baseline;
+            border-radius: 0.375rem;
+        }
+        /* Couleurs des badges (ajuster si besoin) */
+        .badge.status-cv-envoye { background-color: #dbeafe; color: #1e40af; }
+        .badge.status-cv-retenu { background-color: #e0e7ff; color: #3730a3; }
+        .badge.status-entretien-prevu { background-color: #f3e8ff; color: #581c87; }
+        .badge.status-entretien-passe { background-color: #ffedd5; color: #9a3412; }
+        .badge.status-offre-recue { background-color: #fef9c3; color: #854d0e; }
+        .badge.status-offre-acceptee { background-color: #dcfce7; color: #166534; }
+        .badge.status-refus { background-color: #fee2e2; color: #991b1b; }
+
+        /* --- Boutons --- */
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.5rem 1rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-align: center;
+            border: 1px solid transparent;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            transition: background-color 0.2s, border-color 0.2s, color 0.2s, box-shadow 0.2s;
+            white-space: nowrap;
+            gap: 0.5rem; /* gap-2 */
+        }
+        .button:focus {
+             outline: none;
+             box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
+        }
+        .button i { font-size: 0.9em; /* Taille relative de l'icône */ }
+
+        .button-primary {
+            background-color: var(--button-primary-bg);
+            color: #ffffff;
+        }
+        .button-primary:hover { background-color: var(--button-primary-hover-bg); }
+
+        .button-outline {
+            background-color: var(--card-bg-color);
+            color: var(--primary-text-color);
+            border-color: var(--input-border-color);
+        }
+        .button-outline:hover { background-color: var(--body-bg-color); }
+
+        .button-destructive {
+            background-color: var(--destructive-color);
+            color: #ffffff;
+        }
+        .button-destructive:hover { background-color: var(--destructive-hover-color); }
+
+        .button-icon {
+            padding: 0.5rem; /* Ajuster pour taille carrée */
+            width: 2.25rem; /* approx size="icon" */
+            height: 2.25rem;
+            flex-shrink: 0;
+        }
+        .button-icon i { margin: 0; font-size: 1em; } /* Pas de gap ou taille différente pour icône seule */
+
+        /* --- Formulaires (Inputs, Labels, Selects) --- */
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem; /* space-y-2 approx */
+        }
+        label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #374151;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        input[type="date"],
+        select {
+            width: 100%;
+            padding: 0.6rem 0.8rem;
+            border: 1px solid var(--input-border-color);
+            border-radius: 0.375rem;
+            font-size: 0.9rem;
+            background-color: var(--card-bg-color);
+            color: var(--primary-text-color);
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+        }
+        select {
+            appearance: none; /* Permet de styliser un peu la flèche */
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007bff%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+            background-repeat: no-repeat;
+            background-position: right 0.7em top 50%, 0 0;
+            background-size: 0.65em auto, 100%;
+            padding-right: 2.5em; /* Espace pour la flèche */
+        }
+
+        /* --- Boîte de Dialogue (Modal) --- */
+        .dialog {
+            position: fixed;
+            inset: 0; /* top, right, bottom, left = 0 */
+            z-index: 50;
+            display: none; /* Caché par défaut */
+            opacity: 0;
+            transition: opacity 0.2s ease-in-out;
+        }
+        .dialog.open {
+            display: flex; /* Ou block, ou grid selon besoin */
+            opacity: 1;
+        }
+        .dialog-overlay {
+            position: absolute;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .dialog-content {
+            position: relative; /* Pour être au-dessus de l'overlay */
+            margin: auto; /* Centrage */
+            background-color: var(--card-bg-color);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            max-width: 90%;
+            width: 32rem; /* sm:max-w-md approx */
+            max-height: 90vh; /* Limite la hauteur */
+            overflow-y: auto; /* Ajoute le scroll si besoin */
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .dialog-header {
+            /* Styles pour l'en-tête du modal */
+        }
+        .dialog-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .dialog-description {
+            font-size: 0.875rem;
+            color: var(--muted-fg-color);
+            margin-bottom: 1rem;
+        }
+        .dialog-body {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem; /* space-y-4 approx */
+            padding: 1rem 0; /* py-4 */
+        }
+        .dialog-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+            margin-top: 1rem; /* Espacement avant les boutons */
+        }
+
+        /* --- État Vide --- */
+        .empty-card {
+            padding: 2.5rem; /* p-10 */
+            text-align: center;
+        }
+        .empty-card p {
+            color: var(--muted-fg-color);
+            font-size: 1.125rem; /* text-lg */
+            margin-bottom: 1rem; /* mb-4 */
+        }
+        .empty-card .button {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* --- Notifications Toast --- */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 0.8rem 1.2rem;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            font-size: 0.875rem;
+            font-weight: 500;
+            min-width: 200px;
+            text-align: center;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .toast.show {
+            display: block;
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        .toast-success { background-color: #dcfce7; color: #166534; border: 1px solid #a7f3d0; }
+        .toast-error { background-color: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+
+    </style>
+</head>
+<body>
+    <header class="header" id="header">
+        <div class="container flex justify-between items-center">
+        <a href="#" class="logo"><span>Emploi</span>Avenir</a>
+        <nav>
+        <ul class="nav-links">
+        <li><a href="#" class="active">Accueil</a></li>
+        <li><a href="MonParcours.html">Mon Parcours</a></li>
+        <li><a href="MesCandidature.html">Mes Candidatures</a></li>
+        <li><a href="Partenaires.html">Nos partenaires</a></li>
+        <li><a href="Documents.html">Mes documents</a></li>
+        <li><a href="Profil.html">Profil</a></li>
+        </ul>
+        </nav>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+        </div>
+            <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">Mes candidatures</h1>
+            <button id="add-application-btn" class="button button-primary">
+                <i class="fas fa-plus"></i>
+                <span>Ajouter une candidature</span>
+            </button>
+        </div>
+
+        <!-- Zone d'affichage des candidatures -->
+        <div id="application-list" class="application-grid">
+            <!-- Les cartes de candidature seront injectées ici par JS -->
+        </div>
+
+        <!-- État vide (affiché si la liste est vide) -->
+        <div id="empty-state" class="card empty-card" style="display: none;">
+            <p>Vous n'avez pas encore de candidatures enregistrées.</p>
+            <button id="add-first-application-btn" class="button button-primary">
+                <i class="fas fa-plus"></i>
+                <span>Ajouter ma première candidature</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Boîte de Dialogue (Modal) pour Ajouter/Modifier -->
+    <div id="application-dialog" class="dialog">
+        <div class="dialog-overlay" id="dialog-overlay"></div>
+        <div class="dialog-content">
+            <div class="dialog-header">
+                <h2 id="dialog-title" class="dialog-title">Ajouter une candidature</h2>
+                <p id="dialog-description" class="dialog-description">
+                    Renseignez les informations de votre candidature
+                </p>
+                 <button id="close-dialog-btn-x" aria-label="Fermer" style="position: absolute; top: 10px; right: 10px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #666;">×</button>
+            </div>
+
+            <form id="application-form" class="dialog-body">
+                <!-- Champs du formulaire -->
+                <input type="hidden" id="applicationId"> <!-- Champ caché pour l'ID en mode édition -->
+
+                <div class="form-group">
+                    <label for="company">Entreprise</label>
+                    <input type="text" id="company" placeholder="Nom de l'entreprise" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="position">Poste</label>
+                    <input type="text" id="position" placeholder="Intitulé du poste" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="date">Date de candidature</label>
+                    <input type="date" id="date" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="status">Statut</label>
+                    <select id="status" required>
+                        <option value="CV envoyé">CV envoyé</option>
+                        <option value="CV retenu">CV retenu</option>
+                        <option value="Entretien prévu">Entretien prévu</option>
+                        <option value="Entretien passé">Entretien passé</option>
+                        <option value="Offre reçue">Offre reçue</option>
+                        <option value="Offre acceptée">Offre acceptée</option>
+                        <option value="Refus">Refus</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="notes">Notes</label>
+                    <input type="text" id="notes" placeholder="Informations complémentaires">
+                </div>
+
+                <div class="form-group">
+                    <label for="contactName">Nom du contact (optionnel)</label>
+                    <input type="text" id="contactName" placeholder="Nom de la personne à contacter">
+                </div>
+
+                <div class="form-group">
+                    <label for="contactEmail">Email du contact (optionnel)</label>
+                    <input type="email" id="contactEmail" placeholder="Email de contact">
+                </div>
+
+                <div class="form-group">
+                    <label for="contactPhone">Téléphone du contact (optionnel)</label>
+                    <input type="tel" id="contactPhone" placeholder="Numéro de téléphone">
+                </div>
+            </form>
+
+            <div class="dialog-footer">
+                <button id="cancel-dialog-btn" type="button" class="button button-outline">Annuler</button>
+                <button id="save-dialog-btn" type="button" class="button button-primary">Ajouter</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Zone pour les notifications (toasts) -->
+    <div id="toast-notification" class="toast"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Références DOM ---
+            const applicationListContainer = document.getElementById('application-list');
+            const emptyStateContainer = document.getElementById('empty-state');
+            const addApplicationBtn = document.getElementById('add-application-btn');
+            const addFirstApplicationBtn = document.getElementById('add-first-application-btn');
+            const dialog = document.getElementById('application-dialog');
+            const dialogOverlay = document.getElementById('dialog-overlay');
+            const dialogTitle = document.getElementById('dialog-title');
+            const applicationForm = document.getElementById('application-form');
+            const applicationIdInput = document.getElementById('applicationId');
+            const companyInput = document.getElementById('company');
+            const positionInput = document.getElementById('position');
+            const dateInput = document.getElementById('date');
+            const statusSelect = document.getElementById('status');
+            const notesInput = document.getElementById('notes');
+            const contactNameInput = document.getElementById('contactName');
+            const contactEmailInput = document.getElementById('contactEmail');
+            const contactPhoneInput = document.getElementById('contactPhone');
+            const saveDialogBtn = document.getElementById('save-dialog-btn');
+            const cancelDialogBtn = document.getElementById('cancel-dialog-btn');
+             const closeDialogBtnX = document.getElementById('close-dialog-btn-x');
+            const toastNotification = document.getElementById('toast-notification');
+
+            // --- État ---
+            let applicationsData = [];
+            let dialogMode = 'add'; // 'add' or 'edit'
+            let toastTimeout;
+
+            // --- Fonctions ---
+
+            // Charger les données depuis localStorage
+            function loadApplications() {
+                const storedData = localStorage.getItem('jobApplications');
+                applicationsData = storedData ? JSON.parse(storedData) : [];
+            }
+
+            // Sauvegarder les données dans localStorage
+            function saveApplications() {
+                localStorage.setItem('jobApplications', JSON.stringify(applicationsData));
+            }
+
+            // Afficher une notification toast
+            function showToast(message, type = 'success', duration = 3000) {
+                if (toastTimeout) clearTimeout(toastTimeout);
+                toastNotification.textContent = message;
+                toastNotification.className = `toast toast-${type}`;
+                void toastNotification.offsetWidth; // Reflow
+                toastNotification.classList.add('show');
+                toastTimeout = setTimeout(() => {
+                    toastNotification.classList.remove('show');
+                }, duration);
+            }
+
+            // Convertir le statut en nom de classe CSS pour le badge
+            function getStatusClass(status) {
+                return 'status-' + status.toLowerCase()
+                    .replace(/ /g, '-') // Remplace les espaces par des tirets
+                    .replace(/[éè]/g, 'e'); // Remplace les accents (simplifié)
+            }
+
+            // Rendre la liste des candidatures
+            function renderApplications() {
+                applicationListContainer.innerHTML = ''; // Vide la liste
+
+                if (applicationsData.length === 0) {
+                    emptyStateContainer.style.display = 'block';
+                    applicationListContainer.style.display = 'none';
+                } else {
+                    emptyStateContainer.style.display = 'none';
+                    applicationListContainer.style.display = 'grid';
+
+                    applicationsData
+                        .sort((a, b) => new Date(b.date) - new Date(a.date)) // Trie par date décroissante
+                        .forEach(app => {
+                            const card = document.createElement('div');
+                            card.className = 'card application-card';
+                            card.dataset.id = app.id; // Important pour l'identification
+
+                            const formattedDate = new Date(app.date).toLocaleDateString('fr-FR', {
+                                year: 'numeric', month: '2-digit', day: '2-digit'
+                            });
+
+                            card.innerHTML = `
+                                <div class="application-card-content">
+                                    <div class="application-card-main">
+                                        <div class="application-card-header">
+                                            <div>
+                                                <h3 class="application-card-title">
+                                                    <i class="fas fa-briefcase"></i>
+                                                    ${app.position || 'Poste non spécifié'}
+                                                </h3>
+                                                <div class="application-card-company">
+                                                    <i class="fas fa-building"></i>
+                                                    <span>${app.company || 'Entreprise non spécifiée'}</span>
+                                                </div>
+                                            </div>
+                                            <div class="application-card-meta">
+                                                <span class="badge ${getStatusClass(app.status)}">${app.status}</span>
+                                                <div class="application-card-date">
+                                                    <i class="fas fa-calendar-alt"></i>
+                                                    <span>${formattedDate}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        ${app.notes ? `<p class="application-card-notes">${app.notes}</p>` : ''}
+                                        ${(app.contactName || app.contactEmail || app.contactPhone) ? `
+                                            <div class="application-card-contact">
+                                                <strong>Contact:</strong>
+                                                ${app.contactName ? `<p>${app.contactName}</p>` : ''}
+                                                ${app.contactEmail ? `<p>${app.contactEmail}</p>` : ''}
+                                                ${app.contactPhone ? `<p>${app.contactPhone}</p>` : ''}
+                                            </div>
+                                        ` : ''}
+                                    </div>
+                                    <div class="application-card-actions">
+                                        <select class="status-select" data-id="${app.id}" title="Changer le statut">
+                                            <option value="CV envoyé" ${app.status === 'CV envoyé' ? 'selected' : ''}>CV envoyé</option>
+                                            <option value="CV retenu" ${app.status === 'CV retenu' ? 'selected' : ''}>CV retenu</option>
+                                            <option value="Entretien prévu" ${app.status === 'Entretien prévu' ? 'selected' : ''}>Entretien prévu</option>
+                                            <option value="Entretien passé" ${app.status === 'Entretien passé' ? 'selected' : ''}>Entretien passé</option>
+                                            <option value="Offre reçue" ${app.status === 'Offre reçue' ? 'selected' : ''}>Offre reçue</option>
+                                            <option value="Offre acceptée" ${app.status === 'Offre acceptée' ? 'selected' : ''}>Offre acceptée</option>
+                                            <option value="Refus" ${app.status === 'Refus' ? 'selected' : ''}>Refus</option>
+                                        </select>
+                                        <div class="action-buttons">
+                                            <button class="button button-outline button-icon edit-btn" data-id="${app.id}" title="Modifier">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button class="button button-destructive button-icon delete-btn" data-id="${app.id}" title="Supprimer">
+                                                <i class="fas fa-trash-alt"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                            applicationListContainer.appendChild(card);
+                        });
+                }
+            }
+
+            // Ouvrir la boîte de dialogue
+            function openDialog(mode = 'add', application = null) {
+                dialogMode = mode;
+                applicationForm.reset(); // Réinitialise le formulaire
+
+                if (mode === 'add') {
+                    dialogTitle.textContent = 'Ajouter une candidature';
+                    saveDialogBtn.textContent = 'Ajouter';
+                    applicationIdInput.value = ''; // Pas d'ID pour l'ajout
+                    dateInput.value = new Date().toISOString().split('T')[0]; // Date du jour par défaut
+                    statusSelect.value = 'CV envoyé'; // Statut par défaut
+                } else if (mode === 'edit' && application) {
+                    dialogTitle.textContent = 'Modifier la candidature';
+                    saveDialogBtn.textContent = 'Enregistrer';
+                    // Pré-remplir le formulaire
+                    applicationIdInput.value = application.id;
+                    companyInput.value = application.company || '';
+                    positionInput.value = application.position || '';
+                    dateInput.value = application.date || '';
+                    statusSelect.value = application.status || 'CV envoyé';
+                    notesInput.value = application.notes || '';
+                    contactNameInput.value = application.contactName || '';
+                    contactEmailInput.value = application.contactEmail || '';
+                    contactPhoneInput.value = application.contactPhone || '';
+                }
+                dialog.classList.add('open');
+            }
+
+            // Fermer la boîte de dialogue
+            function closeDialog() {
+                dialog.classList.remove('open');
+            }
+
+            // Gérer le clic sur "Sauvegarder" dans le modal
+            function handleSaveApplication() {
+                // Récupérer les valeurs (validation basique)
+                const id = applicationIdInput.value;
+                const company = companyInput.value.trim();
+                const position = positionInput.value.trim();
+                const date = dateInput.value;
+                const status = statusSelect.value;
+                const notes = notesInput.value.trim();
+                const contactName = contactNameInput.value.trim();
+                const contactEmail = contactEmailInput.value.trim();
+                const contactPhone = contactPhoneInput.value.trim();
+
+                if (!company || !position || !date || !status) {
+                    showToast("Veuillez remplir les champs obligatoires (Entreprise, Poste, Date, Statut).", "error");
+                    return;
+                }
+
+                const applicationData = {
+                    id: dialogMode === 'add' ? `app_${Date.now()}` : id, // Génère un nouvel ID si ajout
+                    company,
+                    position,
+                    date,
+                    status,
+                    notes,
+                    contactName: contactName || undefined, // Stocker undefined si vide
+                    contactEmail: contactEmail || undefined,
+                    contactPhone: contactPhone || undefined
+                };
+
+                if (dialogMode === 'add') {
+                    applicationsData.push(applicationData);
+                    showToast("Candidature ajoutée avec succès !");
+                } else {
+                    applicationsData = applicationsData.map(app =>
+                        app.id === id ? applicationData : app
+                    );
+                    showToast("Candidature modifiée avec succès !");
+                }
+
+                saveApplications();
+                renderApplications();
+                closeDialog();
+            }
+
+            // Gérer le changement de statut depuis la carte
+            function handleStatusChange(id, newStatus) {
+                 applicationsData = applicationsData.map(app =>
+                    app.id === id ? { ...app, status: newStatus } : app
+                 );
+                 saveApplications();
+                 renderApplications(); // Re-render pour mettre à jour le badge
+                 showToast("Statut mis à jour.");
+            }
+
+            // Gérer la suppression d'une candidature
+            function handleDeleteApplication(id) {
+                 if (window.confirm("Êtes-vous sûr de vouloir supprimer cette candidature ?")) {
+                     applicationsData = applicationsData.filter(app => app.id !== id);
+                     saveApplications();
+                     renderApplications();
+                     showToast("Candidature supprimée.");
+                 }
+            }
+
+            // --- Écouteurs d'événements ---
+
+            // Boutons principaux pour ouvrir le modal
+            addApplicationBtn.addEventListener('click', () => openDialog('add'));
+            addFirstApplicationBtn.addEventListener('click', () => openDialog('add'));
+
+            // Boutons du modal
+            saveDialogBtn.addEventListener('click', handleSaveApplication);
+            cancelDialogBtn.addEventListener('click', closeDialog);
+             closeDialogBtnX.addEventListener('click', closeDialog);
+            dialogOverlay.addEventListener('click', closeDialog); // Fermer en cliquant sur l'overlay
+
+            // Utilisation de la délégation d'événements pour les actions sur les cartes
+            applicationListContainer.addEventListener('click', (event) => {
+                const editButton = event.target.closest('.edit-btn');
+                const deleteButton = event.target.closest('.delete-btn');
+
+                if (editButton) {
+                    const id = editButton.dataset.id;
+                    const applicationToEdit = applicationsData.find(app => app.id === id);
+                    if (applicationToEdit) {
+                        openDialog('edit', applicationToEdit);
+                    }
+                } else if (deleteButton) {
+                    const id = deleteButton.dataset.id;
+                    handleDeleteApplication(id);
+                }
+            });
+
+            // Utilisation de la délégation d'événements pour le changement de statut
+             applicationListContainer.addEventListener('change', (event) => {
+                 const statusSelectElement = event.target.closest('.status-select');
+                 if (statusSelectElement) {
+                     const id = statusSelectElement.dataset.id;
+                     const newStatus = statusSelectElement.value;
+                     handleStatusChange(id, newStatus);
+                 }
+             });
+
+
+            // --- Initialisation ---
+            loadApplications();
+            renderApplications();
+
+        });
+    </script>
+</body>
+</html>

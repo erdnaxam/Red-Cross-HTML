@@ -5,12 +5,14 @@
     padding: 0;
 }
 
+/* Styles généraux (si non déjà définis) */
 body {
     font-family: sans-serif;
     line-height: 1.6;
     color: #333;
-    background-color: #f9fafb; /* Gris très clair */
-    padding: 20px;
+    background-color: #f9fafb;
+    margin: 0;
+    padding: 0; /* Enlève le padding par défaut pour laisser le container gérer */
 }
 
 .container {
@@ -42,6 +44,7 @@ h2.section-title {
     margin-bottom: 1.5rem; /* mb-6 */
     border-bottom: 1px solid #e5e7eb; /* Gris clair */
 }
+
 
 .tab-button {
     padding: 0.75rem 1rem;
@@ -453,4 +456,235 @@ a {
 }
 a:hover {
   text-decoration: underline;
+}
+
+
+
+.container {
+    max-width: 1100px; /* Légèrement plus large pour le contenu */
+    margin: 2rem auto; /* Ajoute de l'espace en haut/bas */
+    padding: 1.5rem; /* px-4 py-6 approx */
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Titre de la page */
+.page-title {
+    font-size: 1.75rem; /* text-2xl */
+    font-weight: 700; /* font-bold */
+    margin-bottom: 1.5rem; /* mb-6 */
+    text-align: center; /* text-center */
+    color: #111827;
+}
+
+/* Conteneur des actions principales */
+.main-actions {
+    display: flex;
+    flex-direction: column; /* Empilé par défaut */
+    gap: 1rem; /* gap-4 */
+    margin-bottom: 2rem; /* mb-8 */
+    max-width: 42rem; /* max-w-xl */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media (min-width: 768px) { /* md: breakpoint */
+    .main-actions {
+        flex-direction: row; /* Côte à côte sur écran moyen */
+    }
+}
+
+/* Zone de contenu des documents */
+.documents-content-area {
+    max-width: 42rem; /* max-w-2xl approx */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Bannière d'information */
+.info-banner {
+    background-color: #f3f4f6; /* bg-muted (gris clair) */
+    padding: 1rem; /* p-4 */
+    border-radius: 8px; /* rounded-lg */
+    margin-bottom: 1.5rem; /* mb-6 */
+    display: flex;
+    align-items: center;
+    gap: 0.75rem; /* gap-3 */
+    border: 1px solid #e5e7eb;
+}
+
+.info-banner p {
+    font-weight: 500; /* font-medium */
+    margin: 0;
+    flex-grow: 1;
+}
+
+.info-banner .icon.primary-icon {
+    color: #007bff; /* Couleur primaire (à ajuster) */
+}
+
+.info-banner .icon.large-icon {
+    font-size: 1.5rem; /* h-6 w-6 approx */
+}
+
+
+/* Liste des documents */
+.documents-list-container {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; /* Espace entre les documents */
+}
+
+.document-item {
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    padding: 1rem 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; /* Permet le retour à la ligne sur petits écrans */
+    gap: 0.75rem;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+.document-item:hover {
+    box-shadow: 0 3px 6px rgba(0,0,0,0.07);
+}
+
+.document-item .info {
+    flex-grow: 1;
+}
+
+.document-item .title {
+    font-weight: 600;
+    display: block; /* Pour être au-dessus des autres infos */
+    margin-bottom: 0.25rem;
+    color: #1f2937;
+}
+
+.document-item .meta {
+    font-size: 0.85rem;
+    color: #6b7280; /* Gris moyen */
+}
+
+.document-item .meta span:not(:last-child)::after {
+    content: "•";
+    margin: 0 0.5em;
+}
+
+.document-item .status-badge {
+    padding: 0.2em 0.6em;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border-radius: 0.375rem;
+    white-space: nowrap;
+}
+
+.status-badge.completed {
+    background-color: #dcfce7; /* Vert clair */
+    color: #166534; /* Vert foncé */
+    border: 1px solid #a7f3d0;
+}
+
+.status-badge.draft {
+    background-color: #ffedd5; /* Orange clair */
+    color: #9a3412; /* Orange foncé */
+    border: 1px solid #fed7aa;
+}
+
+.document-item .actions {
+    /* Styles pour les boutons d'action par document (si nécessaire) */
+    display: flex;
+    gap: 0.5rem;
+}
+
+.document-item .actions a,
+.document-item .actions button {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.8rem;
+    /* Utilise les styles .button ou crée des styles spécifiques */
+}
+
+
+/* Bouton Télécharger tout */
+.download-all-action {
+    margin-top: 2rem; /* mt-8 */
+    display: flex;
+    justify-content: center; /* justify-center */
+}
+
+
+/* Styles des boutons (si non déjà définis ou à compléter) */
+.button {
+    display: inline-flex; /* Pour aligner icône et texte */
+    align-items: center;
+    justify-content: center;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-align: center;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+    white-space: nowrap;
+    flex-grow: 1; /* Pour que les boutons dans .main-actions prennent la même largeur */
+}
+@media (min-width: 768px) {
+    .button {
+        flex-grow: 0; /* Reset sur écran large */
+    }
+}
+
+
+.button-primary {
+    background-color: #007bff;
+    color: #fff;
+    border-color: #007bff;
+}
+.button-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.button-outline {
+    background-color: #fff;
+    color: #0d6efd; /* Couleur primaire pour le texte */
+    border: 2px solid #0d6efd; /* border-2 */
+}
+.button-outline:hover {
+    background-color: #e7f1ff; /* Léger fond au survol */
+    color: #0a58ca;
+    border-color: #0a58ca;
+}
+
+.icon-text-button .icon {
+    margin-right: 0.5rem; /* gap-2 approx */
+    width: 1.25em; /* Assure que l'icône a une largeur définie */
+    font-size: 1em; /* Ajuste la taille de l'icône avec le texte */
+}
+
+.button.large-button {
+    padding-top: 0.8rem; /* py-5 h-auto approx */
+    padding-bottom: 0.8rem;
+    font-size: 1.125rem; /* text-lg */
+    height: auto; /* h-auto */
+}
+
+/* Icônes (si nécessaire) */
+.icon {
+    /* Styles généraux pour les icônes si besoin */
+    line-height: 1; /* Empêche les problèmes de hauteur de ligne */
+}
+
+/* Message Aucun Résultat (si non défini) */
+.no-results {
+    text-align: center;
+    padding: 1.5rem;
+    color: #6b7280;
+    font-style: italic;
 }

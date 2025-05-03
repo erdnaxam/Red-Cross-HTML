@@ -344,4 +344,103 @@ document.addEventListener('DOMContentLoaded', () => {
     appointmentListContainer.addEventListener('click', handleCancelAppointment);
     partnerListContainer.addEventListener('click', handleTakeAppointmentClick);
 
+
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+
+        // --- Données simulées ---
+        const documentsData = [
+            {
+                id: "doc1",
+                title: "Mon CV",
+                type: "Curriculum Vitae",
+                date: "12/04/2025",
+                status: "completed", // 'completed' ou 'draft'
+                url: "#" // Lien de téléchargement/visualisation réel
+            },
+            {
+                id: "doc2",
+                title: "Lettre de motivation",
+                type: "Lettre de motivation",
+                date: "14/04/2025",
+                status: "draft",
+                url: "#"
+            },
+            {
+                id: "doc3",
+                title: "Attestation de formation",
+                type: "Document officiel",
+                date: "10/04/2025",
+                status: "completed",
+                url: "#"
+            }
+            // Ajoute d'autres documents ici si nécessaire
+        ];
+    
+        // --- Références DOM ---
+        const documentsListContainer = document.getElementById('documents-list');
+        const noDocumentsMessage = document.getElementById('no-documents-message');
+        const createDocBtn = document.getElementById('create-doc-btn');
+        const helpDocBtn = document.getElementById('help-doc-btn');
+        const downloadAllBtn = document.getElementById('download-all-btn');
+    
+        // --- Fonctions ---
+    
+        // Fonction pour afficher la liste des documents
+        function renderDocuments(documents) {
+            documentsListContainer.innerHTML = ''; // Vide la liste actuelle
+    
+            if (!documents || documents.length === 0) {
+                noDocumentsMessage.style.display = 'block'; // Affiche le message si pas de documents
+                return;
+            } else {
+                 noDocumentsMessage.style.display = 'none'; // Cache le message s'il y a des documents
+            }
+    
+    
+            documents.forEach(doc => {
+                const docElement = document.createElement('div');
+                docElement.className = 'document-item';
+                docElement.innerHTML = `
+                    <div class="info">
+                        <strong class="title">${doc.title}</strong>
+                        <p class="meta">
+                            <span>${doc.type}</span>
+                            <span>${doc.date}</span>
+                        </p>
+                    </div>
+                    <div class="status">
+                         <span class="status-badge ${doc.status}">${doc.status === 'completed' ? 'Complété' : 'Brouillon'}</span>
+                    </div>
+                    <div class="actions">
+                        <!-- Ajoute ici des boutons si besoin (ex: voir, télécharger) -->
+                        <a href="${doc.url}" class="button button-outline" title="Voir/Télécharger ${doc.title}" target="_blank" rel="noopener noreferrer">
+                           <i class="fas fa-eye"></i>
+                        </a>
+                        <!-- Exemple: <button class="button button-secondary">Modifier</button> -->
+                    </div>
+                `;
+                documentsListContainer.appendChild(docElement);
+            });
+        }
+    
+        // --- Gestionnaires d'événements ---
+        createDocBtn.addEventListener('click', () => {
+            window.alert("Fonctionnalité 'Créer un nouveau document' en développement");
+        });
+    
+        helpDocBtn.addEventListener('click', () => {
+            window.alert("Fonctionnalité 'Aide pour mes documents' en développement");
+        });
+    
+        downloadAllBtn.addEventListener('click', () => {
+            window.alert("Fonctionnalité 'Télécharger tous mes documents' en développement");
+        });
+    
+    
+        // --- Initialisation ---
+        renderDocuments(documentsData); // Affiche les documents au chargement de la page
+    
+
 });

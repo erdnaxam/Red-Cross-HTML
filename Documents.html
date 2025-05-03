@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mes Documents</title>
+    <link rel="stylesheet" href="style.css"> <!-- Assure-toi que le chemin est correct -->
+    <!-- Lien vers Font Awesome pour les icônes (comme dans l'exemple précédent) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header class="header" id="header">
+        <div class="container flex justify-between items-center">
+        <a href="#" class="logo"><span>Emploi</span>Avenir</a>
+        <nav>
+        <ul class="nav-links">
+        <li><a href="#" class="active">Accueil</a></li>
+        <li><a href="MonParcours.html">Mon Parcours</a></li>
+        <li><a href="MesCandidature.html">Mes Candidatures</a></li>
+        <li><a href="Partenaires.html">Nos partenaires</a></li>
+        <li><a href="Documents.html">Mes documents</a></li>
+        <li><a href="Profil.html">Profil</a></li>
+        </ul>
+        </nav>
+        <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+        </div>
+    <div class="container">
+        <h1 class="page-title">Mes documents</h1>
+
+        <!-- Boutons d'action principaux -->
+        <div class="main-actions">
+            <button id="create-doc-btn" class="button button-primary icon-text-button large-button">
+                <i class="fas fa-plus icon"></i> <!-- Remplacement de FilePlus -->
+                <span>Créer un nouveau document</span>
+            </button>
+            <button id="help-doc-btn" class="button button-outline icon-text-button large-button">
+                <i class="fas fa-question-circle icon"></i> <!-- Remplacement de HelpCircle -->
+                <span>Aide pour mes documents</span>
+            </button>
+        </div>
+
+        <!-- Zone principale du contenu des documents -->
+        <div class="documents-content-area">
+            <!-- Bannière d'information -->
+            <div class="info-banner">
+                <i class="fas fa-file-alt icon primary-icon large-icon"></i> <!-- Remplacement de FileText -->
+                <p>Tous vos documents importants sont sauvegardés ici</p>
+            </div>
+
+            <!-- Liste des documents (sera remplie par JS) -->
+            <h2>Liste des documents</h2>
+            <div id="documents-list" class="documents-list-container">
+                <!-- Les éléments de document seront ajoutés ici -->
+                 <p id="no-documents-message" class="no-results" style="display: none;">Vous n'avez aucun document pour le moment.</p>
+            </div>
+
+            <!-- Bouton Télécharger tout -->
+            <div class="download-all-action">
+                <button id="download-all-btn" class="button button-outline icon-text-button large-button">
+                    <i class="fas fa-download icon"></i> <!-- Remplacement de Download -->
+                    <span>Télécharger tous mes documents</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script> <!-- Assure-toi que le chemin est correct -->
+</body>
+</html>
