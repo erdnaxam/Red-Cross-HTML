@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
             phone: '3949',
             email: 'contact@francetravail.fr',
             website: 'https://www.francetravail.fr',
-            logoUrl: 'placeholder.svg' // Mettre un vrai chemin ou laisser vide
+            logoUrl: 'Images/FranceTravail.webp' // Mettre un vrai chemin ou laisser vide
         },
         {
             id: '2',
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
             phone: '01 44 43 11 00',
             email: 'contact@croix-rouge.fr',
             website: 'https://www.croix-rouge.fr',
-            logoUrl: 'placeholder.svg'
+            logoUrl: 'Images/CroixRougeFR.png'
         },
         {
             id: '3',
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
             phone: '3936',
             email: 'contact@afpa.fr',
             website: 'https://www.afpa.fr',
-            logoUrl: 'placeholder.svg'
+            logoUrl: 'Images/Afpa.png'
         },
         {
             id: '4',
@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
             address: '34 rue Nationale, 75013 Paris',
             phone: '01 44 97 28 85',
             website: 'https://www.mission-locale.fr',
-            logoUrl: 'placeholder.svg'
+            logoUrl: 'Images/MissionLocale.png'
         }
     ];
 
