@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partenaires & Accompagnement</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Optionnel: Ajouter une bibliothèque d'icônes comme Font Awesome ou utiliser des SVGs -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Partenaires & Accompagnement</h1>
+
+        <!-- Système d'onglets -->
+        <div class="tabs">
+            <div class="tabs-list">
+                <button class="tab-button active" data-tab="partners">Trouver un partenaire</button>
+                <button class="tab-button" data-tab="appointments">Mes rendez-vous</button>
+            </div>
+
+            <!-- Contenu Onglet Partenaires -->
+            <div id="partners-content" class="tab-content active">
+                <!-- Filtres -->
+                <div class="filters">
+                    <div class="filter-item search-filter">
+                        <input type="search" id="search-query" placeholder="Rechercher un partenaire..." aria-label="Rechercher un partenaire">
+                    </div>
+                    <div class="filter-item category-filter">
+                        <select id="category-filter" aria-label="Filtrer par catégorie">
+                            <option value="all">Toutes les catégories</option>
+                            <option value="emploi">Recherche d'emploi</option>
+                            <option value="formation">Formation</option>
+                            <option value="insertion">Insertion professionnelle</option>
+                            <option value="accompagnement">Accompagnement social</option>
+                            <option value="aide">Aide aux démarches</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Liste des partenaires -->
+                <div id="partner-list" class="partner-grid">
+                    <!-- Les partenaires seront injectés ici par JavaScript -->
+                </div>
+                 <div id="no-partners-message" class="no-results" style="display: none;">
+                    <p>Aucun partenaire ne correspond à votre recherche.</p>
+                </div>
+
+                <!-- Formulaire de prise de RDV -->
+                <div class="card form-card" id="appointment-form-container">
+                    <div class="card-header">
+                        <h2 class="card-title">Prendre rendez-vous</h2>
+                        <p class="card-description">
+                            Remplissez ce formulaire pour demander un rendez-vous avec un partenaire.
+                        </p>
+                    </div>
+                    <div class="card-content">
+                        <form id="appointment-form" class="appointment-form-fields">
+                            <div class="form-group">
+                                <label for="appointment-partner">Partenaire</label>
+                                <select id="appointment-partner" name="partnerId" required>
+                                    <option value="">Choisir un partenaire</option>
+                                    <!-- Options ajoutées par JS -->
+                                </select>
+                            </div>
+
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label for="appointment-date">Date</label>
+                                    <input type="date" id="appointment-date" name="date" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="appointment-time">Heure</label>
+                                    <input type="time" id="appointment-time" name="time" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="appointment-type">Type de rendez-vous</label>
+                                <select id="appointment-type" name="type" required>
+                                    <option value="présentiel">Présentiel</option>
+                                    <option value="téléphonique">Téléphonique</option>
+                                    <option value="visioconférence">Visioconférence</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="appointment-notes">Notes (optionnel)</label>
+                                <input type="text" id="appointment-notes" name="notes" placeholder="Précisions sur votre demande...">
+                            </div>
+
+                            <button type="submit" class="button button-primary button-full">
+                                Confirmer le rendez-vous
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contenu Onglet Rendez-vous -->
+            <div id="appointments-content" class="tab-content">
+                 <h2 class="section-title">Mes rendez-vous prévus</h2>
+                 <div id="appointment-list" class="appointment-grid">
+                     <!-- Les rendez-vous seront injectés ici par JavaScript -->
+                 </div>
+                 <div id="no-appointments-message" class="no-results card" style="display: none;">
+                     <div class="card-content">
+                         <p>Vous n'avez pas encore de rendez-vous prévus.</p>
+                         <button class="button button-secondary" onclick="switchToTab('partners')">
+                             Prendre un rendez-vous
+                         </button>
+                     </div>
+                 </div>
+            </div>
+        </div>
+        <!-- Zone pour les notifications (toasts) -->
+        <div id="toast-notification" class="toast" style="display: none;"></div>
+    </div>
+
+    <!-- Script JS à la fin -->
+    <script src="script.js"></script>
+</body>
+</html>
