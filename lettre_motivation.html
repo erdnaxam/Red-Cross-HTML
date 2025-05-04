@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Générateur de Lettre de Motivation</title>
+  <link rel="stylesheet" href="Style.css">
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #f8f9fa;
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      max-width: 600px;
+      width: 100%;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    form label {
+      font-weight: bold;
+    }
+    form input,
+    form textarea {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    form input[type="submit"] {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    form input[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+    #resultat {
+      margin-top: 2rem;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Générateur de Lettre de Motivation</h1>
+    <form id="motivationForm">
+      <label>Nom Prénom:</label>
+      <input type="text" name="nom" required>
+
+      <label>Email:</label>
+      <input type="email" name="email" required>
+
+      <label>Poste visé:</label>
+      <input type="text" name="poste" required>
+
+      <label>Nom de l’entreprise:</label>
+      <input type="text" name="entreprise" required>
+
+      <label>Pourquoi ce poste vous intéresse-t-il ?</label>
+      <textarea name="motivation_poste" required></textarea>
+
+      <label>Ce que vous pouvez apporter à l’entreprise :</label>
+      <textarea name="valeur_ajoutee" required></textarea>
+
+      <input type="submit" value="Générer ma lettre">
+    </form>
+    <div id="resultat"></div>
+  </div>
+
+  <script>
+    const form = document.getElementById('motivationForm');
+    const output = document.getElementById('resultat');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+
+      const prompt = `Rédige une lettre de motivation pour ${data.nom} qui postule au poste de ${data.poste} chez ${data.entreprise}. 
+Motivation : ${data.motivation_poste}.
+Ce qu'il/elle peut apporter : ${data.valeur_ajoutee}.`;
+
+      output.innerText = '⏳ Génération en cours...';
+
+      try {
+        const response = await fetch("https://api.openai.com/v1/chat/completions", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer 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"
+          },
+          body: JSON.stringify({
+            model: "gpt-3.5-turbo",
+            messages: [
+              { role: "system", content: "Tu es un assistant RH qui rédige des lettres de motivation professionnelles. " },
+              { role: "user", content: prompt }
+            ]
+          })
+        });
+
+        const json = await response.json();
+        output.innerText = json.choices[0].message.content;
+      } catch (error) {
+        output.innerText = '❌ Erreur lors de la génération. Vérifie ta clé API ou ta connexion.';
+      }
+    });
+  </script>
+</body>
+</html>
