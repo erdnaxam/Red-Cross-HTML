@@ -90,7 +90,7 @@
       const formData = new FormData(form);
       const data = Object.fromEntries(formData.entries());
 
-      const prompt = `Rédige une lettre de motivation pour ${data.nom} qui postule au poste de ${data.poste} chez ${data.entreprise}. 
+      const prompt = `Rédige une lettre de motivation pour ${data.nom} qui postule au poste de ${data.poste} chez ${data.entreprise}.
 Motivation : ${data.motivation_poste}.
 Ce qu'il/elle peut apporter : ${data.valeur_ajoutee}.`;
 
@@ -113,7 +113,7 @@ Ce qu'il/elle peut apporter : ${data.valeur_ajoutee}.`;
         });
 
         const json = await response.json();
-        output.innerText = json.choices[0].message.content;
+        output.innezrText = json.choices[0].message.content;
       } catch (error) {
         output.innerText = '❌ Erreur lors de la génération. Vérifie ta clé API ou ta connexion.';
       }

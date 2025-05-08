@@ -1,83 +1,236 @@
+/*
+ * style.css pour le site EmploiAvenir
+ * Adapté pour la simplicité, clarté et accessibilité
+ */
+
+/* ============================================= */
+/* === Variables Globales & Reset === */
+/* ============================================= */
 :root {
-  /* Couleurs basées sur index.html et parcours.html */
-  --color-primary: #8B5CF6; /* Violet principal */
-  --color-primary-darker: #7C3AED;
-  --color-primary-light: #EDE9FE;
-  --color-secondary: #4CAF50; /* Vert pour complétion (ajusté depuis #22C55E si besoin) */
+  /* Couleurs principales */
+  --color-primary: #8B5CF6; /* Violet/Bleu principal - Action, liens actifs */
+  --color-primary-darker: #7C3AED; /* Violet/Bleu foncé - Hover, état cliqué */
+  --color-primary-light: #EDE9FE; /* Violet/Bleu très clair - Fonds doux, états actifs */
+  --color-secondary: #22C55E; /* Vert - Succès, complétion, actions positives */
+  --color-secondary-darker: #16a34a; /* Vert foncé - Hover succès */
+  --color-secondary-light: #DCFCE7; /* Vert très clair - Fonds complétés */
+
+  /* Couleurs Neutres et Texte */
   --color-dark: #1A1F2C;      /* Texte principal sombre */
   --color-light: #F9FAFB;     /* Fond de page gris très clair */
-  --color-gray: #6B7280;      /* Gris moyen (texte muted) */
-  --color-gray-light: #E5E7EB; /* Bordures claires */
-  --color-gray-medium: #D1D5DB; /* Texte/Icônes gris moyen (pour état locked) */
-  --color-white: #ffffff;
-  --color-blue-link: #007bff; /* Un bleu standard pour les liens (peut être var(--color-primary)) */
-  --color-destructive: #dc2626; /* Rouge pour erreurs */
-  --color-destructive-hover: #b91c1c;
+  --color-gray: #6B7280;      /* Gris moyen - Texte secondaire, descriptions */
+  --color-gray-light: #E5E7EB; /* Bordures claires, fonds légers */
+  --color-gray-medium: #9CA3AF; /* Gris moyen foncé - Icônes inactives, texte verrouillé */
+  --color-gray-darker: #4B5563; /* Gris foncé */
+  --color-white: #ffffff;     /* Blanc */
+
+  /* Couleurs pour états spécifiques */
+  --color-info: #3B82F6; /* Bleu - Information, notification */
+  --color-warning: #F59E0B; /* Orange - Attention */
+  --color-destructive: #EF4444; /* Rouge - Erreur, suppression */
+  --color-destructive-hover: #DC2626; /* Rouge foncé */
+
+  /* Couleurs pour les badges de statut de candidature */
+  --status-cv-envoye: #DBEAFE; --status-cv-envoye-text: #1E40AF; /* Bleu pâle */
+  --status-cv-retenu: #E0E7FF; --status-cv-retenu-text: #4338CA; /* Indigo pâle */
+  --status-entretien-prevu: #F3E8FF; --status-entretien-prevu-text: #6D28D9; /* Violet pâle */
+  --status-entretien-passe: #FFEDD5; --status-entretien-passe-text: #C2410C; /* Orange pâle */
+  --status-offre-recue: #FEF9C3; --status-offre-recue-text: #A16207; /* Jaune pâle */
+  --status-offre-acceptee: #DCFCE7; --status-offre-acceptee-text: #15803D; /* Vert pâle */
+  --status-refus: #FEE2E2; --status-refus-text: #B91C1C; /* Rouge pâle */
+
+  /* Couleurs pour les badges de catégorie partenaire */
+  --category-emploi: #EFF6FF; --category-emploi-text: #1D4ED8;
+  --category-formation: #FEFCE8; --category-formation-text: #854D0E;
+  --category-insertion: #ECFDF5; --category-insertion-text: #065F46;
+  --category-accompagnement: #F5F3FF; --category-accompagnement-text: #5B21B6;
+  --category-aide: #FEF2F2; --category-aide-text: #991B1B;
+
+  /* Couleurs pour les badges de type de rendez-vous */
+  --appointment-presentiel: #DBEAFE; --appointment-presentiel-text: #1E40AF;
+  --appointment-telephonique: #DCFCE7; --appointment-telephonique-text: #15803D;
+  --appointment-visioconference: #F3E8FF; --appointment-visioconference-text: #6D28D9;
+
 
   /* Polices et autres */
-  --font-primary: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-primary: 'Inter', system-ui, -apple-system, sans-serif; /* Police principale, simple et lisible */
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
   --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.07);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-  --transition: all 0.3s ease;
-  --radius: 8px; /* Rayon standardisé */
+  --transition-fast: all 0.2s ease; /* Transition plus rapide pour les interactions */
+  --transition: all 0.3s ease;      /* Transition standard */
+  --radius: 8px; /* Rayon standardisé pour les coins arrondis */
+  --spacing-unit: 0.25rem; /* Unité de base pour les espacements (ex: padding, gap) */
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* Reset minimal */
+*, *::before, *::after {
+  box-sizing: border-box; /* Inclut padding et border dans la taille de l'élément */
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: smooth; /* Défilement doux pour les ancres */
 }
 
 body {
   font-family: var(--font-primary);
   color: var(--color-dark);
   background-color: var(--color-light);
-  line-height: 1.6;
-  overflow-x: hidden;
-  padding-top: 80px; /* Espace pour le header fixe (ajuster si hauteur différente) */
+  line-height: 1.6; /* Améliore la lisibilité */
+  overflow-x: hidden; /* Évite le scroll horizontal non désiré */
+  padding-top: calc(4rem + 2px); /* Espace pour le header fixe (padding 1rem + bordure ou ombre si présente) */
+  /* Ajustez si la hauteur de votre header fixe change (1rem padding * 2 + hauteur élément header) */
+  scroll-padding-top: calc(4rem + 2px); /* Pour le défilement doux vers les ancres */
+  margin: 0; /* Assure pas de marge par défaut */
 }
+
+/* Assurer que main est bien positionné sous le header fixe */
+main {
+    margin-top: 0; /* Le padding-top du body gère l'espace */
+}
+
 
 /* ============================================= */
 /* === Styles Typographiques Globaux === */
 /* ============================================= */
 h1, h2, h3, h4, h5, h6 {
-  font-weight: 700;
+  font-weight: 700; /* Titres en gras pour la hiérarchie */
   line-height: 1.2;
-  margin-bottom: 1rem;
+  margin-bottom: 1rem; /* Espace standard sous les titres */
+  color: var(--color-dark); /* Couleur par défaut pour les titres */
 }
-h1 { font-size: 1.875rem; font-weight: 700; margin-bottom: 2rem; }
-h2.section-title { font-size: clamp(1.75rem, 3vw, 2.5rem); position: relative; margin-bottom: 3rem; }
-.section-title::after { content: ''; position: absolute; left: 0; bottom: -10px; height: 4px; width: 60px; background-color: var(--color-primary); }
+
+h1 {
+  font-size: clamp(1.875rem, 4vw, 2.5rem); /* Taille responsive pour H1 */
+  margin-bottom: 2rem;
+}
+
+h2 {
+    font-size: clamp(1.5rem, 3.5vw, 2rem); /* Taille responsive pour H2 */
+}
+
+h3 {
+     font-size: clamp(1.25rem, 3vw, 1.6rem); /* Taille responsive pour H3 */
+}
+
+h4 {
+     font-size: clamp(1.1rem, 2.5vw, 1.25rem); /* Taille responsive pour H4 */
+}
+
+
+/* Style pour les titres de section spécifiques */
+.section-title {
+    position: relative;
+    font-size: clamp(1.75rem, 3vw, 2.5rem);
+    margin-bottom: 3rem;
+    padding-bottom: 10px; /* Espace pour la ligne décorative */
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0; /* Position de la ligne */
+    height: 4px;
+    width: 60px;
+    background-color: var(--color-primary);
+}
 .section-title.centered { text-align: center; }
 .section-title.centered::after { left: 50%; transform: translateX(-50%); }
-p { margin-bottom: 1rem; color: var(--color-gray); }
-p:last-child { margin-bottom: 0; }
-a { text-decoration: none; color: var(--color-primary); transition: var(--transition); } /* Liens utilisent couleur primaire par défaut */
-a:hover { color: var(--color-primary-darker); text-decoration: none; }
+
+p {
+  margin-bottom: 1rem; /* Espace standard sous les paragraphes */
+  color: var(--color-gray-darker); /* Texte des paragraphes plus clair que les titres */
+}
+p:last-child {
+    margin-bottom: 0; /* Pas de marge sous le dernier paragraphe d'un bloc */
+}
+
+a {
+  text-decoration: none; /* Pas de soulignement par défaut */
+  color: var(--color-primary); /* Couleur des liens cohérente */
+  transition: var(--transition-fast); /* Transition rapide au survol */
+}
+a:hover {
+  color: var(--color-primary-darker); /* Couleur au survol */
+  text-decoration: underline; /* Soulignement au survol pour l'affordance */
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block; /* Assure que l'image prend sa propre ligne */
+}
 
 /* ============================================= */
-/* === Utilitaires Communs === */
+/* === Layout & Container === */
 /* ============================================= */
-.container { max-width: 1200px; margin-left: auto; margin-right: auto; padding: 0 1rem; }
-.text-center { text-align: center; }
-.mb-4 { margin-bottom: 1.5rem; }
-.mb-8 { margin-bottom: 3rem; }
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto; /* Centre le conteneur */
+  padding: 0 1.5rem; /* Espacement latéral par défaut, ajuste pour mobile via media query */
+}
+
+/* Padding vertical pour le contenu principal (sauf sections spécifiques si elles ont déjà un padding) */
+main .container {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+
+
+/* Utilitaires Flexbox et Grille */
 .flex { display: flex; }
 .items-center { align-items: center; }
 .justify-between { justify-content: space-between; }
-.gap-2 { gap: 1rem; }
-.gap-4 { gap: 2rem; }
-/* Classe pour cacher visuellement mais garder pour lecteurs d'écran */
-.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border-width: 0; }
+.justify-center { justify-content: center; }
+.flex-wrap { flex-wrap: wrap; }
+.flex-col { flex-direction: column; } /* Utilitaires pour les directions */
+.md\:flex-row { /* Exemple d'utilitaire responsive */ } /* Ces utilitaires responsive dépendent d'une implémentation spécifique */
+
+
+/* Utilitaires Espacements */
+.mt-1 { margin-top: calc(var(--spacing-unit) * 2); } /* 0.5rem */
+.mt-2 { margin-top: calc(var(--spacing-unit) * 4); } /* 1rem */
+.mt-3 { margin-top: calc(var(--spacing-unit) * 6); } /* 1.5rem */
+.mt-4 { margin-top: calc(var(--spacing-unit) * 8); } /* 2rem */
+.mt-8 { margin-top: calc(var(--spacing-unit) * 16); } /* 4rem */
+
+.mb-1 { margin-bottom: calc(var(--spacing-unit) * 2); } /* 0.5rem */
+.mb-2 { margin-bottom: calc(var(--spacing-unit) * 4); } /* 1rem */
+.mb-4 { margin-bottom: calc(var(--spacing-unit) * 8); } /* 2rem */
+.mb-6 { margin-bottom: calc(var(--spacing-unit) * 12); } /* 3rem */
+.mb-8 { margin-bottom: calc(var(--spacing-unit) * 16); } /* 4rem */
+
+.gap-1 { gap: calc(var(--spacing-unit) * 2); } /* 0.5rem */
+.gap-2 { gap: calc(var(--spacing-unit) * 4); } /* 1rem */
+.gap-3 { gap: calc(var(--spacing-unit) * 6); } /* 1.5rem */
+.gap-4 { gap: calc(var(--spacing-unit) * 8); } /* 2rem */
+
+.space-y-2 > :not([hidden]) ~ :not([hidden]) { margin-top: calc(var(--spacing-unit) * 4); margin-bottom: 0; } /* 1rem vertical space between children */
+.space-y-4 > :not([hidden]) ~ :not([hidden]) { margin-top: calc(var(--spacing-unit) * 8); margin-bottom: 0; } /* 2rem vertical space */
+.space-y-6 > :not([hidden]) ~ :not([hidden]) { margin-top: calc(var(--spacing-unit) * 12); margin-bottom: 0; } /* 3rem vertical space */
+
+
+.text-center { text-align: center; }
+
+
+/* Visually hidden for accessibility */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
 
 
 /* ============================================= */
-/* === Header / Navigation (Commun) === */
+/* === Header / Navigation === */
 /* ============================================= */
 .header {
   position: fixed;
@@ -85,123 +238,2045 @@ a:hover { color: var(--color-primary-darker); text-decoration: none; }
   left: 0;
   width: 100%;
   background-color: var(--color-white);
-  padding: 1rem 0;
+  padding: 1rem 0; /* Hauteur de base */
   box-shadow: var(--shadow-sm);
-  z-index: 1000;
+  z-index: 1000; /* Au-dessus des autres contenus */
+  transition: var(--transition);
 }
-.logo { font-size: 1.5rem; font-weight: 700; color: var(--color-dark); text-decoration: none; }
-.logo span { color: var(--color-primary); }
-.nav-links { display: none; gap: 1.5rem; list-style: none; margin: 0; padding: 0; }
-@media (min-width: 992px) { /* Ajuster le breakpoint si besoin */
-  .nav-links { display: flex; }
+
+.header.scrolled {
+  padding: 0.75rem 0; /* Un peu plus petit au scroll */
+  box-shadow: var(--shadow);
 }
-.nav-links a { color: var(--color-dark); text-decoration: none; font-weight: 500; padding: 0.5rem 0; position: relative; transition: color 0.2s ease; }
-.nav-links a:hover { color: var(--color-primary); }
-.nav-links a.active { color: var(--color-primary); font-weight: 600; }
-.nav-links a.active::after { content: ''; position: absolute; bottom: 0px; left: 0; width: 100%; height: 2px; background-color: var(--color-primary); }
-.mobile-menu-btn { display: none; background: none; border: none; font-size: 1.8rem; cursor: pointer; color: var(--color-dark); }
-@media (max-width: 991px) { /* Correspond au min-width ci-dessus */
-  .mobile-menu-btn { display: block; }
+
+.header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1.5rem; /* Utilise le padding du container */
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-dark);
+  text-decoration: none;
+}
+
+.logo span {
+  color: var(--color-primary);
+}
+
+nav {
+    /* La navigation elle-même peut avoir des styles, mais le .nav-links gère les liens */
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem; /* Espacement entre les liens sur desktop */
+  list-style: none;
+  margin: 0; /* Annule les marges par défaut des ul */
+  padding: 0; /* Annule les padding par défaut des ul */
+}
+
+.nav-links li {
+    margin: 0; /* Annule les marges par défaut des li */
+    padding: 0; /* Annule les padding par défaut des li */
+}
+
+.nav-links a {
+  color: var(--color-dark);
+  font-weight: 500;
+  position: relative;
+  padding: 0.25rem 0; /* Ajoute un peu de padding vertical pour cliquer */
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.nav-links a:hover {
+  color: var(--color-primary);
+  text-decoration: none; /* S'assurer qu'il n'y a pas de soulignement inattendu */
+}
+
+/* Soulignement animé pour les liens */
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: var(--color-primary);
+  transition: width var(--transition-fast) ease-out; /* Animation plus fluide */
+}
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+/* Style pour le lien de la page active */
+.nav-links a.active {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+.nav-links a.active::after {
+  width: 100%; /* La ligne est toujours présente pour la page active */
+}
+
+/* Bouton Menu Mobile (Hamburger) */
+.mobile-menu-btn {
+    display: none; /* Caché par défaut sur desktop */
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.8rem; /* Icône plus visible */
+    color: var(--color-dark);
+    transition: color var(--transition-fast);
+    padding: 0.5rem; /* Zone cliquable plus grande */
+}
+.mobile-menu-btn:hover,
+.mobile-menu-btn:focus {
+    color: var(--color-primary);
+    outline: none; /* L'outline par défaut est moins esthétique */
+    /* Ajouter une alternative au focus si outline:none; */
+    box-shadow: 0 0 0 3px var(--color-primary-light);
+    border-radius: var(--radius); /* Forme du focus */
+}
+
+
+/* ============================================= */
+/* === Buttons (Styles de base pour .button et .btn) === */
+/* ============================================= */
+/* Harmonisation des classes .button et .btn */
+.button, .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem; /* Taille de police par défaut des boutons */
+    font-weight: 600;
+    text-align: center;
+    border: 1px solid transparent;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: var(--transition-fast); /* Transition plus rapide pour interactivité */
+    white-space: nowrap; /* Empêche le texte de passer à la ligne */
+    gap: 0.5rem; /* Espace entre texte et icône */
+    text-decoration: none; /* S'assurer qu'il n'y a pas de soulignement sur les liens stylisés */
+    line-height: 1.2;
+}
+.button:focus, .btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px var(--color-primary-light); /* Indicateur de focus clair et cohérent */
+}
+/* Style pour les icônes à l'intérieur des boutons */
+.button i, .btn i {
+    font-size: 1em; /* L'icône prend la taille du texte du bouton */
+    line-height: 1;
+}
+
+/* Variantes de Boutons (Basées sur vos couleurs et noms de classes) */
+
+/* Bouton Primaire */
+.button.button-primary, .btn.btn-primary {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    border-color: var(--color-primary);
+}
+.button.button-primary:hover, .btn.btn-primary:hover {
+    background-color: var(--color-primary-darker);
+    border-color: var(--color-primary-darker);
+    color: var(--color-white); /* S'assurer que le texte reste blanc */
+    transform: translateY(-2px); /* Léger effet de soulèvement */
+    box-shadow: var(--shadow); /* Ombre au survol */
+}
+
+/* Bouton Secondaire (Utilisé pour des actions moins importantes, ex: dans les listes d'actions) */
+.button.button-secondary {
+    background-color: var(--color-dark);
+    color: var(--color-white);
+    border-color: var(--color-dark);
+}
+.button.button-secondary:hover {
+    background-color: var(--color-gray-darker);
+    border-color: var(--color-gray-darker);
+}
+
+/* Bouton Outline (Contour) */
+.button.button-outline, .btn.btn-outline {
+    background-color: transparent;
+    border: 2px solid var(--color-primary);
+    color: var(--color-primary);
+    padding: calc(0.75rem - 2px) calc(1.5rem - 2px); /* Ajuste le padding pour compenser la bordure */
+}
+.button.button-outline:hover, .btn.btn-outline:hover {
+    background-color: var(--color-primary);
+    color: var(--color-white);
+}
+
+/* Bouton Destructif (pour supprimer) */
+.button.button-destructive {
+    background-color: var(--color-destructive);
+    color: var(--color-white);
+    border-color: var(--color-destructive);
+}
+.button.button-destructive:hover {
+    background-color: var(--color-destructive-hover);
+    border-color: var(--color-destructive-hover);
+}
+
+/* Bouton Accent (si vous avez une couleur d'accent différente de primary/secondary) */
+/* Le code initial utilise .btn-accent basé sur --color-secondary */
+.btn-accent {
+  background-color: var(--color-secondary);
+  color: var(--color-white); /* Assurer couleur texte */
+}
+.btn-accent:hover {
+  background-color: var(--color-secondary-darker); /* Utiliser la variable pour le hover vert */
+  color: var(--color-white); /* Assurer couleur texte */
+}
+
+
+/* Boutons de différentes tailles */
+.button-large {
+    padding: 1rem 2rem; /* Plus grand padding */
+    font-size: 1.1rem; /* Taille de police plus grande */
+}
+.button-small {
+    padding: 0.5rem 1rem; /* Plus petit padding */
+    font-size: 0.85rem; /* Taille de police plus petite */
+}
+
+/* Bouton Icône uniquement */
+.button-icon {
+    padding: 0.5rem; /* Padding égal sur les 4 côtés */
+    width: 2.5rem; /* Largeur et hauteur égales pour un bouton carré */
+    height: 2.5rem;
+    flex-shrink: 0; /* Empêche le bouton de rétrécir */
+    border-radius: 50%; /* Pour un bouton rond si vous voulez */
+}
+/* Ajustement pour les icônes */
+.button-icon i { margin: 0; }
+
+
+/* Boutons pleine largeur */
+.button-full { width: 100%; }
+
+/* Styles pour les boutons désactivés */
+.button:disabled, .btn:disabled {
+    background-color: var(--color-gray-light);
+    color: var(--color-gray);
+    border-color: var(--color-gray-light);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+    opacity: 0.7; /* Indiquer visuellement qu'il est désactivé */
+}
+.button:disabled:hover, .btn:disabled:hover {
+    background-color: var(--color-gray-light); /* Pas de changement au survol */
+    border-color: var(--color-gray-light);
+    color: var(--color-gray);
+}
+
+
+/* ============================================= */
+/* === Cards (Cartes) === */
+/* ============================================= */
+.card {
+    background-color: var(--color-white);
+    border: 1px solid var(--color-gray-light);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden; /* Cache le contenu qui dépasse, utile pour les images arrondies */
+    margin-bottom: 1.5rem; /* Espace sous chaque carte */
+    transition: var(--transition-fast); /* Transition pour les effets de survol/focus */
+}
+.card:hover {
+     /* Effet subtil au survol */
+    /* transform: translateY(-2px); */
+    /* box-shadow: var(--shadow); */
+}
+
+.card-header {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--color-gray-light); /* Séparateur */
+}
+.card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-dark);
+    margin-bottom: 0.25rem; /* Petit espace sous le titre */
+    margin-top: 0; /* S'assurer qu'il n'y a pas de marge supérieure par défaut */
+}
+.card-description {
+    font-size: 0.875rem;
+    color: var(--color-gray);
+    margin-bottom: 0; /* Pas de marge sous la description */
+}
+.card-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; /* Espacement vertical entre les éléments du contenu */
+}
+.card-footer {
+    padding: 1rem 1.5rem;
+    background-color: var(--color-light); /* Fond légèrement grisé */
+    border-top: 1px solid var(--color-gray-light); /* Séparateur */
+    display: flex;
+    gap: 0.75rem;
+    justify-content: flex-start; /* Aligne les éléments à gauche */
 }
 
 /* ============================================= */
-/* === Styles Spécifiques Page Parcours === */
+/* === Forms (Inputs, Labels, Selects, Groups) === */
 /* ============================================= */
-/* --- Barre de Progression --- */
-.parcours-progress-bar { display: flex; justify-content: space-between; list-style: none; padding: 0; margin-bottom: 2rem; position: relative; }
-.parcours-progress-bar::before { content: ''; position: absolute; top: 15px; left: 5%; right: 5%; height: 4px; background-color: var(--color-gray-light); z-index: 1; }
-.progress-step { display: flex; flex-direction: column; align-items: center; flex: 1; position: relative; z-index: 2; cursor: default; }
-.step-indicator { width: 30px; height: 30px; border-radius: 50%; background-color: var(--color-gray-medium); color: var(--color-white); display: flex; align-items: center; justify-content: center; font-weight: bold; margin-bottom: 0.5rem; border: 3px solid var(--color-light); }
-.step-label { font-size: 0.8rem; color: var(--color-gray); text-align: center; max-width: 80px; }
-.progress-step.is-active .step-indicator { background-color: var(--color-primary); border-color: var(--color-primary-light); }
-.progress-step.is-active .step-label { color: var(--color-primary); font-weight: bold; }
-.progress-step.is-completed .step-indicator { background-color: var(--color-secondary); border-color: #E0F2E1; color: white; }
-.progress-step.is-completed .step-label { color: var(--color-secondary); }
-/* --- Bouton Aide --- */
-.aide-button { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; background-color: var(--color-white); border: 1px solid var(--color-gray-light); border-radius: var(--radius); box-shadow: var(--shadow); cursor: pointer; font-size: 1rem; color: var(--color-dark); margin-bottom: 2rem; transition: background-color 0.2s ease; }
-.aide-button:hover { background-color: var(--color-light); }
-.aide-button i { color: var(--color-primary); margin-right: 0.3rem; }
-/* --- Dashboard --- */
-.parcours-dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
-.dashboard-card { background-color: var(--color-white); padding: 1.5rem; border-radius: var(--radius); box-shadow: var(--shadow); }
+.form-group {
+    display: flex;
+    flex-direction: column; /* Label au-dessus de l'input */
+    gap: 0.5rem; /* Espacement entre label et input */
+    margin-bottom: 1rem; /* Espace entre les groupes de formulaire */
+}
+.form-group:last-child {
+    margin-bottom: 0; /* Pas de marge sous le dernier groupe */
+}
+
+label {
+    font-size: 0.875rem; /* Taille de police plus petite pour les labels */
+    font-weight: 500;
+    color: var(--color-dark); /* Couleur du texte du label */
+    display: block; /* Assure que le label prend toute la largeur si nécessaire */
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="password"],
+input[type="search"],
+input[type="date"],
+input[type="time"],
+select {
+    width: 100%; /* Prend toute la largeur disponible */
+    padding: 0.75rem 1rem; /* Padding interne confortable */
+    border: 1px solid var(--color-gray-medium); /* Bordure visible */
+    border-radius: var(--radius);
+    font-size: 1rem;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast); /* Transition au focus */
+    background-color: var(--color-white);
+    color: var(--color-dark);
+    line-height: 1.5;
+}
+input:focus, select:focus {
+    outline: none; /* Retire l'outline par défaut */
+    border-color: var(--color-primary); /* Bordure colorée au focus */
+    box-shadow: 0 0 0 3px var(--color-primary-light); /* Halo coloré au focus pour accessibilité */
+}
+
+/* Style spécifique pour le select (flèche personnalisée) */
+select {
+    appearance: none; /* Cache la flèche native */
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%236B7280%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right 0.8em top 50%;
+    background-size: 0.7em auto;
+    padding-right: 2.5em; /* Espace pour la flèche */
+}
+
+/* Style pour les champs requis (optionnel, peut aider visuellement) */
+input:required, select:required {
+    /* border-color: var(--color-primary); */ /* Exemple */
+}
+
+
+/* Grilles de Formulaires (utilisées sur Profil, Partenaires) */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Une colonne par défaut */
+    gap: 1rem; /* Espacement entre les colonnes/lignes */
+}
+@media (min-width: 768px) {
+    .form-grid { grid-template-columns: 1fr 1fr; } /* 2 colonnes sur desktop */
+}
+
+.form-grid-cols-2 { /* Nom alternatif ou grille spécifique à 2 colonnes */
+    display: grid;
+    grid-template-columns: 1fr; /* Une colonne par défaut */
+    gap: 1rem;
+}
+@media (min-width: 768px) {
+    .form-grid-cols-2 { grid-template-columns: 1fr 1fr; } /* 2 colonnes sur desktop */
+}
+
+/* Styles spécifiques pour le formulaire de prise de rendez-vous */
+.appointment-form-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+
+/* ============================================= */
+/* === Badges (États, Catégories, Types) === */
+/* ============================================= */
+.badge {
+    display: inline-block;
+    padding: 0.25em 0.6em;
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle; /* Aligne le badge avec le texte */
+    border-radius: 6px;
+    border: 1px solid transparent; /* Bordure pour la clarté */
+}
+
+/* Statut Document */
+.status-badge.completed { background-color: var(--color-secondary-light); color: var(--color-secondary-darker); border-color: #a7f3d0; }
+.status-badge.draft { background-color: var(--status-entretien-passe); color: var(--status-entretien-passe-text); border-color: #fed7aa; } /* Utilise une couleur de statut candidature pour brouillon */
+
+/* Statut Candidature (Utilise les variables définies en :root) */
+.badge.status-cv-envoye { background-color: var(--status-cv-envoye); color: var(--status-cv-envoye-text); }
+.badge.status-cv-retenu { background-color: var(--status-cv-retenu); color: var(--status-cv-retenu-text); }
+.badge.status-entretien-prevu { background-color: var(--status-entretien-prevu); color: var(--status-entretien-prevu-text); }
+.badge.status-entretien-passe { background-color: var(--status-entretien-passe); color: var(--status-entretien-passe-text); }
+.badge.status-offre-recue { background-color: var(--status-offre-recue); color: var(--status-offre-recue-text); }
+.badge.status-offre-acceptee { background-color: var(--status-offre-acceptee); color: var(--status-offre-acceptee-text); }
+.badge.status-refus { background-color: var(--status-refus); color: var(--status-refus-text); }
+
+/* Catégories Partenaires (Utilise les variables définies en :root) */
+.badge-emploi { background-color: var(--category-emploi); color: var(--category-emploi-text); }
+.badge-formation { background-color: var(--category-formation); color: var(--category-formation-text); }
+.badge-insertion { background-color: var(--category-insertion); color: var(--category-insertion-text); }
+.badge-accompagnement { background-color: var(--category-accompagnement); color: var(--category-accompagnement-text); }
+.badge-aide { background-color: var(--category-aide); color: var(--category-aide-text); }
+
+/* Type Rendez-vous (Utilise les variables définies en :root) */
+.badge-presentiel { background-color: var(--appointment-presentiel); color: var(--appointment-presentiel-text); }
+.badge-telephonique { background-color: var(--appointment-telephonique); color: var(--appointment-telephonique-text); }
+.badge-visioconference { background-color: var(--appointment-visioconference); color: var(--appointment-visioconference-text); }
+
+
+/* ============================================= */
+/* === Tabs (Onglets) === */
+/* ============================================= */
+.tabs-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Deux colonnes pour deux onglets */
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--color-gray-light); /* Ligne sous les onglets */
+}
+.tab-button {
+    padding: 0.75rem 1rem;
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid transparent; /* Bordure pour l'indicateur actif */
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--color-gray-darker); /* Couleur texte inactif */
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+    text-align: center; /* Centre le texte du bouton */
+}
+.tab-button:hover { color: var(--color-dark); border-bottom-color: var(--color-gray-medium); } /* Couleur au survol */
+.tab-button.active {
+    color: var(--color-primary); /* Couleur texte actif */
+    border-bottom-color: var(--color-primary); /* Ligne colorée pour l'actif */
+    font-weight: 600;
+}
+.tab-button:focus {
+    outline: none;
+    /* Ajouter un indicateur de focus si besoin */
+    box-shadow: 0 0 0 2px var(--color-primary-light);
+    z-index: 1; /* Assure que le focus n'est pas caché */
+}
+
+
+.tab-content {
+    display: none; /* Caché par défaut */
+    /* Ajouter un padding si le contenu de l'onglet n'a pas déjà de padding interne */
+    /* padding-top: 1rem; */
+}
+.tab-content.active {
+     display: block; /* Affiché quand il est actif */
+}
+/* Rendre le contenu focusable pour les lecteurs d'écran quand il est activé par JS */
+[role="tabpanel"][aria-hidden="false"] {
+  /* Styles pour le contenu actif, si besoin */
+}
+
+
+/* ============================================= */
+/* === Filters (Utilisé sur Partenaires) === */
+/* ============================================= */
+.filters {
+    display: flex;
+    flex-direction: column; /* Colonne par défaut sur mobile */
+    gap: 1rem; /* Espacement entre les filtres */
+    margin-bottom: 1.5rem;
+}
+@media (min-width: 768px) {
+    .filters { flex-direction: row; } /* Ligne sur desktop */
+    .filter-item.search-filter { flex-grow: 1; } /* La recherche prend l'espace disponible */
+    .filter-item.category-filter { width: 250px; flex-shrink: 0;} /* Largeur fixe pour le select catégorie */
+}
+
+
+/* ============================================= */
+/* === Switch Component (Utilisé sur Profil) === */
+/* ============================================= */
+.setting-item {
+    display: flex;
+    align-items: center; /* Alignement vertical */
+    justify-content: space-between; /* Étire les éléments aux extrémités */
+    gap: 1rem; /* Espace entre le label et le switch */
+    /* Ajoutez padding/border si vous voulez séparer les paramètres */
+    /* padding: 0.75rem 0; */
+    /* border-bottom: 1px solid var(--color-gray-light); */
+}
+/* Masquer la bordure du dernier élément si border-bottom est utilisé */
+/* .setting-item:last-child { border-bottom: none; } */
+
+.setting-item-label {
+    display: flex;
+    flex-direction: column;
+    gap: 0.125rem; /* Très petit espace entre titre et description */
+    flex-grow: 1; /* Permet au label de prendre l'espace restant */
+}
+.setting-item-label label { /* Style spécifique pour le label dans un setting item */
+    font-size: 1rem; /* Taille de police normale pour le label */
+    font-weight: 500;
+    color: var(--color-dark);
+    margin-bottom: 0; /* Géré par le gap parent */
+}
+.setting-item-label p {
+    font-size: 0.875rem; /* Taille de police plus petite pour la description */
+    color: var(--color-gray);
+    margin: 0; /* Géré par le gap parent */
+}
+
+/* Conteneur visuel du switch */
+.switch-container {
+    position: relative;
+    display: inline-block; /* Pour pouvoir définir width/height */
+    width: 44px; /* Largeur de la base du switch */
+    height: 24px; /* Hauteur de la base */
+    flex-shrink: 0; /* Empêche le switch de rétrécir */
+}
+
+/* Input checkbox (caché visuellement) */
+.switch-container input[type="checkbox"] {
+    opacity: 0; /* Rend l'input complètement invisible */
+    width: 0;
+    height: 0;
+    margin: 0; /* S'assurer qu'il ne prend pas de place */
+    padding: 0;
+}
+
+/* Le "slider" visuel (le track) */
+.switch-slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0; /* Top, right, bottom, left à 0 pour remplir le conteneur */
+    background-color: var(--color-gray-medium); /* Couleur du track inactif */
+    transition: background-color 0.4s; /* Transition pour la couleur du track */
+    border-radius: 24px; /* Coins arrondis pour le track */
+}
+
+/* Le "thumb" visuel (la poignée ronde) */
+.switch-slider:before {
+    position: absolute;
+    content: ""; /* Indispensable pour afficher l'élément pseudo */
+    height: 18px; /* Taille du thumb */
+    width: 18px;
+    left: 3px; /* Position initiale à gauche */
+    bottom: 3px; /* Alignement vertical */
+    background-color: var(--color-white); /* Couleur du thumb */
+    transition: transform 0.4s; /* Transition pour le mouvement du thumb */
+    border-radius: 50%; /* Rond */
+}
+
+/* Quand l'input est coché */
+input[type="checkbox"]:checked + .switch-slider {
+    background-color: var(--color-secondary); /* Couleur du track quand actif (vert succès) */
+}
+
+/* Indicateur de focus pour le switch (sur le slider visible) */
+input[type="checkbox"]:focus + .switch-slider {
+    box-shadow: 0 0 0 3px var(--color-primary-light); /* Halo coloré au focus */
+     /* Assurez-vous que ce style de focus ne remplace pas un potentiel style de `:checked + .switch-slider:focus` si vous en ajoutez un */
+}
+
+/* Mouvement du thumb quand coché */
+input[type="checkbox"]:checked + .switch-slider:before {
+    transform: translateX(20px); /* Déplace le thumb vers la droite */
+}
+
+/* Séparateur visuel */
+hr.separator {
+    border: none;
+    height: 1px;
+    background-color: var(--color-gray-light);
+    margin: 1.5rem 0; /* Espacement autour du séparateur */
+}
+
+
+/* ============================================= */
+/* === Dialog / Modal Styles === */
+/* ============================================= */
+/* Conteneur du dialog/modal (masqué par défaut) */
+.dialog {
+    position: fixed; /* Reste fixe même si on scroll */
+    inset: 0; /* Top, right, bottom, left à 0 -> prend tout l'écran */
+    z-index: 1000; /* Au-dessus de tout */
+    display: flex; /* Utilise flexbox pour centrer le contenu */
+    justify-content: center; /* Centre horizontalement */
+    align-items: center; /* Centre verticalement */
+    opacity: 0; /* Commence transparent */
+    visibility: hidden; /* Caché pour les lecteurs d'écran et interactions */
+    transition: opacity 0.2s ease-in-out; /* Transition pour l'opacité */
+    background-color: rgba(0, 0, 0, 0.5); /* Fond semi-transparent */
+}
+
+/* Quand la modale est ouverte (classe ajoutée par JS) */
+.dialog.open {
+    opacity: 1; /* Devient opaque */
+    visibility: visible; /* Devient visible */
+    /* La transition de visibilité empêche le clic sur le fond avant que l'opacité ne soit à 1 */
+    transition: opacity 0.2s ease-in-out, visibility 0s linear 0s;
+}
+
+/* Contenu de la modale (la boîte blanche) */
+.dialog-content {
+    position: relative; /* Pour positionner le bouton de fermeture absolue */
+    margin: auto; /* Peut être utile pour le centrage ou les marges automatiques */
+    background-color: var(--color-white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    max-width: 600px; /* Largeur maximale */
+    width: 95%; /* Prend 95% de la largeur disponible, s'ajuste sur petits écrans */
+    padding: 2rem; /* Padding interne */
+    max-height: 90vh; /* Hauteur maximale (90% de la hauteur du viewport) */
+    overflow-y: auto; /* Ajoute une barre de défilement si le contenu est trop long */
+    display: flex; /* Peut utiliser flexbox pour structurer header/body/footer */
+    flex-direction: column;
+    gap: 1.5rem; /* Espacement entre les sections du dialog */
+    /* Animation optionnelle lors de l'ouverture */
+    transform: translateY(-20px); /* Commence légèrement au-dessus */
+    transition: transform 0.3s ease; /* Animation pour le mouvement */
+}
+/* Animation du contenu quand la modale est ouverte */
+.dialog.open .dialog-content {
+     transform: translateY(0); /* Revient à sa position normale */
+}
+
+
+/* Header du dialog (titre et description) */
+.dialog-header {
+    margin-bottom: 1rem; /* Espace sous le header */
+    /* Pas de border-bottom par défaut pour plus de flexibilité */
+}
+
+.dialog-title {
+    font-size: 1.5rem; /* Taille du titre */
+    font-weight: 700;
+    color: var(--color-dark);
+    margin-bottom: 0.5rem;
+    margin-top: 0;
+}
+
+.dialog-description {
+    color: var(--color-gray-darker);
+    font-size: 0.9rem;
+    margin-bottom: 0;
+}
+
+/* Body du dialog (le contenu principal, souvent un formulaire) */
+.dialog-body {
+     display: flex;
+     flex-direction: column;
+     gap: 1rem; /* Espacement entre les éléments du body (ex: form-groups) */
+     padding: 0; /* Pas de padding interne par défaut si le contenu a déjà des marges */
+}
+
+/* Footer du dialog (boutons d'action) */
+.dialog-footer {
+    display: flex;
+    justify-content: flex-end; /* Aligne les boutons à droite */
+    gap: 0.75rem; /* Espace entre les boutons */
+    margin-top: 1rem; /* Espace au-dessus du footer */
+    border-top: 1px solid var(--color-gray-light); /* Séparateur */
+    padding-top: 1rem; /* Padding au-dessus du séparateur */
+}
+
+/* Bouton de fermeture "X" dans le coin du dialog */
+#close-dialog-btn-x {
+    position: absolute;
+    top: 10px; /* Position depuis le haut */
+    right: 10px; /* Position depuis la droite */
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: var(--color-gray);
+    line-height: 1;
+    padding: 0.5rem; /* Zone cliquable */
+    z-index: 10; /* Assure qu'il est au-dessus du contenu du header */
+    border-radius: 50%; /* Rond */
+    transition: var(--transition-fast);
+}
+#close-dialog-btn-x:hover { color: var(--color-dark); }
+#close-dialog-btn-x:focus { outline: none; box-shadow: 0 0 0 3px var(--color-primary-light); }
+
+
+/* ============================================= */
+/* === Toast Notifications === */
+/* ============================================= */
+#toast-container {
+    position: fixed;
+    top: 20px; /* Position depuis le haut */
+    left: 50%;
+    transform: translateX(-50%); /* Centre horizontalement */
+    z-index: 1000; /* Au-dessus de tout */
+    display: flex; /* Pour empiler les toasts si plusieurs */
+    flex-direction: column;
+    align-items: center; /* Centre les toasts horizontalement */
+    gap: 10px; /* Espacement entre les toasts */
+    /* Ces styles rendent le conteneur flexible pour empiler les toasts */
+    pointer-events: none; /* Les clics passent à travers le conteneur */
+}
+
+.toast {
+    /* Styles visuels de base du toast */
+    padding: 0.8rem 1.2rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    font-size: 0.9rem; /* Taille de police des messages */
+    font-weight: 500;
+    min-width: 250px; /* Largeur minimale */
+    max-width: 90%; /* Largeur maximale responsive */
+    text-align: center;
+    opacity: 0; /* Commence caché */
+    /* transform: translateY(10px); /* Commence légèrement en dessous */
+    transition: opacity 0.3s ease, transform 0.3s ease; /* Transition pour l'apparition/disparition */
+     /* Ajouter pointer-events: auto; si vous ajoutez un bouton de fermeture au toast */
+}
+.toast.show {
+    opacity: 1; /* Devient visible */
+    /* transform: translateY(0); /* Remonte à sa position */
+}
+
+/* Couleurs des variantes de toast */
+.toast-success { background-color: var(--color-secondary-light); color: var(--color-secondary-darker); border: 1px solid var(--color-secondary); }
+.toast-error { background-color: var(--color-destructive-light, #FEE2E2); color: var(--color-destructive); border: 1px solid var(--color-destructive); } /* Utilisé var() si vous définissez --color-destructive-light */
+.toast-warning { background-color: var(--color-warning-light, #FFEDD5); color: var(--color-warning); border: 1px solid var(--color-warning); } /* Utilisé var() si vous définissez --color-warning-light */
+.toast-info { background-color: var(--color-info-light, #DBEAFE); color: var(--color-info); border: 1px solid var(--color-info); } /* Utilisé var() si vous définissez --color-info-light */
+
+
+/* ============================================= */
+/* === Specific Page Styles === */
+/* ============================================= */
+
+/* Homepage Specific Styles (index.html) */
+.dashboard-accueil {
+    padding-top: 2rem; /* Espace au-dessus */
+    padding-bottom: 2rem; /* Espace en dessous */
+    /* Pas de fond spécifique si on utilise le fond du body */
+}
+.dashboard-accueil h1 { margin-bottom: 0.5rem; }
+.dashboard-accueil .intro-text { font-size: 1.1rem; color: var(--color-gray-darker); }
+
+.parcours-progression-accueil {
+    text-align: center;
+    margin-top: 2.5rem;
+    margin-bottom: 2.5rem;
+}
+.parcours-progression-accueil h2 { font-size: 1.3rem; margin-bottom: 0.5rem; }
+.etape-actuelle-text { font-size: 1.1rem; font-weight: 500; color: var(--color-primary); margin-bottom: 0.8rem; }
+
+/* Barre de progression visuelle sur la page d'accueil */
+.progress-bar-visual {
+    width: 100%;
+    max-width: 400px; /* Limiter la largeur visuelle */
+    height: 8px;
+    background-color: var(--color-gray-light);
+    border-radius: 4px;
+    margin: 0.5rem auto 0 auto; /* Centrer et espacer */
+    overflow: hidden;
+}
+.progress-fill-visual {
+    height: 100%;
+    background-color: var(--color-primary);
+    border-radius: 4px;
+    transition: width 0.5s ease-in-out; /* Animation douce pour le remplissage */
+}
+
+.etape-description-text {
+    font-size: 1rem;
+    color: var(--color-dark);
+    font-weight: 500;
+}
+
+.btn-large { /* Réappliquer le style large au bouton 'Continuer' */
+     padding: 1rem 2rem;
+     font-size: 1.1rem;
+     margin-top: 2rem;
+}
+
+.acces-rapides-accueil {
+     margin-top: 4rem;
+     text-align: center;
+}
+.acces-rapides-accueil h3 { font-size: 1.25rem; margin-bottom: 1.5rem; color: var(--color-dark); }
+
+/* Grille pour les accès rapides sur l'accueil */
+.quick-links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Au moins 200px par colonne, s'adapte */
+    gap: 1.5rem; /* Espace entre les cartes de liens rapides */
+    max-width: 800px; /* Limiter la largeur de la grille */
+    margin: 0 auto; /* Centrer la grille */
+}
+
+.quick-link-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 1.5rem;
+    background-color: var(--color-white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    text-decoration: none; /* Enlève le soulignement des liens */
+    color: var(--color-dark); /* Couleur texte par défaut */
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.quick-link-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow);
+    text-decoration: none;
+}
+.quick-link-card h4 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    color: var(--color-primary); /* Titre en couleur primaire */
+}
+.quick-link-card p {
+     font-size: 0.9rem;
+     color: var(--color-gray-darker); /* Description en gris */
+     margin-bottom: 0;
+}
+
+.encouragement-section {
+    margin-top: 4rem;
+    text-align: center;
+}
+.encouragement-section h2 { font-size: 1.5rem; margin-bottom: 1rem; }
+.encouragement-section p { font-size: 1.1rem; color: var(--color-dark); }
+
+
+/* MonParcours Specific Styles (MonParcours.html) */
+/* Les styles pour MonParcours étaient déjà dans votre CSS fourni */
+/* J'ai juste ajouté quelques ajustements mineurs pour la cohérence */
+
+.parcours-progress-bar {
+    display: flex;
+    justify-content: space-between;
+    list-style: none;
+    padding: 0;
+    margin-bottom: 2rem;
+    position: relative;
+    width: 100%; /* Assurer que la barre prend la largeur */
+    max-width: 800px; /* Limiter la largeur de la barre de progression supérieure */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.parcours-progress-bar::before {
+  content: '';
+  position: absolute;
+  top: 19px; /* Ajuster pour centrer verticalement sur l'indicateur (hauteur indicateur 40px, bordure 2px, 19px + 20px = 39px) */
+  left: 0; /* Commence à gauche */
+  right: 0; /* Finit à droite */
+  height: 4px;
+  background-color: var(--color-gray-light);
+  z-index: 1;
+  border-radius: 2px;
+}
+.parcours-progress-bar .progress-line-active {
+    position: absolute;
+    top: 19px; /* Alignée sur la barre grise */
+    left: 0; /* Commence à gauche */
+    height: 4px;
+    background-color: var(--color-primary);
+    z-index: 2; /* Au-dessus de la barre grise */
+    border-radius: 2px;
+    width: 0%; /* Sera ajusté par JS */
+    transition: width 0.5s ease-in-out;
+}
+
+
+.progress-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    z-index: 3; /* Au-dessus de la barre de progression */
+    flex: 1; /* Pour une distribution équitable de l'espace */
+    max-width: 120px; /* Limiter la largeur de chaque étape pour qu'elles ne se chevauchent pas trop */
+    padding: 0 5px; /* Petit padding pour ne pas coller aux étapes voisines */
+}
+
+.step-indicator {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--color-white);
+    border: 2px solid var(--color-gray-medium); /* Bordure grise pour inactif/bloqué */
+    color: var(--color-gray-medium); /* Couleur texte/icône inactif/bloqué */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    transition: var(--transition-fast);
+}
+
+.progress-step.is-active .step-indicator {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary); /* La bordure est de la même couleur que le fond pour l'actif */
+  color: var(--color-white);
+  box-shadow: 0 0 0 3px var(--color-primary-light); /* Halo pour l'état actif */
+}
+.progress-step.is-completed .step-indicator {
+  background-color: var(--color-secondary); /* Vert pour complété */
+  border-color: var(--color-secondary); /* Bordure verte */
+  color: white;
+}
+
+.step-label {
+    font-size: 0.9rem;
+    color: var(--color-gray); /* Texte gris par défaut */
+    font-weight: 500;
+    line-height: 1.3; /* Espacement pour les labels sur plusieurs lignes */
+}
+.progress-step.is-active .step-label,
+.progress-step.is-completed .step-label {
+    color: var(--color-dark); /* Texte plus visible pour les étapes actives/complétées */
+}
+
+/* Bouton Aide sur Mon Parcours */
+.aide-button {
+     display: inline-flex;
+     align-items: center;
+     gap: 0.5rem;
+     padding: 0.75rem 1.5rem;
+     background-color: var(--color-white);
+     border: 1px solid var(--color-gray-light);
+     border-radius: var(--radius);
+     box-shadow: var(--shadow-sm); /* Ombre plus légère par défaut */
+     cursor: pointer;
+     font-size: 1rem;
+     color: var(--color-dark);
+     margin-bottom: 2rem;
+     transition: var(--transition-fast);
+     text-decoration: none; /* Si c'est un lien */
+ }
+ .aide-button:hover {
+     background-color: var(--color-light);
+     box-shadow: var(--shadow); /* Ombre plus forte au survol */
+ }
+ .aide-button i { color: var(--color-primary); margin-right: 0.3rem; }
+
+/* Tableau de bord Mon Parcours */
+.parcours-dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* 1 ou 2 colonnes */
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+.dashboard-card {
+    background-color: var(--color-white);
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+}
 .dashboard-card h3 { margin-top: 0; margin-bottom: 1rem; font-size: 1.25rem; }
-.progression-details p, .reussites-details p { margin-bottom: 0.5rem; color: var(--color-gray); }
-.progression-details strong, .reussites-details strong { color: var(--color-dark); }
-#progression-bar { width: 100%; height: 8px; margin-bottom: 0.5rem; appearance: none; border: none; border-radius: 4px; overflow: hidden; background-color: var(--color-gray-light); }
-#progression-bar::-webkit-progress-bar { background-color: var(--color-gray-light); }
-#progression-bar::-webkit-progress-value { background-color: var(--color-primary); border-radius: 4px; }
-#progression-bar::-moz-progress-bar { background-color: var(--color-primary); border-radius: 4px; }
-.badge-nouveau { display: inline-block; background-color: var(--color-primary-light); color: var(--color-primary); font-size: 0.75rem; padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: 600; }
-#badges-gagnes { margin-top: 1rem; display: flex; flex-wrap: wrap; gap: 0.8rem; min-height: 30px; }
-#badges-gagnes i { font-size: 1.8rem; color: var(--color-gray-light); }
-#badges-gagnes i.earned { color: #FFD700; }
-/* --- Détail des Étapes --- */
-.etapes-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
-.etape-carte { background-color: var(--color-white); padding: 1.5rem; border-radius: var(--radius); box-shadow: var(--shadow); display: flex; flex-direction: column; align-items: center; text-align: center; transition: transform 0.2s ease, box-shadow 0.2s ease; }
-.etape-carte:hover:not(.is-locked):not(.is-completed) { transform: translateY(-4px); box-shadow: 0 8px 15px -3px rgba(0, 0, 0, 0.1); }
-.etape-icon { width: 55px; height: 55px; border-radius: 50%; background-color: var(--color-gray-light); color: var(--color-gray); display: flex; align-items: center; justify-content: center; font-size: 1.6rem; margin-bottom: 1rem; }
-.etape-carte h3 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--color-dark); }
-.etape-carte p { font-size: 0.9rem; color: var(--color-gray); margin-bottom: 1rem; flex-grow: 1; }
-.etape-action { background-color: var(--color-primary); color: var(--color-white); border: none; border-radius: 50%; width: 40px; height: 40px; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; cursor: pointer; margin-top: auto; transition: background-color 0.2s ease; }
-.etape-action:hover { background-color: var(--color-primary-darker); }
+.progression-details p, .reussites-details p { margin-bottom: 0.5rem; color: var(--color-gray-darker); font-size: 0.95rem; }
+.progression-details strong, .reussites-details strong { color: var(--color-dark); font-weight: 600; }
+
+/* Barre de progression HTML5 */
+#progression-bar {
+  width: 100%;
+  height: 8px;
+  margin-bottom: 0.5rem;
+  appearance: none;
+  -webkit-appearance: none; /* Pour Safari */
+  border: none;
+  border-radius: 4px;
+  overflow: hidden; /* Important pour que la couleur de remplissage respecte le border-radius */
+  background-color: var(--color-gray-light); /* Fond gris clair */
+}
+/* Style du remplissage de la barre de progression */
+#progression-bar::-webkit-progress-bar { background-color: var(--color-gray-light); border-radius: 4px; }
+#progression-bar::-webkit-progress-value { background-color: var(--color-primary); border-radius: 4px; transition: width 0.5s ease-in-out; }
+#progression-bar::-moz-progress-bar { background-color: var(--color-primary); border-radius: 4px; transition: width 0.5s ease-in-out; } /* Pour Firefox */
+
+/* Badges sur le dashboard */
+.badge-nouveau {
+    display: inline-block;
+    background-color: var(--color-primary-light);
+    color: var(--color-primary-darker);
+    font-size: 0.75rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 600;
+    margin-bottom: 0.5rem; /* Espace en dessous si sur sa propre ligne */
+}
+#badges-gagnes {
+     margin-top: 1rem;
+     display: flex;
+     flex-wrap: wrap;
+     gap: 0.8rem; /* Espace entre les badges */
+     min-height: 30px; /* Assure un espace même s'il n'y a pas encore de badges */
+     align-items: center;
+ }
+/* Icônes des badges */
+#badges-gagnes i {
+    font-size: 1.8rem;
+    color: var(--color-gray-medium); /* Couleur badge non gagné */
+}
+#badges-gagnes i.earned {
+    color: #FFD700; /* Or pour badge gagné (ou une autre couleur vive) */
+}
+
+
+/* Détail des Étapes (Grille de cartes) */
+.etapes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); /* Cartes d'au moins 260px, s'adaptent */
+    gap: 1.5rem; /* Espacement entre les cartes */
+}
+
+/* Cartes d'Étape */
+.etape-carte {
+  background-color: var(--color-white);
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm); /* Ombre plus légère par défaut */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Animation au survol */
+  border: 1px solid transparent; /* Bordure invisible par défaut */
+  min-height: 260px; /* Assure une hauteur minimale cohérente */
+  justify-content: space-between; /* Distribue l'espace à l'intérieur */
+}
+.etape-carte:hover:not(.is-locked):not(.is-completed) {
+  transform: translateY(-5px); /* Léger soulèvement */
+  box-shadow: var(--shadow); /* Ombre plus forte au survol */
+}
+
+.etape-icon {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background-color: var(--color-gray-light); /* Fond icône inactif/bloqué */
+    color: var(--color-gray-medium); /* Couleur icône inactif/bloqué */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem; /* Taille de l'icône */
+    margin-bottom: 1rem;
+    flex-shrink: 0; /* Empêche de rétrécir */
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.etape-carte h3 {
+    font-size: 1.2rem; /* Taille titre carte étape */
+    margin-bottom: 0.75rem;
+    color: var(--color-dark);
+    margin-top: 0; /* Assure pas de marge supérieure indésirable */
+}
+.etape-carte p {
+    font-size: 0.95rem;
+    color: var(--color-gray);
+    margin-bottom: 1.5rem; /* Espace entre le texte et le bouton */
+    flex-grow: 1; /* Permet au paragraphe de prendre l'espace restant */
+}
+
+/* Style du bouton d'action dans la carte étape */
+.etape-action {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--radius); /* Coins arrondis */
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem; /* Taille de police */
+  font-weight: 600;
+  display: inline-flex; /* Utilise inline-flex car c'est un lien */
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-top: auto; /* Pousse le bouton vers le bas s'il y a de l'espace flexible */
+  transition: var(--transition-fast);
+  text-decoration: none;
+}
+.etape-action:hover:not([disabled]) {
+  background-color: var(--color-primary-darker);
+  transform: scale(1.02); /* Léger agrandissement au survol */
+}
+.etape-action:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--color-primary-light); /* Indicateur de focus */
+}
+/* Style de l'icône dans le bouton d'action */
+.etape-action i { font-size: 0.9em; margin-right: 0.5em; } /* Petit espace entre icône et texte */
+
+
 /* États des cartes étapes */
-.etape-carte.is-active { border: 2px solid var(--color-primary); background-color: var(--color-primary-light); }
-.etape-carte.is-active .etape-icon { background-color: var(--color-primary); color: var(--color-white); }
-.etape-carte.is-active .etape-action { background-color: var(--color-primary); color: var(--color-white); }
-.etape-carte.is-completed { background-color: #F0FDF4; border: 1px solid #A7F3D0; }
-.etape-carte.is-completed .etape-icon { background-color: var(--color-secondary); color: var(--color-white); }
-.etape-carte.is-completed .etape-action { display: none; }
-.etape-carte.is-locked { background-color: var(--color-light); opacity: 0.7; cursor: not-allowed; }
-.etape-carte.is-locked .etape-icon { background-color: var(--color-gray-light); color: var(--color-gray-medium); }
+.etape-carte.is-active {
+  border: 2px solid var(--color-primary); /* Bordure primaire */
+  background-color: var(--color-primary-light); /* Fond clair primaire */
+  box-shadow: 0 0 10px var(--color-primary-light); /* Halo subtil */
+}
+.etape-carte.is-active .etape-icon {
+    background-color: var(--color-primary); /* Icône pleine couleur primaire */
+    color: var(--color-white);
+}
+.etape-carte.is-active h3 { color: var(--color-dark); } /* Titre reste sombre pour lisibilité */
+.etape-carte.is-active p { color: var(--color-gray-darker); } /* Texte reste sombre pour lisibilité */
+/* Le bouton d'action dans l'étape active est le bouton normal */
+
+.etape-carte.is-completed {
+  background-color: var(--color-secondary-light); /* Fond clair secondaire (vert) */
+  border: 1px solid var(--color-secondary); /* Bordure secondaire */
+  opacity: 1; /* Pas de transparence pour l'état complété */
+}
+.etape-carte.is-completed .etape-icon {
+    background-color: var(--color-secondary); /* Icône pleine couleur secondaire */
+    color: var(--color-white);
+}
+.etape-carte.is-completed h3 { color: var(--color-dark); }
+.etape-carte.is-completed p { color: var(--color-gray-darker); }
+.etape-carte.is-completed .etape-action {
+    display: none; /* Cache le bouton si l'étape est finie */
+}
+
+.etape-carte.is-locked {
+    background-color: var(--color-light); /* Fond gris clair du body */
+    opacity: 0.8; /* Légère transparence */
+    border-color: var(--color-gray-light);
+    cursor: not-allowed;
+}
+.etape-carte.is-locked .etape-icon {
+    background-color: var(--color-gray-light);
+    color: var(--color-gray-medium);
+}
 .etape-carte.is-locked h3 { color: var(--color-gray); }
 .etape-carte.is-locked p { color: var(--color-gray); }
-.etape-carte.is-locked .etape-action { display: none; }
-
-/* ============================================= */
-/* === Styles Responsive / Menu Mobile === */
-/* ============================================= */
-@media (max-width: 991px) { /* Point de rupture cohérent avec l'affichage du bouton hamburger */
-  /* Styles pour le menu déroulant */
-  .nav-links {
-      display: none; /* Caché par défaut */
-      flex-direction: column;
-      position: absolute;
-      top: 100%; /* Position juste sous le header */
-      left: 0;
-      width: 100%;
-      background-color: var(--color-white);
-      padding: 1rem;
-      box-shadow: var(--shadow);
-      gap: 0.5rem;
-      border-top: 1px solid var(--color-gray-light);
-  }
-  .nav-links.show {
-      display: flex; /* Afficher quand .show est ajouté */
-  }
-  .nav-links a {
-      padding: 0.75rem 1rem;
-      border-bottom: 1px solid var(--color-gray-light);
-  }
-  .nav-links li:last-child a {
-      border-bottom: none;
-  }
-  .nav-links a.active::after {
-      display: none; /* Cacher le soulignement */
-  }
-  .nav-links a.active {
-      background-color: var(--color-primary-light); /* Indiquer l'actif */
-      border-radius: var(--radius);
-  }
-
-  /* Ajustements mobile pour page Parcours */
-  .parcours-progress-bar { flex-wrap: wrap; /* Permet aux étapes de passer à la ligne si nécessaire */ row-gap: 1rem; }
-  .step-label { font-size: 0.7rem; max-width: 65px; } /* Texte plus petit */
-  .etapes-grid { grid-template-columns: 1fr; } /* Une seule colonne */
-  .parcours-dashboard { grid-template-columns: 1fr; }
+.etape-carte.is-locked .etape-action {
+    display: none; /* Cache le bouton */
 }
 
+
+/* Documents Specific Styles (Documents.html) */
+/* Les styles de la page Documents étaient déjà dans votre CSS fourni */
+/* J'ai intégré et harmonisé les classes et variables */
+
+.documents-page-title { /* H1 de la page Documents */
+    font-size: clamp(1.75rem, 4vw, 2.2rem); /* Taille adaptée */
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: var(--color-dark);
+}
+.main-actions { /* Conteneur des boutons Créer et Aide */
+    display: flex;
+    flex-direction: column; /* Colonne sur mobile */
+    gap: 1rem;
+    margin-bottom: 2rem;
+    max-width: 42rem; /* Limite la largeur */
+    margin-left: auto;
+    margin-right: auto; /* Centre le bloc */
+}
+@media (min-width: 768px) {
+    .main-actions { flex-direction: row; } /* Ligne sur desktop */
+    .main-actions .btn { flex-grow: 1; } /* Boutons prennent l'espace disponible */
+}
+.documents-content-area { /* Conteneur de la bannière info et de la liste */
+     max-width: 42rem;
+     margin-left: auto;
+     margin-right: auto;
+}
+.info-banner {
+    background-color: var(--color-gray-light); /* Fond gris clair */
+    padding: 1rem;
+    border-radius: var(--radius);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border: 1px solid var(--color-gray-medium); /* Bordure pour délimiter */
+}
+.info-banner p {
+    font-weight: 500;
+    margin: 0;
+    flex-grow: 1; /* Permet au paragraphe de prendre l'espace */
+    color: var(--color-dark);
+}
+.info-banner .icon.primary-icon { color: var(--color-primary); }
+.info-banner .icon.large-icon { font-size: 1.5rem; }
+
+/* Liste des documents */
+.documents-list-container {
+    margin-top: 1rem; /* Espace au-dessus si pas de bannière */
+    display: flex;
+    flex-direction: column;
+    gap: 1rem; /* Espacement entre les items */
+}
+.document-item { /* Chaque élément de la liste */
+    background-color: var(--color-white);
+    border: 1px solid var(--color-gray-light);
+    border-radius: 6px;
+    padding: 1rem 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Aligner verticalement */
+    flex-wrap: wrap; /* Permettre le retour à la ligne sur petits écrans */
+    gap: 0.75rem; /* Espace entre info et actions */
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.2s ease-in-out;
+}
+.document-item:hover {
+    box-shadow: var(--shadow); /* Ombre au survol */
+}
+.document-item .info {
+    flex-grow: 1; /* Infos prennent l'espace disponible */
+    min-width: 150px; /* Largeur minimale pour éviter d'être trop écrasé */
+}
+.document-item .title {
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.25rem;
+    color: var(--color-dark);
+    font-size: 1rem; /* Taille du titre du document */
+}
+.document-item .meta { /* Infos secondaires (type, date) */
+    font-size: 0.85rem;
+    color: var(--color-gray-darker);
+    display: flex; /* Aligne les meta infos horizontalement */
+    gap: 0.75rem; /* Espace entre les meta infos */
+}
+/* Séparateur entre les meta infos */
+.document-item .meta span:not(:last-child)::after {
+    content: "•";
+    margin: 0 0.5em;
+    color: var(--color-gray-medium);
+}
+.document-item .actions { /* Conteneur des boutons d'action par item */
+    display: flex;
+    gap: 0.5rem; /* Espace entre les boutons/badge */
+    align-items: center; /* Aligne verticalement avec le reste de l'item */
+    flex-shrink: 0; /* Empêche de rétrécir */
+}
+/* Styles pour les boutons d'action dans la liste (plus petits) */
+.document-item .actions .button, .document-item .actions .btn {
+    padding: 0.4rem 0.8rem; /* Padding ajusté */
+    font-size: 0.85rem; /* Taille ajustée */
+}
+.document-item .actions .button-icon { /* Icônes spécifiques */
+     width: 2rem; height: 2rem; padding: 0.4rem;
+     font-size: 1em; /* Prend la taille du bouton */
+     border-radius: 50%;
+}
+
+
+/* Bouton Télécharger tout */
+.download-all-action {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+}
+.download-all-action .btn {
+    /* Utilise déjà .btn.btn-outline.btn-large.button-full */
+}
+
+
+/* Candidatures Specific Styles (MesCandidature.html) */
+/* Les styles de la page Candidatures étaient déjà dans votre CSS fourni */
+/* J'ai intégré et harmonisé les classes et variables */
+
+.application-grid { /* Utilisé pour la liste des candidatures (même si c'est une liste flex/block) */
+     display: flex; /* Change à flex pour une liste verticale */
+     flex-direction: column;
+     gap: 1rem; /* Espace entre les cartes de candidature */
+}
+
+/* Carte de candidature */
+.application-card .card-content { /* S'assurer que c'est flex pour la disposition interne */
+    display: flex;
+    flex-direction: column;
+    padding: 0; /* Retire le padding pour que le contenu interne le gère */
+}
+@media (min-width: 768px) {
+    .application-card .card-content { flex-direction: row; align-items: stretch; } /* Disposition horizontale sur desktop */
+}
+
+.application-card-main { /* Section principale (titre, entreprise, notes, contact) */
+    padding: 1.5rem; /* Padding interne */
+    flex-grow: 1; /* Prend l'espace restant horizontalement */
+    display: flex; /* Permet la mise en page interne */
+    flex-direction: column;
+}
+.application-card-header { /* Ligne titre / statut / date */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.75rem; /* Espace entre les blocs de header */
+    margin-bottom: 1rem;
+}
+@media (min-width: 768px) {
+     .application-card-header { flex-direction: row; align-items: center; }
+     .application-card-meta { flex-wrap: nowrap; }
+}
+
+.application-card-title { /* Titre du poste */
+     font-size: 1.2rem; /* Taille du titre */
+     font-weight: 700;
+     display: flex;
+     align-items: center;
+     gap: 0.5rem;
+     color: var(--color-dark);
+     margin: 0; /* Géré par le gap parent */
+ }
+ .application-card-title i { color: var(--color-gray-medium); font-size: 0.9em; } /* Icône petite et grise */
+
+.application-card-company { /* Nom de l'entreprise */
+     display: flex;
+     align-items: center;
+     color: var(--color-gray-darker);
+     margin-top: 0.25rem; /* Petit espace après le titre */
+     font-size: 0.95rem;
+     margin-bottom: 0; /* Géré par le gap parent */
+ }
+ .application-card-company i { width: 1rem; margin-right: 0.25rem; font-size: 0.9em; }
+
+.application-card-meta { /* Conteneur statut + date */
+    display: flex;
+    align-items: center;
+    gap: 0.75rem; /* Espace entre statut et date */
+    flex-wrap: wrap; /* Permet de passer à la ligne si pas de place */
+    margin: 0; /* Géré par le gap parent */
+}
+
+.application-card-date { /* Date de candidature */
+    display: flex;
+    align-items: center;
+    color: var(--color-gray);
+    font-size: 0.9rem;
+    margin: 0; /* Géré par le gap parent */
+}
+.application-card-date i { width: 1rem; margin-right: 0.25rem; font-size: 0.9em; }
+
+.application-card-notes { /* Notes de la candidature */
+    font-size: 0.9rem;
+    color: var(--color-gray);
+    margin-top: 0.5rem;
+    margin-bottom: 0; /* Géré par le gap parent */
+}
+
+.application-card-contact { /* Infos contact */
+    margin-top: 0.75rem;
+    font-size: 0.9rem;
+    color: var(--color-dark);
+}
+.application-card-contact p { margin: 0.2rem 0; color: inherit;} /* Petit espace entre les lignes de contact */
+.application-card-contact strong { font-weight: 600; color: inherit; }
+
+
+.application-card-actions { /* Section Actions (select + boutons) */
+    padding: 1.5rem; /* Padding interne */
+    display: flex;
+    flex-direction: row; /* Ligne par défaut sur mobile */
+    gap: 0.75rem;
+    justify-content: flex-end; /* Aligne à droite */
+    background-color: var(--color-light); /* Fond léger */
+    flex-shrink: 0; /* Empêche de rétrécir */
+}
+@media (min-width: 768px) {
+    .application-card-actions {
+         flex-direction: column; /* Colonne sur desktop */
+         border-left: 1px solid var(--color-gray-light); /* Séparateur vertical */
+         justify-content: center; /* Centre verticalement */
+         width: 180px; /* Largeur fixe pour la colonne d'actions */
+         background-color: transparent; /* Pas de fond gris sur desktop si la carte est blanche */
+         align-items: flex-end; /* Aligne les éléments à droite dans la colonne */
+     }
+     /* Ajustement de l'espace entre le select et les boutons sur desktop */
+     .application-card-actions select { margin-bottom: 0.5rem; }
+     .application-card-actions .flex.gap-2 { flex-direction: column; gap: 0.5rem; } /* Stack les boutons Modifier/Supprimer */
+}
+
+.application-card-actions .action-buttons { display: flex; gap: 0.5rem; } /* Conteneur des boutons modifier/supprimer */
+
+
+/* État vide de la liste */
+.empty-card { padding: 2.5rem; text-align: center; }
+.empty-card p { color: var(--color-gray-darker); font-size: 1.125rem; margin-bottom: 1rem; }
+.empty-card .button { margin-left: auto; margin-right: auto; }
+
+
+/* Profile Specific Styles (Profil.html) */
+/* Les styles de la page Profil étaient déjà dans votre CSS fourni */
+/* J'ai intégré et harmonisé les classes et variables */
+
+.profile-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Une colonne par défaut */
+    gap: 2rem; /* Espacement entre les colonnes/sections */
+}
+@media (min-width: 768px) {
+    .profile-grid { grid-template-columns: 2fr 1fr; } /* Deux colonnes sur desktop (2/3 vs 1/3) */
+}
+/* Assurer que la colonne latérale n'est pas avant la principale sur mobile si la grille s'inverse */
+.profile-column-sidebar {
+     display: flex;
+     flex-direction: column;
+     gap: 1.5rem;
+ }
+@media (max-width: 767px) { /* Applique sur mobile */
+     .profile-column-sidebar {
+          order: 1; /* Assure qu'elle vient après la colonne principale */
+     }
+     .profile-column-main {
+          order: 2;
+     }
+}
+
+.profile-column-main {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; /* Espacement entre les cartes dans la colonne */
+}
+
+
+/* Séparateur dans la carte (utilisé pour les paramètres) */
+hr.separator {
+    border: none;
+    height: 1px;
+    background-color: var(--color-gray-light);
+    margin: 1rem 0; /* Espace au-dessus et en dessous */
+}
+
+/* Boutons d'action finaux (Enregistrer, Exporter, Supprimer) */
+.final-actions {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: flex-end; /* Aligne à droite */
+    gap: 1rem; /* Espace entre les boutons (si plusieurs) */
+}
+
+
+/* Partenaires Specific Styles (Partenaires.html) */
+/* Les styles de la page Partenaires étaient déjà dans votre CSS fourni */
+/* J'ai intégré et harmonisé les classes et variables */
+
+/* Grille des partenaires */
+.partner-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Cartes d'au moins 300px */
+    gap: 1.5rem; /* Espace entre les cartes */
+}
+
+/* Carte Partenaire */
+.partner-card .card-header { /* En-tête de la carte (Nom, Catégorie, Logo) */
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 0.5rem; /* Espace sous le header */
+    border-bottom: none; /* Pas de bordure sous le header */
+    gap: 1rem; /* Espace entre le texte et le logo */
+}
+.partner-card .card-header > div { /* Conteneur du titre et badge */
+     flex-grow: 1;
+     min-width: 0; /* Permet au contenu de rétrécir si nécessaire */
+}
+
+.partner-card .logo { /* Conteneur du logo */
+    width: 48px; height: 48px;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid var(--color-gray-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--color-white); /* Fond blanc pour le logo */
+    flex-shrink: 0; /* Empêche le logo de rétrécir */
+}
+.partner-card .logo img {
+     max-width: 100%;
+     max-height: 100%;
+     object-fit: contain; /* L'image s'adapte sans être déformée */
+}
+
+.partner-card .card-content {
+     padding-top: 0; /* Retire le padding en haut car il y en a déjà dans le header */
+     gap: 1rem; /* Espace entre les blocs de contenu (description, contact, services) */
+     /* Ajouter padding-bottom si le footer n'est pas toujours présent */
+}
+.partner-card .description {
+    color: var(--color-gray-darker);
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+    margin-top: 0;
+}
+.partner-card .contact-info {
+    font-size: 0.9rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem; /* Espace entre les lignes de contact */
+    color: var(--color-dark); /* Couleur texte contact */
+}
+.partner-card .contact-info div {
+    display: flex;
+    align-items: center; /* Aligne icône et texte */
+    gap: 0.5rem; /* Espace entre icône et texte */
+}
+/* Style spécifique pour les icônes de contact */
+.partner-card .contact-info i {
+     width: 18px; /* Largeur fixe pour l'icône */
+     flex-shrink: 0;
+     color: var(--color-primary); /* Couleur icône primaire */
+     text-align: center;
+ }
+/* S'assurer que les liens dans les infos contact sont stylisés comme des liens standard */
+.partner-card .contact-info a {
+     color: var(--color-primary);
+     text-decoration: underline; /* Souligné pour indiquer que c'est cliquable */
+ }
+ .partner-card .contact-info a:hover {
+      color: var(--color-primary-darker);
+      text-decoration: none;
+ }
+
+
+.partner-card .services { /* Section Services proposés */
+     margin-top: 1rem; /* Espace au-dessus */
+     border-top: 1px solid var(--color-gray-light); /* Séparateur */
+     padding-top: 1rem; /* Padding au-dessus du séparateur */
+}
+.partner-card .services p {
+     font-weight: 600; /* Titre de la liste de services */
+     margin-bottom: 0.5rem;
+     color: var(--color-dark);
+}
+.partner-card .services ul {
+     list-style: disc; /* Puces */
+     padding-left: 1.25rem; /* Indentation pour les puces */
+     font-size: 0.9rem;
+     display: flex;
+     flex-direction: column;
+     gap: 0.25rem; /* Petit espace entre les items de la liste */
+     color: var(--color-gray-darker);
+}
+
+/* Grille des rendez-vous */
+.appointment-grid {
+    display: flex; /* Utilise flexbox pour une liste verticale */
+    flex-direction: column;
+    gap: 1rem; /* Espace entre les cartes de rendez-vous */
+}
+/* Carte de rendez-vous */
+.appointment-card.card {
+    padding: 1.5rem;
+}
+.appointment-details { /* Détail (nom, date, type) et bouton Annuler */
+    display: flex;
+    flex-direction: column; /* Colonne par défaut sur mobile */
+    justify-content: space-between;
+    align-items: flex-start; /* Aligne les éléments à gauche */
+    gap: 1rem; /* Espace entre les éléments (info vs bouton) */
+}
+@media (min-width: 768px) {
+    .appointment-details { flex-direction: row; align-items: center; } /* Ligne sur desktop */
+    .appointment-details .appointment-info { flex-grow: 1; } /* Les infos prennent l'espace */
+}
+
+.appointment-info h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--color-dark);
+}
+.appointment-info .date-time { /* Date et heure */
+    display: flex;
+    align-items: center;
+    color: var(--color-gray-darker);
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+    gap: 0.5rem; /* Espace entre icône et texte */
+}
+.appointment-info .date-time i { width: 16px; font-size: 0.9em; color: var(--color-primary); } /* Icône */
+.appointment-info .badge { margin-top: 0.5rem; /* Espace sous la date/heure */ }
+
+.appointment-card .notes { /* Bloc des notes */
+    margin-top: 1rem;
+    padding: 0.75rem;
+    background-color: var(--color-gray-light); /* Fond léger */
+    border-radius: 6px;
+    font-size: 0.875rem;
+    border: 1px solid var(--color-gray-medium);
+    color: var(--color-dark); /* Couleur texte notes */
+}
+
+/* Message si pas de résultats / pas de rendez-vous */
+.no-results, .empty-card .card-content {
+    text-align: center;
+    padding: 2.5rem;
+    color: var(--color-gray);
+}
+.no-results p, .empty-card p {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: var(--color-gray-darker);
+}
+.empty-card .button { /* Bouton dans l'état vide */
+     margin-left: auto;
+     margin-right: auto;
+ }
+
+/* Styles pour les images (s'assurer qu'elles ne dépassent pas leur conteneur) */
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+
 /* ============================================= */
-/* === Styles Additionnels (Ex: Footer, Modals) === */
+/* === Responsive Design (Media Queries) === */
 /* ============================================= */
-/* Ajoutez ici les styles pour le footer, les modales, etc. */
-/* qui étaient dans votre style.css original si nécessaire */
+
+/* Styles pour les écrans plus petits (ex: mobiles et tablettes) */
+@media (max-width: 991px) {
+    /* Réajustement général du padding conteneur */
+    .container { padding: 0 1rem; }
+
+    /* Menu Mobile */
+    .nav-links {
+        display: none; /* Caché par défaut sur mobile (JS le rend flex avec .show-mobile) */
+        flex-direction: column; /* Empile verticalement */
+        position: absolute;
+        top: calc(4rem + 1px); /* Juste sous le header (padding header + bordure si présente) */
+        left: 0;
+        width: 100%;
+        background-color: var(--color-white);
+        padding: 1rem;
+        box-shadow: var(--shadow);
+        gap: 0.5rem; /* Espacement réduit entre les liens */
+        border-top: 1px solid var(--color-gray-light);
+        z-index: 999; /* S'assure que le menu est au-dessus de la plupart des éléments */
+    }
+    .nav-links.show-mobile { /* Classe ajoutée/retirée par JS */
+        display: flex;
+    }
+
+    .nav-links a {
+        padding: 0.75rem 1rem; /* Plus grand padding pour les clics sur mobile */
+        border-radius: var(--radius); /* Coins arrondis pour chaque lien */
+        transition: background-color var(--transition-fast);
+    }
+    .nav-links a:hover {
+        background-color: var(--color-primary-light); /* Feedback visuel au survol */
+        color: var(--color-primary-darker);
+         text-decoration: none;
+    }
+    /* Masquer le soulignement animé sur mobile si vous préférez */
+    .nav-links a::after { display: none; }
+
+    /* Le bouton hamburger est affiché sur mobile */
+    .mobile-menu-btn { display: block; }
+
+
+    /* Réajustement des marges pour les sections principales */
+    main .container {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+
+
+    /* Réajustement des grilles pour s'empiler sur mobile */
+    .form-grid, .form-grid-cols-2,
+    .profile-grid, .partner-grid,
+    .footer-grid {
+        grid-template-columns: 1fr; /* Une seule colonne sur mobile */
+    }
+
+    /* Ajustement des colonnes de la grille Profil sur mobile */
+    .profile-column-main { order: 1; } /* Main content first */
+    .profile-column-sidebar { order: 2; } /* Sidebar content second */
+
+    /* Ajustement de la disposition de la carte Candidature sur mobile */
+    .application-card .card-content { flex-direction: column; } /* Revenir à la colonne */
+    .application-card-main { padding: 1rem; } /* Padding réduit */
+    .application-card-actions {
+         flex-direction: row; /* Revenir à la ligne pour les actions */
+         width: auto; /* Largeur automatique */
+         border-left: none; /* Supprimer la bordure verticale */
+         border-top: 1px solid var(--color-gray-light); /* Ajouter une bordure horizontale */
+         justify-content: flex-end; /* Aligner à droite */
+         background-color: var(--color-light); /* Fond gris */
+         padding: 1rem; /* Padding ajusté */
+     }
+    .application-card-actions .flex.gap-2 { flex-direction: row; } /* Boutons Modifier/Supprimer en ligne */
+    .application-card-actions select { margin-bottom: 0; } /* Supprimer la marge sous le select */
+
+
+    /* Ajustement de la barre de progression Mon Parcours */
+    .parcours-progress-bar {
+         max-width: 100%; /* Prend toute la largeur disponible */
+         padding: 0 1rem; /* Padding pour ne pas coller aux bords */
+    }
+    .parcours-progress-bar::before, .parcours-progress-bar .progress-line-active {
+         left: 10px; right: 10px; /* Ligne s'étend presque sur toute la largeur */
+         top: 15px; /* Ajuster position verticale de la ligne */
+    }
+    .progress-step {
+        flex-direction: row; /* Aligner bulle et label horizontalement */
+        align-items: center;
+        text-align: left; /* Texte aligné à gauche */
+        margin-bottom: 1rem; /* Espace entre les étapes empilées */
+        padding: 1rem;
+        border: 1px solid var(--color-gray-light); /* Bordure pour chaque étape */
+        border-radius: var(--radius); /* Coins arrondis */
+        max-width: 100%; /* Prend toute la largeur disponible */
+        gap: 1rem; /* Espace entre bulle et label */
+    }
+    .step-indicator {
+         margin-bottom: 0; /* Retire la marge du bas */
+         flex-shrink: 0; /* Empêche la bulle de rétrécir */
+    }
+    .step-label {
+         flex-grow: 1; /* Permet au label de prendre l'espace */
+         max-width: auto; /* Retire la limitation de largeur */
+         text-align: left;
+    }
+
+
+    /* Ajustement des filtres Partenaires */
+    .filters { flex-direction: column; }
+    .filter-item.search-filter, .filter-item.category-filter { width: 100%; }
+
+
+    /* Ajustement du formulaire de prise de rendez-vous (s'il a une grille spécifique) */
+     .appointment-form-fields {
+          gap: 0.75rem;
+      }
+
+
+    /* Ajustement des boutons d'action principaux sur Documents */
+    .main-actions { flex-direction: column; }
+
+
+    /* Ajustement des cartes (padding, etc.) */
+     .card { margin-bottom: 1rem; }
+     .card-header { padding: 0.75rem 1rem; }
+     .card-content { padding: 1rem; gap: 0.75rem; }
+     .card-footer { padding: 0.75rem 1rem; gap: 0.5rem; }
+
+     /* Taille des titres sur mobile */
+     h1 { font-size: clamp(1.5rem, 6vw, 2rem); margin-bottom: 1.5rem; }
+     h2 { font-size: clamp(1.3rem, 5vw, 1.7rem); margin-bottom: 1rem; }
+     h3 { font-size: clamp(1.1rem, 4.5vw, 1.4rem); margin-bottom: 0.75rem; }
+
+
+}
+
+/* Styles pour les écrans encore plus petits (ex: petits mobiles) */
+@media (max-width: 480px) {
+    .container { padding: 0 0.5rem; }
+    .header .container { padding: 0 0.5rem; }
+    .parcours-progress-bar { padding: 0 0.5rem; }
+    .partner-grid { grid-template-columns: 1fr; } /* S'assurer qu'il n'y a qu'une seule colonne si l'écran est très petit */
+    .quick-links-grid { grid-template-columns: 1fr; } /* Une seule colonne pour les accès rapides sur très petit écran */
+    .quick-link-card { padding: 1rem; } /* Padding réduit */
+    .application-card-actions { flex-direction: column; } /* Boutons d'action en colonne sur très petit écran */
+    .application-card-actions .flex.gap-2 { flex-direction: column; gap: 0.25rem; } /* Stack les boutons modifier/supprimer */
+
+}
+
+
+/* ============================================= */
+/* === Animations (via classes déclenchées par JS) === */
+/* ============================================= */
+
+/* Définition des keyframes */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInRight {
+  from { opacity: 0; transform: translateX(50px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Styles initiaux pour les éléments qui seront animés par JS */
+.animate-fade-in,
+.animate-slide-in-right {
+    opacity: 0; /* Commence caché */
+    /* Les propriétés transform initiales sont gérées par le JS */
+    /* transition: opacity 0.5s ease, transform 0.5s ease; /* Ajoutez une transition douce */
+}
+
+/* Styles appliqués par le JS pour démarrer l'animation */
+/* Le JS va directement modifier style.opacity et style.transform
+   Si vous voulez utiliser des classes, le JS ajouterait une classe
+   comme '.is-visible' et les animations seraient définies ici:
+.animate-fade-in.is-visible {
+  animation: fadeIn 0.5s ease forwards;
+}
+.animate-slide-in-right.is-visible {
+  animation: slideInRight 0.5s ease forwards;
+}
+*/
+
+
+/* ============================================= */
+/* === Chatbot Styles === */
+/* ============================================= */
+/* Les styles du Chatbot étaient déjà dans votre CSS fourni */
+/* J'ai intégré et harmonisé les classes et variables */
+
+.chatbot-btn { /* Bouton d'ouverture du chatbot */
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 60px;
+  height: 60px;
+  background-color: var(--color-primary);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  z-index: 90; /* Au-dessus de la plupart des choses mais sous la modale */
+  transition: var(--transition-fast);
+  border: none;
+}
+
+.chatbot-btn:hover {
+  background-color: var(--color-primary-darker);
+  transform: scale(1.05); /* Petit effet au survol */
+}
+.chatbot-btn:focus {
+    outline: none;
+     box-shadow: 0 0 0 3px var(--color-primary-light); /* Indicateur de focus */
+}
+
+.chatbot-container {
+  position: fixed;
+  bottom: 90px; /* Au-dessus du bouton chatbot */
+  right: 20px;
+  width: 350px; /* Largeur fixe */
+  height: 450px; /* Hauteur fixe */
+  background-color: var(--color-white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  z-index: 99; /* Sous la modale */
+  overflow: hidden;
+  display: none; /* Caché par défaut (JS le gère avec display:flex/none et classes pour animation) */
+  flex-direction: column;
+  /* Les transitions d'opacité et de transform sont gérées par le JS directement ou via une classe */
+  /* transition: opacity 0.3s ease, transform 0.3s ease; */
+  /* opacity: 0; */
+  /* transform: translateY(20px); */
+}
+/* Classe ajoutée par JS pour afficher */
+.chatbot-container.show {
+     /* opacity: 1; */
+     /* transform: translateY(0); */
+     display: flex; /* Le display:flex est mis ici par JS pour la transition */
+}
+
+.chatbot-header {
+  background-color: var(--color-primary);
+  color: white;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0; /* Empêche le header de rétrécir */
+}
+.chatbot-header h3 { color: white; margin: 0; font-size: 1.1rem; }
+
+/* Bouton de fermeture dans le header du chatbot */
+.chatbot-header button#closeChatbot {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.4em; /* Taille de la croix */
+    cursor: pointer;
+    padding: 0.2rem; /* Zone cliquable */
+    line-height: 1;
+     transition: var(--transition-fast);
+}
+.chatbot-header button#closeChatbot:hover { opacity: 0.8; }
+.chatbot-header button#closeChatbot:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(255,255,255,0.5);
+    border-radius: 4px;
+}
+
+
+.chatbot-messages {
+  flex: 1; /* Prend l'espace restant vertical */
+  overflow-y: auto; /* Scroll si le contenu dépasse */
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem; /* Espace entre les messages */
+}
+
+/* Styles des messages individuels */
+.message {
+  max-width: 80%; /* Limite la largeur du message */
+  padding: 0.75rem 1rem;
+  border-radius: 1rem; /* Coins arrondis */
+  word-wrap: break-word; /* Casse les mots longs si nécessaire */
+}
+
+/* Messages du bot */
+.bot-message {
+  background-color: var(--color-gray-light);
+  align-self: flex-start; /* Alignés à gauche */
+  border-bottom-left-radius: 0.25rem; /* Coin inférieur gauche moins arrondi */
+}
+
+/* Messages de l'utilisateur */
+.user-message {
+  background-color: var(--color-primary);
+  color: white;
+  align-self: flex-end; /* Alignés à droite */
+  border-bottom-right-radius: 0.25rem; /* Coin inférieur droit moins arrondi */
+}
+
+.chatbot-input {
+  display: flex;
+  padding: 0.75rem;
+  border-top: 1px solid var(--color-gray-light);
+  flex-shrink: 0; /* Empêche de rétrécir */
+}
+
+.chatbot-input input {
+  flex: 1; /* Prend l'espace disponible */
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--color-gray-light);
+  border-radius: 1.5rem; /* Coins arrondis */
+  margin-right: 0.5rem;
+  font-size: 1rem;
+}
+.chatbot-input input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px var(--color-primary-light); /* Halo coloré au focus */
+}
+
+
+.chatbot-input button {
+  background-color: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: 1.5rem; /* Coins arrondis */
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: var(--transition-fast);
+  flex-shrink: 0; /* Empêche de rétrécir */
+}
+.chatbot-input button:hover {
+    background-color: var(--color-primary-darker);
+}
+.chatbot-input button:focus {
+     outline: none;
+      box-shadow: 0 0 0 2px var(--color-primary-light); /* Indicateur de focus */
+}
+
+
+/* Responsive spécifique pour le chatbot */
+@media (max-width: 480px) {
+    .chatbot-container {
+        width: 95%; /* Prend presque toute la largeur */
+        right: 2.5%; /* Centre plus ou moins */
+        bottom: 80px; /* Remonte un peu si le bouton est grand */
+        height: 70vh; /* Hauteur relative */
+    }
+     .chatbot-btn {
+         width: 50px; height: 50px; font-size: 1.3rem; /* Bouton plus petit */
+         bottom: 15px; right: 15px;
+     }
+     .chatbot-container { bottom: 75px; right: 15px; }
+}
+
+
+/* Footer */
+.footer {
+  padding: 4rem 0 2rem;
+  background-color: #1f2937; /* Un gris très foncé/noir */
+  color: var(--color-white);
+  margin-top: 3rem; /* Espace au-dessus du footer */
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem; /* Espacement entre les colonnes */
+  margin-bottom: 3rem;
+}
+
+.footer-column h3 {
+  color: var(--color-white); /* Titres du footer en blanc */
+  margin-bottom: 1.5rem;
+  font-size: 1.25rem;
+}
+
+.footer-links {
+  list-style: none;
+  margin: 0; padding: 0;
+}
+
+.footer-links li {
+  margin-bottom: 0.75rem; /* Espace entre les liens du footer */
+}
+
+.footer-links a {
+  color: rgba(255, 255, 255, 0.8); /* Liens légèrement transparents */
+  transition: color var(--transition-fast);
+}
+
+.footer-links a:hover {
+  color: var(--color-white); /* Liens deviennent blancs au survol */
+  text-decoration: underline;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1); /* Ligne séparatrice */
+  color: rgba(255, 255, 255, 0.6); /* Texte copyright plus clair */
+  font-size: 0.9rem;
+}
+
+/* Responsive Footer (intégré à la media query 991px ou 768px si elle est plus grande) */
+/* Si le footer grid n'est pas géré par auto-fit/minmax */
+/* @media (max-width: 768px) { */
+/*     .footer-grid { grid-template-columns: 1fr; } */
+/*     .footer-column { text-align: center; } */
+/*     .footer-links { */
+/*         display: flex; flex-direction: column; align-items: center; gap: 0.5rem; */
+/*     } */
+/*      .footer-links li { margin-bottom: 0; } */
+/* } */

@@ -3,721 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Partenaires & Accompagnement</title>
+    <!-- Titre de la page spécifique - Garde EmploiAvenir -->
+    <title>Nos partenaires - EmploiAvenir</title>
+    <!-- Description adaptée pour cette page -->
+    <meta name="description" content="Découvrez les partenaires d'EmploiAvenir pour l'emploi, la formation et l'accompagnement, et prenez rendez-vous facilement.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Lien vers le fichier CSS externe - INDISPENSABLE -->
+    <!-- Assurez-vous que ce fichier style.css existe et contient TOUS les styles nécessaires, y compris ceux qui étaient dans le bloc <style> retiré ici. -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Lien CDN pour Font Awesome (si tu utilises les icônes <i class="fas ...">) -->
+    <!-- Conserve celui que vous avez fourni -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <style>
-        /* ============================================= */
-        /* === Variables Globales & Reset === */
-        /* ============================================= */
-        :root {
-            --color-primary: #8B5CF6;
-            --color-primary-darker: #7C3AED;
-            --color-primary-light: #EDE9FE;
-            --color-secondary: #22C55E;
-            --color-dark: #1A1F2C;
-            --color-light: #F9FAFB;
-            --color-gray: #6B7280;
-            --color-gray-light: #E5E7EB;
-            --color-border-input: #d1d5db;
-            --color-destructive: #dc2626;
-            --color-destructive-hover: #b91c1c;
-            --color-white: #ffffff;
-            --color-blue-link: #007bff;
 
-            --font-primary: 'Inter', system-ui, -apple-system, sans-serif;
-            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
-            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.07);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            --transition: all 0.3s ease;
-            --radius: 8px;
-        }
+    <!-- Lovable script tag for Select feature -->
+    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    <!-- Le bloc <style> intégré a été COMPLÈTEMENT SUPPRIMÉ ici. -->
 
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: var(--font-primary);
-            color: var(--color-dark);
-            background-color: var(--color-light);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* ============================================= */
-        /* === Styles Typographiques Globaux === */
-        /* ============================================= */
-        h1, h2, h3, h4, h5, h6 {
-            font-weight: 700;
-            line-height: 1.2;
-            margin-bottom: 1rem;
-        }
-
-        h1 {
-            font-size: 1.875rem;
-            font-weight: 700;
-            margin-bottom: 2rem;
-        }
-
-        h2.section-title {
-            font-size: clamp(1.75rem, 3vw, 2.5rem);
-            position: relative;
-            margin-bottom: 3rem;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: -10px;
-            height: 4px;
-            width: 60px;
-            background-color: var(--color-primary);
-        }
-        .section-title.centered { text-align: center; }
-        .section-title.centered::after { left: 50%; transform: translateX(-50%); }
-
-        p {
-            margin-bottom: 1rem;
-            color: var(--color-gray);
-        }
-        p:last-child {
-            margin-bottom: 0;
-        }
-
-        a {
-            text-decoration: none;
-            color: var(--color-blue-link);
-            transition: var(--transition);
-        }
-        a:hover {
-            color: var(--color-primary-darker);
-            text-decoration: underline;
-        }
-
-        img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        /* ============================================= */
-        /* === Layout & Container === */
-        /* ============================================= */
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        main > .container {
-            padding-top: 2rem;
-            padding-bottom: 2rem;
-        }
-
-        /* ============================================= */
-        /* === Header / Navigation === */
-        /* ============================================= */
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: var(--color-white);
-            padding: 1rem 0;
-            box-shadow: var(--shadow-sm);
-            z-index: 100;
-            transition: var(--transition);
-        }
-
-        .header.scrolled {
-            padding: 0.5rem 0;
-            box-shadow: var(--shadow);
-        }
-
-        .header .container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1200px;
-            padding: 0 2rem;
-        }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--color-dark);
-        }
-
-        .logo span {
-            color: var(--color-primary);
-        }
-
-        nav {
-            /* Styles spécifiques pour la balise nav */
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: var(--color-dark);
-            font-weight: 500;
-            position: relative;
-            padding: 0.25rem 0;
-            text-decoration: none;
-        }
-        .nav-links a:hover {
-            color: var(--color-primary);
-            text-decoration: none;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: 0;
-            left: 0;
-            background-color: var(--color-primary);
-            transition: var(--transition);
-        }
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .nav-links a.active {
-            color: var(--color-primary);
-            font-weight: 600;
-        }
-        .nav-links a.active::after {
-            width: 100%;
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 1.5rem;
-            color: var(--color-dark);
-        }
-
-        /* ============================================= */
-        /* === Buttons === */
-        /* ============================================= */
-        .button, .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.75rem 1.5rem;
-            font-size: 0.9rem;
-            font-weight: 600;
-            text-align: center;
-            border: 1px solid transparent;
-            border-radius: var(--radius);
-            cursor: pointer;
-            transition: var(--transition);
-            white-space: nowrap;
-            gap: 0.5rem;
-            text-decoration: none;
-            line-height: 1.2;
-        }
-        .button:focus, .btn:focus {
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3);
-        }
-        .button i, .btn i {
-            font-size: 0.9em;
-            line-height: 1;
-        }
-
-        .button.button-primary, .btn {
-            background-color: var(--color-primary);
-            color: var(--color-white);
-            border-color: var(--color-primary);
-        }
-        .button.button-primary:hover, .btn:hover {
-            background-color: var(--color-primary-darker);
-            border-color: var(--color-primary-darker);
-            color: var(--color-white);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow);
-        }
-
-        .button.button-secondary {
-            background-color: var(--color-dark);
-            color: var(--color-white);
-            border-color: var(--color-dark);
-        }
-        .button.button-secondary:hover {
-            background-color: #374151;
-            border-color: #374151;
-        }
-
-        .button.button-outline, .btn.btn-outline {
-            background-color: transparent;
-            border: 2px solid var(--color-primary);
-            color: var(--color-primary);
-        }
-        .button.button-outline:hover, .btn.btn-outline:hover {
-            background-color: var(--color-primary);
-            color: var(--color-white);
-        }
-
-        .button.button-destructive {
-            background-color: var(--color-destructive);
-            color: var(--color-white);
-            border-color: var(--color-destructive);
-        }
-        .button.button-destructive:hover {
-            background-color: var(--color-destructive-hover);
-            border-color: var(--color-destructive-hover);
-        }
-
-        .button-full { width: 100%; }
-
-        .button-large {
-            padding: 0.8rem 1.5rem;
-            font-size: 1rem;
-        }
-
-        .button-icon {
-            padding: 0.5rem;
-            width: 2.25rem;
-            height: 2.25rem;
-            flex-shrink: 0;
-        }
-        .button-icon i { margin: 0; font-size: 1em; }
-
-        .icon-text-button .icon {
-            margin-right: 0.5rem;
-            width: 1.25em;
-            font-size: 1em;
-            line-height: 1;
-        }
-
-        /* ============================================= */
-        /* === Cards === */
-        /* ============================================= */
-        .card {
-            background-color: var(--color-white);
-            border: 1px solid var(--color-gray-light);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-sm);
-            overflow: hidden;
-            margin-bottom: 1.5rem;
-            transition: var(--transition);
-        }
-        .card:hover {
-            /* Optional: Elevation au survol */
-            /* transform: translateY(-3px); */
-            /* box-shadow: var(--shadow); */
-        }
-
-        .card-header {
-            padding: 1rem 1.5rem;
-            border-bottom: 1px solid var(--color-gray-light);
-        }
-        .card-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--color-dark);
-            margin-bottom: 0.25rem;
-        }
-        .card-description {
-            font-size: 0.875rem;
-            color: var(--color-gray);
-            margin-bottom: 0;
-        }
-        .card-content {
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-        .card-footer {
-            padding: 1rem 1.5rem;
-            background-color: var(--color-light);
-            border-top: 1px solid var(--color-gray-light);
-            display: flex;
-            gap: 0.75rem;
-            justify-content: flex-start;
-        }
-
-        /* Cartes Partenaires */
-        .partner-card .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            padding-bottom: 0.5rem;
-            border-bottom: none;
-        }
-        .partner-card .logo {
-            width: 48px; height: 48px; border-radius: 6px;
-            overflow: hidden; border: 1px solid #eee; display: flex;
-            align-items: center; justify-content: center; background-color: #f0f0f0;
-            flex-shrink: 0;
-        }
-        .partner-card .logo img { max-width: 100%; max-height: 100%; object-fit: contain; }
-        .partner-card .card-content { padding-top: 0; gap: 1rem; }
-        .partner-card .description { color: var(--color-gray); font-size: 0.9rem; margin-bottom: 0.5rem;}
-        .partner-card .contact-info { font-size: 0.875rem; display: flex; flex-direction: column; gap: 0.5rem; }
-        .partner-card .contact-info div { display: flex; align-items: center; }
-        .partner-card .contact-info i { width: 16px; margin-right: 0.5rem; color: var(--color-gray); text-align: center; }
-        .partner-card .services p { font-weight: 500; margin-bottom: 0.5rem; }
-        .partner-card .services ul { list-style: disc; padding-left: 1.25rem; font-size: 0.875rem; display: flex; flex-direction: column; gap: 0.25rem; }
-
-        /* Cartes Rendez-vous */
-        .appointment-card { padding: 1.5rem; }
-        .appointment-details { display: flex; flex-direction: column; justify-content: space-between; align-items: flex-start; gap: 1rem; }
-        @media (min-width: 768px) { .appointment-details { flex-direction: row; align-items: center; } }
-        .appointment-info h3 { font-size: 1.125rem; font-weight: 600; }
-        .appointment-info .date-time { display: flex; align-items: center; color: var(--color-gray); font-size: 0.9rem; margin-top: 0.25rem; }
-        .appointment-info .date-time i { width: 16px; margin-right: 0.25rem; }
-        .appointment-info .badge { margin-top: 0.5rem; }
-        .appointment-card .notes { margin-top: 1rem; padding: 0.75rem; background-color: #f3f4f6; border-radius: 6px; font-size: 0.875rem; border: 1px solid var(--color-gray-light); }
-
-        /* Cartes Candidatures */
-        .application-card .application-card-content { display: flex; flex-direction: column; }
-        @media (min-width: 768px) { .application-card .application-card-content { flex-direction: row; align-items: stretch; } }
-        .application-card-main { padding: 1.5rem; flex-grow: 1; }
-        .application-card-header { display: flex; flex-direction: column; justify-content: space-between; gap: 1rem; margin-bottom: 1rem; }
-        @media (min-width: 768px) { .application-card-header { flex-direction: row; align-items: center; } }
-        .application-card-title { font-size: 1.125rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; }
-        .application-card-title i { color: var(--color-gray); font-size: 0.9em; }
-        .application-card-company { display: flex; align-items: center; color: var(--color-gray); margin-top: 0.25rem; font-size: 0.9rem; }
-        .application-card-company i { width: 1rem; margin-right: 0.25rem; font-size: 0.9em; }
-        .application-card-meta { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
-        .application-card-date { display: flex; align-items: center; color: var(--color-gray); font-size: 0.9rem; }
-        .application-card-date i { width: 1rem; margin-right: 0.25rem; font-size: 0.9em; }
-        .application-card-notes { font-size: 0.875rem; color: var(--color-gray); margin-top: 0.5rem; }
-        .application-card-contact { margin-top: 0.75rem; font-size: 0.875rem; }
-        .application-card-contact p { margin: 0.1rem 0; }
-        .application-card-contact strong { font-weight: 600; }
-        .application-card-actions { padding: 1rem 1.5rem; display: flex; flex-direction: row; gap: 0.75rem; justify-content: flex-end; background-color: var(--color-light); }
-        @media (min-width: 768px) { .application-card-actions { flex-direction: column; border-left: 1px solid var(--color-gray-light); justify-content: center; width: 12rem; flex-shrink: 0; background-color: transparent; } }
-        .application-card-actions .action-buttons { display: flex; gap: 0.5rem; }
-
-        /* État vide */
-        .empty-card { padding: 2.5rem; text-align: center; }
-        .empty-card p { color: var(--color-gray); font-size: 1.125rem; margin-bottom: 1rem; }
-        .empty-card .button { margin-left: auto; margin-right: auto; }
-
-
-        /* ============================================= */
-        /* === Forms (Inputs, Labels, Selects, Groups) === */
-        /* ============================================= */
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
-        .form-group:last-child {
-            margin-bottom: 0;
-        }
-
-        label {
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: #374151;
-        }
-
-        input[type="text"],
-        input[type="email"],
-        input[type="tel"],
-        input[type="password"],
-        input[type="search"],
-        input[type="date"],
-        input[type="time"],
-        select {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border: 1px solid var(--color-border-input);
-            border-radius: var(--radius);
-            font-size: 1rem;
-            transition: var(--transition);
-            background-color: var(--color-white);
-            color: var(--color-dark);
-            line-height: 1.5;
-        }
-        input:focus, select:focus {
-            outline: none;
-            border-color: var(--color-primary);
-            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
-        }
-
-        select {
-            appearance: none;
-            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%236B7280%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
-            background-repeat: no-repeat;
-            background-position: right 0.8em top 50%;
-            background-size: 0.7em auto;
-            padding-right: 2.5em;
-        }
-
-        .form-grid {
-            display: grid; grid-template-columns: 1fr; gap: 1rem;
-        }
-        @media (min-width: 768px) { .form-grid { grid-template-columns: 1fr 1fr; } }
-
-        .form-grid-cols-2 {
-            display: grid; grid-template-columns: 1fr; gap: 1rem;
-        }
-        @media (min-width: 768px) { .form-grid-cols-2 { grid-template-columns: 1fr 1fr; } }
-
-        .appointment-form-fields {
-            display: flex; flex-direction: column; gap: 1rem;
-        }
-
-        /* ============================================= */
-        /* === Badges === */
-        /* ============================================= */
-        .badge {
-            display: inline-block;
-            padding: 0.25em 0.6em;
-            font-size: 0.75rem;
-            font-weight: 500;
-            line-height: 1;
-            text-align: center;
-            white-space: nowrap;
-            vertical-align: baseline;
-            border-radius: 6px;
-            border: 1px solid transparent;
-        }
-        /* Catégories Partenaires */
-        .badge-emploi { background-color: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
-        .badge-formation { background-color: #fefce8; color: #854d0e; border-color: #fef08a; }
-        .badge-insertion { background-color: #ecfdf5; color: #065f46; border-color: #a7f3d0; }
-        .badge-accompagnement { background-color: #f5f3ff; color: #5b21b6; border-color: #ddd6fe; }
-        .badge-aide { background-color: #fef2f2; color: #991b1b; border-color: #fecaca; }
-        /* Type Rendez-vous */
-        .badge-presentiel { background-color: #dbeafe; color: #1e40af; }
-        .badge-telephonique { background-color: #dcfce7; color: #166534; }
-        .badge-visioconference { background-color: #f3e8ff; color: #581c87; }
-        /* Statut Document */
-        .status-badge.completed { background-color: #dcfce7; color: #166534; border: 1px solid #a7f3d0; }
-        .status-badge.draft { background-color: #ffedd5; color: #9a3412; border: 1px solid #fed7aa; }
-        /* Statut Candidature */
-        .badge.status-cv-envoye { background-color: #dbeafe; color: #1e40af; }
-        .badge.status-cv-retenu { background-color: #e0e7ff; color: #3730a3; }
-        .badge.status-entretien-prevu { background-color: #f3e8ff; color: #581c87; }
-        .badge.status-entretien-passe { background-color: #ffedd5; color: #9a3412; }
-        .badge.status-offre-recue { background-color: #fef9c3; color: #854d0e; }
-        .badge.status-offre-acceptee { background-color: #dcfce7; color: #166534; }
-        .badge.status-refus { background-color: #fee2e2; color: #991b1b; }
-
-        /* ============================================= */
-        /* === Tabs === */
-        /* ============================================= */
-        .tabs-list {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            margin-bottom: 1.5rem;
-            border-bottom: 1px solid var(--color-gray-light);
-        }
-        .tab-button {
-            padding: 0.75rem 1rem;
-            background-color: transparent;
-            border: none;
-            border-bottom: 2px solid transparent;
-            font-size: 1rem;
-            font-weight: 500;
-            color: var(--color-gray);
-            cursor: pointer;
-            transition: color 0.2s, border-color 0.2s;
-        }
-        .tab-button:hover { color: var(--color-dark); }
-        .tab-button.active {
-            color: var(--color-blue-link);
-            border-bottom-color: var(--color-blue-link);
-            font-weight: 600;
-        }
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-
-        /* ============================================= */
-        /* === Filters === */
-        /* ============================================= */
-        .filters { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 1.5rem; }
-        @media (min-width: 768px) {
-            .filters { flex-direction: row; }
-            .filter-item.search-filter { flex-grow: 1; }
-            .filter-item.category-filter { width: 200px; flex-shrink: 0;}
-        }
-
-        /* Switch Component (Page Profil) */
-        .setting-item { display: flex; align-items: center; justify-content: space-between; }
-        .setting-item-label { display: flex; flex-direction: column; gap: 0.125rem; }
-        .setting-item-label p { font-size: 0.875rem; color: var(--color-gray); margin: 0; }
-        .switch-container { position: relative; display: inline-block; width: 44px; height: 24px; flex-shrink: 0;}
-        .switch-container input { opacity: 0; width: 0; height: 0; }
-        .switch-slider { position: absolute; cursor: pointer; inset: 0; background-color: #ccc; transition: .4s; border-radius: 24px; }
-        .switch-slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
-        input:checked + .switch-slider { background-color: var(--color-primary); }
-        input:focus + .switch-slider { box-shadow: 0 0 1px var(--color-primary); }
-        input:checked + .switch-slider:before { transform: translateX(20px); }
-
-        /* Separator */
-        hr.separator { border: none; height: 1px; background-color: var(--color-gray-light); margin: 1rem 0; }
-
-        /* Dialog / Modal */
-        .dialog { position: fixed; inset: 0; z-index: 50; display: none; opacity: 0; transition: opacity 0.2s ease-in-out; background-color: rgba(0, 0, 0, 0.5); }
-        .dialog.open { display: flex; opacity: 1; }
-        .dialog-content { position: relative; margin: auto; background-color: var(--color-white); border-radius: var(--radius); padding: 1.5rem; max-width: 90%; width: 32rem; max-height: 90vh; overflow-y: auto; display: flex; flex-direction: column; gap: 1rem; box-shadow: var(--shadow-lg); transform: translateY(-20px); transition: transform 0.3s ease; }
-        .dialog.open .dialog-content { transform: translateY(0); }
-        .dialog-header { position: relative; }
-        .dialog-title { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--color-dark);}
-        .dialog-description { font-size: 0.875rem; color: var(--color-gray); margin-bottom: 1rem; }
-        .dialog-body { display: flex; flex-direction: column; gap: 1rem; padding: 1rem 0; }
-        .dialog-footer { display: flex; justify-content: flex-end; gap: 0.75rem; margin-top: 1rem; border-top: 1px solid var(--color-gray-light); padding-top: 1rem; }
-        #close-dialog-btn-x { position: absolute; top: -5px; right: -5px; background: none; border: none; font-size: 1.8rem; cursor: pointer; color: var(--color-gray); line-height: 1; padding: 0.5rem; }
-        #close-dialog-btn-x:hover { color: var(--color-dark); }
-
-        /* Toast Notifications */
-        .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(10px); padding: 0.8rem 1.2rem; border-radius: var(--radius); box-shadow: var(--shadow-lg); z-index: 1000; font-size: 0.875rem; font-weight: 500; min-width: 200px; text-align: center; display: block; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s linear 0.3s; }
-        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); visibility: visible; transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s linear 0s; }
-        .toast-success { background-color: #dcfce7; color: #166534; border: 1px solid #a7f3d0; }
-        .toast-error { background-color: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
-
-        /* Grid Layouts Spécifiques */
-        .partner-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
-        @media (min-width: 768px) { .partner-grid { grid-template-columns: repeat(2, 1fr); } }
-
-        .profile-grid { display: grid; grid-template-columns: 1fr; gap: 2rem; }
-        @media (min-width: 768px) { .profile-grid { grid-template-columns: 2fr 1fr; } }
-        .profile-column-main
-
-        .profile-column-main, .profile-column-sidebar { display: flex; flex-direction: column; gap: 1.5rem; }
-        .final-actions { margin-top: 2rem; display: flex; justify-content: flex-end; }
-
-        .application-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
-
-        .appointment-grid { display: flex; flex-direction: column; gap: 1rem; }
-
-        /* Page Documents Spécifique */
-        .documents-page-title {
-            font-size: 1.75rem; font-weight: 700; margin-bottom: 1.5rem;
-            text-align: center; color: var(--color-dark);
-        }
-        .main-actions { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem; max-width: 42rem; margin-left: auto; margin-right: auto; }
-        @media (min-width: 768px) { .main-actions { flex-direction: row; } }
-        .documents-content-area { max-width: 42rem; margin-left: auto; margin-right: auto; }
-        .info-banner { background-color: #f3f4f6; padding: 1rem; border-radius: var(--radius); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.75rem; border: 1px solid var(--color-gray-light); }
-        .info-banner p { font-weight: 500; margin: 0; flex-grow: 1; color: var(--color-dark); }
-        .info-banner .icon.primary-icon { color: var(--color-primary); }
-        .info-banner .icon.large-icon { font-size: 1.5rem; }
-        .documents-list-container { margin-top: 1rem; display: flex; flex-direction: column; gap: 1rem; }
-        .document-item { background-color: var(--color-white); border: 1px solid var(--color-gray-light); border-radius: 6px; padding: 1rem 1.25rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem; box-shadow: var(--shadow-sm); transition: box-shadow 0.2s ease-in-out; }
-        .document-item:hover { box-shadow: var(--shadow); }
-        .document-item .info { flex-grow: 1; }
-        .document-item .title { font-weight: 600; display: block; margin-bottom: 0.25rem; color: var(--color-dark); }
-        .document-item .meta { font-size: 0.85rem; color: var(--color-gray); }
-        .document-item .meta span:not(:last-child)::after { content: "•"; margin: 0 0.5em; }
-        .document-item .actions { display: flex; gap: 0.5rem; }
-        .document-item .actions a, .document-item .actions button { padding: 0.3rem 0.6rem; font-size: 0.8rem; }
-        .download-all-action { margin-top: 2rem; display: flex; justify-content: center; }
-
-        /* Homepage Specific Sections (Vide ici, car pas dans la page partenaires) */
-
-        /* Utilitaires & Messages Spéciaux */
-        .no-results { text-align: center; padding: 2.5rem; color: var(--color-gray); }
-        .no-results p { font-size: 1.1rem; margin-bottom: 1rem; }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .container { padding: 0 1rem; }
-
-            .nav-links {
-                display: none;
-                flex-direction: column;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background-color: white;
-                padding: 1rem;
-                box-shadow: var(--shadow);
-                gap: 1rem;
-                border-top: 1px solid var(--color-gray-light);
-            }
-            .nav-links.show-mobile {
-                display: flex;
-            }
-            .mobile-menu-btn { display: block; }
-
-            .hero { padding: 6rem 0 4rem; margin-top: 3.5rem; }
-            .hero-buttons, .cta-form, .newsletter-form { flex-direction: column; }
-            .features-content { flex-direction: column; gap: 2rem; }
-            .features-image { order: -1; }
-            .footer-column { text-align: center; }
-
-            .form-grid, .form-grid-cols-2, .profile-grid, .partner-grid {
-                grid-template-columns: 1fr;
-            }
-            .profile-column-sidebar { order: 1; }
-            .application-card-content { flex-direction: column; }
-            .application-card-actions { flex-direction: row; width: auto; border-left: none; justify-content: flex-end; background-color: var(--color-light); }
-            .filters { flex-direction: column; }
-            .filter-item.category-filter { width: 100%; }
-            .appointment-details { flex-direction: column; align-items: flex-start; }
-        }
-
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fade-in { animation: fadeIn 0.5s ease forwards; }
-
-    </style>
 </head>
 <body>
+  <!-- Header - Repris du code standard EmploiAvenir -->
+  <header class="header" id="header">
+    <div class="container flex justify-between items-center">
+      <!-- Lien du logo corrigé pour pointer vers l'accueil -->
+      <a href="index.html" class="logo"><span>Emploi</span>Avenir</a>
+      <nav aria-label="Navigation principale">
+        <!-- Ajout de l'ID pour le JS du menu mobile -->
+        <ul class="nav-links" id="mainNavLinks">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="MonParcours.html">Mon Parcours</a></li>
+          <li><a href="MesCandidature.html">Mes Candidatures</a></li>
+          <!-- Marquer Nos partenaires comme actif sur cette page -->
+          <li><a href="Partenaires.html" class="active" aria-current="page">Nos partenaires</a></li>
+          <li><a href="Documents.html">Mes documents</a></li>
+          <li><a href="Profil.html">Profil</a></li>
+          <!-- Laissez ce commentaire ou ajoutez un bouton/lien avec id="loginBtn" si le JS doit l'ouvrir -->
+          <!-- Ex: <li><button type="button" class="btn btn-outline" id="loginBtn" aria-controls="loginModal">Connexion</button></li> -->
+        </ul>
+      </nav>
+      <!-- Bouton menu mobile - Attributs ARIA améliorés + lien vers l'ID du menu -->
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Ouvrir le menu de navigation" aria-expanded="false" aria-controls="mainNavLinks">☰</button>
+    </div>
+  </header>
 
-    <header class="header">
-        <div class="container">
-            <a href="#" class="logo"> Emploi <span>Avenir</span></a>
-            <nav>
-                <ul class="nav-links">
-                    <li><a href="index.html">Accueil</a></li>
-                    <li><a href="MonParcours.html">Mon Parcours</a></li>
-                    <li><a href="MesCandidature.html">Mes Candidatures</a></li>
-                    <li><a href="#" class="active">Nos partenaires</a></li>
-                    <li><a href="Documents.html">Mes documents</a></li>
-                    <li><a href="Profil.html">Profil</a></li>
-                </ul>
-            </nav>
-            <button class="mobile-menu-btn"><i class="fas fa-bars"></i></button>
-        </div>
-    </header>
-
+    <!-- Contenu principal de la page Partenaires -->
     <main>
-        <div class="container">
-            <h1 class="text-2xl font-bold mb-6">Partenaires & Accompagnement</h1>
+        <!-- Utilisation de la classe container standard -->
+        <div class="container py-8"> <!-- Ajout padding vertical -->
+            <!-- Titre principal - H1 amélioré pour la page -->
+            <h1 class="text-center mb-6">Nos partenaires & Accompagnement</h1>
 
-            <div class="tabs">
-                <div class="tabs-list">
-                    <button class="tab-button active" data-tab="partners">Trouver un partenaire</button>
-                    <button class="tab-button" data-tab="appointments">Mes rendez-vous</button>
+            <!-- Section des Onglets -->
+            <section class="tabs" aria-label="Sections Trouver un partenaire et Mes rendez-vous">
+                <div class="tabs-list" role="tablist">
+                    <button type="button" class="tab-button active" data-tab="partners" role="tab" aria-selected="true" aria-controls="partners-tab-content" id="tab-partners">Trouver un partenaire</button>
+                    <button type="button" class="tab-button" data-tab="appointments" role="tab" aria-selected="false" aria-controls="appointments-tab-content" id="tab-appointments">Mes rendez-vous</button>
                 </div>
 
-                <div class="tab-content active" id="partners-tab-content">
-                    <div class="filters">
-                        <div class="filter-item search-filter">
-                            <input type="text" id="searchQuery" placeholder="Rechercher un partenaire..." class="w-full">
+                <!-- Contenu de l'onglet "Trouver un partenaire" -->
+                <div class="tab-content active" id="partners-tab-content" role="tabpanel" aria-labelledby="tab-partners">
+                    <!-- Section des filtres -->
+                    <section class="filters" aria-label="Filtres de partenaires">
+                         <!-- Utilisation de label pour l'accessibilité, même si placeholder -->
+                        <div class="filter-item search-filter form-group">
+                             <label for="searchQuery" class="sr-only">Rechercher par nom ou description</label>
+                             <input type="text" id="searchQuery" placeholder="Rechercher un partenaire..." class="w-full">
                         </div>
-                        <div class="filter-item category-filter">
+                         <!-- Utilisation de label pour l'accessibilité -->
+                        <div class="filter-item category-filter form-group">
+                             <label for="categoryFilter" class="sr-only">Filtrer par catégorie</label>
                             <select id="categoryFilter" class="w-full">
                                 <option value="all">Toutes les catégories</option>
                                 <option value="emploi">Recherche d'emploi</option>
@@ -727,22 +86,59 @@
                                 <option value="aide">Aide aux démarches</option>
                             </select>
                         </div>
-                    </div>
+                    </section>
 
+                    <!-- Grille des partenaires -->
                     <div class="partner-grid" id="partner-list">
                         <!-- Cartes partenaires seront ajoutées ici par JavaScript -->
+                        <!-- Structure attendue par le JS (avec améliorations a11y) : -->
+                        <!--
+                         <article class="card partner-card" data-partner-id="...">
+                            <div class="card-header">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h3 class="card-title">Nom Partenaire</h3>
+                                        <span class="badge badge-categorie">Catégorie</span>
+                                    </div>
+                                    <div class="logo">
+                                         <img src="url-logo.png" alt="Logo Nom Partenaire" loading="lazy">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <p class="description">Description du partenaire.</p>
+                                <div class="contact-info">
+                                    <div><i class="fas fa-map-marker-alt" aria-hidden="true"></i>Adresse</div>
+                                    <div><i class="fas fa-phone" aria-hidden="true"></i>Téléphone</div>
+                                    <div><i class="fas fa-envelope" aria-hidden="true"></i>Email</div>
+                                    <div><i class="fas fa-globe" aria-hidden="true"></i><a href="#" target="_blank">Site web</a></div>
+                                </div>
+                                <div class="services">
+                                    <p>Services proposés :</p>
+                                    <ul>
+                                        <li>Service 1</li>
+                                        <li>Service 2</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <button type="button" class="button button-primary take-appointment-btn" data-partner-id="...">Prendre rendez-vous</button>
+                            </div>
+                        </article>
+                         -->
                     </div>
 
-                    <div class="card mt-10" id="appointment-form">
+                    <!-- Formulaire de prise de rendez-vous -->
+                    <section class="card mt-10" id="appointment-form" aria-labelledby="appointmentFormTitle">
                         <div class="card-header">
-                            <h2 class="card-title">Prendre rendez-vous</h2>
+                            <h2 class="card-title" id="appointmentFormTitle">Prendre rendez-vous</h2>
                             <p class="card-description">Remplissez ce formulaire pour demander un rendez-vous avec un partenaire</p>
                         </div>
                         <div class="card-content">
                             <form id="appointmentForm" class="space-y-4">
                                 <div class="form-group">
-                                    <label for="partner">Partenaire</label>
-                                    <select id="partner" class="w-full">
+                                    <label for="partner">Partenaire <span aria-hidden="true">*</span></label>
+                                    <select id="partner" name="partnerId" required>
                                         <option value="">Choisir un partenaire</option>
                                         <!-- Options seront ajoutées ici par JavaScript -->
                                     </select>
@@ -750,18 +146,18 @@
 
                                 <div class="form-grid">
                                     <div class="form-group">
-                                        <label for="date">Date</label>
-                                        <input type="date" id="date" class="w-full" min="">
+                                        <label for="date">Date souhaitée <span aria-hidden="true">*</span></label>
+                                        <input type="date" id="date" name="date" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="time">Heure</label>
-                                        <input type="time" id="time" class="w-full">
+                                        <label for="time">Heure souhaitée <span aria-hidden="true">*</span></label>
+                                        <input type="time" id="time" name="time" required>
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="type">Type de rendez-vous</label>
-                                    <select id="type" class="w-full">
+                                    <label for="type">Type de rendez-vous <span aria-hidden="true">*</span></label>
+                                    <select id="type" name="type" required>
                                         <option value="présentiel">Présentiel</option>
                                         <option value="téléphonique">Téléphonique</option>
                                         <option value="visioconférence">Visioconférence</option>
@@ -770,372 +166,162 @@
 
                                 <div class="form-group">
                                     <label for="notes">Notes (optionnel)</label>
-                                    <input type="text" id="notes" placeholder="Précisions sur votre demande..." class="w-full">
+                                    <input type="text" id="notes" name="notes" placeholder="Précisions sur votre demande...">
                                 </div>
 
+                                <!-- Bouton de soumission du formulaire -->
                                 <button type="submit" class="button button-primary w-full">Confirmer le rendez-vous</button>
                             </form>
                         </div>
-                    </div>
+                    </section>
                 </div>
 
-                <div class="tab-content" id="appointments-tab-content">
+                <!-- Contenu de l'onglet "Mes rendez-vous" -->
+                <div class="tab-content" id="appointments-tab-content" role="tabpanel" aria-labelledby="tab-appointments">
                     <div class="space-y-6">
                         <h2 class="text-xl font-semibold">Mes rendez-vous prévus</h2>
 
+                        <!-- Grille des rendez-vous -->
                         <div class="appointment-grid" id="appointment-list">
                             <!-- Rendez-vous seront ajoutés ici par JavaScript -->
+                            <!-- Structure attendue par le JS (avec améliorations a11y) : -->
+                            <!--
+                             <article class="card appointment-card" data-appointment-id="...">
+                                <div class="appointment-details">
+                                    <div class="appointment-info">
+                                        <h3>Nom Partenaire</h3>
+                                        <div class="date-time">
+                                            <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                                            <span>Date à Heure</span>
+                                        </div>
+                                        <span class="badge badge-type-rdv">Type</span>
+                                    </div>
+                                     <button type="button" class="button button-destructive cancel-appointment-btn" data-appointment-id="...">Annuler</button>
+                                </div>
+                                <div class="notes">Notes si présentes</div>
+                            </article>
+                             -->
                         </div>
+                         <!-- Message si pas de rendez-vous -->
+                         <div class="card empty-card" id="no-appointments-message" style="display: none;">
+                             <div class="card-content">
+                                 <p>Vous n'avez pas encore de rendez-vous prévus.</p>
+                                 <!-- Bouton pour basculer vers l'onglet partenaires -->
+                                 <button type="button" class="button button-primary" id="go-to-partners-tab">Prendre un rendez-vous</button>
+                             </div>
+                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
         </div>
     </main>
 
+    <!-- Footer - Repris du code standard EmploiAvenir -->
     <footer class="footer">
         <div class="container">
-            <div class="footer-grid">
-                <div class="footer-column">
-                    <h3>À propos</h3>
-                    <p>Association d'aide humanitaire...</p>
-                </div>
-                <div class="footer-column">
-                    <h3>Liens utiles</h3>
-                    <ul class="footer-links">
-                        <li><a href="#">Accueil</a></li>
-                        <li><a href="#">Partenaires</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h3>Contact</h3>
-                    <p>Email: contact@example.com</p>
-                    <p>Téléphone: 01 23 45 67 89</p>
-                </div>
+          <div class="footer-grid">
+            <div class="footer-column">
+              <h3>EmploiAvenir</h3>
+              <p>Votre partenaire pour trouver l'emploi de vos rêves et développer votre carrière professionnelle.</p>
             </div>
-            <div class="footer-bottom">
-                <p>© 2024 Red Cross. Tous droits réservés.</p>
+
+            <div class="footer-column">
+              <h3>Liens rapides</h3>
+              <ul class="footer-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="MonParcours.html">Mon Parcours</a></li>
+                <li><a href="MesCandidature.html">Mes Candidatures</a></li>
+                <li><a href="Partenaires.html">Nos partenaires</a></li>
+                <li><a href="Documents.html">Mes documents</a></li>
+                <li><a href="Profil.html">Profil</a></li>
+              </ul>
             </div>
+
+            <div class="footer-column">
+              <h3>Services</h3>
+              <ul class="footer-links">
+                <li><a href="#">Création de CV</a></li> <!-- Ces liens pourraient pointer vers des sections de MonParcours.html plus tard -->
+                <li><a href="#">Lettres de motivation</a></li>
+                <li><a href="#">Coaching</a></li>
+                <li><a href="#">Préparation aux entretiens</a></li>
+                <li><a href="#">Partenaires entreprises</a></li>
+              </ul>
+            </div>
+
+            <div class="footer-column">
+              <h3>Contact</h3>
+              <ul class="footer-links">
+                <li><a href="tel:+33123456789">+33 1 23 45 67 89</a></li>
+                <li><a href="mailto:contact@emploiavenir.fr">contact@emploiavenir.fr</a></li>
+                <li>12 rue de l'Emploi, 75001 Paris</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="footer-bottom">
+            <p>© 2024 EmploiAvenir. Tous droits réservés.</p>
+          </div>
         </div>
     </footer>
 
-    <div id="toast-container" style="position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 1000;"></div>
+    <!-- Toast Container - Conserve l'original -->
+    <!-- Style de base pour le toast container (à déplacer dans style.css) -->
+    <!-- La div elle-même est essentielle pour que le JS fonctionne -->
+    <div id="toast-container"></div>
 
-    <script>
-        const partnersData = [
-            {
-                id: '1',
-                name: 'France Travail',
-                category: 'emploi',
-                description: "L'organisme public pour l'emploi en France",
-                services: ["Accompagnement personnalisé", "Offres d'emploi", "Ateliers de recherche"],
-                address: '15 rue de Paris, 75001 Paris',
-                phone: '3949',
-                email: 'contact@francetravail.fr',
-                website: 'https://www.francetravail.fr',
-                logoUrl: 'Images/FranceTravail.webp' // Utilisez un placeholder temporaire
-            },
-            {
-                id: '2',
-                name: 'Croix-Rouge française',
-                category: 'accompagnement',
-                description: "Association d'aide humanitaire",
-                services: ['Accompagnement social', 'Aide alimentaire', 'Insertion professionnelle'],
-                address: '86 rue Didot, 75014 Paris',
-                phone: '01 44 43 11 00',
-                email: 'contact@croix-rouge.fr',
-                website: 'https://www.croix-rouge.fr',
-                logoUrl: 'Images/CroixRougeFR.png'
-            },
-            {
-                id: '3',
-                name: 'AFPA',
-                category: 'formation',
-                description: 'Centre de formation professionnelle pour adultes',
-                services: ['Formation professionnelle', 'Certification', 'Reconversion'],
-                address: '3 rue Franklin, 93100 Montreuil',
-                phone: '3936',
-                email: 'contact@afpa.fr',
-                website: 'https://www.afpa.fr',
-                logoUrl: 'Images/Afpa.png'
-            },
-            {
-                id: '4',
-                name: 'Mission Locale',
-                category: 'insertion',
-                description: 'Accompagnement des jeunes dans leur insertion professionnelle',
-                services: ["Conseil en orientation", "Aide à la recherche d'emploi", 'Accompagnement social'],
-                address: '34 rue Nationale, 75013 Paris',
-                phone: '01 44 97 28 85',
-                website: 'https://www.mission-locale.fr',
-                logoUrl: 'Images/MissionLocale.png'
-            }
-        ];
 
-        const appointmentsData = [
-            {
-                id: '1',
-                partnerId: '1',
-                partnerName: 'France Travail',
-                date: '2025-04-15',
-                time: '14:30',
-                type: 'présentiel',
-                notes: 'Apporter CV et pièce d\'identité'
-            }
-        ];
+    <!-- Login Modal - Repris des améliorations précédentes -->
+    <div id="loginModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="loginModalTitle" style="display: none;">
+        <div class="modal-content">
+          <button type="button" class="close-modal" aria-label="Fermer la fenêtre de connexion">×</button>
+          <h2 id="loginModalTitle">Connexion</h2>
+          <form id="loginForm">
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" required>
+            </div>
 
-        const categoryLabels = {
-            'insertion': 'Insertion professionnelle',
-            'emploi': "Recherche d'emploi",
-            'formation': 'Formation',
-            'accompagnement': 'Accompagnement social',
-            'aide': 'Aide aux démarches'
-        };
+            <div class="form-group">
+              <label for="password">Mot de passe</label>
+              <input type="password" id="password" name="password" required>
+            </div>
 
-        let searchQuery = '';
-        let categoryFilter = 'all';
-        let appointments = [...appointmentsData]; // Copy the data so we can filter it.
-        let newAppointment = {
-            partnerId: '',
-            date: '',
-            time: '',
-            type: 'présentiel',
-            notes: ''
-        };
+            <button type="submit" class="btn" style="width: 100%;">Se connecter</button>
 
-        function renderPartners() {
-            const partnerList = document.getElementById('partner-list');
-            partnerList.innerHTML = ''; // Clear existing content
+            <div class="text-center mt-2">
+              <a href="#" class="modal-link">Mot de passe oublié ?</a>
+            </div>
 
-            const filteredPartners = partnersData.filter(partner => {
-                const matchesSearch = partner.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                    partner.description.toLowerCase().includes(searchQuery.toLowerCase());
-                const matchesCategory = categoryFilter === 'all' || partner.category === categoryFilter;
-                return matchesSearch && matchesCategory;
-            });
+            <div class="text-center mt-2">
+              <p>Pas encore de compte ? <a href="#" class="modal-link" id="openRegisterModal">S'inscrire</a></p>
+            </div>
+          </form>
+        </div>
+    </div>
 
-            if (filteredPartners.length === 0) {
-                partnerList.innerHTML = '<div class="no-results"><p>Aucun partenaire ne correspond à votre recherche.</p></div>';
-                return;
-            }
+    <!-- Chatbot - Repris des améliorations précédentes -->
+    <button type="button" class="chatbot-btn" id="chatbotBtn" aria-label="Ouvrir l'assistant virtuel EmploiAvenir" aria-expanded="false" aria-controls="chatbotContainer">💬</button>
 
-            filteredPartners.forEach(partner => {
-                const cardHTML = `
-                    <div class="card partner-card">
-                        <div class="card-header">
-                            <div class="flex justify-between items-start">
-                                <div>
-                                    <h3 class="card-title">${partner.name}</h3>
-                                    <span class="badge badge-${partner.category}">${categoryLabels[partner.category]}</span>
-                                </div>
-                                ${partner.logoUrl ? `<div class="logo"><img src="${partner.logoUrl}" alt="Logo ${partner.name}"></div>` : ''}
-                            </div>
-                        </div>
-                        <div class="card-content">
-                            <p class="description">${partner.description}</p>
-                            <div class="contact-info">
-                                ${partner.address ? `<div><i class="fas fa-map-marker-alt"></i>${partner.address}</div>` : ''}
-                                ${partner.phone ? `<div><i class="fas fa-phone"></i>${partner.phone}</div>` : ''}
-                                ${partner.email ? `<div><i class="fas fa-envelope"></i>${partner.email}</div>` : ''}
-                                ${partner.website ? `<div><i class="fas fa-globe"></i><a href="${partner.website}" target="_blank">${partner.website}</a></div>` : ''}
-                            </div>
-                            <div class="services">
-                                <p>Services proposés :</p>
-                                <ul>
-                                    ${partner.services.map(service => `<li>${service}</li>`).join('')}
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="card-footer">
-                            <button class="button button-primary take-appointment-btn" data-partner-id="${partner.id}">Prendre rendez-vous</button>
-                        </div>
-                    </div>
-                `;
-                partnerList.innerHTML += cardHTML;
-            });
+    <div class="chatbot-container" id="chatbotContainer" role="log" aria-labelledby="chatbotHeaderTitle" style="display: none;">
+        <div class="chatbot-header">
+          <h3 id="chatbotHeaderTitle">Assistant EmploiAvenir</h3>
+          <button type="button" id="closeChatbot" aria-label="Fermer l'assistant virtuel">✖</button>
+        </div>
 
-            // Attach event listeners to the newly created buttons
-            document.querySelectorAll('.take-appointment-btn').forEach(button => {
-                button.addEventListener('click', function() {
-                    const partnerId = this.dataset.partnerId;
-                    // Set the partnerId in the newAppointment object and scroll to the form
-                    newAppointment.partnerId = partnerId;
-                    updateAppointmentFormPartnerSelection();  //Update dynamically the partner selected
-                    document.getElementById('appointment-form')?.scrollIntoView({ behavior: 'smooth' });
-                });
-            });
-        }
+        <div class="chatbot-messages" id="chatbotMessages" aria-live="polite">
+          <div class="message bot-message">
+            Bonjour ! Comment puis-je vous aider aujourd'hui ?
+          </div>
+        </div>
 
-        function renderAppointmentOptions() {
-            const partnerSelect = document.getElementById('partner');
-            partnerSelect.innerHTML = '<option value="">Choisir un partenaire</option>';  //Clear existing options
-            partnersData.forEach(partner => {
-                const option = document.createElement('option');
-                option.value = partner.id;
-                option.textContent = partner.name;
-                partnerSelect.appendChild(option);
-            });
-        }
+        <div class="chatbot-input">
+          <input type="text" id="chatbotInput" name="chatbot_message" placeholder="Écrivez votre message..." aria-label="Votre message à l'assistant EmploiAvenir">
+          <button id="sendMessage" type="button">Envoyer</button>
+        </div>
+    </div>
 
-        function renderAppointments() {
-            const appointmentList = document.getElementById('appointment-list');
-            appointmentList.innerHTML = '';  //Clear existing appointments
-            if (appointments.length === 0) {
-                appointmentList.innerHTML = `
-                    <div class="card empty-card">
-                        <div class="card-content">
-                            <p>Vous n'avez pas encore de rendez-vous prévus.</p>
-                            <button class="button button-primary" id="partners-tab-button">Prendre un rendez-vous</button>
-                        </div>
-                    </div>
-                `;
 
-                // Attach the event listener to the "Prendre un rendez-vous" button after it has been added to the DOM
-                document.getElementById('partners-tab-button')?.addEventListener('click', function() {
-                    showTab('partners');  //Switch to the "partners" tab
-                });
-                return;
-            }
-
-            appointments.forEach(appointment => {
-                const appointmentHTML = `
-                    <div class="card appointment-card">
-                        <div class="appointment-details">
-                            <div class="appointment-info">
-                                <h3>${appointment.partnerName}</h3>
-                                <div class="date-time">
-                                    <i class="fas fa-calendar-alt"></i>
-                                    <span>${new Date(appointment.date).toLocaleDateString('fr-FR')} à ${appointment.time}</span>
-                                </div>
-                                <span class="badge badge-${appointment.type}">${appointment.type}</span>
-                            </div>
-                            <button class="button button-destructive cancel-appointment-btn" data-appointment-id="${appointment.id}">Annuler</button>
-                        </div>
-                        ${appointment.notes ? `<div class="notes">${appointment.notes}</div>` : ''}
-                    </div>
-                `;
-                appointmentList.innerHTML += appointmentHTML;
-            });
-
-            // Attach event listeners to the newly created cancel buttons
-            document.querySelectorAll('.cancel-appointment-btn').forEach(button => {
-                button.addEventListener('click', function() {
-                    const appointmentId = this.dataset.appointmentId;
-                    cancelAppointment(appointmentId);
-                });
-            });
-        }
-
-        function updateAppointmentFormPartnerSelection(){
-            const partnerSelect = document.getElementById('partner');
-            partnerSelect.value = newAppointment.partnerId;  //Set the selected partner
-        }
-
-        function showTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.tab-button').forEach(button => button.classList.remove('active'));
-            document.getElementById(tabId + '-tab-content').classList.add('active');
-            document.querySelector(`.tab-button[data-tab="${tabId}"]`).classList.add('active');
-        }
-
-        function handleAppointmentSubmit(event) {
-            event.preventDefault();  //Prevent the form from submitting
-
-            const partnerId = document.getElementById('partner').value;
-            const date = document.getElementById('date').value;
-            const time = document.getElementById('time').value;
-            const type = document.getElementById('type').value;
-            const notes = document.getElementById('notes').value;
-
-            if (!partnerId || !date || !time) {
-                showToast("Formulaire incomplet: Veuillez remplir tous les champs obligatoires.", 'error');
-                return;
-            }
-
-            const partner = partnersData.find(p => p.id === partnerId);
-            if (!partner) {
-                showToast("Erreur: Partenaire introuvable.", 'error');
-                return;
-            }
-
-            const appointment = {
-                id: Date.now().toString(),
-                partnerId: partnerId,
-                partnerName: partner.name,
-                date: date,
-                time: time,
-                type: type,
-                notes: notes
-            };
-
-            appointments.push(appointment);
-
-            //Reset the form
-            document.getElementById('partner').value = '';
-            document.getElementById('date').value = '';
-            document.getElementById('time').value = '';
-            document.getElementById('type').value = 'présentiel';
-            document.getElementById('notes').value = '';
-
-            renderAppointments();
-            showTab('appointments'); //Switch automatically to "Mes rendez-vous" tab
-
-            showToast(`Rendez-vous enregistré: Votre rendez-vous avec ${partner.name} a été confirmé.`, 'success');
-        }
-
-        function cancelAppointment(appointmentId) {
-            appointments = appointments.filter(app => app.id !== appointmentId);
-            renderAppointments();  //Update the displayed appointments
-            showToast("Rendez-vous annulé: Votre rendez-vous a été annulé avec succès.", 'success');
-        }
-
-        function showToast(message, type = 'success') {
-            const toastContainer = document.getElementById('toast-container');
-            const toast = document.createElement('div');
-            toast.className = `toast toast-${type}`;
-            toast.textContent = message;
-            toastContainer.appendChild(toast);
-            setTimeout(() => {
-                toast.classList.add('show');
-                setTimeout(() => {
-                    toast.classList.remove('show');
-                    setTimeout(() => toast.remove(), 300);  //After the transition
-                }, 3000);  //Display duration: 3 seconds
-            }, 10);  //Small delay to ensure the toast is fully created
-        }
-
-        // INITIALIZATION
-        document.addEventListener('DOMContentLoaded', () => {
-            //Event Listener for Tabs
-            document.querySelectorAll('.tab-button').forEach(button => {
-                button.addEventListener('click', function() {
-                    const tabId = this.dataset.tab;
-                    showTab(tabId);
-                });
-            });
-
-            //Event Listeners for Filters
-            document.getElementById('searchQuery').addEventListener('input', function() {
-                searchQuery = this.value;
-                renderPartners();
-            });
-
-            document.getElementById('categoryFilter').addEventListener('change', function() {
-                categoryFilter = this.value;
-                renderPartners();
-            });
-
-            //Event Listener for Appointment Form
-            document.getElementById('appointmentForm').addEventListener('submit', handleAppointmentSubmit);
-
-            //Initialize the date input's minimum value to today's date
-            document.getElementById('date').min = new Date().toISOString().split('T')[0];
-
-            renderPartners();  //Initial rendering of partners
-            renderAppointmentOptions(); //Initial rendering of the select/options
-            renderAppointments(); //Initial rendering of appointments
-        });
-
-    </script>
+  <script src="Script.js"></script>
 
 </body>
 </html>
