@@ -54,6 +54,22 @@
   </style>
 </head>
 <body>
+<header class="header" id="header">
+    <div class="container flex justify-between items-center">
+      <a href="index.html" class="logo"><span>Emploi</span>Avenir</a>
+      <nav aria-label="Navigation principale">
+        <ul class="nav-links" id="mainNavLinks">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="MonParcours.html" class="active" aria-current="page">Mon Parcours</a></li>
+          <li><a href="MesCandidature.html">Mes Candidatures</a></li>
+          <li><a href="Partenaires.html">Nos partenaires</a></li>
+          <li><a href="Documents.html">Mes documents</a></li>
+          <li><a href="Profil.html">Profil</a></li>
+        </ul>
+      </nav>
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Ouvrir le menu de navigation" aria-expanded="false" aria-controls="mainNavLinks">☰</button>
+    </div>
+</header>
   <div class="container">
     <h1>Générateur de Lettre de Motivation</h1>
     <form id="motivationForm">
@@ -79,10 +95,16 @@
     </form>
     <div id="resultat"></div>
   </div>
+<div class="cv-step-navigation" style="text-align: center; margin-top: 2rem;">
+    <a href="MonParcours.html" class="btn btn-success" id="finishLetterButton" style="display: none;">
+        <i class="fas fa-check-circle"></i> Terminer et voir mon parcours
+    </a>
+</div>
 
   <script>
     const form = document.getElementById('motivationForm');
     const output = document.getElementById('resultat');
+    const finishButton = document.getElementById('finishLetterButton');
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
@@ -90,32 +112,28 @@
       const formData = new FormData(form);
       const data = Object.fromEntries(formData.entries());
 
-      const prompt = `Rédige une lettre de motivation pour ${data.nom} qui postule au poste de ${data.poste} chez ${data.entreprise}.
-Motivation : ${data.motivation_poste}.
-Ce qu'il/elle peut apporter : ${data.valeur_ajoutee}.`;
-
       output.innerText = '⏳ Génération en cours...';
 
       try {
-        const response = await fetch("https://api.openai.com/v1/chat/completions", {
+        const response = await fetch("http://localhost:3001/api/generer-lettre", {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer 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"
+            "Content-Type": "application/json"
           },
-          body: JSON.stringify({
-            model: "gpt-3.5-turbo",
-            messages: [
-              { role: "system", content: "Tu es un assistant RH qui rédige des lettres de motivation professionnelles. " },
-              { role: "user", content: prompt }
-            ]
-          })
+          body: JSON.stringify(data)
         });
 
         const json = await response.json();
-        output.innezrText = json.choices[0].message.content;
+
+        if (json.text) {
+          output.innerText = json.text;
+          finishButton.style.display = 'inline-block';
+        } else {
+          throw new Error('Réponse invalide de l’API');
+        }
       } catch (error) {
-        output.innerText = '❌ Erreur lors de la génération. Vérifie ta clé API ou ta connexion.';
+        console.error("Erreur API détaillée :", error);
+        output.innerText = '❌ Erreur lors de la génération. Vérifie ta connexion ou contacte le support.';
       }
     });
   </script>
