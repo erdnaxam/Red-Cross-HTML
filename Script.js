@@ -2137,604 +2137,603 @@ function initEvaluationPage() {
 // =======================================================================
 // NOUVELLE SECTION : Logique de la page Générateur de CV Facile (cv-generator.html)
 // =======================================================================
-function initCVGeneratorPage() {
-    const cvAssistantContainer = document.querySelector('.cv-assistant-container');
-    if (!cvAssistantContainer) {
-        return; // Pas la bonne page
-    }
+    function initCVGeneratorPage() {
+        const cvAssistantForm = document.getElementById('cvAssistantForm');
+        if (!cvAssistantForm) return;
 
-    console.log("Initialisation de Mon CV Facile...");
+        console.log("Initialisation de Mon CV Facile (Générateur)...");
 
-    // --- DOM Elements ---
-    const form = document.getElementById('cvAssistantForm');
-    const steps = Array.from(form.querySelectorAll('.cv-step'));
-    const progressBarSteps = Array.from(document.querySelectorAll('.cv-progress-step'));
-    const prevStepBtn = document.getElementById('prevStepBtn');
-    const nextStepBtn = document.getElementById('nextStepBtn');
-    const finishCVAssistantBtn = document.getElementById('finishCVAssistantBtn');
+        const steps = Array.from(cvAssistantForm.querySelectorAll('.cv-step'));
+        const progressBarSteps = Array.from(document.querySelectorAll('.cv-progress-bar .cv-progress-step'));
+        const prevStepBtn = document.getElementById('prevStepBtn');
+        const nextStepBtn = document.getElementById('nextStepBtn');
+        const finishCVAssistantBtn = document.getElementById('finishCVAssistantBtn');
+        const downloadPdfBtn = document.getElementById('downloadPdfBtn');
 
-    // Éléments spécifiques aux champs (à récupérer au besoin dans les fonctions)
-    const nameInput = document.getElementById('name');
-    const cvTitleInput = document.getElementById('cvTitle');
-    const emailInput = document.getElementById('email');
-    const phoneInput = document.getElementById('phone');
-    const addressInput = document.getElementById('address');
+        const nameInput = document.getElementById('name');
+        const cvTitleInput = document.getElementById('cvTitle');
+        const emailInput = document.getElementById('email');
+        const phoneInput = document.getElementById('phone');
+        const addressInput = document.getElementById('address');
 
-    const experiencesListForm = document.getElementById('experiences-list-form');
-    const addExperienceFormBtn = document.getElementById('addExperienceFormBtn');
+        const experiencesListForm = document.getElementById('experiences-list-form');
+        const addExperienceFormBtn = document.getElementById('addExperienceFormBtn');
+        let experienceIdCounter = 0;
 
-    const formationsListForm = document.getElementById('formations-list-form');
-    const addFormationFormBtn = document.getElementById('addFormationFormBtn');
+        const formationsListForm = document.getElementById('formations-list-form');
+        const addFormationFormBtn = document.getElementById('addFormationFormBtn');
+        let formationIdCounter = 0;
 
-    const competencesListForm = document.getElementById('competences-list-form');
-    const newCompetenceInput = document.getElementById('newCompetenceInput');
-    const addCompetenceToListBtn = document.getElementById('addCompetenceToListBtn');
+        const competencesListForm = document.getElementById('competences-list-form');
+        const newCompetenceInput = document.getElementById('newCompetenceInput');
+        const addCompetenceToListBtn = document.getElementById('addCompetenceToListBtn');
+        const newCompetenceFeedback = document.getElementById('newCompetenceInput-feedback');
 
-    const languesListForm = document.getElementById('langues-list-form');
-    const newLangueInput = document.getElementById('newLangueInput');
-    const newLangueLevelSelect = document.getElementById('newLangueLevelSelect');
-    const addLangueToListBtn = document.getElementById('addLangueToListBtn');
+        const languesListForm = document.getElementById('langues-list-form');
+        const newLangueInput = document.getElementById('newLangueInput');
+        const newLangueLevelSelect = document.getElementById('newLangueLevelSelect');
+        const addLangueToListBtn = document.getElementById('addLangueToListBtn');
+        const newLangueFeedback = document.getElementById('newLangueInput-feedback');
 
-    const finalPreviewContentDiv = document.getElementById('final-preview-content');
-    const downloadPdfBtn = document.getElementById('downloadPdfBtn');
+        const finalPreviewContentDiv = document.getElementById('final-preview-content');
 
-    // --- État ---
-    let currentStepIndex = 0;
-    const cvData = {
-        personalInfo: {},
-        experiences: [],
-        formations: [],
-        competences: [],
-        langues: []
-    };
-    let experienceIdCounter = 0;
-    let formationIdCounter = 0;
+        let cvData = {
+            personalInfo: { name: '', cvTitle: '', email: '', phone: '', address: '' },
+            experiences: [],
+            formations: [],
+            competences: [],
+            langues: []
+        };
+        let currentStepIndex = 0;
 
-    // --- Utility Functions ---
-    function escapeHTML(str) { // Réutiliser celle globale si elle est accessible
-        if (typeof str !== 'string' && typeof str !== 'number') return str;
-        const div = document.createElement('div');
-        div.appendChild(document.createTextNode(str));
-        return div.innerHTML;
-    }
-
-    function formatDateForDisplay(dateString, isMonthType = true) { // Modifié pour type month par défaut
-        if (!dateString) return '';
-        try {
-            // Pour type="month" (YYYY-MM), on ajoute un jour pour éviter les pbs de timezone
-            const date = new Date(dateString + (isMonthType ? '-02T00:00:00Z' : 'T00:00:00Z'));
-            return date.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric', timeZone: 'UTC' });
-        } catch (e) {
-            console.warn("Error formatting date for display:", dateString, e);
-            return dateString;
-        }
-    }
-
-
-    // --- Validation ---
-    function validateField(field) {
-        // ... (Votre fonction validateField existante, adaptée pour utiliser les classes de `style.css` si besoin)
-        // S'assurer qu'elle retourne true/false et ajoute/retire .is-invalid et gère .invalid-feedback
-        let isValid = true;
-        const feedbackEl = field.parentElement.querySelector('.invalid-feedback'); // Cherche le feedback dans le parent
-
-        field.classList.remove('is-invalid');
-        if (feedbackEl) feedbackEl.style.display = 'none';
-
-        if (field.required && !field.value.trim()) {
-            isValid = false;
-            if (feedbackEl) feedbackEl.textContent = "Ce champ est obligatoire.";
-        }
-        if (field.type === 'email' && field.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value.trim())) {
-            isValid = false;
-            if (feedbackEl) feedbackEl.textContent = "Veuillez entrer une adresse e-mail valide.";
-        }
-        // Ajouter d'autres validations si nécessaire
-
-        if (!isValid) {
-            field.classList.add('is-invalid');
-            if (feedbackEl) feedbackEl.style.display = 'block';
-        }
-        return isValid;
-    }
-
-    function validateCurrentStepForm() {
-        const currentFields = steps[currentStepIndex].querySelectorAll('input[required], textarea[required], select[required]');
-        let allValid = true;
-        currentFields.forEach(field => {
-            if (!validateField(field)) {
-                allValid = false;
+        function formatDateForDisplay(dateString, isMonthType = true) {
+            if (!dateString) return 'Présent';
+            try {
+                const date = new Date(dateString + (isMonthType ? '-02T00:00:00Z' : 'T00:00:00Z'));
+                if (isNaN(date.getTime())) return dateString;
+                return date.toLocaleDateString('fr-FR', { month: 'long', year: 'numeric', timeZone: 'UTC' });
+            } catch (e) {
+                console.warn("Error formatting date for display:", dateString, e);
+                return dateString;
             }
-        });
-        // Validation spécifique pour les listes d'expériences/formations si au moins une est requise
-        if (currentStepIndex === 1 && cvData.experiences.length === 0 && addExperienceFormBtn.offsetParent !== null) {
-            // Si on est à l'étape expérience et qu'aucune n'est ajoutée (et que le bouton est visible)
-            // Vous pourriez ajouter un message d'erreur global pour l'étape. Pour l'instant, on laisse passer.
         }
-        return allValid;
-    }
 
-    // --- Gestion des Étapes (Navigation) ---
-    function showStep(index) {
-        steps.forEach((step, i) => {
-            step.classList.toggle('active-step', i === index);
-        });
-        progressBarSteps.forEach((pStep, i) => {
-            pStep.classList.toggle('active', i === index);
-            pStep.classList.toggle('completed', i < index);
-        });
-        currentStepIndex = index;
-        prevStepBtn.disabled = index === 0;
-        nextStepBtn.style.display = index === steps.length - 1 ? 'none' : 'inline-flex';
-        finishCVAssistantBtn.style.display = index === steps.length - 1 ? 'inline-flex' : 'none';
+        function validateField(field) {
+            let isValid = true;
+            const feedbackEl = field.closest('.form-group,.input-with-mic,.input-group-add')?.querySelector('.invalid-feedback');
+            field.classList.remove('is-invalid');
+            if (feedbackEl) feedbackEl.style.display = 'none';
 
-        // Focus sur le premier champ de l'étape (pour accessibilité)
-        const firstFocusable = steps[index].querySelector('input:not([type="hidden"]), select, textarea, button:not([disabled])');
-        if (firstFocusable) firstFocusable.focus();
-
-        // Mettre à jour l'aperçu à la dernière étape
-        if (index === steps.length - 1) {
-            collectAllData(); // S'assurer que tout est collecté avant l'aperçu final
-            updateFinalCVPreview();
+            if (field.required && !field.value.trim()) {
+                isValid = false;
+                if (feedbackEl) feedbackEl.textContent = "Ce champ est obligatoire.";
+            }
+            if (field.type === 'email' && field.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value.trim())) {
+                isValid = false;
+                if (feedbackEl) feedbackEl.textContent = "Veuillez entrer une adresse e-mail valide.";
+            }
+            if (!isValid) {
+                field.classList.add('is-invalid');
+                if (feedbackEl) feedbackEl.style.display = 'block';
+            }
+            return isValid;
         }
-    }
 
-    prevStepBtn.addEventListener('click', () => {
-        if (currentStepIndex > 0) {
-            collectCurrentStepData(); // Sauvegarder les données avant de changer
-            showStep(currentStepIndex - 1);
+        function validateStepForm(stepElement) {
+            let allValid = true;
+            const fieldsToValidate = stepElement.querySelectorAll('input[required], textarea[required], select[required]');
+            fieldsToValidate.forEach(field => {
+                if (field.offsetParent !== null && !field.disabled) { // Visible et non désactivé
+                    if (!validateField(field)) {
+                        allValid = false;
+                    }
+                }
+            });
+            return allValid;
         }
-    });
 
-    nextStepBtn.addEventListener('click', () => {
-        if (!validateCurrentStepForm()) {
-            // Utiliser showToast si disponible globalement
-            typeof showToast === 'function' ? showToast("Veuillez remplir les champs obligatoires.", 'warning') : alert("Veuillez remplir les champs obligatoires.");
-            return;
-        }
-        collectCurrentStepData();
-        if (currentStepIndex < steps.length - 1) {
-            showStep(currentStepIndex + 1);
-        }
-    });
+        function showStep(index) {
+            steps.forEach((step, i) => {
+                step.classList.toggle('active-step', i === index);
+                step.setAttribute('aria-hidden', i !== index);
+            });
+            progressBarSteps.forEach((pStep, i) => {
+                pStep.classList.toggle('active', i === index);
+                pStep.classList.toggle('completed', i < index);
+                pStep.setAttribute('aria-current', i === index ? 'step' : 'false');
+            });
+            currentStepIndex = index;
+            document.querySelector('.cv-progress-bar').setAttribute('aria-valuenow', index + 1);
+            prevStepBtn.disabled = index === 0;
+            nextStepBtn.style.display = index === steps.length - 1 ? 'none' : 'inline-flex';
+            finishCVAssistantBtn.style.display = index === steps.length - 1 ? 'inline-flex' : 'none';
 
-    // --- Collecte des Données ---
-    function collectCurrentStepData() {
-        const currentStepElement = steps[currentStepIndex];
-        if (currentStepIndex === 0) { // Infos Perso
+            const currentStepElement = steps[index];
+            if (currentStepElement) {
+                const firstFocusable = currentStepElement.querySelector('input:not([type="hidden"]):not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled])');
+                if (firstFocusable) firstFocusable.focus();
+            }
+            if (index === steps.length - 1) {
+                collectAllData();
+                updateFinalCVPreview();
+            }
+        }
+
+        function collectPersonalInfo() {
             cvData.personalInfo.name = nameInput.value.trim();
             cvData.personalInfo.cvTitle = cvTitleInput.value.trim();
             cvData.personalInfo.email = emailInput.value.trim();
             cvData.personalInfo.phone = phoneInput.value.trim();
             cvData.personalInfo.address = addressInput.value.trim();
         }
-        // Les sections expériences, formations, compétences, langues sont gérées par leurs propres fonctions d'ajout/suppression
-        // et les données sont déjà dans cvData.experiences, cvData.formations etc.
-    }
-    function collectAllData() { // Appelée avant l'aperçu final
-        collectCurrentStepData(); // Collecte la dernière étape si ce n'est pas déjà fait
-        // Les autres données (expériences, formations, etc.) sont déjà dans cvData
-        console.log("Données CV collectées pour aperçu :", cvData);
-    }
 
+        function collectExperiences() {
+            cvData.experiences = [];
+            experiencesListForm.querySelectorAll('.experience-form-item').forEach(item => {
+                const idSuffix = item.id.split('-')[1];
+                const enCoursCheckbox = item.querySelector(`#expEnCours-${idSuffix}`);
+                cvData.experiences.push({
+                    id: item.id,
+                    poste: item.querySelector(`#expPoste-${idSuffix}`)?.value.trim() || '',
+                    organisation: item.querySelector(`#expOrganisation-${idSuffix}`)?.value.trim() || '',
+                    lieu: item.querySelector(`#expLieu-${idSuffix}`)?.value.trim() || '',
+                    dateDebut: item.querySelector(`#expDateDebut-${idSuffix}`)?.value || '',
+                    dateFin: enCoursCheckbox?.checked ? '' : (item.querySelector(`#expDateFin-${idSuffix}`)?.value || ''),
+                    enCours: enCoursCheckbox?.checked || false,
+                    description: item.querySelector(`#expDescription-${idSuffix}`)?.value.trim() || ''
+                });
+            });
+        }
 
-    // --- Gestion dynamique des sections (Expériences, Formations, Compétences, Langues) ---
+        function collectFormations() {
+            cvData.formations = [];
+            formationsListForm.querySelectorAll('.formation-form-item').forEach(item => {
+                const idSuffix = item.id.split('-')[1];
+                const enCoursCheckbox = item.querySelector(`#formEnCours-${idSuffix}`);
+                cvData.formations.push({
+                    id: item.id,
+                    diplome: item.querySelector(`#formDiplome-${idSuffix}`)?.value.trim() || '',
+                    etablissement: item.querySelector(`#formEtablissement-${idSuffix}`)?.value.trim() || '',
+                    lieu: item.querySelector(`#formLieu-${idSuffix}`)?.value.trim() || '',
+                    dateDebut: item.querySelector(`#formDateDebut-${idSuffix}`)?.value || '',
+                    dateFin: enCoursCheckbox?.checked ? '' : (item.querySelector(`#formDateFin-${idSuffix}`)?.value || ''),
+                    enCours: enCoursCheckbox?.checked || false,
+                    description: item.querySelector(`#formDescription-${idSuffix}`)?.value.trim() || ''
+                });
+            });
+        }
 
-    // EXPÉRIENCES
-    function renderExperienceForm(container, exp = {}, idSuffix = experienceIdCounter) {
-        const div = document.createElement('div');
-        div.className = 'dynamic-form-item experience-form-item';
-        div.id = `experience-${idSuffix}`;
-        div.innerHTML = `
-            <button type="button" class="btn btn-danger btn-remove-item" aria-label="Supprimer cette expérience"><i class="fas fa-times"></i></button>
-            <div class="form-group">
-                <label for="expPoste-${idSuffix}">Poste occupé ou rôle*</label>
-                <input type="text" id="expPoste-${idSuffix}" class="form-control expPoste" value="${escapeHTML(exp.poste || '')}" placeholder="Ex: Caissier, Bénévole à la cantine, Aide aux devoirs" required>
-                <div class="invalid-feedback">Requis</div>
-            </div>
-            <div class="form-group">
-                <label for="expOrganisation-${idSuffix}">Entreprise, Association ou Contexte*</label>
-                <input type="text" id="expOrganisation-${idSuffix}" class="form-control expOrganisation" value="${escapeHTML(exp.organisation || '')}" placeholder="Ex: Supermarché Local, Association Les Petits Frères, Famille Martin" required>
-                <div class="invalid-feedback">Requis</div>
-            </div>
-            <div class="form-group">
-                <label for="expLieu-${idSuffix}">Lieu (Ville)</label>
-                <input type="text" id="expLieu-${idSuffix}" class="form-control expLieu" value="${escapeHTML(exp.lieu || '')}" placeholder="Ex: Paris">
-            </div>
-            <div class="form-group experience-dates-group">
-                <div>
-                    <label for="expDateDebut-${idSuffix}">Date de début*</label>
-                    <input type="month" id="expDateDebut-${idSuffix}" class="form-control expDateDebut" value="${exp.dateDebut || ''}" required>
-                    <div class="invalid-feedback">Requis</div>
+        function collectAllData() {
+            collectPersonalInfo();
+            collectExperiences();
+            collectFormations();
+            // Compétences et langues sont déjà mises à jour dans cvData par leurs fonctions d'ajout/suppression
+            console.log("Données CV collectées pour aperçu/export:", JSON.parse(JSON.stringify(cvData)));
+        }
+
+        function renderExperienceForm(container, exp = {}, idSuffix = experienceIdCounter) {
+            const div = document.createElement('div');
+            div.className = 'dynamic-form-item experience-form-item';
+            div.id = `experience-${idSuffix}`;
+            div.innerHTML = `
+                <h4 class="sr-only">Expérience ${idSuffix + 1}</h4>
+                <div class="form-group">
+                    <label for="expPoste-${idSuffix}">Poste occupé ou rôle*</label>
+                    <div class="input-with-mic">
+                        <input type="text" id="expPoste-${idSuffix}" name="expPoste-${idSuffix}" class="form-control expPoste" value="${escapeHTML(exp.poste || '')}" placeholder="Ex: Caissier" required>
+                        <button type="button" class="mic-btn" data-target-input="expPoste-${idSuffix}" aria-label="Saisir par la voix pour Poste"><i class="fas fa-microphone"></i></button>
+                    </div>
+                    <div class="invalid-feedback">Ce champ est requis.</div>
                 </div>
-                <div id="expDateFinGroup-${idSuffix}">
-                    <label for="expDateFin-${idSuffix}">Date de fin*</label>
-                    <input type="month" id="expDateFin-${idSuffix}" class="form-control expDateFin" value="${exp.dateFin || ''}" ${exp.enCours ? 'disabled' : ''} required>
-                    <div class="invalid-feedback">Requis si pas en cours</div>
+                <div class="form-group">
+                    <label for="expOrganisation-${idSuffix}">Entreprise, Association ou Contexte*</label>
+                     <div class="input-with-mic">
+                        <input type="text" id="expOrganisation-${idSuffix}" name="expOrganisation-${idSuffix}" class="form-control expOrganisation" value="${escapeHTML(exp.organisation || '')}" placeholder="Ex: Supermarché Local" required>
+                        <button type="button" class="mic-btn" data-target-input="expOrganisation-${idSuffix}" aria-label="Saisir par la voix pour Organisation"><i class="fas fa-microphone"></i></button>
+                    </div>
+                    <div class="invalid-feedback">Ce champ est requis.</div>
                 </div>
-            </div>
-            <div class="form-group">
-                 <label for="expEnCours-${idSuffix}" class="checkbox-label">
-                    <input type="checkbox" id="expEnCours-${idSuffix}" class="expEnCours" ${exp.enCours ? 'checked' : ''}> J'occupe toujours ce poste / Cette expérience est en cours
-                </label>
-            </div>
-            <div class="form-group">
-                <label for="expDescription-${idSuffix}">Ce que j'ai fait / appris (quelques phrases)</label>
-                <textarea id="expDescription-${idSuffix}" class="form-control expDescription" rows="4" placeholder="Ex: J'ai accueilli les clients et géré la caisse. J'ai appris à être patient et organisé. J'ai aidé les enfants avec leurs maths et français.">${escapeHTML(exp.description || '')}</textarea>
-                <small class="help-text">Décrivez vos tâches principales et ce que cette expérience vous a apporté.</small>
-            </div>
-        `;
-        container.appendChild(div);
-        div.querySelector('.btn-remove-item').addEventListener('click', () => {
-            const expIndex = cvData.experiences.findIndex(e => e.id === `experience-${idSuffix}`);
-            if (expIndex > -1) cvData.experiences.splice(expIndex, 1);
-            div.remove();
-        });
-        div.querySelector(`#expEnCours-${idSuffix}`).addEventListener('change', (e) => {
+                <div class="form-group">
+                    <label for="expLieu-${idSuffix}">Lieu (Ville)</label>
+                    <input type="text" id="expLieu-${idSuffix}" name="expLieu-${idSuffix}" class="form-control expLieu" value="${escapeHTML(exp.lieu || '')}" placeholder="Ex: Paris">
+                </div>
+                <div class="form-group experience-dates-group">
+                    <div>
+                        <label for="expDateDebut-${idSuffix}">Date de début*</label>
+                        <input type="month" id="expDateDebut-${idSuffix}" name="expDateDebut-${idSuffix}" class="form-control expDateDebut" value="${exp.dateDebut || ''}" required>
+                        <div class="invalid-feedback">Requis.</div>
+                    </div>
+                    <div id="expDateFinGroup-${idSuffix}">
+                        <label for="expDateFin-${idSuffix}">Date de fin${exp.enCours ? '' : '*'}</label>
+                        <input type="month" id="expDateFin-${idSuffix}" name="expDateFin-${idSuffix}" class="form-control expDateFin" value="${exp.dateFin || ''}" ${exp.enCours ? 'disabled' : ''} ${exp.enCours ? '' : 'required'}>
+                        <div class="invalid-feedback">Requis si pas en cours.</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                     <label for="expEnCours-${idSuffix}" class="checkbox-label">
+                        <input type="checkbox" id="expEnCours-${idSuffix}" name="expEnCours-${idSuffix}" class="expEnCours" ${exp.enCours ? 'checked' : ''}> J'occupe toujours ce poste
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="expDescription-${idSuffix}">Ce que j'ai fait / appris</label>
+                    <textarea id="expDescription-${idSuffix}" name="expDescription-${idSuffix}" class="form-control expDescription" rows="4" placeholder="Ex: J'ai accueilli les clients...">${escapeHTML(exp.description || '')}</textarea>
+                </div>
+                <button type="button" class="btn btn-danger btn-sm btn-remove-item" aria-label="Supprimer cette expérience"><i class="fas fa-trash-alt"></i> Supprimer</button>
+            `;
+            container.appendChild(div);
+            const checkbox = div.querySelector(`#expEnCours-${idSuffix}`);
             const dateFinInput = div.querySelector(`#expDateFin-${idSuffix}`);
-            dateFinInput.disabled = e.target.checked;
-            dateFinInput.required = !e.target.checked;
-            if (e.target.checked) dateFinInput.value = '';
-        });
-    }
-    addExperienceFormBtn.addEventListener('click', () => {
-        experienceIdCounter++;
-        renderExperienceForm(experiencesListForm, {}, experienceIdCounter);
-        const newExp = experiencesListForm.lastElementChild;
-        if(newExp) newExp.querySelector('input, textarea').focus();
-    });
+            const dateFinLabel = div.querySelector(`label[for="expDateFin-${idSuffix}"]`);
+            checkbox.addEventListener('change', (e) => {
+                dateFinInput.disabled = e.target.checked;
+                dateFinInput.required = !e.target.checked;
+                dateFinLabel.textContent = `Date de fin${e.target.checked ? '' : '*'}`;
+                if (e.target.checked) { dateFinInput.value = ''; dateFinInput.classList.remove('is-invalid'); dateFinInput.closest('.form-group')?.querySelector('.invalid-feedback')?.style.display == 'none'; }
+            });
+            div.querySelector('.btn-remove-item').addEventListener('click', () => { div.remove(); collectExperiences(); /* Mettre à jour cvData après suppression */ });
+            attachMicListenersToContainer(div);
+        }
+        addExperienceFormBtn.addEventListener('click', () => { renderExperienceForm(experiencesListForm, {}, experienceIdCounter++); experiencesListForm.lastElementChild?.querySelector('input, textarea')?.focus(); });
 
-
-    // FORMATIONS (similaire aux expériences, utilisation d'une modale ou formulaire inline)
-    // Pour la simplicité, je vais faire un formulaire inline comme pour les expériences
-    function renderFormationForm(container, form = {}, idSuffix = formationIdCounter) {
-        const div = document.createElement('div');
-        div.className = 'dynamic-form-item formation-form-item';
-        div.id = `formation-${idSuffix}`;
-        div.innerHTML = `
-            <button type="button" class="btn btn-danger btn-remove-item" aria-label="Supprimer cette formation"><i class="fas fa-times"></i></button>
-            <div class="form-group">
-                <label for="formDiplome-${idSuffix}">Diplôme ou Type de formation*</label>
-                <input type="text" id="formDiplome-${idSuffix}" class="form-control formDiplome" value="${escapeHTML(form.diplome || '')}" placeholder="Ex: Brevet des collèges, CAP Cuisine, Attestation de ..." required>
-                <div class="invalid-feedback">Requis</div>
-            </div>
-            <div class="form-group">
-                <label for="formEtablissement-${idSuffix}">École ou Organisme de formation*</label>
-                <input type="text" id="formEtablissement-${idSuffix}" class="form-control formEtablissement" value="${escapeHTML(form.etablissement || '')}" placeholder="Ex: Collège Victor Hugo, AFPA" required>
-                <div class="invalid-feedback">Requis</div>
-            </div>
-            <div class="form-group">
-                <label for="formLieu-${idSuffix}">Lieu (Ville)</label>
-                <input type="text" id="formLieu-${idSuffix}" class="form-control formLieu" value="${escapeHTML(form.lieu || '')}" placeholder="Ex: Bordeaux">
-            </div>
-            <div class="form-group experience-dates-group"> <!-- Réutilisation de la classe pour le layout des dates -->
-                <div>
-                    <label for="formDateDebut-${idSuffix}">Date de début*</label>
-                    <input type="month" id="formDateDebut-${idSuffix}" class="form-control formDateDebut" value="${form.dateDebut || ''}" required>
-                    <div class="invalid-feedback">Requis</div>
+        function renderFormationForm(container, form = {}, idSuffix = formationIdCounter) {
+            const div = document.createElement('div');
+            div.className = 'dynamic-form-item formation-form-item';
+            div.id = `formation-${idSuffix}`;
+            div.innerHTML = `
+                <h4 class="sr-only">Formation ${idSuffix + 1}</h4>
+                <div class="form-group">
+                    <label for="formDiplome-${idSuffix}">Diplôme ou Type de formation*</label>
+                    <div class="input-with-mic">
+                        <input type="text" id="formDiplome-${idSuffix}" name="formDiplome-${idSuffix}" class="form-control formDiplome" value="${escapeHTML(form.diplome || '')}" placeholder="Ex: Brevet des collèges" required>
+                        <button type="button" class="mic-btn" data-target-input="formDiplome-${idSuffix}" aria-label="Saisir par la voix pour Diplôme"><i class="fas fa-microphone"></i></button>
+                    </div>
+                    <div class="invalid-feedback">Ce champ est requis.</div>
                 </div>
-                <div id="formDateFinGroup-${idSuffix}">
-                    <label for="formDateFin-${idSuffix}">Date de fin*</label>
-                    <input type="month" id="formDateFin-${idSuffix}" class="form-control formDateFin" value="${form.dateFin || ''}" ${form.enCours ? 'disabled' : ''} required>
-                    <div class="invalid-feedback">Requis si pas en cours</div>
+                <div class="form-group">
+                    <label for="formEtablissement-${idSuffix}">École ou Organisme*</label>
+                    <div class="input-with-mic">
+                        <input type="text" id="formEtablissement-${idSuffix}" name="formEtablissement-${idSuffix}" class="form-control formEtablissement" value="${escapeHTML(form.etablissement || '')}" placeholder="Ex: Collège Victor Hugo" required>
+                        <button type="button" class="mic-btn" data-target-input="formEtablissement-${idSuffix}" aria-label="Saisir par la voix pour Établissement"><i class="fas fa-microphone"></i></button>
+                    </div>
+                    <div class="invalid-feedback">Ce champ est requis.</div>
                 </div>
-            </div>
-             <div class="form-group">
-                <label for="formEnCours-${idSuffix}" class="checkbox-label">
-                    <input type="checkbox" id="formEnCours-${idSuffix}" class="formEnCours" ${form.enCours ? 'checked' : ''}> Formation en cours
-                </label>
-            </div>
-            <div class="form-group">
-                <label for="formDescription-${idSuffix}">Ce que j'ai appris (optionnel)</label>
-                <textarea id="formDescription-${idSuffix}" class="form-control formDescription" rows="3" placeholder="Ex: Matières principales, compétences acquises...">${escapeHTML(form.description || '')}</textarea>
-            </div>
-        `;
-        container.appendChild(div);
-        div.querySelector('.btn-remove-item').addEventListener('click', () => {
-            const formIndex = cvData.formations.findIndex(f => f.id === `formation-${idSuffix}`);
-            if (formIndex > -1) cvData.formations.splice(formIndex, 1);
-            div.remove();
-        });
-        div.querySelector(`#formEnCours-${idSuffix}`).addEventListener('change', (e) => {
+                <div class="form-group">
+                    <label for="formLieu-${idSuffix}">Lieu (Ville)</label>
+                    <input type="text" id="formLieu-${idSuffix}" name="formLieu-${idSuffix}" class="form-control formLieu" value="${escapeHTML(form.lieu || '')}" placeholder="Ex: Bordeaux">
+                </div>
+                 <div class="form-group formation-dates-group">
+                    <div>
+                        <label for="formDateDebut-${idSuffix}">Date de début*</label>
+                        <input type="month" id="formDateDebut-${idSuffix}" name="formDateDebut-${idSuffix}" class="form-control formDateDebut" value="${form.dateDebut || ''}" required>
+                        <div class="invalid-feedback">Requis.</div>
+                    </div>
+                    <div id="formDateFinGroup-${idSuffix}">
+                        <label for="formDateFin-${idSuffix}">Date de fin${form.enCours ? '' : '*'}</label>
+                        <input type="month" id="formDateFin-${idSuffix}" name="formDateFin-${idSuffix}" class="form-control formDateFin" value="${form.dateFin || ''}" ${form.enCours ? 'disabled' : ''} ${form.enCours ? '' : 'required'}>
+                        <div class="invalid-feedback">Requis si pas en cours.</div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="formEnCours-${idSuffix}" class="checkbox-label">
+                        <input type="checkbox" id="formEnCours-${idSuffix}" name="formEnCours-${idSuffix}" class="formEnCours" ${form.enCours ? 'checked' : ''}> Formation en cours
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="formDescription-${idSuffix}">Ce que j'ai appris (optionnel)</label>
+                    <textarea id="formDescription-${idSuffix}" name="formDescription-${idSuffix}" class="form-control formDescription" rows="3" placeholder="Ex: Matières principales...">${escapeHTML(form.description || '')}</textarea>
+                </div>
+                <button type="button" class="btn btn-danger btn-sm btn-remove-item" aria-label="Supprimer cette formation"><i class="fas fa-trash-alt"></i> Supprimer</button>
+            `;
+            container.appendChild(div);
+            const checkbox = div.querySelector(`#formEnCours-${idSuffix}`);
             const dateFinInput = div.querySelector(`#formDateFin-${idSuffix}`);
-            dateFinInput.disabled = e.target.checked;
-            dateFinInput.required = !e.target.checked;
-            if (e.target.checked) dateFinInput.value = '';
-        });
-    }
-    addFormationFormBtn.addEventListener('click', () => {
-        formationIdCounter++;
-        renderFormationForm(formationsListForm, {}, formationIdCounter);
-        const newForm = formationsListForm.lastElementChild;
-        if(newForm) newForm.querySelector('input, textarea').focus();
-    });
+            const dateFinLabel = div.querySelector(`label[for="formDateFin-${idSuffix}"]`);
+            checkbox.addEventListener('change', (e) => {
+                dateFinInput.disabled = e.target.checked;
+                dateFinInput.required = !e.target.checked;
+                dateFinLabel.textContent = `Date de fin${e.target.checked ? '' : '*'}`;
+                if (e.target.checked) { dateFinInput.value = ''; dateFinInput.classList.remove('is-invalid'); dateFinInput.closest('.form-group')?.querySelector('.invalid-feedback')?.style.display == 'none';}
+            });
+            div.querySelector('.btn-remove-item').addEventListener('click', () => { div.remove(); collectFormations(); });
+            attachMicListenersToContainer(div);
+        }
+        addFormationFormBtn.addEventListener('click', () => { renderFormationForm(formationsListForm, {}, formationIdCounter++); formationsListForm.lastElementChild?.querySelector('input, textarea')?.focus();});
 
-    // COMPÉTENCES & LANGUES (Affichage simple en liste)
-    function renderListItem(listContainer, itemData, type) {
-        const itemDiv = document.createElement('div');
-        itemDiv.className = 'dynamic-form-item listed-item'; // Pour style commun
-        itemDiv.innerHTML = `<span>${escapeHTML(itemData.nom)} ${itemData.niveau ? `(${escapeHTML(itemData.niveau)})` : ''}</span>`;
-        const removeBtn = document.createElement('button');
-        removeBtn.type = 'button'; removeBtn.className = 'btn btn-danger btn-sm btn-remove-item';
-        removeBtn.innerHTML = '<i class="fas fa-times"></i>';
-        removeBtn.setAttribute('aria-label', `Supprimer ${type}`);
-        removeBtn.addEventListener('click', () => {
-            if (type === 'competence') {
-                cvData.competences = cvData.competences.filter(c => c.nom !== itemData.nom || c.niveau !== itemData.niveau);
-            } else if (type === 'langue') {
-                cvData.langues = cvData.langues.filter(l => l.nom !== itemData.nom || l.niveau !== itemData.niveau);
+        function renderListItem(listContainer, itemData, type) {
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'dynamic-form-item listed-item';
+            itemDiv.innerHTML = `<span>${escapeHTML(itemData.nom)} ${itemData.niveau ? `(${escapeHTML(itemData.niveau)})` : ''}</span>
+                                 <button type="button" class="btn btn-danger btn-sm btn-remove-item" aria-label="Supprimer ${type === 'competence' ? 'cette compétence' : 'cette langue'}">
+                                     <i class="fas fa-times"></i>
+                                 </button>`;
+            itemDiv.querySelector('.btn-remove-item').addEventListener('click', () => {
+                if (type === 'competence') cvData.competences = cvData.competences.filter(c => c.nom !== itemData.nom);
+                else if (type === 'langue') cvData.langues = cvData.langues.filter(l => !(l.nom === itemData.nom && l.niveau === itemData.niveau));
+                itemDiv.remove();
+            });
+            listContainer.appendChild(itemDiv);
+        }
+        addCompetenceToListBtn.addEventListener('click', () => {
+            const nom = newCompetenceInput.value.trim();
+            newCompetenceInput.classList.remove('is-invalid'); newCompetenceFeedback.style.display = 'none';
+            if (nom) {
+                if (cvData.competences.find(c => c.nom.toLowerCase() === nom.toLowerCase())) { showToast("Cette compétence existe déjà.", 'warning'); return; }
+                const competenceData = { nom: nom }; cvData.competences.push(competenceData);
+                renderListItem(competencesListForm, competenceData, 'competence');
+                newCompetenceInput.value = ''; newCompetenceInput.focus();
+            } else { newCompetenceInput.classList.add('is-invalid'); newCompetenceFeedback.style.display = 'block'; }
+        });
+        addLangueToListBtn.addEventListener('click', () => {
+            const nom = newLangueInput.value.trim(); const niveau = newLangueLevelSelect.value;
+            newLangueInput.classList.remove('is-invalid'); newLangueLevelSelect.classList.remove('is-invalid'); newLangueFeedback.style.display = 'none';
+            if (nom && niveau) {
+                if (cvData.langues.find(l => l.nom.toLowerCase() === nom.toLowerCase())) { showToast("Cette langue existe déjà.", 'warning'); return; }
+                const langueData = { nom: nom, niveau: niveau }; cvData.langues.push(langueData);
+                renderListItem(languesListForm, langueData, 'langue');
+                newLangueInput.value = ''; newLangueLevelSelect.value = ''; newLangueInput.focus();
+            } else {
+                if (!nom) newLangueInput.classList.add('is-invalid'); if (!niveau) newLangueLevelSelect.classList.add('is-invalid');
+                newLangueFeedback.style.display = 'block';
             }
-            itemDiv.remove();
         });
-        itemDiv.appendChild(removeBtn);
-        listContainer.appendChild(itemDiv);
+
+        // --- Mise à jour de l'Aperçu Final ---
+        function updateFinalCVPreview() {
+            console.log("--- updateFinalCVPreview DÉBUT ---");
+            console.log("Données pour aperçu:", JSON.parse(JSON.stringify(cvData)));
+
+            finalPreviewContentDiv.innerHTML = '';
+            let contentGenerated = false;
+
+            const previewDoc = document.createDocumentFragment(); // Travailler sur un fragment pour la performance
+
+            // Infos Personnelles
+            const headerDiv = document.createElement('div');
+            headerDiv.className = 'cv-preview-header';
+            if (cvData.personalInfo.name) {
+                const nameEl = document.createElement('h2'); nameEl.textContent = escapeHTML(cvData.personalInfo.name); headerDiv.appendChild(nameEl); contentGenerated = true;
+            }
+            if (cvData.personalInfo.cvTitle) {
+                const titleEl = document.createElement('p'); titleEl.className = 'cv-preview-jobtitle'; titleEl.textContent = escapeHTML(cvData.personalInfo.cvTitle); headerDiv.appendChild(titleEl); contentGenerated = true;
+            }
+            if (headerDiv.children.length > 0) previewDoc.appendChild(headerDiv);
+
+            const contactInfoDiv = document.createElement('div'); contactInfoDiv.className = 'contact-info-preview';
+            let contactHTML = '';
+            if (cvData.personalInfo.email) contactHTML += `<p><i class="fas fa-envelope"></i> ${escapeHTML(cvData.personalInfo.email)}</p>`;
+            if (cvData.personalInfo.phone) contactHTML += `<p><i class="fas fa-phone"></i> ${escapeHTML(cvData.personalInfo.phone)}</p>`;
+            if (cvData.personalInfo.address) contactHTML += `<p><i class="fas fa-map-marker-alt"></i> ${escapeHTML(cvData.personalInfo.address)}</p>`;
+            if (contactHTML) { contactInfoDiv.innerHTML = contactHTML; previewDoc.appendChild(contactInfoDiv); contentGenerated = true;}
+
+            // Expériences
+            if (cvData.experiences.length > 0) {
+                const expSection = document.createElement('section'); expSection.className = 'cv-preview-section';
+                const expTitle = document.createElement('h3'); expTitle.textContent = "Expériences Professionnelles"; expSection.appendChild(expTitle);
+                cvData.experiences.forEach(exp => {
+                    if (exp.poste && exp.organisation && exp.dateDebut) {
+                        const expDiv = document.createElement('div'); expDiv.className = 'experience-preview-item';
+                        expDiv.innerHTML = `<h4>${escapeHTML(exp.poste)}</h4>
+                                          <p class="organisation"><strong>${escapeHTML(exp.organisation)}</strong>${exp.lieu ? `, <em>${escapeHTML(exp.lieu)}</em>` : ''}</p>
+                                          <p class="dates-preview">${formatDateForDisplay(exp.dateDebut)} - ${exp.enCours ? "Aujourd'hui" : formatDateForDisplay(exp.dateFin)}</p>
+                                          ${exp.description ? `<p class="description-preview">${escapeHTML(exp.description).replace(/\n/g, '<br>')}</p>` : ''}`;
+                        expSection.appendChild(expDiv); contentGenerated = true;
+                    }
+                });
+                if (expSection.querySelectorAll('.experience-preview-item').length > 0) previewDoc.appendChild(expSection);
+            }
+
+            // Formations
+            if (cvData.formations.length > 0) {
+                const formSection = document.createElement('section'); formSection.className = 'cv-preview-section';
+                const formTitle = document.createElement('h3'); formTitle.textContent = "Formations et Diplômes"; formSection.appendChild(formTitle);
+                cvData.formations.forEach(form => {
+                    if (form.diplome && form.etablissement && form.dateDebut) {
+                        const formDiv = document.createElement('div'); formDiv.className = 'formation-preview-item';
+                        formDiv.innerHTML = `<h4>${escapeHTML(form.diplome)}</h4>
+                                           <p class="organisation"><strong>${escapeHTML(form.etablissement)}</strong>${form.lieu ? `, <em>${escapeHTML(form.lieu)}</em>` : ''}</p>
+                                           <p class="dates-preview">${formatDateForDisplay(form.dateDebut)} - ${form.enCours ? "En cours" : formatDateForDisplay(form.dateFin)}</p>
+                                           ${form.description ? `<p class="description-preview">${escapeHTML(form.description).replace(/\n/g, '<br>')}</p>` : ''}`;
+                        formSection.appendChild(formDiv); contentGenerated = true;
+                    }
+                });
+                if (formSection.querySelectorAll('.formation-preview-item').length > 0) previewDoc.appendChild(formSection);
+            }
+
+            // Compétences
+            if (cvData.competences.length > 0) {
+                const compSection = document.createElement('section'); compSection.className = 'cv-preview-section';
+                const compTitle = document.createElement('h3'); compTitle.textContent = "Compétences"; compSection.appendChild(compTitle);
+                const compContainer = document.createElement('div'); compContainer.className = 'skills-preview-container';
+                cvData.competences.forEach(comp => {
+                    const compEl = document.createElement('span'); compEl.className = 'skill-preview-item'; compEl.textContent = escapeHTML(comp.nom); compContainer.appendChild(compEl);
+                });
+                compSection.appendChild(compContainer); previewDoc.appendChild(compSection); contentGenerated = true;
+            }
+
+            // Langues
+            if (cvData.langues.length > 0) {
+                const langSection = document.createElement('section'); langSection.className = 'cv-preview-section';
+                const langTitle = document.createElement('h3'); langTitle.textContent = "Langues"; langSection.appendChild(langTitle);
+                const langContainer = document.createElement('div'); langContainer.className = 'langues-preview-container';
+                cvData.langues.forEach(lang => {
+                    const langEl = document.createElement('span'); langEl.className = 'langue-preview-item'; langEl.textContent = `${escapeHTML(lang.nom)} (${escapeHTML(lang.niveau)})`; langContainer.appendChild(langEl);
+                });
+                langSection.appendChild(langContainer); previewDoc.appendChild(langSection); contentGenerated = true;
+            }
+
+            if (!contentGenerated) {
+                const placeholder = document.createElement('p');
+                placeholder.style.textAlign = 'center'; placeholder.style.padding = '2rem'; placeholder.style.color = 'var(--color-gray)';
+                placeholder.textContent = 'Commencez à remplir les étapes pour voir votre CV prendre forme ici !';
+                previewDoc.appendChild(placeholder);
+            }
+            finalPreviewContentDiv.appendChild(previewDoc); // Ajoute tout le fragment d'un coup
+            console.log("Contenu HTML de l'aperçu après update (premiers 500 chars):", finalPreviewContentDiv.innerHTML.substring(0, 500));
+            console.log("--- updateFinalCVPreview FIN ---");
+        }
+
+        prevStepBtn.addEventListener('click', () => {
+            if (currentStepIndex > 0) {
+                // La collecte se fera au "suivant" ou avant le téléchargement/finalisation
+                showStep(currentStepIndex - 1);
+            }
+        });
+        nextStepBtn.addEventListener('click', () => {
+            const currentStepElement = steps[currentStepIndex];
+            if (!validateStepForm(currentStepElement)) {
+                showToast("Veuillez corriger les erreurs avant de continuer.", 'warning');
+                const firstInvalidField = currentStepElement.querySelector('.is-invalid');
+                if (firstInvalidField) firstInvalidField.focus();
+                return;
+            }
+            // Collecter explicitement avant de passer à l'étape suivante
+            if (currentStepIndex === 0) collectPersonalInfo();
+            else if (currentStepIndex === 1) collectExperiences();
+            else if (currentStepIndex === 2) collectFormations();
+            // Compétences et langues sont mises à jour en temps réel dans cvData
+
+            if (currentStepIndex < steps.length - 1) {
+                showStep(currentStepIndex + 1);
+            }
+        });
+
+        downloadPdfBtn.addEventListener('click', () => {
+            console.log("--- Début du processus de téléchargement PDF ---");
+            collectAllData();
+            updateFinalCVPreview();
+
+            const elementToPrint = finalPreviewContentDiv;
+            console.log("2.1. Contenu de finalPreviewContentDiv.innerHTML:", elementToPrint.innerHTML.substring(0, 1000) + "...");
+            console.log("2.2. Hauteur:", elementToPrint.offsetHeight + "px", "Largeur:", elementToPrint.offsetWidth + "px");
+             if (elementToPrint.children.length > 0) {
+                const stylesPremierEnfant = window.getComputedStyle(elementToPrint.children[0]);
+                console.log("2.5. Styles premier enfant:", `display: ${stylesPremierEnfant.display}, visibility: ${stylesPremierEnfant.visibility}, opacity: ${stylesPremierEnfant.opacity}`);
+            } else { console.warn("2.4. finalPreviewContentDiv n'a PAS d'enfants!"); }
+
+
+            const placeholderText = "Commencez à remplir les étapes";
+            if (!elementToPrint || !elementToPrint.hasChildNodes() ||
+                (elementToPrint.children.length === 1 && elementToPrint.firstElementChild && elementToPrint.firstElementChild.textContent.includes(placeholderText))) {
+                console.warn("4.1. L'aperçu est vide ou placeholder.");
+                showToast("Veuillez remplir votre CV pour générer un aperçu.", 'warning');
+                return;
+            }
+
+            const originalButtonText = downloadPdfBtn.innerHTML;
+            downloadPdfBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Export en cours...';
+            downloadPdfBtn.disabled = true; document.body.style.cursor = 'wait';
+
+            const timestamp = new Date().toISOString().replace(/[:.-]/g, '').slice(0, 15);
+            const userNameForFile = (cvData.personalInfo && cvData.personalInfo.name) ? cvData.personalInfo.name.replace(/\s+/g, '_') : 'MonCV';
+            const fileName = `CV_EmploiAvenir_${userNameForFile}_${timestamp}.pdf`;
+
+            const opt = {
+              margin:       10, filename:     fileName, image: { type: 'jpeg', quality: 0.98 },
+              html2canvas:  { scale: 2, logging: true, useCORS: true, dpi: 192, letterRendering: true, backgroundColor: '#ffffff' },
+              jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+              pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
+            };
+            console.log("5.1. Options html2pdf:", JSON.stringify(opt));
+
+            html2pdf().from(elementToPrint).set(opt).save()
+                .then(() => { console.log("6.2. PDF généré."); showToast("CV téléchargé !", 'success'); })
+                .catch((error) => { console.error("6.2. Erreur PDF:", error); showToast("Erreur PDF. Vérifiez console.", 'error'); })
+                .finally(() => {
+                    console.log("6.3. .finally()");
+                    downloadPdfBtn.innerHTML = originalButtonText; downloadPdfBtn.disabled = false; document.body.style.cursor = 'default';
+                });
+        });
+
+        finishCVAssistantBtn.addEventListener('click', () => {
+            collectAllData();
+            let allStepsValid = true;
+            for (let i = 0; i < steps.length - 1; i++) {
+                if (!validateStepForm(steps[i])) {
+                    allStepsValid = false; showStep(i);
+                    showToast(`Veuillez corriger les erreurs à l'étape "${steps[i].dataset.stepTitle || i + 1}".`, 'error');
+                    steps[i].querySelector('.is-invalid')?.focus(); return;
+                }
+            }
+            if (!allStepsValid) return;
+
+            let mesDocuments = JSON.parse(localStorage.getItem('emploiavenir_documents')) || [];
+            const cvFileName = cvData.personalInfo.name ? `CV ${cvData.personalInfo.name}` : "Mon CV";
+            const existingCvIndex = mesDocuments.findIndex(doc => doc.id === 'cv_principal_utilisateur');
+            const cvEntry = {
+                id: "cv_principal_utilisateur", title: cvFileName, type: "Curriculum Vitae",
+                date: new Date().toISOString().split('T')[0], status: "completed", cvDataSource: cvData
+            };
+            if (existingCvIndex > -1) mesDocuments[existingCvIndex] = cvEntry;
+            else mesDocuments.push(cvEntry);
+            localStorage.setItem('emploiavenir_documents', JSON.stringify(mesDocuments));
+
+            let etapesCompletes = parseInt(localStorage.getItem('emploiavenir_parcours_etapesCompletes') || '0', 10);
+            if (etapesCompletes < 2) {
+                localStorage.setItem('emploiavenir_parcours_etapesCompletes', '2');
+                localStorage.setItem('emploiavenir_parcours_lastActivityDate', new Date().toISOString().split('T')[0]);
+            }
+            showToast("CV enregistré ! Redirection...", 'success');
+            setTimeout(() => { window.location.href = 'MonParcours.html'; }, 1500);
+        });
+
+        function attachMicListenersToContainer(container) {
+            container.querySelectorAll('.mic-btn').forEach(micBtn => {
+                micBtn.addEventListener('click', function() {
+                    const targetInputId = this.dataset.targetInput;
+                    if (window.startDictation && typeof window.startDictation === 'function') {
+                        window.startDictation(targetInputId);
+                    } else { showToast("Dictée vocale non disponible.", "warning"); }
+                });
+            });
+        }
+        attachMicListenersToContainer(cvAssistantForm);
+        showStep(0);
     }
 
-    addCompetenceToListBtn.addEventListener('click', () => {
-        const nom = newCompetenceInput.value.trim();
-        if (nom) {
-            const competenceData = { nom: nom, niveau: '' }; // Pas de niveau pour les compétences ici, juste le nom
-            cvData.competences.push(competenceData);
-            renderListItem(competencesListForm, competenceData, 'competence');
-            newCompetenceInput.value = '';
-            newCompetenceInput.focus();
-        } else {
-            validateField(newCompetenceInput); // Marquer comme invalide si vide
+
+    // Fonction de reconnaissance vocale globale
+    window.startDictation = function(targetInputId) {
+        const targetInput = document.getElementById(targetInputId);
+        if (!targetInput) { console.error("Input target for dictation not found:", targetInputId); return; }
+
+        if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+            showToast("Votre navigateur ne supporte pas la reconnaissance vocale.", 'warning'); return;
         }
-    });
-    addLangueToListBtn.addEventListener('click', () => {
-        const nom = newLangueInput.value.trim();
-        const niveau = newLangueLevelSelect.value;
-        if (nom && niveau) {
-            const langueData = { nom: nom, niveau: niveau };
-            cvData.langues.push(langueData);
-            renderListItem(languesListForm, langueData, 'langue');
-            newLangueInput.value = '';
-            newLangueLevelSelect.value = '';
-            newLangueInput.focus();
-        } else {
-            if(!nom) validateField(newLangueInput);
-            // Gérer la validation du select de niveau si besoin
-        }
-    });
+        const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const recognition = new SpeechRecognitionAPI();
+        recognition.lang = 'fr-FR'; recognition.interimResults = false; recognition.maxAlternatives = 1;
 
-    // --- Mise à jour de l'Aperçu Final ---
-    function updateFinalCVPreview() {
-        finalPreviewContentDiv.innerHTML = ''; // Clear
-        // Recréer le contenu basé sur cvData (similaire à votre ancienne fonction updateCV, mais lisant cvData)
+        const micButtonIcon = document.querySelector(`button[data-target-input="${targetInputId}"] i`);
+        let originalMicClass = micButtonIcon ? micButtonIcon.className : '';
 
-        // Infos Personnelles
-        if (cvData.personalInfo.name) {
-            const nameEl = document.createElement('h3'); nameEl.style.textAlign = 'center';
-            nameEl.textContent = cvData.personalInfo.name; finalPreviewContentDiv.appendChild(nameEl);
-        }
-        if (cvData.personalInfo.cvTitle) {
-            const titleEl = document.createElement('p'); titleEl.style.textAlign = 'center'; titleEl.style.fontStyle = 'italic';
-            titleEl.textContent = cvData.personalInfo.cvTitle; finalPreviewContentDiv.appendChild(titleEl);
-        }
-        const contactInfoDiv = document.createElement('div'); contactInfoDiv.className = 'contact-info-preview';
-        if (cvData.personalInfo.email) contactInfoDiv.innerHTML += `<p><i class="fas fa-envelope"></i> ${escapeHTML(cvData.personalInfo.email)}</p>`;
-        if (cvData.personalInfo.phone) contactInfoDiv.innerHTML += `<p><i class="fas fa-phone"></i> ${escapeHTML(cvData.personalInfo.phone)}</p>`;
-        if (cvData.personalInfo.address) contactInfoDiv.innerHTML += `<p><i class="fas fa-map-marker-alt"></i> ${escapeHTML(cvData.personalInfo.address)}</p>`;
-        if(contactInfoDiv.innerHTML) finalPreviewContentDiv.appendChild(contactInfoDiv);
+        if (micButtonIcon) micButtonIcon.className = 'fas fa-microphone-alt fa-beat';
 
-
-        // Expériences (lire depuis les formulaires remplis ou cvData)
-        const experiences = [];
-        experiencesListForm.querySelectorAll('.dynamic-form-item').forEach(formItem => {
-            experiences.push({
-                poste: formItem.querySelector('.expPoste')?.value.trim(),
-                organisation: formItem.querySelector('.expOrganisation')?.value.trim(),
-                lieu: formItem.querySelector('.expLieu')?.value.trim(),
-                dateDebut: formItem.querySelector('.expDateDebut')?.value,
-                dateFin: formItem.querySelector('.expDateFin')?.value,
-                enCours: formItem.querySelector('.expEnCours')?.checked,
-                description: formItem.querySelector('.expDescription')?.value.trim()
-            });
-        });
-        cvData.experiences = experiences; // Mettre à jour cvData avec les dernières valeurs des champs
-
-        if (cvData.experiences.length > 0) {
-            const expTitle = document.createElement('h4'); expTitle.textContent = "Expériences"; finalPreviewContentDiv.appendChild(expTitle);
-            cvData.experiences.forEach(exp => {
-                if(exp.poste || exp.organisation) {
-                    const expDiv = document.createElement('div'); expDiv.className = 'experience-preview-item';
-                    if(exp.poste) expDiv.innerHTML += `<h5>${escapeHTML(exp.poste)}</h5>`;
-                    expDiv.innerHTML += `<p><strong>${escapeHTML(exp.organisation || '')}</strong>${exp.lieu ? `, <em>${escapeHTML(exp.lieu)}</em>` : ''}</p>`;
-                    const dateStart = formatDateForDisplay(exp.dateDebut);
-                    const dateEnd = exp.enCours ? "Aujourd'hui" : formatDateForDisplay(exp.dateFin);
-                    if(dateStart) expDiv.innerHTML += `<p class="dates-preview">${dateStart} - ${dateEnd}</p>`;
-                    if(exp.description) expDiv.innerHTML += `<p class="description-preview">${escapeHTML(exp.description).replace(/\n/g, '<br>')}</p>`;
-                    finalPreviewContentDiv.appendChild(expDiv);
-                }
-            });
-        }
-
-        // Formations (lire depuis les formulaires remplis ou cvData)
-        const formations = [];
-        formationsListForm.querySelectorAll('.dynamic-form-item').forEach(formItem => {
-            formations.push({
-                diplome: formItem.querySelector('.formDiplome')?.value.trim(),
-                etablissement: formItem.querySelector('.formEtablissement')?.value.trim(),
-                lieu: formItem.querySelector('.formLieu')?.value.trim(),
-                dateDebut: formItem.querySelector('.formDateDebut')?.value,
-                dateFin: formItem.querySelector('.formDateFin')?.value,
-                enCours: formItem.querySelector('.formEnCours')?.checked,
-                description: formItem.querySelector('.formDescription')?.value.trim()
-            });
-        });
-        cvData.formations = formations;
-        if (cvData.formations.length > 0) {
-            const formTitle = document.createElement('h4'); formTitle.textContent = "Formations"; finalPreviewContentDiv.appendChild(formTitle);
-            cvData.formations.forEach(form => {
-                 if(form.diplome || form.etablissement) {
-                    const formDiv = document.createElement('div'); formDiv.className = 'formation-preview-item';
-                    if(form.diplome) formDiv.innerHTML += `<h5>${escapeHTML(form.diplome)}</h5>`;
-                    formDiv.innerHTML += `<p><strong>${escapeHTML(form.etablissement || '')}</strong>${form.lieu ? `, <em>${escapeHTML(form.lieu)}</em>` : ''}</p>`;
-                    const dateStart = formatDateForDisplay(form.dateDebut);
-                    const dateEnd = form.enCours ? "Aujourd'hui" : formatDateForDisplay(form.dateFin);
-                     if(dateStart) formDiv.innerHTML += `<p class="dates-preview">${dateStart} - ${dateEnd}</p>`;
-                    if(form.description) formDiv.innerHTML += `<p class="description-preview">${escapeHTML(form.description).replace(/\n/g, '<br>')}</p>`;
-                    finalPreviewContentDiv.appendChild(formDiv);
-                }
-            });
-        }
-
-
-        // Compétences
-        if (cvData.competences.length > 0) {
-            const compTitle = document.createElement('h4'); compTitle.textContent = "Compétences"; finalPreviewContentDiv.appendChild(compTitle);
-            const compContainer = document.createElement('div'); compContainer.className = 'skills-preview-container';
-            cvData.competences.forEach(comp => {
-                const compEl = document.createElement('span'); compEl.className = 'skill-preview-item';
-                compEl.textContent = escapeHTML(comp.nom);
-                compContainer.appendChild(compEl);
-            });
-            finalPreviewContentDiv.appendChild(compContainer);
-        }
-
-        // Langues
-        if (cvData.langues.length > 0) {
-            const langTitle = document.createElement('h4'); langTitle.textContent = "Langues"; finalPreviewContentDiv.appendChild(langTitle);
-            const langContainer = document.createElement('div'); langContainer.className = 'langues-preview-container';
-            cvData.langues.forEach(lang => {
-                const langEl = document.createElement('span'); langEl.className = 'langue-preview-item';
-                langEl.textContent = `${escapeHTML(lang.nom)} (${escapeHTML(lang.niveau)})`;
-                langContainer.appendChild(langEl);
-            });
-            finalPreviewContentDiv.appendChild(langContainer);
-        }
-
-        if (finalPreviewContentDiv.innerHTML.trim() === '') {
-             finalPreviewContentDiv.innerHTML = '<p style="text-align:center; padding: 2rem; color: var(--color-gray);">Commencez à remplir les étapes pour voir votre CV prendre forme ici !</p>';
-        }
-    }
-
-
-    // --- PDF Generation ---
-    downloadPdfBtn.addEventListener('click', () => {
-        const elementToPrint = finalPreviewContentDiv; // Le div contenant l'aperçu
-        // Vérification plus robuste si le contenu est juste le placeholder
-        if (!elementToPrint || !elementToPrint.hasChildNodes() || finalPreviewContentDiv.textContent.includes("Commencez à remplir")) {
-            typeof showToast === 'function' ? showToast("Veuillez d'abord remplir votre CV pour générer un aperçu.", 'warning') : alert("Veuillez d'abord remplir votre CV pour générer un aperçu.");
-            return;
-        }
-
-        const originalButtonText = downloadPdfBtn.innerHTML;
-        downloadPdfBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Export en cours...';
-        downloadPdfBtn.disabled = true;
-        document.body.style.cursor = 'wait';
-
-        const timestamp = new Date().toISOString().replace(/[:.-]/g, '').slice(0, 15);
-        const userName = cvData.personalInfo.name || 'Mon';
-        const fileName = `CV_EmploiAvenir_${userName.replace(/\s+/g, '_')}_${timestamp}.pdf`;
-
-        const opt = {
-          margin:       10, // Marge uniforme de 10mm
-          filename:     fileName,
-          image:        { type: 'jpeg', quality: 0.98 },
-          html2canvas:  { scale: 2, logging: false, useCORS: true, dpi: 192, letterRendering: true, backgroundColor: '#ffffff' },
-          jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
-          pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
+        recognition.onresult = function(event) {
+            targetInput.value = event.results[0][0].transcript;
+            targetInput.dispatchEvent(new Event('input', { bubbles: true }));
         };
-
-        html2pdf().set(opt).from(elementToPrint).save()
-            .then(() => {
-                downloadPdfBtn.innerHTML = originalButtonText;
-                downloadPdfBtn.disabled = false;
-                document.body.style.cursor = 'default';
-                typeof showToast === 'function' ? showToast("CV téléchargé avec succès !", 'success') : alert("CV téléchargé avec succès !");
-            })
-            .catch((error) => {
-                console.error("Erreur lors de la génération du PDF avec html2pdf:", error);
-                downloadPdfBtn.innerHTML = originalButtonText;
-                downloadPdfBtn.disabled = false;
-                document.body.style.cursor = 'default';
-                typeof showToast === 'function' ? showToast("Erreur lors de la génération du PDF.", 'error') : alert("Erreur lors de la génération du PDF.");
-            });
-    });
-
-    // --- Finalisation et Redirection ---
-    finishCVAssistantBtn.addEventListener('click', () => {
-        collectAllData(); // S'assurer que tout est à jour dans cvData
-        // Ici, vous pourriez aussi sauvegarder cvData dans localStorage si besoin pour la page "Mes Documents"
-
-        // Marquer l'étape 1 (CV & LM) comme complétée
-        let etapesCompletes = parseInt(localStorage.getItem('emploiavenir_parcours_etapesCompletes') || '0', 10);
-        if (etapesCompletes < 2) { // 0=eval, 1=CV. Donc après CV, on est à 2 étapes complètes
-            localStorage.setItem('emploiavenir_parcours_etapesCompletes', '2');
-            localStorage.setItem('emploiavenir_parcours_lastActivityDate', new Date().toISOString().split('T')[0]);
-            console.log("Étape 1 (CV & LM) marquée comme complétée.");
+        recognition.onerror = function(event) {
+            console.error("Erreur de reconnaissance vocale:", event.error);
+            let message = "Erreur de reconnaissance vocale: " + event.error;
+            if (event.error === 'no-speech') message = "Aucune parole détectée.";
+            else if (event.error === 'audio-capture') message = "Problème de capture audio.";
+            else if (event.error === 'not-allowed') message = "Accès au microphone refusé.";
+            showToast(message, 'error');
+        };
+        recognition.onend = function() { if (micButtonIcon) micButtonIcon.className = originalMicClass; };
+        try { recognition.start(); } catch (e) {
+            console.error("Erreur démarrage reco:", e);
+            if (micButtonIcon) micButtonIcon.className = originalMicClass;
+            showToast("Impossible de démarrer la reconnaissance.", 'error');
         }
-        typeof showToast === 'function' ? showToast("CV enregistré ! Redirection vers votre parcours...", 'success') : alert("CV enregistré ! Redirection vers votre parcours...");
-        setTimeout(() => {
-            window.location.href = 'MonParcours.html';
-        }, 1500);
-    });
-
-
-    // --- Initialisation ---
-    showStep(0); // Afficher la première étape
-} // Fin de initCVGeneratorPage
-
-// Fonction de reconnaissance vocale globale
-window.startDictation = function(targetInputId) {
-    const targetInput = document.getElementById(targetInputId);
-    if (!targetInput) {
-        console.error("Input target for dictation not found:", targetInputId);
-        return;
     }
-
-    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-        typeof showToast === 'function' ? showToast("Votre navigateur ne supporte pas la reconnaissance vocale.", 'warning') : alert("Votre navigateur ne supporte pas la reconnaissance vocale.");
-        return;
-    }
-    const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
-    const recognition = new SpeechRecognitionAPI();
-    recognition.lang = 'fr-FR';
-    recognition.interimResults = false;
-    recognition.maxAlternatives = 1;
-
-    const micButton = document.querySelector(`button[data-target-input="${targetInputId}"] i`);
-    let originalMicClass = '';
-    if (micButton) originalMicClass = micButton.className;
-
-    if (micButton) micButton.className = 'fas fa-microphone-alt fa-beat'; // Feedback visuel
-
-    recognition.onresult = function(event) {
-        const result = event.results[0][0].transcript;
-        targetInput.value = result;
-        targetInput.dispatchEvent(new Event('input', { bubbles: true })); // Pour déclencher la mise à jour de l'aperçu
-    };
-    recognition.onerror = function(event) {
-        console.error("Erreur de reconnaissance vocale:", event.error);
-        let message = "Erreur de reconnaissance vocale: " + event.error;
-        if(event.error === 'no-speech') message = "Aucune parole détectée. Veuillez réessayer.";
-        else if(event.error === 'audio-capture') message = "Problème de capture audio. Vérifiez votre microphone.";
-        else if(event.error === 'not-allowed') message = "Accès au microphone refusé.";
-        typeof showToast === 'function' ? showToast(message, 'error') : alert(message);
-    };
-    recognition.onend = function() {
-        if (micButton) micButton.className = originalMicClass;
-    };
-    try {
-        recognition.start();
-    } catch (e) {
-        console.error("Erreur au démarrage de la reconnaissance: ", e);
-        if (micButton) micButton.className = originalMicClass;
-        typeof showToast === 'function' ? showToast("Impossible de démarrer la reconnaissance vocale.", 'error') : alert("Impossible de démarrer la reconnaissance vocale.");
-    }
-}
-
-
 
     // --- Point d'entrée : Appeler les fonctions d'initialisation ---
-    // Ces fonctions ne s'exécuteront que si les éléments DOM de la page correspondante existent.
     initParcoursPage();
     initDocumentsPage();
     initCandidaturesPage();
     initProfilPage();
     initPartenairesPage();
     initEvaluationPage();
-    initCVGeneratorPage();
-}); // Fin de DOMContentLoaded
+    initCVGeneratorPage(); // S'assurer que c'est cette version qui est utilisée
+    });
