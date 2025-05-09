@@ -1,4 +1,3 @@
-Javascript
 /*
  * script.js pour le site EmploiAvenir
  * Centralise toutes les fonctionnalités JavaScript
@@ -89,8 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // il faut le sélectionner ici.
     const loginBtn = document.getElementById('loginBtn'); // Assurez-vous qu'un élément cliquable a cet ID
     const closeModalBtn = loginModal ? loginModal.querySelector('.close-modal') : null;
-    const loginForm = loginModal ? loginModal.getElementById('loginForm') : null;
-
+    const loginForm = loginModal ? document.getElementById('loginForm') : null;
 
     if (loginModal) { // N'active la logique modale que si la modale HTML existe
         if (loginBtn) { // N'ajoute l'écouteur que si le bouton d'ouverture existe
@@ -1728,6 +1726,425 @@ document.addEventListener('DOMContentLoaded', () => {
 
     } // Fin de initPartenairesPage
 
+// Logique de la page Évaluation (Quizz Express)
+function initEvaluationPage() {
+    // Vérifie si c'est la page Évaluation en cherchant un élément clé
+    const evaluationForm = document.getElementById('evaluationForm');
+    if (!evaluationForm) return; // Quitte la fonction si les éléments ne sont pas présents
+
+    console.log("Initialisation de la page d'évaluation...");
+
+    // --- Références DOM spécifiques à l'évaluation ---
+    const quizStepsContainer = document.getElementById('quizSteps');
+    const quizSteps = quizStepsContainer ? quizStepsContainer.querySelectorAll('.quiz-step') : [];
+    const currentQuizQuestionSpan = document.getElementById('currentQuizQuestion');
+    const totalQuizQuestionsSpan = document.getElementById('totalQuizQuestions');
+    const prevStepButton = document.getElementById('prevStepButton');
+    const nextStepButton = document.getElementById('nextStepButton');
+    const submitQuizButton = document.getElementById('submitQuizButton');
+    const goToParcoursButton = document.getElementById('goToParcoursButton'); // Bouton dans l'étape finale
+
+    if (quizSteps.length === 0 || !currentQuizQuestionSpan || !totalQuizQuestionsSpan || !prevStepButton || !nextStepButton || !submitQuizButton || !goToParcoursButton) {
+        console.error("Éléments DOM du quiz manquants !");
+        return; // Assure que tous les éléments nécessaires existent
+    }
+
+
+    // --- Variables d'état ---
+    // L'index commence à 0 pour la première étape
+    let currentStepIndex = 0;
+     // Le nombre total d'étapes *de questions* (avant le message final)
+    const totalQuestionSteps = 4; // Étapes 1 à 4
+
+    // Objet pour stocker les réponses collectées
+    let quizResponses = {};
+
+
+    // --- Fonctions de gestion du quiz ---
+
+    // Met à jour l'affichage (quelle étape montrer, quels boutons afficher, indicateur)
+    function updateQuizUI() {
+        // Masque toutes les étapes
+        quizSteps.forEach((step, index) => {
+            step.classList.remove('active');
+            step.style.display = 'none'; // Cache visuellement
+            step.setAttribute('aria-hidden', 'true'); // Cache sémantiquement
+        });
+
+        // Affiche l'étape actuelle
+        const currentStep = quizSteps[currentStepIndex];
+        if (currentStep) {
+            currentStep.classList.add('active');
+            currentStep.style.display = 'block'; // Ou 'flex'/'grid' selon le layout souhaité
+            currentStep.removeAttribute('aria-hidden'); // Rends le contenu visible sémantiquement
+
+            // Déplace le focus vers le premier élément interactif de l'étape actuelle pour l'accessibilité
+            const firstFocusableElement = currentStep.querySelector('input, select, button, a');
+            if (firstFocusableElement) {
+                firstFocusableElement.focus();
+            }
+        }
+
+        // Met à jour l'indicateur de progression
+         if (currentStepIndex < totalQuestionSteps) {
+             // Si on est sur une étape de question (1 à 4)
+             currentQuizQuestionSpan.textContent = currentStepIndex + 1; // Index 0 -> Question 1, etc.
+             totalQuizQuestionsSpan.textContent = totalQuestionSteps; // Total des questions
+             // S'assure que l'indicateur est visible
+             currentQuizQuestionSpan.parentElement.style.display = 'block';
+         } else {
+              // Si on est sur l'étape finale (message)
+             currentQuizQuestionSpan.parentElement.style.display = 'none'; // Cache l'indicateur de progression
+         }
+
+
+        // Gère la visibilité des boutons de navigation
+        if (currentStepIndex === 0) {
+            // Première étape : cacher "Précédent"
+            prevStepButton.style.visibility = 'hidden'; // visibility pour maintenir l'espace
+        } else {
+            // Autres étapes : afficher "Précédent"
+            prevStepButton.style.visibility = 'visible';
+        }
+
+        if (currentStepIndex < totalQuestionSteps - 1) {
+            // Étapes avant la dernière question (1 à 3) : afficher "Suivant", cacher "Terminer" et "Accéder"
+            nextStepButton.style.display = 'block';
+            submitQuizButton.style.display = 'none';
+            goToParcoursButton.style.display = 'none';
+             // Cacher aussi le conteneur des boutons Précédent/Suivant/Terminer si on est à l'étape finale
+             evaluationForm.querySelector('.form-navigation').style.display = 'flex';
+
+        } else if (currentStepIndex === totalQuestionSteps - 1) {
+            // Dernière étape de question (étape 4) : cacher "Suivant", afficher "Terminer", cacher "Accéder"
+            nextStepButton.style.display = 'none';
+            submitQuizButton.style.display = 'block'; // Le bouton de soumission apparaît
+            goToParcoursButton.style.display = 'none';
+             evaluationForm.querySelector('.form-navigation').style.display = 'flex';
+
+        } else {
+            // Étape finale (message, index == totalQuestionSteps) : cacher tous les boutons de navigation classiques
+            prevStepButton.style.visibility = 'hidden';
+            nextStepButton.style.display = 'none';
+            submitQuizButton.style.display = 'none';
+            goToParcoursButton.style.display = 'block'; // Le bouton "Accéder à mon parcours" apparaît
+            // Cacher le conteneur des boutons Précédent/Suivant/Terminer à l'étape finale
+             evaluationForm.querySelector('.form-navigation').style.display = 'none';
+        }
+    }
+
+    // Valide les champs requis de l'étape actuelle
+    function validateCurrentStep() {
+        const currentStep = quizSteps[currentStepIndex];
+        if (!currentStep) return false;
+
+        // Sélectionne tous les champs requis dans l'étape actuelle (input, select, textarea)
+        // Gère les groupes de radio (au moins un doit être coché)
+        const requiredFields = currentStep.querySelectorAll('[required]');
+        let allValid = true;
+
+        requiredFields.forEach(field => {
+            // Retire les éventuelles classes d'erreur précédentes
+            field.classList.remove('input-error'); // Assurez-vous d'avoir un style pour .input-error dans style.css
+            const errorId = field.id + '-error';
+            const existingErrorMsg = document.getElementById(errorId);
+            if (existingErrorMsg) existingErrorMsg.remove();
+
+
+            let fieldValid = true;
+
+            if (field.type === 'radio') {
+                 // Pour les groupes de radio, on vérifie si au moins un est coché DANS ce groupe
+                 const radioGroupName = field.name;
+                 // On ne valide qu'une fois par groupe de radio, basé sur le premier radio trouvé dans le groupe
+                 if (currentStep.querySelector(`input[name="${radioGroupName}"][type="radio"]:checked`)) {
+                     // Au moins un radio est coché dans ce groupe
+                     fieldValid = true;
+                 } else {
+                      // Aucun radio n'est coché dans ce groupe
+                      fieldValid = false;
+                 }
+                 // On s'assure de ne valider le groupe qu'une fois en sautant les autres radios du même groupe
+                 if (field !== currentStep.querySelector(`input[name="${radioGroupName}"][type="radio"]`)) {
+                     return; // Passe à l'itération suivante si ce n'est pas le premier radio du groupe
+                 }
+
+             } else {
+                  // Pour les autres champs (text, select, email, password, date, time...)
+                  if (!field.value.trim()) {
+                      fieldValid = false;
+                  }
+                  // Validation spécifique pour l'email si type="email"
+                  if (field.type === 'email' && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value.trim())) {
+                       if (field.value.trim()) { // N'affiche l'erreur que si le champ n'est pas vide (déjà géré par required)
+                            fieldValid = false; // Email invalide si non vide
+                            // Optionnel: ajouter un message d'erreur plus spécifique pour l'email
+                       }
+                  }
+                   // Validation spécifique pour le mot de passe (longueur min gérée par HTML5 minlength)
+                   if (field.type === 'password') {
+                       if (field.value.length < field.minLength) {
+                            fieldValid = false;
+                            // Optionnel: message d'erreur pour la longueur
+                       }
+                   }
+             }
+
+
+            if (!fieldValid) {
+                 allValid = false; // Marque la validation globale comme échouée
+                 field.classList.add('input-error'); // Ajoute une classe pour styler l'erreur
+                 // Ajouter un message d'erreur à côté du champ (optionnel mais recommandé pour a11y)
+                 const errorMsg = document.createElement('p');
+                 errorMsg.id = errorId; // Lie le message au champ
+                 errorMsg.classList.add('error-message'); // Classe CSS pour les messages d'erreur
+                 errorMsg.textContent = "Ce champ est requis."; // Texte par défaut
+                  if (field.type === 'email' && field.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value.trim())) {
+                      errorMsg.textContent = "Veuillez saisir une adresse email valide.";
+                  } else if (field.type === 'password' && field.value.length < field.minLength) {
+                       errorMsg.textContent = `Le mot de passe doit contenir au moins ${field.minLength} caractères.`;
+                  } else if (field.type === 'radio') {
+                       errorMsg.textContent = "Veuillez sélectionner une option.";
+                  }
+
+
+                 // Trouver où insérer le message d'erreur
+                 const parentGroup = field.closest('.form-group, fieldset');
+                 if (parentGroup) {
+                      // Insère après le champ ou le groupe de radio
+                     if (field.type === 'radio') {
+                          // Insère après le fieldset du groupe radio
+                          parentGroup.appendChild(errorMsg);
+                     } else {
+                         // Insère après le champ individuel
+                          field.parentNode.insertBefore(errorMsg, field.nextSibling);
+                     }
+
+                 } else {
+                     // Solution de secours si pas de .form-group (moins sémantique)
+                      field.parentNode.insertBefore(errorMsg, field.nextSibling);
+                 }
+
+                 // Mettre le focus sur le premier champ invalide trouvé
+                 if (!document.querySelector('.input-error')) {
+                      field.focus();
+                 }
+            }
+        });
+
+        // Validation spécifique pour la confirmation de mot de passe (étape 4)
+         if (currentStepIndex === 3) { // C'est l'étape 4 (index 3)
+             const passwordField = document.getElementById('user-password');
+             const confirmPasswordField = document.getElementById('confirm-password');
+              // Retirer les éventuelles erreurs de confirmation précédentes
+              confirmPasswordField.classList.remove('input-error');
+              const confirmErrorId = confirmPasswordField.id + '-error';
+              const existingConfirmErrorMsg = document.getElementById(confirmErrorId);
+              if (existingConfirmErrorMsg) existingConfirmErrorMsg.remove();
+
+              if (passwordField && confirmPasswordField && passwordField.value !== confirmPasswordField.value) {
+                 allValid = false;
+                 confirmPasswordField.classList.add('input-error');
+                 const errorMsg = document.createElement('p');
+                 errorMsg.id = confirmErrorId;
+                 errorMsg.classList.add('error-message');
+                 errorMsg.textContent = "Les mots de passe ne correspondent pas.";
+                 confirmPasswordField.parentNode.insertBefore(errorMsg, confirmPasswordField.nextSibling);
+                 // Mettre le focus sur le champ de confirmation si c'est la seule erreur ou la première
+                 if (!document.querySelector('.input-error')) {
+                       confirmPasswordField.focus();
+                  }
+              }
+         }
+
+
+        return allValid;
+    }
+
+     // Collecte les données de l'étape actuelle
+     function collectStepData() {
+         const currentStep = quizSteps[currentStepIndex];
+         if (!currentStep) return {};
+
+         // Récupérer tous les éléments de formulaire nommés dans l'étape actuelle
+         const inputs = currentStep.querySelectorAll('input, select, textarea');
+         const stepData = {};
+
+         inputs.forEach(input => {
+             const name = input.name;
+             if (!name) return; // Ignore les champs sans nom
+
+             if (input.type === 'radio') {
+                 // Pour les radios, on ne prend que la valeur du radio coché dans le groupe
+                 if (input.checked) {
+                     stepData[name] = input.value;
+                 }
+             } else if (input.type === 'checkbox') {
+                  // Pour les checkboxes, on peut stocker un booléen ou un tableau si plusieurs ont le même nom
+                  // Ici, supposons une seule checkbox par nom pour l'exemple, ou stocker true/false
+                  stepData[name] = input.checked;
+             }
+              else if (input.tagName === 'SELECT') {
+                  // Pour les selects, on prend la valeur sélectionnée
+                  stepData[name] = input.value;
+              }
+             else {
+                 // Pour les champs texte, email, password, etc.
+                 stepData[name] = input.value.trim();
+             }
+         });
+
+         // Fusionne les nouvelles données avec les réponses déjà collectées
+         quizResponses = { ...quizResponses, ...stepData };
+         console.log("Données de l'étape", currentStepIndex + 1, ":", stepData);
+         console.log("Données complètes collectées jusqu'à présent :", quizResponses);
+     }
+
+
+    // Gère le passage à l'étape suivante
+    function handleNextStep() {
+        console.log("handleNextStep appelé. currentStepIndex:", currentStepIndex); // <-- Ajouter cette ligne
+        // 1. Valider l'étape actuelle
+        if (!validateCurrentStep()) {
+            console.log("Validation de l'étape échouée."); // <-- Ajouter cette ligne
+            showToast("Veuillez remplir correctement tous les champs requis de cette étape.", 'warning');
+            return; // Arrête si la validation échoue
+        }
+    console.log("Validation de l'étape réussie. Collecte des données..."); // <-- Ajouter cette ligne
+
+        // 2. Collecter les données de l'étape actuelle (si c'est une étape de question)
+        if (currentStepIndex < totalQuestionSteps) {
+             collectStepData();
+        }
+
+
+        // 3. Passer à l'étape suivante (si pas la dernière question)
+       if (currentStepIndex < totalQuestionSteps -1) {
+            console.log("Passage à l'étape suivante. currentStepIndex avant increment:", currentStepIndex); // <-- Ajouter cette ligne
+            currentStepIndex++;
+            console.log("currentStepIndex après increment:", currentStepIndex); // <-- Ajouter cette ligne
+            updateQuizUI();
+            console.log("updateQuizUI appelé."); // <-- Ajouter cette ligne
+
+        } else if (currentStepIndex === totalQuestionSteps - 1) {
+             // On est à la dernière étape de question (étape 4).
+             // Le bouton "Suivant" est caché et le bouton "Terminer" est affiché.
+             // Le clic sur "Terminer" est géré par le listener du formulaire submit.
+             // Ce bloc ne devrait normalement pas être atteint si les boutons sont gérés correctement par updateQuizUI
+             // Mais par sécurité :
+             console.warn("Le bouton 'Suivant' a été cliqué sur la dernière étape de question. Le bouton 'Terminer' devrait être visible à la place.");
+        }
+
+    }
+
+    // Gère le retour à l'étape précédente
+    function handlePrevStep() {
+        // Collecter les données de l'étape actuelle (pour les conserver si l'utilisateur revient plus tard)
+         if (currentStepIndex < totalQuestionSteps) {
+             collectStepData(); // Optionnel : collecter avant de revenir si les réponses peuvent changer en revenant
+         }
+
+        // Revenir à l'étape précédente (si pas la première)
+        if (currentStepIndex > 0) {
+            currentStepIndex--;
+            updateQuizUI();
+        }
+         // Pas besoin de gérer le cas currentStepIndex === 0 car le bouton Précédent est caché.
+    }
+
+    // Gère la soumission finale du formulaire (clic sur le bouton "Terminer")
+    function handleFormSubmit(event) {
+        event.preventDefault(); // Empêche le rechargement de la page
+
+        // 1. Valider la dernière étape (étape 4)
+        if (!validateCurrentStep()) {
+            showToast("Veuillez remplir correctement tous les champs requis de cette étape pour terminer.", 'warning');
+            return; // Arrête si la validation échoue
+        }
+
+        // 2. Collecter les données de la dernière étape
+        collectStepData();
+
+        // 3. Simuler le traitement des données (sauvegarde, création de compte)
+        console.log("Quiz terminé. Données collectées :", quizResponses);
+
+        // Ici, vous intégreriez la logique réelle :
+        // - Envoyer quizResponses au serveur pour sauvegarde/analyse
+        // - Créer le compte utilisateur avec email/mot de passe
+        // - Stocker les données dans le profil utilisateur
+
+        // Pour la démo : Simuler la réussite
+         showToast("Votre évaluation est terminée ! Redirection...", 'success');
+
+         // 4. Marquer l'Étape 0 (Évaluation) comme complétée dans le parcours
+         // Appelle la fonction définie dans initParcoursPage pour mettre à jour la progression
+         // Cette fonction DOIT être accessible globalement (ou gérée différemment, comme via un CustomEvent)
+         // Pour la démo, on suppose qu'elle est sur window.
+         if (typeof window.completeCurrentParcoursStep === 'function') {
+              console.log("Appel de completeCurrentParcoursStep pour marquer l'Étape 0...");
+              window.completeCurrentParcoursStep(); // Ceci devrait incrémenter et sauvegarder la progression
+         } else {
+              console.warn("La fonction window.completeCurrentParcoursStep n'est pas trouvée. Impossible de marquer l'étape 0 comme complétée.");
+              // Stocker localement si la fonction n'existe pas (moins fiable)
+              let etapesCompletes = parseInt(localStorage.getItem('emploiavenir_parcours_etapesCompletes') || '0', 10);
+              if (etapesCompletes < 1) { // S'assurer que l'étape 0 est bien marquée complète (index 0 -> complétée)
+                  localStorage.setItem('emploiavenir_parcours_etapesCompletes', '1');
+                   localStorage.setItem('emploiavenir_parcours_lastActivityDate', new Date().toISOString().split('T')[0]);
+                  console.log("Étape 0 marquée comme complétée via localStorage direct.");
+              }
+         }
+
+
+        // 5. Passer à l'étape finale (message de fin)
+        currentStepIndex = totalQuestionSteps; // Index après la dernière question
+        updateQuizUI(); // Affiche l'étape 5
+
+        // Optionnel : Redirection automatique après un court délai au lieu d'attendre le clic sur le bouton final
+        // setTimeout(() => {
+        //     window.location.href = 'MonParcours.html'; // Redirige vers la page Mon Parcours
+        // }, 2000); // Redirige après 2 secondes
+    }
+
+    // Gère le clic sur le bouton "Accéder à mon parcours" (dans l'étape finale)
+    function handleGoToParcours() {
+         window.location.href = 'MonParcours.html'; // Redirige vers la page Mon Parcours
+    }
+
+    // --- Ajout des écouteurs d'événements ---
+
+    // Boutons Précédent et Suivant
+    prevStepButton.addEventListener('click', handlePrevStep);
+    nextStepButton.addEventListener('click', handleNextStep);
+
+    // Soumission du formulaire (bouton Terminer)
+    evaluationForm.addEventListener('submit', handleFormSubmit);
+
+     // Bouton "Accéder à mon parcours" (dans l'étape finale)
+     goToParcoursButton.addEventListener('click', handleGoToParcours);
+
+    // --- Initialisation ---
+    updateQuizUI(); // Affiche la première étape au chargement de la page
+
+    // Optionnel: Gérer la navigation par clavier (touches fléchées?) - Complexifie un peu
+    // document.addEventListener('keydown', (event) => {
+    //     if (event.key === 'ArrowRight' && nextStepButton.style.display !== 'none') {
+    //         handleNextStep();
+    //     } else if (event.key === 'ArrowLeft' && prevStepButton.style.visibility !== 'hidden') {
+    //         handlePrevStep();
+    //     }
+    // });
+
+} // Fin de initEvaluationPage
+
+// ... (le reste du code script.js, y compris le DOMContentLoaded qui appelle toutes les fonctions init) ...
+
+// Assurez-vous que votre bloc DOMContentLoaded à la fin de script.js appelle bien initEvaluationPage
+/*
+document.addEventListener('DOMContentLoaded', () => {
+    // ... autres appels initPage ...
+    initEvaluationPage(); // <-- Ajoutez ou assurez-vous que cet appel est présent
+});
+*/
 
     // --- Point d'entrée : Appeler les fonctions d'initialisation ---
     // Ces fonctions ne s'exécuteront que si les éléments DOM de la page correspondante existent.
@@ -1736,6 +2153,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initCandidaturesPage();
     initProfilPage();
     initPartenairesPage();
-
+    initEvaluationPage();
 
 }); // Fin de DOMContentLoaded
