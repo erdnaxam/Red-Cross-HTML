@@ -1,33 +1,29 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Titre de la page spécifique - Garde EmploiAvenir -->
-    <title>Mon Parcours - EmploiAvenir</title>
+    <title>Quizz Express - EmploiAvenir</title>
     <!-- Description adaptée pour cette page -->
-    <meta name="description" content="Suivez votre progression étape par étape dans votre parcours de recherche d'emploi personnalisé avec EmploiAvenir.">
+    <meta name="description" content="Démarrez votre parcours EmploiAvenir avec une courte évaluation pour mieux comprendre vos besoins et personnaliser aux mieux votre accompagnement.">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Lien vers le fichier CSS externe - INDISPENSABLE -->
-    <!-- Assurez-vous que ce fichier style.css existe et contient tous les styles nécessaires, y compris ceux du bloc <style> retiré ici. -->
+    <!-- Lien vers votre fichier CSS externe - INDISPENSABLE -->
+    <!-- Assurez-vous que ce fichier style.css existe et contient TOUS les styles nécessaires (header, footer, conteneur, formulaires, boutons, classes pour cacher/afficher les étapes du quiz, etc.). -->
     <link rel="stylesheet" href="style.css">
 
     <!-- Lien CDN pour Font Awesome (si tu utilises les icônes <i class="fas ...">) -->
-    <!-- Utile car les icônes Font Awesome sont utilisées dans la structure fournie. -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    <!-- Lovable script tag for Select feature -->
-    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
-
-    <!-- Le bloc <style> intégré a été COMPLÈTEMENT SUPPRIMÉ ici. -->
+    <!-- AUCUN STYLE INTEGRÉ -->
 
 </head>
 <body>
- <!-- Header - Repris du code fourni et des améliorations précédentes -->
+  <!-- Header - Repris du code standard EmploiAvenir -->
   <header class="header" id="header">
     <div class="container flex justify-between items-center">
       <!-- Lien du logo corrigé pour pointer vers l'accueil -->
@@ -36,7 +32,7 @@
         <!-- Ajout de l'ID pour le JS du menu mobile -->
         <ul class="nav-links" id="mainNavLinks">
           <li><a href="index.html">Accueil</a></li>
-          <!-- Marquer Mon Parcours comme actif sur cette page -->
+          <!-- Marquer Mon Parcours comme actif car l'évaluation en fait partie -->
           <li><a href="MonParcours.html" class="active" aria-current="page">Mon Parcours</a></li>
           <li><a href="MesCandidature.html">Mes Candidatures</a></li>
           <li><a href="Partenaires.html">Nos partenaires</a></li>
@@ -51,172 +47,189 @@
     </div>
   </header>
 
+    <!-- Contenu principal de la page Évaluation -->
+    <main>
+        <!-- Utilisation de la classe container standard, max-width pour le contenu centré -->
+        <div class="container py-8 max-w-xl mx-auto">
+            <!-- Titre principal -->
+            <h1 class="text-center mb-6">Quizz Express</h1>
+            <p class="text-center mb-8">Répondez à quelques questions simples pour nous aider à mieux vous connaître et démarrer votre parcours personnalisé.</p>
 
-  <!-- Contenu principal de la page Parcours -->
-  <main class="container" > <!-- Utilisation de <main>, la classe container peut être ici ou dans une section -->
+            <!-- Le formulaire du questionnaire -->
+            <!-- Important: Le formulaire englobe toutes les étapes pour faciliter la collecte des données et la soumission -->
+            <form id="evaluationForm">
 
-    <!-- Titre principal de la page -->
-    <h1 class="text-center mb-8">Votre Parcours Personnalisé vers l'Emploi</h1>
+                <!-- Indicateur de progression du quiz (sera mis à jour par JS) -->
+                <div class="text-center mb-4">
+                    <p>Question <span id="currentQuizQuestion">1</span> sur <span id="totalQuizQuestions">4</span></p> <!-- Corrigé le total -->
+                </div>
 
-    <!-- Section Barre de Progression Visuelle -->
-    <section class="parcours-progress-bar mb-4" aria-label="Indicateur de progression dans le parcours">
-        <!-- Ligne de progression active (sera gérée par JS/CSS) -->
-        <div class="progress-line-active"></div>
-        <!-- Les étapes visuelles - Ajout de classes pour les étapes 0 à 7 (8 au total) -->
-        <div class="progress-step is-active" id="progress-step-0"> <div class="step-indicator" aria-hidden="true">0</div> <div class="step-label">Évaluation</div> </div>
-        <div class="progress-step" id="progress-step-1"> <div class="step-indicator" aria-hidden="true">1</div> <div class="step-label">CV & LM</div> </div>
-        <div class="progress-step" id="progress-step-2"> <div class="step-indicator" aria-hidden="true">2</div> <div class="step-label">Recherche & Candidature</div> </div>
-        <div class="progress-step" id="progress-step-3"> <div class="step-indicator" aria-hidden="true">3</div> <div class="step-label">Préparation Entretien</div> </div>
-        <div class="progress-step" id="progress-step-4"> <div class="step-indicator" aria-hidden="true">4</div> <div class="step-label">L'Après Entretien</div> </div>
-        <div class="progress-step" id="progress-step-5"> <div class="step-indicator" aria-hidden="true">5</div> <div class="step-label">Le Contrat</div> </div>
-        <div class="progress-step" id="progress-step-6"> <div class="step-indicator" aria-hidden="true">6</div> <div class="step-label">Le Suivi</div> </div>
-        <!-- Ajusté pour avoir 7 étapes de progression plus l'évaluation initiale = 8 -->
-        <!-- L'étape 7 (Suivi) est bien la 8ème bulle -->
-        <div class="progress-step" id="progress-step-7"> <div class="step-indicator" aria-hidden="true">7</div> <div class="step-label">Félicitations!</div> </div>
-    </section>
+                <!-- Conteneur des étapes/questions du quiz (JS affichera une seule étape à la fois) -->
+                <div id="quizSteps">
 
-    <!-- Bouton d'Aide - Transformé en <button> pour accessibilité -->
-    <div class="text-center mb-8">
-        <!-- Utilise onclick comme dans votre script fourni, mais sur un bouton -->
-        <button type="button" class="aide-button" aria-label="Obtenir de l'aide disponible à chaque étape" onclick="alert('Fonctionnalité d\'aide à implémenter !');">
-            <i class="fas fa-question-circle" aria-hidden="true"></i> <!-- Icône Font Awesome -->
-            <span>Aide disponible à chaque étape</span>
-        </button>
-    </div>
+                    <!-- Étape 1 : Situation actuelle et besoins basiques -->
+                    <!-- Un fieldset est sémantiquement plus adapté pour un groupe de questions -->
+                    <fieldset class="quiz-step active" id="step-1"> <!-- 'active' par défaut pour la première étape, géré par JS -->
+                        <legend class="sr-only">Partie 1 : Votre situation actuelle</legend> <!-- Label pour le groupe, caché visuellement -->
+                        <h2 class="text-center mb-4">Parlons un peu de vous...</h2>
+                        <p class="text-center mb-6">Ces questions nous aident à adapter l'aide que nous vous proposons.</p>
 
-    <!-- Section Tableau de bord Utilisateur -->
-    <section class="parcours-dashboard mb-8" aria-label="Tableau de bord de votre progression">
-        <div class="dashboard-card progression-globale">
-            <h3>Progression globale</h3>
-            <div class="progression-details">
-                <p>Votre avancement dans le parcours :</p>
-                <!-- ID pour le script JS -->
-                <p><strong>Étapes validées :</strong> <span id="etapes-validees">0/8</span></p>
-                <!-- Barre de progression sémantique -->
-                <!-- Label pour accessibilité, caché visuellement par CSS .sr-only -->
-                <label for="progression-bar" id="progression-pourcentage-label" class="sr-only">Pourcentage de complétion</label>
-                <progress id="progression-bar" value="0" max="100" aria-labelledby="progression-pourcentage-label"></progress>
-                 <!-- Pourcentage visible -->
-                <p><strong id="progression-pourcentage">0%</strong> complété</p>
-                <p style="font-size: 0.8rem; color: var(--color-gray);">Dernière activité: <span id="derniere-activite">Jamais</span></p>
-            </div>
-        </div>
-        <div class="dashboard-card vos-reussites">
-            <h3>Vos réussites (Badges)</h3>
-            <div class="reussites-details">
-                 <p><span class="badge-nouveau">Nouveau</span>: Terminez votre première étape pour débloquer vos premiers badges !</p>
-                 <!-- Conteneur pour les badges gagnés ou non -->
-                 <div id="badges-gagnes" aria-label="Liste des badges obtenus et à obtenir">
-                      <!-- Les icônes Font Awesome seront ajoutées/mises à jour par le script JS -->
-                      <!-- Exemple de structure attendue par le script: -->
-                      <!-- <i class="fas fa-medal earned" aria-label="Badge Premier Pas ! (obtenu)" title="Badge Premier Pas !"></i> -->
-                      <!-- <i class="fas fa-star" aria-label="Badge Mi-Parcours ! (non obtenu)" title="Badge Mi-Parcours !"></i> -->
-                 </div>
-            </div>
-        </div>
-    </section>
+                        <div class="form-group">
+                            <label for="lang-comprehension">Est-ce facile pour vous de lire et comprendre le français ? <span aria-hidden="true">*</span></label>
+                            <select id="lang-comprehension" name="langComprehension" required>
+                                <option value="">Choisir...</option>
+                                <option value="tres-facile">Très facile</option>
+                                <option value="assez-facile">Assez facile</option>
+                                <option value="un-peu-difficile">Un peu difficile</option>
+                                <option value="tres-difficile">Très difficile</option>
+                            </select>
+                        </div>
 
-    <!-- Section Détail des Étapes - Affichage des cartes cliquables -->
-    <section aria-labelledby="detail-etapes-titre">
-        <h2 id="detail-etapes-titre" class="text-center mb-4">Détail des étapes du parcours</h2>
-        <div class="etapes-grid">
-            <!-- Étape 0 : Évaluation -->
-            <!-- Utilise <article> pour chaque carte étape -->
-            <article class="etape-carte is-active" id="etape-0"> <!-- ID correct pour coller au JS -->
-                <div class="etape-icon" aria-hidden="true"><i class="fas fa-clipboard-question"></i></div> <!-- Icône adaptée -->
-                <h3>0. Évaluation Express</h3>
-                <p>Commencez ici pour évaluer votre situation et démarrer votre profil facilement.</p>
-                <!-- Lien d'action vers la page/section de l'étape -->
-                <!-- L'href doit mener à la page/section de l'étape 0 -->
-                <a href="evaluation-quizz.html" class="etape-action" aria-label="Démarrer l'étape 0 : Évaluation Express">
-                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                </a>
-            </article>
+                         <div class="form-group">
+                             <label for="contact-preference">Pour échanger avec un conseiller, préférez-vous : <span aria-hidden="true">*</span></label>
+                             <select id="contact-preference" name="contactPreference" required>
+                                 <option value="">Choisir...</option>
+                                 <option value="telephone">Par téléphone</option>
+                                 <option value="ecrit">Par écrit (email, chat)</option>
+                                 <option value="visio">Par visioconférence</option>
+                                 <option value="indifferent">Indifférent</option>
+                             </select>
+                         </div>
 
-             <!-- Étape 1 : Création / Amélioration CV/LM -->
-            <article class="etape-carte is-locked" id="etape-1"> <!-- ID correct pour coller au JS -->
-                <div class="etape-icon" aria-hidden="true"><i class="fas fa-file-alt"></i></div>
-                <h3>1. Mon CV & LM</h3>
-                <p>Créez ou améliorez votre CV et une lettre de motivation percutante.</p>
-                <!-- Lien d'action -->
-                 <a href="creation-cv-lm.html" class="etape-action" aria-label="Continuer à l'étape 1 : Création de CV et Lettre de Motivation">
-                     <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                 </a>
-            </article>
+                         <!-- Exemple de question simple oui/non -->
+                         <fieldset class="form-group" role="radiogroup" aria-labelledby="physical-needs-legend">
+                              <legend id="physical-needs-legend">Avez-vous des besoins spécifiques (ex: besoin d'aide pour vous déplacer) ? <span aria-hidden="true">*</span></legend>
+                              <div class="flex gap-2">
+                                  <label><input type="radio" name="physicalNeeds" value="yes" required> Oui</label>
+                                  <label><input type="radio" name="physicalNeeds" value="no" required> Non</label>
+                              </div>
+                         </fieldset>
 
-            <!-- Étape 2 : Recherche & Candidature -->
-            <article class="etape-carte is-locked" id="etape-2"> <!-- ID correct pour coller au JS -->
-                 <div class="etape-icon" aria-hidden="true"><i class="fas fa-search"></i></div>
-                 <h3>2. Recherche & Candidature</h3>
-                 <p>Trouvez des offres d'emploi et postulez simplement.</p>
-                 <!-- Lien d'action -->
-                 <a href="recherche-offres.html" class="etape-action" aria-label="Continuer à l'étape 2 : Recherche et Candidature aux offres">
-                     <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                 </a>
-             </article>
+                    </fieldset> <!-- Fin Étape 1 -->
 
-            <!-- Étape 3 : Préparation Entretien -->
-             <article class="etape-carte is-locked" id="etape-3"> <!-- ID correct pour coller au JS -->
-                 <div class="etape-icon" aria-hidden="true"><i class="fas fa-chalkboard-user"></i></div> <!-- Icône adaptée -->
-                 <h3>3. Préparation Entretien</h3>
-                 <p>Préparez vos entretiens pour être confiant le jour J.</p>
-                  <!-- Lien d'action -->
-                  <a href="preparation-entretien.html" class="etape-action" aria-label="Continuer à l'étape 3 : Préparation à l'entretien">
-                      <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                  </a>
-              </article>
+                    <!-- Étape 2 : Expérience professionnelle -->
+                    <fieldset class="quiz-step" id="step-2"> <!-- Caché par défaut -->
+                        <legend class="sr-only">Partie 2 : Votre expérience</legend>
+                        <h2 class="text-center mb-4">Votre expérience professionnelle</h2>
+                        <p class="text-center mb-6">Cela nous aide à préparer votre CV.</p>
 
-             <!-- Étape 4 : L'Après Entretien -->
-              <article class="etape-carte is-locked" id="etape-4"> <!-- ID correct pour coller au JS -->
-                  <div class="etape-icon" aria-hidden="true"><i class="fas fa-comments"></i></div> <!-- Icône adaptée -->
-                  <h3>4. L'Après Entretien</h3>
-                  <p>Analysez vos entretiens et gardez votre motivation.</p>
-                   <!-- Lien d'action -->
-                   <a href="apres-entretien.html" class="etape-action" aria-label="Continuer à l'étape 4 : Le suivi après l'entretien">
-                       <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                   </a>
-               </article>
+                         <fieldset class="form-group" role="radiogroup" aria-labelledby="worked-before-legend">
+                             <legend id="worked-before-legend">Avez-vous déjà travaillé (même bénévolement ou en stage) ? <span aria-hidden="true">*</span></legend>
+                             <div class="flex gap-2">
+                                 <label><input type="radio" name="workedBefore" value="yes" required> Oui</label>
+                                 <label><input type="radio" name="workedBefore" value="no" required> Non</label>
+                             </div>
+                         </fieldset>
 
-              <!-- Étape 5 : Le Contrat -->
-               <article class="etape-carte is-locked" id="etape-5"> <!-- ID correct pour coller au JS -->
-                   <div class="etape-icon" aria-hidden="true"><i class="fas fa-file-signature"></i></div> <!-- Icône adaptée -->
-                   <h3>5. Le Contrat</h3>
-                   <p>Comprenez et signez votre contrat de travail en toute sérénité.</p>
-                    <!-- Lien d'action -->
-                    <a href="le-contrat.html" class="etape-action" aria-label="Continuer à l'étape 5 : Comprendre et signer le contrat">
-                        <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                    </a>
-                </article>
+                         <!-- Cette question pourrait n'apparaître que si "Oui" est choisi ci-dessus (logique JS) -->
+                         <div class="form-group">
+                             <label for="previous-domain">Dans quel domaine avez-vous travaillé ?</label>
+                             <input type="text" id="previous-domain" name="previousDomain" placeholder="Ex: Bâtiment, services à la personne, restauration...">
+                         </div>
 
-               <!-- Étape 6 : Le Suivi (Intégration) -->
-                <article class="etape-carte is-locked" id="etape-6"> <!-- ID correct pour coller au JS -->
-                    <div class="etape-icon" aria-hidden="true"><i class="fas fa-handshake"></i></div> <!-- Icône adaptée -->
-                    <h3>6. Le Suivi</h3>
-                    <p>Bénéficiez d'un accompagnement pour réussir votre intégration.</p>
-                     <!-- Lien d'action -->
-                     <a href="le-suivi.html" class="etape-action" aria-label="Continuer à l'étape 6 : Le suivi après l'embauche">
-                         <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                     </a>
-                 </article>
+                          <div class="form-group">
+                              <label for="skills">Qu'est-ce que vous aimez ou savez bien faire ?</label>
+                              <input type="text" id="skills" name="skills" placeholder="Ex: travailler en équipe, organiser, cuisiner...">
+                          </div>
 
-                 <!-- Étape 7 : Félicitations ! (Fin du parcours actif) -->
-                 <article class="etape-carte is-locked" id="etape-7"> <!-- ID correct pour coller au JS -->
-                     <div class="etape-icon" aria-hidden="true"><i class="fas fa-champagne-glasses"></i></div> <!-- Icône adaptée -->
-                     <h3>7. Objectif atteint !</h3>
-                     <p>Vous avez réussi votre insertion professionnelle. Bravo !</p>
-                      <!-- Lien d'action (peut-être vers une page de célébration ou d'engagement bénévole) -->
-                      <a href="felicitations.html" class="etape-action" aria-label="Découvrir l'étape 7 : Objectif atteint !">
-                          <i class="fas fa-arrow-right" aria-hidden="true"></i>
-                      </a>
-                  </article>
 
-        </div> <!-- Fin .etapes-grid -->
-    </section>
+                    </fieldset> <!-- Fin Étape 2 -->
 
-  </main> <!-- Fin main.container -->
+                    <!-- Étape 3 : Objectifs et Aide souhaitée -->
+                    <fieldset class="quiz-step" id="step-3"> <!-- Caché par défaut -->
+                        <legend class="sr-only">Partie 3 : Vos objectifs</legend>
+                        <h2 class="text-center mb-4">Vos objectifs et besoins</h2>
+                        <p class="text-center mb-6">Quel type d'emploi ou d'aide cherchez-vous ?</p>
 
-    <!-- Footer - Repris du code fourni et des améliorations précédentes -->
-      <footer class="footer">
+                         <div class="form-group">
+                             <label for="job-type">Quel type d'emploi vous intéresse ?</label>
+                             <input type="text" id="job-type" name="jobType" placeholder="Ex: CDI, CDD, formation, stage...">
+                         </div>
+
+                          <div class="form-group">
+                              <label for="help-needed">Quel type d'aide serait le plus utile maintenant ? <span aria-hidden="true">*</span></label>
+                              <select id="help-needed" name="helpNeeded" required>
+                                  <option value="">Choisir...</option>
+                                  <option value="cv-lm">Aide pour CV et lettre de motivation</option>
+                                  <option value="offres">Aide pour trouver des offres</option>
+                                  <option value="entretien">Aide pour préparer un entretien</option>
+                                  <option value="orientation">Aide pour définir mon projet</option>
+                                  <option value="social">Accompagnement social</option>
+                                  <option value="autre">Autre besoin</option>
+                              </select>
+                          </div>
+
+                    </fieldset> <!-- Fin Étape 3 -->
+
+                    <!-- Étape 4 : Création de compte simple -->
+                    <fieldset class="quiz-step" id="step-4"> <!-- Caché par défaut -->
+                        <legend class="sr-only">Partie 4 : Créez votre compte</legend>
+                        <h2 class="text-center mb-4">Créez votre espace personnel</h2>
+                        <p class="text-center mb-6">Créez un compte sécurisé pour sauvegarder vos réponses et suivre votre parcours.</p>
+
+                         <div class="form-group">
+                              <label for="user-email">Votre email <span aria-hidden="true">*</span></label>
+                              <input type="email" id="user-email" name="userEmail" placeholder="Votre email" required autocomplete="email">
+                         </div>
+
+                         <div class="form-group">
+                              <label for="user-password">Choisissez un mot de passe <span aria-hidden="true">*</span></label>
+                              <input type="password" id="user-password" name="userPassword" required minlength="6" autocomplete="new-password">
+                               <p class="text-sm" style="margin-top: 0.25rem;">Minimum 6 caractères.</p>
+                         </div>
+
+                         <!-- Ajout confirmation mot de passe pour une meilleure pratique -->
+                          <div class="form-group">
+                               <label for="confirm-password">Confirmer le mot de passe <span aria-hidden="true">*</span></label>
+                               <input type="password" id="confirm-password" name="confirmPassword" required minlength="6" autocomplete="new-password">
+                          </div>
+
+                    </fieldset> <!-- Fin Étape 4 -->
+
+                    <!-- Étape 5 : Message de Fin et Redirection -->
+                    <div class="quiz-step" id="step-5"> <!-- Caché par défaut -->
+                         <h2 class="text-center mb-4">Félicitations !</h2> <!-- Titre plus positif -->
+                         <p class="text-center mb-6">Votre évaluation est terminée et votre espace personnel est créé.</p>
+                         <p class="text-center mb-6">Nous avons maintenant les informations essentielles pour vous proposer un accompagnement adapté à vos besoins.</p>
+                         <p class="text-center">Cliquez ci-dessous pour découvrir votre parcours personnalisé et passer à l'étape suivante.</p>
+                         <!-- Ce bouton sera géré par le JS pour rediriger et marquer l'étape 0 comme complétée -->
+                         <div class="text-center mt-8">
+                             <button type="button" class="button button-primary button-large" id="goToParcoursButton">
+                                 Accéder à mon parcours
+                             </button>
+                         </div>
+                    </div> <!-- Fin Étape 5 -->
+
+
+                </div> <!-- Fin #quizSteps -->
+
+                <!-- Navigation du formulaire (Boutons Précédent/Suivant/Terminer) -->
+                <div class="form-navigation mt-6 flex justify-between">
+                    <!-- Bouton Précédent (masqué sur la première étape) -->
+                    <button type="button" class="button button-outline" id="prevStepButton" style="visibility: hidden;"> <!-- Utilisez visibility: hidden pour maintenir l'espace -->
+                         <i class="fas fa-arrow-left" aria-hidden="true"></i> Précédent
+                    </button>
+
+                    <!-- Bouton Suivant (affiché sur les étapes intermédiaires) -->
+                    <button type="button" class="button button-primary" id="nextStepButton">
+                        Suivant <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                    </button>
+
+                    <!-- Bouton Terminer (affiché sur la dernière étape du formulaire avant la fin) -->
+                    <!-- Initialement caché, géré par JS. Type submit pour déclencher la soumission du formulaire. -->
+                    <button type="submit" class="button button-primary" id="submitQuizButton" style="display: none;">
+                         Terminer <i class="fas fa-check" aria-hidden="true"></i>
+                    </button>
+                     <!-- Le bouton #goToParcoursButton est DANS l'étape 5, il ne fait pas partie de cette navigation basique -->
+                </div>
+
+            </form> <!-- Fin #evaluationForm -->
+
+        </div> <!-- Fin .container -->
+    </main> <!-- Fin main -->
+
+    <!-- Footer - Repris du code standard EmploiAvenir -->
+    <footer class="footer">
         <div class="container">
           <div class="footer-grid">
             <div class="footer-column">
@@ -225,14 +238,13 @@
             </div>
 
             <div class="footer-column">
-              <!-- Titre simple sans lien pour accessibilité -->
               <h3>Liens rapides</h3>
               <ul class="footer-links">
                 <li><a href="index.html">Accueil</a></li>
                 <li><a href="MonParcours.html">Mon Parcours</a></li>
                 <li><a href="MesCandidature.html">Mes Candidatures</a></li>
-                <li><a href="Partenaires.html">Nos partenaires</a></li> <!-- Ajusté nom page -->
-                <li><a href="Documents.html">Mes documents</a></li> <!-- Ajusté nom page -->
+                <li><a href="Partenaires.html">Nos partenaires</a></li>
+                <li><a href="Documents.html">Mes documents</a></li>
                 <li><a href="Profil.html">Profil</a></li>
               </ul>
             </div>
@@ -262,10 +274,14 @@
             <p>© 2024 EmploiAvenir. Tous droits réservés.</p>
           </div>
         </div>
-      </footer>
+    </footer>
+
+    <!-- Toast Container - Essentiel pour que le JS fonctionne -->
+    <div id="toast-container"></div>
+
 
     <!-- Login Modal - Repris des améliorations précédentes -->
-      <div id="loginModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="loginModalTitle" style="display: none;">
+    <div id="loginModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="loginModalTitle" style="display: none;">
         <div class="modal-content">
           <button type="button" class="close-modal" aria-label="Fermer la fenêtre de connexion">×</button>
           <h2 id="loginModalTitle">Connexion</h2>
@@ -291,18 +307,18 @@
             </div>
           </form>
         </div>
-      </div>
+    </div>
 
-      <!-- Chatbot - Repris des améliorations précédentes -->
-      <button type="button" class="chatbot-btn" id="chatbotBtn" aria-label="Ouvrir l'assistant virtuel EmploiAvenir" aria-expanded="false" aria-controls="chatbotContainer">💬</button>
+    <!-- Chatbot - Repris des améliorations précédentes -->
+    <button type="button" class="chatbot-btn" id="chatbotBtn" aria-label="Ouvrir l'assistant virtuel EmploiAvenir" aria-expanded="false" aria-controls="chatbotContainer">💬</button>
 
-      <div class="chatbot-container" id="chatbotContainer" role="log" aria-labelledby="chatbotHeaderTitle" style="display: none;">
+    <div id="chatbotContainer" class="chatbot-container" role="log" aria-labelledby="chatbotHeaderTitle" style="display: none;">
         <div class="chatbot-header">
           <h3 id="chatbotHeaderTitle">Assistant EmploiAvenir</h3>
           <button type="button" id="closeChatbot" aria-label="Fermer l'assistant virtuel">✖</button>
         </div>
 
-        <div class="chatbot-messages" id="chatbotMessages" aria-live="polite">
+        <div id="chatbotMessages" class="chatbot-messages" aria-live="polite">
           <div class="message bot-message">
             Bonjour ! Comment puis-je vous aider aujourd'hui ?
           </div>
@@ -312,9 +328,10 @@
           <input type="text" id="chatbotInput" name="chatbot_message" placeholder="Écrivez votre message..." aria-label="Votre message à l'assistant EmploiAvenir">
           <button id="sendMessage" type="button">Envoyer</button>
         </div>
-      </div>
+    </div>
 
-  <script src="Script.js"></script>
+    <!-- Lien vers le fichier script.js centralisé -->
+    <script src="script.js"></script>
 
 </body>
 </html>
