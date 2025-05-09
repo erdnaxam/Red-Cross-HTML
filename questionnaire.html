@@ -1,0 +1,337 @@
+  <!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Titre de la page spécifique - Garde EmploiAvenir -->
+    <title>Quizz Express - EmploiAvenir</title>
+    <!-- Description adaptée pour cette page -->
+    <meta name="description" content="Démarrez votre parcours EmploiAvenir avec une courte évaluation pour mieux comprendre vos besoins et personnaliser aux mieux votre accompagnement.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Lien vers votre fichier CSS externe - INDISPENSABLE -->
+    <!-- Assurez-vous que ce fichier style.css existe et contient TOUS les styles nécessaires (header, footer, conteneur, formulaires, boutons, classes pour cacher/afficher les étapes du quiz, etc.). -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Lien CDN pour Font Awesome (si tu utilises les icônes <i class="fas ...">) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- AUCUN STYLE INTEGRÉ -->
+
+</head>
+<body>
+  <!-- Header - Repris du code standard EmploiAvenir -->
+  <header class="header" id="header">
+    <div class="container flex justify-between items-center">
+      <!-- Lien du logo corrigé pour pointer vers l'accueil -->
+      <a href="index.html" class="logo"><span>Emploi</span>Avenir</a>
+      <nav aria-label="Navigation principale">
+        <!-- Ajout de l'ID pour le JS du menu mobile -->
+        <ul class="nav-links" id="mainNavLinks">
+          <li><a href="index.html">Accueil</a></li>
+          <!-- Marquer Mon Parcours comme actif car l'évaluation en fait partie -->
+          <li><a href="MonParcours.html" class="active" aria-current="page">Mon Parcours</a></li>
+          <li><a href="MesCandidature.html">Mes Candidatures</a></li>
+          <li><a href="Partenaires.html">Nos partenaires</a></li>
+          <li><a href="Documents.html">Mes documents</a></li>
+          <li><a href="Profil.html">Profil</a></li>
+          <!-- Laissez ce commentaire ou ajoutez un bouton/lien avec id="loginBtn" si le JS doit l'ouvrir -->
+          <!-- Ex: <li><button type="button" class="btn btn-outline" id="loginBtn" aria-controls="loginModal">Connexion</button></li> -->
+        </ul>
+      </nav>
+      <!-- Bouton menu mobile - Attributs ARIA améliorés + lien vers l'ID du menu -->
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Ouvrir le menu de navigation" aria-expanded="false" aria-controls="mainNavLinks">☰</button>
+    </div>
+  </header>
+
+    <!-- Contenu principal de la page Évaluation -->
+    <main>
+        <!-- Utilisation de la classe container standard, max-width pour le contenu centré -->
+        <div class="container py-8 max-w-xl mx-auto">
+            <!-- Titre principal -->
+            <h1 class="text-center mb-6">Quizz Express</h1>
+            <p class="text-center mb-8">Répondez à quelques questions simples pour nous aider à mieux vous connaître et démarrer votre parcours personnalisé.</p>
+
+            <!-- Le formulaire du questionnaire -->
+            <!-- Important: Le formulaire englobe toutes les étapes pour faciliter la collecte des données et la soumission -->
+            <form id="evaluationForm">
+
+                <!-- Indicateur de progression du quiz (sera mis à jour par JS) -->
+                <div class="text-center mb-4">
+                    <p>Question <span id="currentQuizQuestion">1</span> sur <span id="totalQuizQuestions">4</span></p> <!-- Corrigé le total -->
+                </div>
+
+                <!-- Conteneur des étapes/questions du quiz (JS affichera une seule étape à la fois) -->
+                <div id="quizSteps">
+
+                    <!-- Étape 1 : Situation actuelle et besoins basiques -->
+                    <!-- Un fieldset est sémantiquement plus adapté pour un groupe de questions -->
+                    <fieldset class="quiz-step active" id="step-1"> <!-- 'active' par défaut pour la première étape, géré par JS -->
+                        <legend class="sr-only">Partie 1 : Votre situation actuelle</legend> <!-- Label pour le groupe, caché visuellement -->
+                        <h2 class="text-center mb-4">Parlons un peu de vous...</h2>
+                        <p class="text-center mb-6">Ces questions nous aident à adapter l'aide que nous vous proposons.</p>
+
+                        <div class="form-group">
+                            <label for="lang-comprehension">Est-ce facile pour vous de lire et comprendre le français ? <span aria-hidden="true">*</span></label>
+                            <select id="lang-comprehension" name="langComprehension" required>
+                                <option value="">Choisir...</option>
+                                <option value="tres-facile">Très facile</option>
+                                <option value="assez-facile">Assez facile</option>
+                                <option value="un-peu-difficile">Un peu difficile</option>
+                                <option value="tres-difficile">Très difficile</option>
+                            </select>
+                        </div>
+
+                         <div class="form-group">
+                             <label for="contact-preference">Pour échanger avec un conseiller, préférez-vous : <span aria-hidden="true">*</span></label>
+                             <select id="contact-preference" name="contactPreference" required>
+                                 <option value="">Choisir...</option>
+                                 <option value="telephone">Par téléphone</option>
+                                 <option value="ecrit">Par écrit (email, chat)</option>
+                                 <option value="visio">Par visioconférence</option>
+                                 <option value="indifferent">Indifférent</option>
+                             </select>
+                         </div>
+
+                         <!-- Exemple de question simple oui/non -->
+                         <fieldset class="form-group" role="radiogroup" aria-labelledby="physical-needs-legend">
+                              <legend id="physical-needs-legend">Avez-vous des besoins spécifiques (ex: besoin d'aide pour vous déplacer) ? <span aria-hidden="true">*</span></legend>
+                              <div class="flex gap-2">
+                                  <label><input type="radio" name="physicalNeeds" value="yes" required> Oui</label>
+                                  <label><input type="radio" name="physicalNeeds" value="no" required> Non</label>
+                              </div>
+                         </fieldset>
+
+                    </fieldset> <!-- Fin Étape 1 -->
+
+                    <!-- Étape 2 : Expérience professionnelle -->
+                    <fieldset class="quiz-step" id="step-2"> <!-- Caché par défaut -->
+                        <legend class="sr-only">Partie 2 : Votre expérience</legend>
+                        <h2 class="text-center mb-4">Votre expérience professionnelle</h2>
+                        <p class="text-center mb-6">Cela nous aide à préparer votre CV.</p>
+
+                         <fieldset class="form-group" role="radiogroup" aria-labelledby="worked-before-legend">
+                             <legend id="worked-before-legend">Avez-vous déjà travaillé (même bénévolement ou en stage) ? <span aria-hidden="true">*</span></legend>
+                             <div class="flex gap-2">
+                                 <label><input type="radio" name="workedBefore" value="yes" required> Oui</label>
+                                 <label><input type="radio" name="workedBefore" value="no" required> Non</label>
+                             </div>
+                         </fieldset>
+
+                         <!-- Cette question pourrait n'apparaître que si "Oui" est choisi ci-dessus (logique JS) -->
+                         <div class="form-group">
+                             <label for="previous-domain">Dans quel domaine avez-vous travaillé ?</label>
+                             <input type="text" id="previous-domain" name="previousDomain" placeholder="Ex: Bâtiment, services à la personne, restauration...">
+                         </div>
+
+                          <div class="form-group">
+                              <label for="skills">Qu'est-ce que vous aimez ou savez bien faire ?</label>
+                              <input type="text" id="skills" name="skills" placeholder="Ex: travailler en équipe, organiser, cuisiner...">
+                          </div>
+
+
+                    </fieldset> <!-- Fin Étape 2 -->
+
+                    <!-- Étape 3 : Objectifs et Aide souhaitée -->
+                    <fieldset class="quiz-step" id="step-3"> <!-- Caché par défaut -->
+                        <legend class="sr-only">Partie 3 : Vos objectifs</legend>
+                        <h2 class="text-center mb-4">Vos objectifs et besoins</h2>
+                        <p class="text-center mb-6">Quel type d'emploi ou d'aide cherchez-vous ?</p>
+
+                         <div class="form-group">
+                             <label for="job-type">Quel type d'emploi vous intéresse ?</label>
+                             <input type="text" id="job-type" name="jobType" placeholder="Ex: CDI, CDD, formation, stage...">
+                         </div>
+
+                          <div class="form-group">
+                              <label for="help-needed">Quel type d'aide serait le plus utile maintenant ? <span aria-hidden="true">*</span></label>
+                              <select id="help-needed" name="helpNeeded" required>
+                                  <option value="">Choisir...</option>
+                                  <option value="cv-lm">Aide pour CV et lettre de motivation</option>
+                                  <option value="offres">Aide pour trouver des offres</option>
+                                  <option value="entretien">Aide pour préparer un entretien</option>
+                                  <option value="orientation">Aide pour définir mon projet</option>
+                                  <option value="social">Accompagnement social</option>
+                                  <option value="autre">Autre besoin</option>
+                              </select>
+                          </div>
+
+                    </fieldset> <!-- Fin Étape 3 -->
+
+                    <!-- Étape 4 : Création de compte simple -->
+                    <fieldset class="quiz-step" id="step-4"> <!-- Caché par défaut -->
+                        <legend class="sr-only">Partie 4 : Créez votre compte</legend>
+                        <h2 class="text-center mb-4">Créez votre espace personnel</h2>
+                        <p class="text-center mb-6">Créez un compte sécurisé pour sauvegarder vos réponses et suivre votre parcours.</p>
+
+                         <div class="form-group">
+                              <label for="user-email">Votre email <span aria-hidden="true">*</span></label>
+                              <input type="email" id="user-email" name="userEmail" placeholder="Votre email" required autocomplete="email">
+                         </div>
+
+                         <div class="form-group">
+                              <label for="user-password">Choisissez un mot de passe <span aria-hidden="true">*</span></label>
+                              <input type="password" id="user-password" name="userPassword" required minlength="6" autocomplete="new-password">
+                               <p class="text-sm" style="margin-top: 0.25rem;">Minimum 6 caractères.</p>
+                         </div>
+
+                         <!-- Ajout confirmation mot de passe pour une meilleure pratique -->
+                          <div class="form-group">
+                               <label for="confirm-password">Confirmer le mot de passe <span aria-hidden="true">*</span></label>
+                               <input type="password" id="confirm-password" name="confirmPassword" required minlength="6" autocomplete="new-password">
+                          </div>
+
+                    </fieldset> <!-- Fin Étape 4 -->
+
+                    <!-- Étape 5 : Message de Fin et Redirection -->
+                    <div class="quiz-step" id="step-5"> <!-- Caché par défaut -->
+                         <h2 class="text-center mb-4">Félicitations !</h2> <!-- Titre plus positif -->
+                         <p class="text-center mb-6">Votre évaluation est terminée et votre espace personnel est créé.</p>
+                         <p class="text-center mb-6">Nous avons maintenant les informations essentielles pour vous proposer un accompagnement adapté à vos besoins.</p>
+                         <p class="text-center">Cliquez ci-dessous pour découvrir votre parcours personnalisé et passer à l'étape suivante.</p>
+                         <!-- Ce bouton sera géré par le JS pour rediriger et marquer l'étape 0 comme complétée -->
+                         <div class="text-center mt-8">
+                             <button type="button" class="button button-primary button-large" id="goToParcoursButton">
+                                 Accéder à mon parcours
+                             </button>
+                         </div>
+                    </div> <!-- Fin Étape 5 -->
+
+
+                </div> <!-- Fin #quizSteps -->
+
+                <!-- Navigation du formulaire (Boutons Précédent/Suivant/Terminer) -->
+                <div class="form-navigation mt-6 flex justify-between">
+                    <!-- Bouton Précédent (masqué sur la première étape) -->
+                    <button type="button" class="button button-outline" id="prevStepButton" style="visibility: hidden;"> <!-- Utilisez visibility: hidden pour maintenir l'espace -->
+                         <i class="fas fa-arrow-left" aria-hidden="true"></i> Précédent
+                    </button>
+
+                    <!-- Bouton Suivant (affiché sur les étapes intermédiaires) -->
+                    <button type="button" class="button button-primary" id="nextStepButton">
+                        Suivant <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                    </button>
+
+                    <!-- Bouton Terminer (affiché sur la dernière étape du formulaire avant la fin) -->
+                    <!-- Initialement caché, géré par JS. Type submit pour déclencher la soumission du formulaire. -->
+                    <button type="submit" class="button button-primary" id="submitQuizButton" style="display: none;">
+                         Terminer <i class="fas fa-check" aria-hidden="true"></i>
+                    </button>
+                     <!-- Le bouton #goToParcoursButton est DANS l'étape 5, il ne fait pas partie de cette navigation basique -->
+                </div>
+
+            </form> <!-- Fin #evaluationForm -->
+
+        </div> <!-- Fin .container -->
+    </main> <!-- Fin main -->
+
+    <!-- Footer - Repris du code standard EmploiAvenir -->
+    <footer class="footer">
+        <div class="container">
+          <div class="footer-grid">
+            <div class="footer-column">
+              <h3>EmploiAvenir</h3>
+              <p>Votre partenaire pour trouver l'emploi de vos rêves et développer votre carrière professionnelle.</p>
+            </div>
+
+            <div class="footer-column">
+              <h3>Liens rapides</h3>
+              <ul class="footer-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="MonParcours.html">Mon Parcours</a></li>
+                <li><a href="MesCandidature.html">Mes Candidatures</a></li>
+                <li><a href="Partenaires.html">Nos partenaires</a></li>
+                <li><a href="Documents.html">Mes documents</a></li>
+                <li><a href="Profil.html">Profil</a></li>
+              </ul>
+            </div>
+
+            <div class="footer-column">
+              <h3>Services</h3>
+              <ul class="footer-links">
+                <li><a href="#">Création de CV</a></li> <!-- Ces liens pourraient pointer vers des sections de MonParcours.html plus tard -->
+                <li><a href="#">Lettres de motivation</a></li>
+                <li><a href="#">Coaching</a></li>
+                <li><a href="#">Préparation aux entretiens</a></li>
+                <li><a href="#">Partenaires entreprises</a></li>
+              </ul>
+            </div>
+
+            <div class="footer-column">
+              <h3>Contact</h3>
+              <ul class="footer-links">
+                <li><a href="tel:+33123456789">+33 1 23 45 67 89</a></li>
+                <li><a href="mailto:contact@emploiavenir.fr">contact@emploiavenir.fr</a></li>
+                <li>12 rue de l'Emploi, 75001 Paris</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="footer-bottom">
+            <p>© 2024 EmploiAvenir. Tous droits réservés.</p>
+          </div>
+        </div>
+    </footer>
+
+    <!-- Toast Container - Essentiel pour que le JS fonctionne -->
+    <div id="toast-container"></div>
+
+
+    <!-- Login Modal - Repris des améliorations précédentes -->
+    <div id="loginModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="loginModalTitle" style="display: none;">
+        <div class="modal-content">
+          <button type="button" class="close-modal" aria-label="Fermer la fenêtre de connexion">×</button>
+          <h2 id="loginModalTitle">Connexion</h2>
+          <form id="loginForm">
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+              <label for="password">Mot de passe</label>
+              <input type="password" id="password" name="password" required>
+            </div>
+
+            <button type="submit" class="btn" style="width: 100%;">Se connecter</button>
+
+            <div class="text-center mt-2">
+              <a href="#" class="modal-link">Mot de passe oublié ?</a>
+            </div>
+
+            <div class="text-center mt-2">
+              <p>Pas encore de compte ? <a href="#" class="modal-link" id="openRegisterModal">S'inscrire</a></p>
+            </div>
+          </form>
+        </div>
+    </div>
+
+    <!-- Chatbot - Repris des améliorations précédentes -->
+    <button type="button" class="chatbot-btn" id="chatbotBtn" aria-label="Ouvrir l'assistant virtuel EmploiAvenir" aria-expanded="false" aria-controls="chatbotContainer">💬</button>
+
+    <div id="chatbotContainer" class="chatbot-container" role="log" aria-labelledby="chatbotHeaderTitle" style="display: none;">
+        <div class="chatbot-header">
+          <h3 id="chatbotHeaderTitle">Assistant EmploiAvenir</h3>
+          <button type="button" id="closeChatbot" aria-label="Fermer l'assistant virtuel">✖</button>
+        </div>
+
+        <div id="chatbotMessages" class="chatbot-messages" aria-live="polite">
+          <div class="message bot-message">
+            Bonjour ! Comment puis-je vous aider aujourd'hui ?
+          </div>
+        </div>
+
+        <div class="chatbot-input">
+          <input type="text" id="chatbotInput" name="chatbot_message" placeholder="Écrivez votre message..." aria-label="Votre message à l'assistant EmploiAvenir">
+          <button id="sendMessage" type="button">Envoyer</button>
+        </div>
+    </div>
+
+    <!-- Lien vers le fichier script.js centralisé -->
+    <script src="script.js"></script>
+
+</body>
+</html>
