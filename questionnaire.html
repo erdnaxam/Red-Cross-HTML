@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Titre de la page spécifique - Garde EmploiAvenir -->
+    <title>Mon Parcours - EmploiAvenir</title>
+    <!-- Description adaptée pour cette page -->
+    <meta name="description" content="Suivez votre progression étape par étape dans votre parcours de recherche d'emploi personnalisé avec EmploiAvenir.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Lien vers le fichier CSS externe - INDISPENSABLE -->
+    <!-- Assurez-vous que ce fichier style.css existe et contient tous les styles nécessaires, y compris ceux du bloc <style> retiré ici. -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Lien CDN pour Font Awesome (si tu utilises les icônes <i class="fas ...">) -->
+    <!-- Utile car les icônes Font Awesome sont utilisées dans la structure fournie. -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Lovable script tag for Select feature -->
+    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+
+    <!-- Le bloc <style> intégré a été COMPLÈTEMENT SUPPRIMÉ ici. -->
+
+</head>
+<body>
+ <!-- Header - Repris du code fourni et des améliorations précédentes -->
+  <header class="header" id="header">
+    <div class="container flex justify-between items-center">
+      <!-- Lien du logo corrigé pour pointer vers l'accueil -->
+      <a href="index.html" class="logo"><span>Emploi</span>Avenir</a>
+      <nav aria-label="Navigation principale">
+        <!-- Ajout de l'ID pour le JS du menu mobile -->
+        <ul class="nav-links" id="mainNavLinks">
+          <li><a href="index.html">Accueil</a></li>
+          <!-- Marquer Mon Parcours comme actif sur cette page -->
+          <li><a href="MonParcours.html" class="active" aria-current="page">Mon Parcours</a></li>
+          <li><a href="MesCandidature.html">Mes Candidatures</a></li>
+          <li><a href="Partenaires.html">Nos partenaires</a></li>
+          <li><a href="Documents.html">Mes documents</a></li>
+          <li><a href="Profil.html">Profil</a></li>
+          <!-- Laissez ce commentaire ou ajoutez un bouton/lien avec id="loginBtn" si le JS doit l'ouvrir -->
+          <!-- Ex: <li><button type="button" class="btn btn-outline" id="loginBtn" aria-controls="loginModal">Connexion</button></li> -->
+        </ul>
+      </nav>
+      <!-- Bouton menu mobile - Attributs ARIA améliorés + lien vers l'ID du menu -->
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Ouvrir le menu de navigation" aria-expanded="false" aria-controls="mainNavLinks">☰</button>
+    </div>
+  </header>
+
+
+  <!-- Contenu principal de la page Parcours -->
+  <main class="container" > <!-- Utilisation de <main>, la classe container peut être ici ou dans une section -->
+
+    <!-- Titre principal de la page -->
+    <h1 class="text-center mb-8">Votre Parcours Personnalisé vers l'Emploi</h1>
+
+    <!-- Section Barre de Progression Visuelle -->
+    <section class="parcours-progress-bar mb-4" aria-label="Indicateur de progression dans le parcours">
+        <!-- Ligne de progression active (sera gérée par JS/CSS) -->
+        <div class="progress-line-active"></div>
+        <!-- Les étapes visuelles - Ajout de classes pour les étapes 0 à 7 (8 au total) -->
+        <div class="progress-step is-active" id="progress-step-0"> <div class="step-indicator" aria-hidden="true">0</div> <div class="step-label">Évaluation</div> </div>
+        <div class="progress-step" id="progress-step-1"> <div class="step-indicator" aria-hidden="true">1</div> <div class="step-label">CV & LM</div> </div>
+        <div class="progress-step" id="progress-step-2"> <div class="step-indicator" aria-hidden="true">2</div> <div class="step-label">Recherche & Candidature</div> </div>
+        <div class="progress-step" id="progress-step-3"> <div class="step-indicator" aria-hidden="true">3</div> <div class="step-label">Préparation Entretien</div> </div>
+        <div class="progress-step" id="progress-step-4"> <div class="step-indicator" aria-hidden="true">4</div> <div class="step-label">L'Après Entretien</div> </div>
+        <div class="progress-step" id="progress-step-5"> <div class="step-indicator" aria-hidden="true">5</div> <div class="step-label">Le Contrat</div> </div>
+        <div class="progress-step" id="progress-step-6"> <div class="step-indicator" aria-hidden="true">6</div> <div class="step-label">Le Suivi</div> </div>
+        <!-- Ajusté pour avoir 7 étapes de progression plus l'évaluation initiale = 8 -->
+        <!-- L'étape 7 (Suivi) est bien la 8ème bulle -->
+        <div class="progress-step" id="progress-step-7"> <div class="step-indicator" aria-hidden="true">7</div> <div class="step-label">Félicitations!</div> </div>
+    </section>
+
+    <!-- Bouton d'Aide - Transformé en <button> pour accessibilité -->
+    <div class="text-center mb-8">
+        <!-- Utilise onclick comme dans votre script fourni, mais sur un bouton -->
+        <button type="button" class="aide-button" aria-label="Obtenir de l'aide disponible à chaque étape" onclick="alert('Fonctionnalité d\'aide à implémenter !');">
+            <i class="fas fa-question-circle" aria-hidden="true"></i> <!-- Icône Font Awesome -->
+            <span>Aide disponible à chaque étape</span>
+        </button>
+    </div>
+
+    <!-- Section Tableau de bord Utilisateur -->
+    <section class="parcours-dashboard mb-8" aria-label="Tableau de bord de votre progression">
+        <div class="dashboard-card progression-globale">
+            <h3>Progression globale</h3>
+            <div class="progression-details">
+                <p>Votre avancement dans le parcours :</p>
+                <!-- ID pour le script JS -->
+                <p><strong>Étapes validées :</strong> <span id="etapes-validees">0/8</span></p>
+                <!-- Barre de progression sémantique -->
+                <!-- Label pour accessibilité, caché visuellement par CSS .sr-only -->
+                <label for="progression-bar" id="progression-pourcentage-label" class="sr-only">Pourcentage de complétion</label>
+                <progress id="progression-bar" value="0" max="100" aria-labelledby="progression-pourcentage-label"></progress>
+                 <!-- Pourcentage visible -->
+                <p><strong id="progression-pourcentage">0%</strong> complété</p>
+                <p style="font-size: 0.8rem; color: var(--color-gray);">Dernière activité: <span id="derniere-activite">Jamais</span></p>
+            </div>
+        </div>
+        <div class="dashboard-card vos-reussites">
+            <h3>Vos réussites (Badges)</h3>
+            <div class="reussites-details">
+                 <p><span class="badge-nouveau">Nouveau</span>: Terminez votre première étape pour débloquer vos premiers badges !</p>
+                 <!-- Conteneur pour les badges gagnés ou non -->
+                 <div id="badges-gagnes" aria-label="Liste des badges obtenus et à obtenir">
+                      <!-- Les icônes Font Awesome seront ajoutées/mises à jour par le script JS -->
+                      <!-- Exemple de structure attendue par le script: -->
+                      <!-- <i class="fas fa-medal earned" aria-label="Badge Premier Pas ! (obtenu)" title="Badge Premier Pas !"></i> -->
+                      <!-- <i class="fas fa-star" aria-label="Badge Mi-Parcours ! (non obtenu)" title="Badge Mi-Parcours !"></i> -->
+                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section Détail des Étapes - Affichage des cartes cliquables -->
+    <section aria-labelledby="detail-etapes-titre">
+        <h2 id="detail-etapes-titre" class="text-center mb-4">Détail des étapes du parcours</h2>
+        <div class="etapes-grid">
+            <!-- Étape 0 : Évaluation -->
+            <!-- Utilise <article> pour chaque carte étape -->
+            <article class="etape-carte is-active" id="etape-0"> <!-- ID correct pour coller au JS -->
+                <div class="etape-icon" aria-hidden="true"><i class="fas fa-clipboard-question"></i></div> <!-- Icône adaptée -->
+                <h3>0. Évaluation Express</h3>
+                <p>Commencez ici pour évaluer votre situation et démarrer votre profil facilement.</p>
+                <!-- Lien d'action vers la page/section de l'étape -->
+                <!-- L'href doit mener à la page/section de l'étape 0 -->
+                <a href="evaluation-quizz.html" class="etape-action" aria-label="Démarrer l'étape 0 : Évaluation Express">
+                    <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                </a>
+            </article>
+
+             <!-- Étape 1 : Création / Amélioration CV/LM -->
+            <article class="etape-carte is-locked" id="etape-1"> <!-- ID correct pour coller au JS -->
+                <div class="etape-icon" aria-hidden="true"><i class="fas fa-file-alt"></i></div>
+                <h3>1. Mon CV & LM</h3>
+                <p>Créez ou améliorez votre CV et une lettre de motivation percutante.</p>
+                <!-- Lien d'action -->
+                 <a href="creation-cv-lm.html" class="etape-action" aria-label="Continuer à l'étape 1 : Création de CV et Lettre de Motivation">
+                     <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                 </a>
+            </article>
+
+            <!-- Étape 2 : Recherche & Candidature -->
+            <article class="etape-carte is-locked" id="etape-2"> <!-- ID correct pour coller au JS -->
+                 <div class="etape-icon" aria-hidden="true"><i class="fas fa-search"></i></div>
+                 <h3>2. Recherche & Candidature</h3>
+                 <p>Trouvez des offres d'emploi et postulez simplement.</p>
+                 <!-- Lien d'action -->
+                 <a href="recherche-offres.html" class="etape-action" aria-label="Continuer à l'étape 2 : Recherche et Candidature aux offres">
+                     <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                 </a>
+             </article>
+
+            <!-- Étape 3 : Préparation Entretien -->
+             <article class="etape-carte is-locked" id="etape-3"> <!-- ID correct pour coller au JS -->
+                 <div class="etape-icon" aria-hidden="true"><i class="fas fa-chalkboard-user"></i></div> <!-- Icône adaptée -->
+                 <h3>3. Préparation Entretien</h3>
+                 <p>Préparez vos entretiens pour être confiant le jour J.</p>
+                  <!-- Lien d'action -->
+                  <a href="preparation-entretien.html" class="etape-action" aria-label="Continuer à l'étape 3 : Préparation à l'entretien">
+                      <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                  </a>
+              </article>
+
+             <!-- Étape 4 : L'Après Entretien -->
+              <article class="etape-carte is-locked" id="etape-4"> <!-- ID correct pour coller au JS -->
+                  <div class="etape-icon" aria-hidden="true"><i class="fas fa-comments"></i></div> <!-- Icône adaptée -->
+                  <h3>4. L'Après Entretien</h3>
+                  <p>Analysez vos entretiens et gardez votre motivation.</p>
+                   <!-- Lien d'action -->
+                   <a href="apres-entretien.html" class="etape-action" aria-label="Continuer à l'étape 4 : Le suivi après l'entretien">
+                       <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                   </a>
+               </article>
+
+              <!-- Étape 5 : Le Contrat -->
+               <article class="etape-carte is-locked" id="etape-5"> <!-- ID correct pour coller au JS -->
+                   <div class="etape-icon" aria-hidden="true"><i class="fas fa-file-signature"></i></div> <!-- Icône adaptée -->
+                   <h3>5. Le Contrat</h3>
+                   <p>Comprenez et signez votre contrat de travail en toute sérénité.</p>
+                    <!-- Lien d'action -->
+                    <a href="le-contrat.html" class="etape-action" aria-label="Continuer à l'étape 5 : Comprendre et signer le contrat">
+                        <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                    </a>
+                </article>
+
+               <!-- Étape 6 : Le Suivi (Intégration) -->
+                <article class="etape-carte is-locked" id="etape-6"> <!-- ID correct pour coller au JS -->
+                    <div class="etape-icon" aria-hidden="true"><i class="fas fa-handshake"></i></div> <!-- Icône adaptée -->
+                    <h3>6. Le Suivi</h3>
+                    <p>Bénéficiez d'un accompagnement pour réussir votre intégration.</p>
+                     <!-- Lien d'action -->
+                     <a href="le-suivi.html" class="etape-action" aria-label="Continuer à l'étape 6 : Le suivi après l'embauche">
+                         <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                     </a>
+                 </article>
+
+                 <!-- Étape 7 : Félicitations ! (Fin du parcours actif) -->
+                 <article class="etape-carte is-locked" id="etape-7"> <!-- ID correct pour coller au JS -->
+                     <div class="etape-icon" aria-hidden="true"><i class="fas fa-champagne-glasses"></i></div> <!-- Icône adaptée -->
+                     <h3>7. Objectif atteint !</h3>
+                     <p>Vous avez réussi votre insertion professionnelle. Bravo !</p>
+                      <!-- Lien d'action (peut-être vers une page de célébration ou d'engagement bénévole) -->
+                      <a href="felicitations.html" class="etape-action" aria-label="Découvrir l'étape 7 : Objectif atteint !">
+                          <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                      </a>
+                  </article>
+
+        </div> <!-- Fin .etapes-grid -->
+    </section>
+
+  </main> <!-- Fin main.container -->
+
+    <!-- Footer - Repris du code fourni et des améliorations précédentes -->
+      <footer class="footer">
+        <div class="container">
+          <div class="footer-grid">
+            <div class="footer-column">
+              <h3>EmploiAvenir</h3>
+              <p>Votre partenaire pour trouver l'emploi de vos rêves et développer votre carrière professionnelle.</p>
+            </div>
+
+            <div class="footer-column">
+              <!-- Titre simple sans lien pour accessibilité -->
+              <h3>Liens rapides</h3>
+              <ul class="footer-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="MonParcours.html">Mon Parcours</a></li>
+                <li><a href="MesCandidature.html">Mes Candidatures</a></li>
+                <li><a href="Partenaires.html">Nos partenaires</a></li> <!-- Ajusté nom page -->
+                <li><a href="Documents.html">Mes documents</a></li> <!-- Ajusté nom page -->
+                <li><a href="Profil.html">Profil</a></li>
+              </ul>
+            </div>
+
+            <div class="footer-column">
+              <h3>Services</h3>
+              <ul class="footer-links">
+                <li><a href="#">Création de CV</a></li> <!-- Ces liens pourraient pointer vers des sections de MonParcours.html plus tard -->
+                <li><a href="#">Lettres de motivation</a></li>
+                <li><a href="#">Coaching</a></li>
+                <li><a href="#">Préparation aux entretiens</a></li>
+                <li><a href="#">Partenaires entreprises</a></li>
+              </ul>
+            </div>
+
+            <div class="footer-column">
+              <h3>Contact</h3>
+              <ul class="footer-links">
+                <li><a href="tel:+33123456789">+33 1 23 45 67 89</a></li>
+                <li><a href="mailto:contact@emploiavenir.fr">contact@emploiavenir.fr</a></li>
+                <li>12 rue de l'Emploi, 75001 Paris</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="footer-bottom">
+            <p>© 2024 EmploiAvenir. Tous droits réservés.</p>
+          </div>
+        </div>
+      </footer>
+
+    <!-- Login Modal - Repris des améliorations précédentes -->
+      <div id="loginModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="loginModalTitle" style="display: none;">
+        <div class="modal-content">
+          <button type="button" class="close-modal" aria-label="Fermer la fenêtre de connexion">×</button>
+          <h2 id="loginModalTitle">Connexion</h2>
+          <form id="loginForm">
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="form-group">
+              <label for="password">Mot de passe</label>
+              <input type="password" id="password" name="password" required>
+            </div>
+
+            <button type="submit" class="btn" style="width: 100%;">Se connecter</button>
+
+            <div class="text-center mt-2">
+              <a href="#" class="modal-link">Mot de passe oublié ?</a>
+            </div>
+
+            <div class="text-center mt-2">
+              <p>Pas encore de compte ? <a href="#" class="modal-link" id="openRegisterModal">S'inscrire</a></p>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Chatbot - Repris des améliorations précédentes -->
+      <button type="button" class="chatbot-btn" id="chatbotBtn" aria-label="Ouvrir l'assistant virtuel EmploiAvenir" aria-expanded="false" aria-controls="chatbotContainer">💬</button>
+
+      <div class="chatbot-container" id="chatbotContainer" role="log" aria-labelledby="chatbotHeaderTitle" style="display: none;">
+        <div class="chatbot-header">
+          <h3 id="chatbotHeaderTitle">Assistant EmploiAvenir</h3>
+          <button type="button" id="closeChatbot" aria-label="Fermer l'assistant virtuel">✖</button>
+        </div>
+
+        <div class="chatbot-messages" id="chatbotMessages" aria-live="polite">
+          <div class="message bot-message">
+            Bonjour ! Comment puis-je vous aider aujourd'hui ?
+          </div>
+        </div>
+
+        <div class="chatbot-input">
+          <input type="text" id="chatbotInput" name="chatbot_message" placeholder="Écrivez votre message..." aria-label="Votre message à l'assistant EmploiAvenir">
+          <button id="sendMessage" type="button">Envoyer</button>
+        </div>
+      </div>
+
+  <script src="Script.js"></script>
+
+</body>
+</html>
