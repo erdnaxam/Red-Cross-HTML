@@ -3,907 +3,225 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Générateur de CV Professionnel</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <style>
-        /* === Variables Globales === */
-        :root {
-            --color-primary: #007bff;
-            --color-light: #f8f9fa;
-            --color-gray-light: #ced4da;
-            --color-gray: #6c757d;
-            --color-white: #fff;
-            --radius: 0.25rem;
-            --shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-            --font-size-base: 1rem;
-        }
+    <title>Mon CV Facile - EmploiAvenir</title>
+    <meta name="description" content="Créez facilement votre CV étape par étape avec l'outil d'aide d'EmploiAvenir. Idéal pour commencer ou reprendre votre parcours professionnel.">
 
-        /* === Styles Généraux === */
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: var(--color-light);
-            color: var(--color-gray);
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1140px;
-            margin: 20px auto;
-            padding: 20px;
-        }
-
-        h1 {
-            text-align: center;
-            margin-bottom: 30px;
-            color: var(--color-primary);
-            font-size: 2.5rem;
-        }
-
-        /* === Styles CV Content === */
-        .cv-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        @media (max-width: 768px) {
-            .cv-content {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* === Styles Formulaire === */
-        .cv-form {
-            padding: 20px;
-            background-color: var(--color-white);
-            border: 1px solid var(--color-gray-light);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            font-weight: bold;
-            color: var(--color-gray);
-            margin-bottom: 5px;
-            font-size: var(--font-size-base);
-        }
-        /* Helper pour cacher visuellement mais garder accessible */
-        .sr-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0, 0, 0, 0);
-            white-space: nowrap;
-            border: 0;
-        }
-
-
-        .form-group input[type="text"],
-        .form-group input[type="email"],
-        .form-group input[type="tel"],
-        .form-group input[type="date"],
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid var(--color-gray-light);
-            border-radius: var(--radius);
-            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-            box-sizing: border-box;
-            font-size: var(--font-size-base);
-        }
-
-        .form-group input[type="text"]:focus,
-        .form-group input[type="email"]:focus,
-        .form-group input[type="tel"]:focus,
-        .form-group input[type="date"]:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            border-color: var(--color-primary);
-            outline: 0;
-            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-        }
-
-        /* === Styles Aperçu === */
-        .cv-preview {
-            padding: 20px;
-            background-color: var(--color-white);
-            border: 1px solid var(--color-gray-light);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow);
-            max-height: 80vh;
-            overflow-y: auto;
-        }
-         /* Style spécifique pour le CONTENEUR qui sera exporté en PDF */
-         #preview-content {
-             padding: 10mm; /* Ajouter un padding interne pour simuler les marges du PDF */
-             background-color: white; /* Fond blanc explicite */
-             color: #333; /* Couleur de texte par défaut pour le PDF */
-         }
-
-        .cv-preview h2 { /* Titre "Aperçu..." non exporté */
-            text-align: center;
-            color: var(--color-primary);
-            margin-bottom: 20px;
-            font-size: 2rem;
-        }
-
-        /* Styles pour les éléments DANS #preview-content */
-        #preview-content h3 {
-            margin-top: 15px;
-            margin-bottom: 8px;
-            color: var(--color-primary);
-            font-size: 1.4rem;
-            border-bottom: 1px solid var(--color-gray-light);
-            padding-bottom: 4px;
-        }
-
-        #preview-content h4 {
-            margin-top: 10px;
-            margin-bottom: 3px;
-            color: var(--color-gray); /* Un gris plus foncé peut être mieux */
-            font-size: 1.1rem;
-            font-weight: bold;
-        }
-
-        #preview-content p {
-            margin-bottom: 4px;
-            font-size: 0.95rem;
-            line-height: 1.5;
-        }
-         #preview-content .contact-info p { /* Spécifique pour les infos de contact */
-             margin: 2px 5px;
-         }
-         #preview-content .section-title { /* Classe pour les titres de section si besoin */
-             /* Styles spécifiques */
-         }
-
-        #preview-content .experience,
-        #preview-content .formation {
-            margin-bottom: 10px;
-            padding-left: 5px; /* Léger retrait pour la structure */
-            border-left: 2px solid var(--color-light); /* Ligne discrète à gauche */
-        }
-
-        #preview-content .skill-data,
-        #preview-content .langue-data {
-            background-color: var(--color-light);
-            border: 1px solid var(--color-gray-light);
-            border-radius: var(--radius);
-            padding: 3px 8px;
-            margin: 3px;
-            display: inline-block; /* Important pour l'affichage en bulles */
-             font-size: 0.9rem;
-        }
-         #preview-content .skills-container,
-         #preview-content .langues-container { /* Conteneurs pour les bulles */
-            padding: 5px 0;
-         }
-
-
-        /* === Styles Boutons === */
-        .btn {
-             margin-top: 5px;
-        }
-        .btn-primary {
-            color: #fff;
-            background-color: var(--color-primary);
-            border-color: var(--color-primary);
-            padding: 10px 15px;
-            border-radius: var(--radius);
-            cursor: pointer;
-            transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
-            border: 1px solid transparent;
-            display: inline-block;
-            font-size: var(--font-size-base);
-        }
-        .btn-primary:hover {
-            background-color: #0069d9;
-            border-color: #0062cc;
-        }
-         .btn-primary:disabled { /* Style pour le bouton pendant le chargement */
-            background-color: #6c757d;
-            border-color: #6c757d;
-            cursor: not-allowed;
-         }
-
-
-        .btn-outline-secondary {
-            color: var(--color-gray);
-            background-color: transparent;
-            border-color: var(--color-gray-light);
-            padding: 10px 15px;
-            border-radius: var(--radius);
-            cursor: pointer;
-            transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, color 0.15s ease-in-out;
-            border: 1px solid var(--color-gray-light);
-            display: inline-block;
-            font-size: var(--font-size-base);
-             margin-right: 5px;
-        }
-        .btn-outline-secondary:hover {
-            background-color: var(--color-gray);
-            border-color: var(--color-gray);
-             color: var(--color-white);
-        }
-         .btn-danger {
-            color: #fff;
-            background-color: #dc3545;
-            border-color: #dc3545;
-             padding: 5px 10px;
-            border-radius: var(--radius);
-            cursor: pointer;
-            transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
-            border: 1px solid transparent;
-            font-size: 0.9rem;
-        }
-        .btn-danger:hover {
-            background-color: #c82333;
-            border-color: #bd2130;
-        }
-
-
-        /* Styles pour le modal (popup) */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1050;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.5);
-            align-items: center;
-            justify-content: center;
-        }
-        .modal-content {
-            background-color: #fefefe;
-            margin: auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 600px;
-            border-radius: var(--radius);
-            position: relative;
-             box-shadow: var(--shadow);
-        }
-        .close {
-            position: absolute;
-            right: 15px;
-            top: 10px;
-            color: #aaa;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-            line-height: 1;
-        }
-        .close:hover,
-        .close:focus {
-            color: black;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        /* === Styles Responsive === */
-        @media (max-width: 768px) {
-            .container {
-                padding: 10px;
-            }
-            .cv-content {
-                grid-template-columns: 1fr;
-                gap: 10px;
-            }
-            .cv-form,
-            .cv-preview {
-                padding: 10px;
-                 max-height: none;
-            }
-             .form-block.comp {
-                grid-template-columns: 1fr;
-            }
-             .modal-content {
-                width: 95%;
-            }
-             #preview-content {
-                 padding: 5mm; /* Moins de padding sur petit écran */
-             }
-        }
-
-        /* --- Styles pour les éléments dans le FORMULAIRE --- */
-        .skill-container,
-        .langue-container {
-             margin-bottom: 15px;
-             padding: 15px;
-             border: 1px dashed var(--color-gray-light);
-             border-radius: var(--radius);
-             min-height: 50px; /* Hauteur minimale pour voir la zone */
-        }
-        .experience-form-item {
-            border: 1px solid var(--color-gray-light);
-            border-radius: var(--radius);
-            padding: 15px;
-             padding-right: 50px; /* Espace pour le bouton supprimer */
-            margin-bottom: 15px;
-            background-color: var(--color-white);
-             position: relative;
-        }
-         .experience-form-item h4 {
-             margin-top: 0;
-         }
-         .experience-form-item .btn-danger {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-        }
-        .form-item { /* Compétence, Langue, Formation DANS LE FORMULAIRE */
-            background-color: var(--color-light);
-            border: 1px solid var(--color-gray-light);
-            border-radius: var(--radius);
-            padding: 10px;
-             padding-right: 45px; /* Espace pour bouton supprimer */
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: relative;
-        }
-        .form-item span {
-             flex-grow: 1;
-             margin-right: 10px;
-             word-break: break-word; /* Coupe les mots longs si besoin */
-        }
-         .form-item .btn-danger {
-             position: absolute;
-             top: 50%;
-             right: 10px;
-             transform: translateY(-50%);
-         }
-        /* Style Input pour compétences/langues */
-        .form-block.comp {
-            margin-top: 10px;
-            display: grid;
-            grid-template-columns: 1fr 1fr auto;
-            gap: 10px;
-            align-items: end;
-        }
-         .form-block.comp .form-group {
-            margin-bottom: 0;
-        }
-         .form-block.comp button {
-            height: calc(2.25rem + 2px);
-             padding-top: 10px;
-            padding-bottom: 10px;
-        }
-        .input-with-mic {
-        display: flex;
-        align-items: center;
-        gap: 5px;
-        }
-
-        .input-with-mic input {
-        flex: 1;
-        }
-
-        .mic-btn {
-        background-color: var(--color-white);
-        border: 1px solid var(--color-gray-light);
-        border-radius: var(--radius);
-        padding: 5px;
-        cursor: pointer;
-        }
-        .mic-btn:hover {
-        background-color: var(--color-light);
-        }
-        
-
-    </style>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- Lien vers le fichier CSS externe - INDISPENSABLE -->
-    <!-- Assurez-vous que ce fichier style.css existe et contient TOUS les styles nécessaires (header, footer, conteneur, boutons, listes de documents, etc.), y compris ceux qui étaient dans le bloc <style> retiré ici. -->
-    <link rel="stylesheet" href="style.css">
-
-    <!-- Lien CDN pour Font Awesome (si tu utilises les icônes <i class="fas ...">) -->
-    <!-- Conserve celui que vous avez fourni -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="style.css">
+    <!-- NOTE: Les styles CSS pour la validation (.is-invalid, .invalid-feedback) sont importants dans style.css -->
 </head>
 <body>
-<!-- Header - Repris du code standard EmploiAvenir -->
 <header class="header" id="header">
     <div class="container flex justify-between items-center">
-      <!-- Lien du logo corrigé pour pointer vers l'accueil -->
       <a href="index.html" class="logo"><span>Emploi</span>Avenir</a>
       <nav aria-label="Navigation principale">
-        <!-- Ajout de l'ID pour le JS du menu mobile -->
         <ul class="nav-links" id="mainNavLinks">
           <li><a href="index.html">Accueil</a></li>
-          <li><a href="MonParcours.html">Mon Parcours</a></li>
+          <li><a href="MonParcours.html" class="active" aria-current="page">Mon Parcours</a></li>
           <li><a href="MesCandidature.html">Mes Candidatures</a></li>
           <li><a href="Partenaires.html">Nos partenaires</a></li>
-          <!-- Marquer Mes documents comme actif sur cette page -->
-          <li><a href="Documents.html" class="active" aria-current="page">Mes documents</a></li>
+          <li><a href="Documents.html">Mes documents</a></li>
           <li><a href="Profil.html">Profil</a></li>
-          <!-- Laissez ce commentaire ou ajoutez un bouton/lien avec id="loginBtn" si le JS doit l'ouvrir -->
-          <!-- Ex: <li><button type="button" class="btn btn-outline" id="loginBtn" aria-controls="loginModal">Connexion</button></li> -->
         </ul>
       </nav>
-      <!-- Bouton menu mobile - Attributs ARIA améliorés + lien vers l'ID du menu -->
       <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Ouvrir le menu de navigation" aria-expanded="false" aria-controls="mainNavLinks">☰</button>
     </div>
-  </header>
-    <div class="container cv-generator">
-        <h1>Générateur de CV Professionnel</h1>
-        <div class="cv-content">
-            <div class="cv-form">
-                <h2>Informations personnelles</h2>
-                <div class="form-group">
-                    <label for="name">Nom</label>
-                    <div class="input-with-mic">
-                        <input type="text" id="name" placeholder="Votre nom">
-                        <button type="button" onclick="startDictation('name')" class="mic-btn" aria-label="Parler"><i class="fas fa-microphone"></i></button>
-                    </div>                      
-                </div>
-                <div class="form-group">
-                    <label for="title">Poste recherché / Titre</label>
-                    <input type="text" id="title" placeholder="Ex: Développeur Web Fullstack">
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" placeholder="Votre adresse email">
-                </div>
-                <div class="form-group">
-                    <label for="phone">Téléphone</label>
-                    <input type="tel" id="phone" placeholder="Votre numéro de téléphone">
-                </div>
-                <div class="form-group">
-                    <label for="address">Adresse</label>
-                    <input type="text" id="address" placeholder="Ville, Pays">
-                </div>
+</header>
 
-                <h2>Expériences Professionnelles</h2>
-                <div id="experiences-container">
-                    <!-- Expériences ajoutées ici -->
-                </div>
-                <button type="button" class="btn btn-outline-secondary" id="addExperienceBtn">Ajouter une expérience</button>
-
-                <h2>Formations</h2>
-                <div id="formations-container">
-                     <!-- Formations ajoutées via modal ici -->
-                </div>
-                <button type="button" class="btn btn-outline-secondary" id="openFormationModalBtn">Ajouter une formation</button>
-
-                <h2>Compétences</h2>
-                <div id="competences-list" class="skill-container">
-                     <!-- Liste compétences ajoutées ici -->
-                </div>
-                <div class="form-block comp">
-                    <div class="form-group">
-                        <label for="newCompetence" class="sr-only">Nouvelle compétence</label>
-                        <input type="text" id="newCompetence" placeholder="Nouvelle compétence" />
-                    </div>
-                    <div class="form-group">
-                         <label for="competenceLevel" class="sr-only">Niveau</label>
-                        <select id="competenceLevel">
-                            <option value="Débutant">Débutant</option>
-                            <option value="Intermédiaire">Intermédiaire</option>
-                            <option value="Avancé">Avancé</option>
-                            <option value="Expert">Expert</option>
-                        </select>
-                    </div>
-                    <button type="button" class="btn btn-primary" id="addCompetenceBtn" aria-label="Ajouter la compétence">
-                        Ajouter <i class="fas fa-plus"></i>
-                    </button>
-                </div>
-
-                <h2>Langues</h2>
-                 <div id="langues-list" class="langue-container">
-                     <!-- Liste langues ajoutées ici -->
-                </div>
-                <div class="form-block comp">
-                    <div class="form-group">
-                         <label for="newLangue" class="sr-only">Nouvelle langue</label>
-                        <input type="text" id="newLangue" placeholder="Nouvelle langue" />
-                    </div>
-                    <div class="form-group">
-                         <label for="langueLevel" class="sr-only">Niveau</label>
-                        <select id="langueLevel">
-                            <option value="A1">A1 (Débutant)</option>
-                            <option value="A2">A2 (Élémentaire)</option>
-                            <option value="B1">B1 (Intermédiaire)</option>
-                            <option value="B2">B2 (Intermédiaire avancé)</option>
-                            <option value="C1">C1 (Autonome)</option>
-                            <option value="C2">C2 (Maîtrise)</option>
-                            <option value="Natif">Natif</option>
-                        </select>
-                    </div>
-                    <button type="button" class="btn btn-primary" id="addLangueBtn" aria-label="Ajouter la langue">
-                        Ajouter <i class="fas fa-plus"></i>
-                    </button>
-                </div>
-            </div>
-
-            <div class="cv-preview">
-                 <h2>Aperçu</h2>
-                 <!-- Le contenu réel pour le PDF -->
-                <div id="preview-content">
-                     <p style="font-style: italic; color: var(--color-gray); text-align: center;">Remplissez le formulaire pour voir un aperçu de votre CV.</p>
-                </div>
-            </div>
-        </div>
-
-        <button type="button" class="btn btn-primary" id="generatePdfBtn" style="margin-top: 20px; display: block; margin-left: auto; margin-right: auto;">
-             <i class="fas fa-file-pdf"></i> Exporter en PDF
-        </button>
-
-        <!-- Modal Formation -->
-        <div class="modal" id="formationModal">
-            <div class="modal-content">
-                <span class="close" id="closeFormationModalBtn" aria-label="Fermer">×</span>
-                <h2>Ajouter une formation</h2>
-                 <form id="formationForm">
-                    <div class="form-group">
-                        <label for="diplome">Diplôme / Formation*</label>
-                        <input type="text" id="diplome" placeholder="BTS, Licence, Formation..." required />
-                    </div>
-                    <div class="form-group">
-                        <label for="etablissement">Établissement*</label>
-                        <input type="text" id="etablissement" placeholder="École, Université..." required />
-                    </div>
-                    <div class="form-group">
-                        <label for="lieu">Lieu (Ville, Pays)</label>
-                        <input type="text" id="lieu" placeholder="Paris, France" />
-                    </div>
-                    <div class="form-group">
-                        <label for="dateDebut">Date de début*</label>
-                        <input type="date" id="dateDebut" required/>
-                        <label for="enCours" style="display: inline-block; margin-left: 10px;">
-                           <input type="checkbox" id="enCours" style="width: auto; margin-right: 5px;"> En cours
-                        </label>
-                    </div>
-                    <div class="form-group" id="dateFinGroup">
-                        <label for="dateFin">Date de fin*</label>
-                        <input type="date" id="dateFin" required/>
-                    </div>
-                    <div class="form-group">
-                        <label for="descriptionFormation">Description (facultatif)</label>
-                        <textarea id="descriptionFormation" placeholder="Décrivez brièvement la formation..." rows="3"></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-primary" id="addFormationBtn">Ajouter</button>
-                    <button type="button" class="btn btn-outline-secondary" id="cancelFormationBtn">Annuler</button>
-                 </form>
-            </div>
+<main class="cv-assistant-container">
+    <div class="cv-assistant-header">
+        <h1>Créez Votre CV Facilement</h1>
+        <p class="intro-text">Nous allons vous guider pas à pas pour créer un CV qui vous ressemble. Répondez simplement aux questions.</p>
+        <div class="cv-progress-bar" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="5" aria-label="Progression de la création du CV">
+            <div class="cv-progress-step active" data-step="1"><span>1</span> Infos Perso</div>
+            <div class="cv-progress-step" data-step="2"><span>2</span> Expériences</div>
+            <div class="cv-progress-step" data-step="3"><span>3</span> Formations</div>
+            <div class="cv-progress-step" data-step="4"><span>4</span> Atouts</div>
+            <div class="cv-progress-step" data-step="5"><span>5</span> Finalisation</div>
         </div>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // --- DOM Elements ---
-            const nameInput = document.getElementById('name');
-            const titleInput = document.getElementById('title');
-            const emailInput = document.getElementById('email');
-            const phoneInput = document.getElementById('phone');
-            const addressInput = document.getElementById('address');
-            const experiencesContainer = document.getElementById('experiences-container');
-            const addExperienceBtn = document.getElementById('addExperienceBtn');
-            const formationsContainer = document.getElementById('formations-container');
-            const openFormationModalBtn = document.getElementById('openFormationModalBtn');
-            const formationModal = document.getElementById('formationModal');
-            const closeFormationModalBtn = document.getElementById('closeFormationModalBtn');
-            const formationForm = document.getElementById('formationForm');
-            const cancelFormationBtn = document.getElementById('cancelFormationBtn');
-            const enCoursCheckbox = document.getElementById('enCours');
-            const dateFinGroup = document.getElementById('dateFinGroup');
-            const dateFinInput = document.getElementById('dateFin');
-            const competencesList = document.getElementById('competences-list');
-            const addCompetenceBtn = document.getElementById('addCompetenceBtn');
-            const newCompetenceInput = document.getElementById('newCompetence');
-            const competenceLevelSelect = document.getElementById('competenceLevel');
-            const languesList = document.getElementById('langues-list');
-            const addLangueBtn = document.getElementById('addLangueBtn');
-            const newLangueInput = document.getElementById('newLangue');
-            const langueLevelSelect = document.getElementById('langueLevel');
-            const generatePdfBtn = document.getElementById('generatePdfBtn');
-            const previewContentDiv = document.getElementById('preview-content');
+    <form id="cvAssistantForm" novalidate> <!-- novalidate pour gérer la validation via JS -->
+        <!-- ÉTAPE 1: INFORMATIONS PERSONNELLES -->
+        <fieldset class="cv-step active-step" id="step-1-perso" data-step-title="Vos informations personnelles">
+            <legend class="sr-only">Étape 1 : Vos informations personnelles</legend>
+            <h2>Commençons par vous !</h2>
+            <p class="step-description">Ces informations de base nous aident à démarrer.</p>
 
-            let experienceCount = 0;
+            <div class="form-group">
+                <label for="name">Votre Prénom et Nom*</label>
+                <div class="input-with-mic">
+                    <input type="text" id="name" name="name" class="form-control" placeholder="Ex: Marie Dupont" required>
+                    <button type="button" class="mic-btn" data-target-input="name" aria-label="Saisir par la voix pour Prénom et Nom"><i class="fas fa-microphone"></i></button>
+                </div>
+                <small class="help-text">C'est le nom qui apparaîtra en haut de votre CV.</small>
+                <div class="invalid-feedback">Veuillez indiquer votre prénom et nom.</div>
+            </div>
 
-            // --- Utility Functions ---
-            function createRemoveButton(onClickAction) {
-                 const removeButton = document.createElement('button');
-                 removeButton.type = 'button';
-                 removeButton.className = 'btn btn-danger btn-sm';
-                 removeButton.innerHTML = '<i class="fas fa-trash-alt"></i>'; // Juste l'icône
-                 removeButton.setAttribute('aria-label', 'Supprimer');
-                 removeButton.addEventListener('click', onClickAction);
-                 return removeButton;
-            }
+            <div class="form-group">
+                <label for="cvTitle">Quel type de poste recherchez-vous ? (Ou laissez vide)</label>
+                 <div class="input-with-mic">
+                    <input type="text" id="cvTitle" name="cvTitle" class="form-control" placeholder="Ex: Employé(e) polyvalent(e), Aide à domicile">
+                    <button type="button" class="mic-btn" data-target-input="cvTitle" aria-label="Saisir par la voix pour le type de poste"><i class="fas fa-microphone"></i></button>
+                </div>
+                <small class="help-text">Cela peut être le titre de votre CV. Si vous ne savez pas, ce n'est pas grave !</small>
+            </div>
 
-             function formatDate(dateString) {
-                 if (!dateString) return '';
-                 try {
-                     // Tente de formater en mois année (ex: Janv. 2023)
-                     const date = new Date(dateString);
-                      // Ajoute un jour pour éviter les problèmes de fuseau horaire qui pourraient reculer d'un mois
-                     date.setDate(date.getDate() + 1);
-                     return date.toLocaleDateString('fr-FR', { month: 'short', year: 'numeric' });
-                 } catch (e) {
-                     console.error("Error formatting date:", dateString, e);
-                     return dateString; // Retourne la date brute en cas d'erreur
-                 }
-             }
+            <div class="form-group">
+                <label for="email">Votre adresse e-mail*</label>
+                <input type="email" id="email" name="email" class="form-control" placeholder="Ex: marie.dupont@email.com" required>
+                <small class="help-text">Important pour que les recruteurs puissent vous contacter.</small>
+                <div class="invalid-feedback">Veuillez indiquer une adresse e-mail valide.</div>
+            </div>
 
+            <div class="form-group">
+                <label for="phone">Votre numéro de téléphone</label>
+                <input type="tel" id="phone" name="phone" class="form-control" placeholder="Ex: 06 01 02 03 04">
+                <small class="help-text">Utile si un employeur souhaite vous appeler.</small>
+            </div>
 
-            // --- Core Update Function ---
-            function updateCV() {
-                previewContentDiv.innerHTML = ''; // Clear preview
+             <div class="form-group">
+                <label for="address">Ville (et pays si besoin)</label>
+                 <div class="input-with-mic">
+                    <input type="text" id="address" name="address" class="form-control" placeholder="Ex: Lyon, France">
+                    <button type="button" class="mic-btn" data-target-input="address" aria-label="Saisir par la voix pour la ville"><i class="fas fa-microphone"></i></button>
+                </div>
+                <small class="help-text">Juste la ville suffit généralement.</small>
+            </div>
+        </fieldset>
 
-                // --- Personal Info ---
-                const infoPersoFragment = document.createDocumentFragment();
-                if (nameInput.value) {
-                    const nameElement = document.createElement('h3');
-                     nameElement.style.textAlign = "center"; nameElement.style.marginBottom = "5px";
-                    nameElement.textContent = nameInput.value;
-                    infoPersoFragment.appendChild(nameElement);
-                }
-                 if (titleInput.value) {
-                    const titleElement = document.createElement('p');
-                    titleElement.style.fontStyle = "italic"; titleElement.style.textAlign = "center";
-                     titleElement.style.marginBottom = "15px"; titleElement.style.fontSize = "1.1rem";
-                    titleElement.textContent = titleInput.value;
-                    infoPersoFragment.appendChild(titleElement);
-                }
-                const contactDiv = document.createElement('div');
-                 contactDiv.className = 'contact-info'; // Classe pour styler si besoin
-                contactDiv.style.display = "flex"; contactDiv.style.justifyContent = "space-around";
-                 contactDiv.style.flexWrap = "wrap"; contactDiv.style.marginBottom = "15px";
-                 contactDiv.style.borderBottom = "1px solid var(--color-gray-light)"; contactDiv.style.paddingBottom = "10px";
+        <!-- ÉTAPE 2: EXPÉRIENCES -->
+        <fieldset class="cv-step" id="step-2-experiences" data-step-title="Vos expériences (même non payées)">
+            <legend class="sr-only">Étape 2 : Vos expériences</legend>
+            <h2>Vos expériences (même non payées)</h2>
+            <p class="step-description">
+                Avez-vous déjà travaillé, fait du bénévolat, aidé votre famille ou des amis, ou participé à des projets ?
+                Toute expérience est bonne à partager !
+            </p>
+            <div class="info-box">
+                <i class="fas fa-lightbulb"></i>
+                <div>
+                    <p><strong>Pas d'expérience professionnelle ? Pas de souci !</strong> Pensez à :</p>
+                    <ul>
+                        <li>Bénévolat (aide aux devoirs, distribution de repas...)</li>
+                        <li>Projets personnels (organisation d'un événement, création d'un blog...)</li>
+                        <li>Aide apportée à votre entourage (garde d'enfants, aide à une personne âgée...)</li>
+                        <li>Stages, même courts.</li>
+                    </ul>
+                    <p>Indiquez ce que vous avez fait et ce que cela vous a appris.</p>
+                </div>
+            </div>
 
-                 const createContactItem = (iconClass, text) => {
-                    if(text) {
-                         const p = document.createElement('p');
-                         p.innerHTML = `<i class="${iconClass}" style="margin-right: 5px; color: var(--color-primary);"></i> ${text}`;
-                         return p;
-                    } return null; };
-                 const emailElem = createContactItem('fas fa-envelope', emailInput.value); if(emailElem) contactDiv.appendChild(emailElem);
-                 const phoneElem = createContactItem('fas fa-phone', phoneInput.value); if(phoneElem) contactDiv.appendChild(phoneElem);
-                 const addressElem = createContactItem('fas fa-map-marker-alt', addressInput.value); if(addressElem) contactDiv.appendChild(addressElem);
-                 if (contactDiv.hasChildNodes()) infoPersoFragment.appendChild(contactDiv);
-                previewContentDiv.appendChild(infoPersoFragment);
+            <div id="experiences-list-form">
+                <!-- Les expériences seront ajoutées ici par JS -->
+            </div>
+            <button type="button" class="btn btn-outline-secondary add-item-btn" id="addExperienceFormBtn">
+                <i class="fas fa-plus-circle"></i> Ajouter une expérience
+            </button>
+        </fieldset>
 
+        <!-- ÉTAPE 3: FORMATIONS -->
+        <fieldset class="cv-step" id="step-3-formations" data-step-title="Vos formations et diplômes">
+            <legend class="sr-only">Étape 3 : Vos formations et diplômes</legend>
+            <h2>Vos formations et diplômes</h2>
+            <p class="step-description">Avez-vous suivi des formations, même courtes, ou obtenu des diplômes ?</p>
+            <div class="info-box">
+                <i class="fas fa-graduation-cap"></i>
+                <p>Indiquez ici vos diplômes (brevet, CAP, Bac, etc.) ou les formations que vous avez suivies (permis cariste, formation aux premiers secours, cours en ligne...). Même si ce n'est pas terminé, c'est intéressant !</p>
+            </div>
 
-                // --- Experiences ---
-                const experienceFormItems = experiencesContainer.querySelectorAll('.experience-form-item');
-                if (experienceFormItems.length > 0) {
-                    const experiencesTitle = document.createElement('h3'); experiencesTitle.textContent = "Expériences Professionnelles"; previewContentDiv.appendChild(experiencesTitle);
-                    experienceFormItems.forEach(div => {
-                        const job = div.querySelector('.jobTitle')?.value, comp = div.querySelector('.company')?.value, dat = div.querySelector('.dates')?.value, desc = div.querySelector('.description')?.value;
-                        if (job || comp ) {
-                            const prevDiv = document.createElement('div'); prevDiv.className = 'experience';
-                            if (job) { const el = document.createElement('h4'); el.textContent = job; prevDiv.appendChild(el); }
-                            if (comp || dat) { const el = document.createElement('p'); let txt = ''; if (comp) txt += `<strong>${comp}</strong>`; if (comp && dat) txt += ' | '; if (dat) txt += `<em>${dat}</em>`; el.innerHTML = txt; prevDiv.appendChild(el); }
-                            if (desc) { const el = document.createElement('p'); el.innerHTML = desc.replace(/\n/g, '<br>'); el.style.marginTop = '5px'; prevDiv.appendChild(el); }
-                            previewContentDiv.appendChild(prevDiv); } });
-                }
+            <div id="formations-list-form">
+                <!-- Les formations seront ajoutées ici par JS -->
+            </div>
+            <button type="button" class="btn btn-outline-secondary add-item-btn" id="addFormationFormBtn">
+                <i class="fas fa-plus-circle"></i> Ajouter une formation
+            </button>
+        </fieldset>
 
-                // --- Formations ---
-                 const formationFormItems = formationsContainer.querySelectorAll('.form-item');
-                if (formationFormItems.length > 0) {
-                    const title = document.createElement('h3'); title.textContent = "Formations"; previewContentDiv.appendChild(title);
-                     formationFormItems.forEach(item => {
-                        const { diplome, etablissement, lieu, dateDebut, dateFin, description, enCours } = item.dataset;
-                        const prevDiv = document.createElement('div'); prevDiv.className = 'formation';
-                        const elDip = document.createElement('h4'); elDip.textContent = diplome; prevDiv.appendChild(elDip);
-                        const elEtab = document.createElement('p'); elEtab.innerHTML = `<strong>${etablissement}</strong>${lieu ? ` - <em>${lieu}</em>` : ''}`; prevDiv.appendChild(elEtab);
-                        const elDates = document.createElement('p'); const start = formatDate(dateDebut); const end = enCours === 'true' ? 'Aujourd\'hui' : formatDate(dateFin); elDates.innerHTML = `<em>${start} - ${end}</em>`; prevDiv.appendChild(elDates);
-                        if (description) { const elDesc = document.createElement('p'); elDesc.innerHTML = description.replace(/\n/g, '<br>'); elDesc.style.marginTop = '5px'; prevDiv.appendChild(elDesc); }
-                         previewContentDiv.appendChild(prevDiv); });
-                }
+        <!-- ÉTAPE 4: ATOUTS (Compétences & Langues) -->
+        <fieldset class="cv-step" id="step-4-atouts" data-step-title="Vos qualités et ce que vous savez faire">
+            <legend class="sr-only">Étape 4 : Vos qualités et ce que vous savez faire</legend>
+            <h2>Vos qualités et ce que vous savez faire</h2>
+            <p class="step-description">Quelles sont vos forces ? Que savez-vous bien faire ? Quelles langues parlez-vous ?</p>
 
-                 // --- Skills ---
-                const competenceFormItems = competencesList.querySelectorAll('.form-item');
-                if (competenceFormItems.length > 0) {
-                    const title = document.createElement('h3'); title.textContent = "Compétences"; previewContentDiv.appendChild(title);
-                    const container = document.createElement('div'); container.className = 'skills-container';
-                    competenceFormItems.forEach(item => {
-                        const text = item.querySelector('span').textContent;
-                        const prevDiv = document.createElement('span'); prevDiv.className = 'skill-data'; prevDiv.textContent = text; container.appendChild(prevDiv); });
-                    previewContentDiv.appendChild(container);
-                }
+            <div class="form-section">
+                <h3>Ce que vous savez faire (Compétences)</h3>
+                <p class="help-text">Pensez à ce que vous avez appris dans vos expériences, vos formations ou vos loisirs. <br>
+                    Exemples : "utiliser un ordinateur", "cuisiner", "être à l'écoute", "travailler en équipe", "conduire (permis B)".
+                </p>
+                <div id="competences-list-form" class="form-list-items">
+                    <!-- Compétences ajoutées ici -->
+                </div>
+                <div class="input-group-add">
+                    <input type="text" id="newCompetenceInput" class="form-control" placeholder="Ajouter une compétence">
+                    <button type="button" class="btn btn-primary" id="addCompetenceToListBtn"><i class="fas fa-plus"></i> Ajouter</button>
+                </div>
+                 <div id="newCompetenceInput-feedback" class="invalid-feedback" style="display: none;">Veuillez saisir une compétence.</div>
+            </div>
 
-                // --- Languages ---
-                const langueFormItems = languesList.querySelectorAll('.form-item');
-                if (langueFormItems.length > 0) {
-                    const title = document.createElement('h3'); title.textContent = "Langues"; previewContentDiv.appendChild(title);
-                    const container = document.createElement('div'); container.className = 'langues-container';
-                    langueFormItems.forEach(item => {
-                        const text = item.querySelector('span').textContent;
-                        const prevDiv = document.createElement('span'); prevDiv.className = 'langue-data'; prevDiv.textContent = text; container.appendChild(prevDiv); });
-                    previewContentDiv.appendChild(container);
-                }
+            <div class="form-section">
+                <h3>Langues que vous parlez</h3>
+                <p class="help-text">Même si c'est juste quelques mots, indiquez-le ! Exemple : "Anglais : bases scolaires".</p>
+                <div id="langues-list-form" class="form-list-items">
+                    <!-- Langues ajoutées ici -->
+                </div>
+                <div class="input-group-add">
+                    <input type="text" id="newLangueInput" class="form-control" placeholder="Ajouter une langue">
+                    <select id="newLangueLevelSelect" class="form-control">
+                        <option value="">Niveau ?</option>
+                        <option value="Notions">Notions</option>
+                        <option value="Intermédiaire">Sait se débrouiller</option>
+                        <option value="Courant">Parle bien</option>
+                        <option value="Natif">Langue maternelle</option>
+                    </select>
+                    <button type="button" class="btn btn-primary" id="addLangueToListBtn"><i class="fas fa-plus"></i> Ajouter</button>
+                </div>
+                <div id="newLangueInput-feedback" class="invalid-feedback" style="display: none;">Veuillez saisir une langue et un niveau.</div>
+            </div>
+        </fieldset>
 
-                 // --- Placeholder if empty ---
-                 if (!previewContentDiv.hasChildNodes() || previewContentDiv.innerHTML.trim() === '') {
-                      previewContentDiv.innerHTML = '<p style="font-style: italic; color: var(--color-gray); text-align: center;">Remplissez le formulaire pour voir un aperçu de votre CV.</p>';
-                 }
-            }
+        <!-- ÉTAPE 5: FINALISATION ET APERÇU -->
+        <fieldset class="cv-step" id="step-5-finalisation" data-step-title="Vérification et téléchargement">
+            <legend class="sr-only">Étape 5 : Vérification et téléchargement</legend>
+            <h2>Bravo, votre CV est presque prêt !</h2>
+            <p class="step-description">Vérifiez les informations ci-dessous. Vous pourrez toujours revenir en arrière pour modifier.</p>
 
-            // --- PDF Generation ---
-             function generatePDF() {
-                console.log("Début de la génération PDF...");
-                const elementToPrint = document.getElementById('preview-content');
+            <div class="cv-preview-final">
+                <h3>Aperçu de votre CV</h3>
+                <div id="final-preview-content" class="cv-preview-area">
+                    <p style="text-align:center; padding: 2rem; color: var(--color-gray);">Commencez à remplir les étapes pour voir votre CV prendre forme ici !</p>
+                </div>
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn btn-primary btn-large" id="downloadPdfBtn">
+                    <i class="fas fa-download"></i> Télécharger mon CV en PDF
+                </button>
+            </div>
+        </fieldset>
 
-                // Vérification plus robuste si le contenu est juste le placeholder
-                if (!elementToPrint || !elementToPrint.hasChildNodes() || previewContentDiv.textContent.includes("Remplissez le formulaire")) {
-                    console.error("Erreur: Contenu de l'aperçu vide ou non initialisé.");
-                    alert("Veuillez ajouter du contenu à votre CV avant d'exporter.");
-                    return;
-                }
-                 // DEBUG: Logguer le contenu HTML juste avant l'export
-                 console.log("Contenu HTML à exporter:", elementToPrint.innerHTML.substring(0, 500) + "..."); // Affiche les 500 premiers caractères
+        <!-- Navigation entre les étapes -->
+        <div class="cv-step-navigation">
+            <button type="button" class="btn btn-outline-secondary" id="prevStepBtn" disabled><i class="fas fa-arrow-left"></i> Étape précédente</button>
+            <button type="button" class="btn btn-primary" id="nextStepBtn">Étape suivante <i class="fas fa-arrow-right"></i></button>
+            <button type="button" class="btn btn-success" id="finishCVAssistantBtn" style="display: none;">
+                <i class="fas fa-check-circle"></i> Terminer et voir mon parcours
+            </button>
+        </div>
+    </form>
 
-                const originalButtonText = generatePdfBtn.innerHTML;
-                generatePdfBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Génération...';
-                generatePdfBtn.disabled = true;
-                document.body.style.cursor = 'wait'; // Curseur de chargement
+</main>
 
-                const timestamp = new Date().toISOString().replace(/[:.-]/g, '').slice(0, 15);
-                const userName = nameInput.value || 'Mon';
-                const fileName = `CV_${userName.replace(/\s+/g, '_')}_${timestamp}.pdf`;
-
-                const opt = {
-                  margin:       10, // Marge uniforme de 10mm
-                  filename:     fileName,
-                  image:        { type: 'jpeg', quality: 0.98 },
-                  html2canvas:  {
-                      scale: 2,
-                      logging: true, // **IMPORTANT POUR LE DEBUG DE PAGE BLANCHE**
-                      useCORS: true,
-                      // Tenter d'améliorer le rendu du texte
-                       dpi: 192,
-                       letterRendering: true,
-                       //backgroundColor: null // Laisser transparent pour que jsPDF gère ? Ou mettre #ffffff
-                       backgroundColor: '#ffffff'
-                  },
-                  jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
-                   // Essayer différents modes de saut de page si la mise en page est coupée
-                  pagebreak:    { mode: ['avoid-all', 'css', 'legacy'] }
-                };
-
-                console.log("Options html2pdf:", opt);
-
-                // Utilisation d'une petite temporisation (peut aider dans certains cas)
-                //setTimeout(() => {
-                    html2pdf().set(opt).from(elementToPrint).save().then(() => {
-                        console.log("PDF généré et téléchargement lancé.");
-                        generatePdfBtn.innerHTML = originalButtonText;
-                        generatePdfBtn.disabled = false;
-                        document.body.style.cursor = 'default';
-                    }).catch((error) => {
-                        console.error("Erreur lors de la génération du PDF avec html2pdf:", error);
-                        alert("Une erreur est survenue lors de la génération du PDF. Vérifiez la console (F12) pour les détails techniques.");
-                        generatePdfBtn.innerHTML = originalButtonText;
-                        generatePdfBtn.disabled = false;
-                        document.body.style.cursor = 'default';
-                    });
-               // }, 100); // Délai de 100ms avant de lancer la génération
-
-            }
-
-
-            // --- Event Handlers & Dynamic Element Functions ---
-            function addExperience() {
-                experienceCount++;
-                const div = document.createElement('div');
-                div.className = 'experience-form-item';
-                div.id = `experience-${experienceCount}`;
-                div.innerHTML = `
-                    <h4>Expérience ${experienceCount}</h4>
-                    <div class="form-group"><label for="jobTitle${experienceCount}">Poste</label><input type="text" class="jobTitle" id="jobTitle${experienceCount}"></div>
-                    <div class="form-group"><label for="company${experienceCount}">Entreprise</label><input type="text" class="company" id="company${experienceCount}"></div>
-                    <div class="form-group"><label for="dates${experienceCount}">Dates</label><input type="text" class="dates" id="dates${experienceCount}" placeholder="Ex: Mars 2020 - Présent"></div>
-                    <div class="form-group"><label for="description${experienceCount}">Description</label><textarea class="description" id="description${experienceCount}" rows="3"></textarea></div>`;
-                const removeBtn = createRemoveButton(() => { div.remove(); updateCV(); });
-                div.appendChild(removeBtn);
-                experiencesContainer.appendChild(div);
-                div.querySelectorAll('input, textarea').forEach(input => input.addEventListener('input', updateCV));
-                updateCV();
-            }
-
-            function openFormationModal() {
-                 formationForm.reset(); enCoursCheckbox.checked = false; dateFinGroup.style.display = 'block'; dateFinInput.required = true;
-                formationModal.style.display = 'flex'; document.getElementById('diplome').focus();
-            }
-            function closeFormationModal() { formationModal.style.display = 'none'; }
-
-            enCoursCheckbox.addEventListener('change', function() {
-                dateFinGroup.style.display = this.checked ? 'none' : 'block'; dateFinInput.required = !this.checked; if(this.checked) dateFinInput.value = ''; });
-
-             formationForm.addEventListener('submit', function(event) {
-                event.preventDefault();
-                const data = { diplome: document.getElementById('diplome').value.trim(), etablissement: document.getElementById('etablissement').value.trim(), lieu: document.getElementById('lieu').value.trim(), dateDebut: document.getElementById('dateDebut').value, estEnCours: enCoursCheckbox.checked, dateFin: enCoursCheckbox.checked ? '' : dateFinInput.value, description: document.getElementById('descriptionFormation').value.trim() };
-                if (!data.diplome || !data.etablissement || !data.dateDebut || (!data.estEnCours && !data.dateFin) ) return;
-
-                 const item = document.createElement('div'); item.className = 'form-item';
-                 Object.keys(data).forEach(key => item.dataset[key] = data[key]); // Store data
-                 const span = document.createElement('span'); const start = formatDate(data.dateDebut); const end = data.estEnCours ? 'En cours' : formatDate(data.dateFin); span.innerHTML = `<strong>${data.diplome}</strong> - ${data.etablissement} (${start} - ${end})`; item.appendChild(span);
-                 const removeBtn = createRemoveButton(() => { item.remove(); updateCV(); }); item.appendChild(removeBtn);
-                 formationsContainer.appendChild(item); closeFormationModal(); updateCV(); });
-
-            function addListItem(listContainer, textValue, levelValue, itemClass) {
-                 if (!textValue) return;
-                 const item = document.createElement('div'); item.className = 'form-item ' + itemClass;
-                 const span = document.createElement('span'); span.textContent = `${textValue} (${levelValue})`; item.appendChild(span);
-                 const removeBtn = createRemoveButton(() => { item.remove(); updateCV(); }); item.appendChild(removeBtn);
-                 listContainer.appendChild(item);
-            }
-
-            function addCompetence() {
-                const value = newCompetenceInput.value.trim(); const level = competenceLevelSelect.value;
-                if (!value) { newCompetenceInput.focus(); return; }
-                addListItem(competencesList, value, level, 'competence-item');
-                newCompetenceInput.value = ''; newCompetenceInput.focus(); updateCV();
-            }
-            function addLangue() {
-                const value = newLangueInput.value.trim(); const level = langueLevelSelect.options[langueLevelSelect.selectedIndex].text;
-                if (!value) { newLangueInput.focus(); return; }
-                addListItem(languesList, value, level, 'langue-item');
-                newLangueInput.value = ''; newLangueInput.focus(); updateCV();
-            }
-
-            // --- Event Listeners Setup ---
-            [nameInput, titleInput, emailInput, phoneInput, addressInput].forEach(i => i.addEventListener('input', updateCV));
-            addExperienceBtn.addEventListener('click', addExperience);
-            openFormationModalBtn.addEventListener('click', openFormationModal);
-            closeFormationModalBtn.addEventListener('click', closeFormationModal);
-            cancelFormationBtn.addEventListener('click', closeFormationModal);
-            addCompetenceBtn.addEventListener('click', addCompetence);
-            addLangueBtn.addEventListener('click', addLangue);
-            generatePdfBtn.addEventListener('click', generatePDF);
-            newCompetenceInput.addEventListener('keypress', (e) => e.key === 'Enter' && (e.preventDefault(), addCompetenceBtn.click()));
-            newLangueInput.addEventListener('keypress', (e) => e.key === 'Enter' && (e.preventDefault(), addLangueBtn.click()));
-
-            // --- Initial Call ---
-            updateCV();
-        });
-        function startDictation(inputId) {
-    if (!('webkitSpeechRecognition' in window)) {
-        alert("Votre navigateur ne supporte pas la reconnaissance vocale.");
-        return;
-    }
-
-    const recognition = new webkitSpeechRecognition(); // API spécifique à Chrome
-    recognition.lang = 'fr-FR'; // Langue en français
-    recognition.interimResults = false;
-    recognition.maxAlternatives = 1;
-
-    recognition.onresult = function(event) {
-        const result = event.results[0][0].transcript;
-        document.getElementById(inputId).value = result;
-        document.getElementById(inputId).dispatchEvent(new Event('input')); // Pour mettre à jour le CV
-    };
-
-    recognition.onerror = function(event) {
-        console.error("Erreur de reconnaissance vocale :", event.error);
-    };
-
-    recognition.start();
-}
-
-    </script>
+<footer class="footer">
+    <div class="container">
+      <p>© 2024 EmploiAvenir. Tous droits réservés.</p>
+    </div>
+</footer>
+<div id="toast-container"></div>
+<script src="script.js"></script>
+<!-- Le JavaScript spécifique à cette page (initCVGeneratorPage) sera dans script.js -->
 </body>
 </html>

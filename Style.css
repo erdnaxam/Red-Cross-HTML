@@ -2338,14 +2338,331 @@ img {
   font-size: 0.9rem;
 }
 
+/.cv-assistant-container {
+    max-width: 800px; /* Conteneur principal un peu plus étroit pour un assistant */
+    margin: 2rem auto;
+    padding: 1rem;
+    background-color: var(--color-white);
+    border-radius: var(--radius-lg, 12px); /* Rayon plus grand pour le conteneur principal */
+    box-shadow: var(--shadow-lg);
+}
 
-/* Responsive Footer (intégré à la media query 991px ou 768px si elle est plus grande) */
-/* Si le footer grid n'est pas géré par auto-fit/minmax */
-/* @media (max-width: 768px) { */
-/*     .footer-grid { grid-template-columns: 1fr; } */
-/*     .footer-column { text-align: center; } */
-/*     .footer-links { */
-/*         display: flex; flex-direction: column; align-items: center; gap: 0.5rem; */
-/*     } */
-/*      .footer-links li { margin-bottom: 0; } */
-/* } */
+.cv-assistant-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--color-gray-light);
+}
+
+.cv-assistant-header h1 {
+    font-size: clamp(1.7rem, 5vw, 2.1rem);
+    color: var(--color-primary);
+    margin-bottom: 0.5rem;
+}
+
+.cv-assistant-header .intro-text {
+    font-size: 1rem;
+    color: var(--color-gray-darker);
+    margin-bottom: 1.5rem;
+}
+
+/* Barre de progression pour l'assistant CV */
+.cv-progress-bar {
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem; /* Petit espace entre les bulles */
+    list-style: none;
+    padding: 0;
+    margin: 0 auto;
+    max-width: 100%;
+    position: relative; /* Pour la ligne de fond */
+}
+/* Ligne derrière les étapes */
+.cv-progress-bar::before {
+    content: '';
+    position: absolute;
+    top: 12px; /* Centre verticalement sur les bulles (si hauteur bulle = 24px) */
+    left: 12px; /* Pour ne pas commencer avant la première bulle */
+    right: 12px; /* Pour ne pas finir après la dernière bulle */
+    height: 4px;
+    background-color: var(--color-gray-light);
+    z-index: 1;
+    border-radius: 2px;
+}
+
+.cv-progress-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-size: 0.8rem;
+    color: var(--color-gray-medium);
+    position: relative; /* Pour que la bulle soit au-dessus de la ligne */
+    z-index: 2;
+    flex: 1; /* Pour distribuer l'espace */
+    padding: 0 0.25rem;
+}
+
+.cv-progress-step span { /* La bulle numérotée */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color: var(--color-white);
+    border: 2px solid var(--color-gray-medium);
+    color: var(--color-gray-medium);
+    font-weight: bold;
+    margin-bottom: 0.3rem;
+    transition: all var(--transition-fast);
+}
+
+.cv-progress-step.active span {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-white);
+}
+.cv-progress-step.active {
+    color: var(--color-primary);
+    font-weight: 600;
+}
+
+.cv-progress-step.completed span {
+    background-color: var(--color-secondary);
+    border-color: var(--color-secondary);
+    color: var(--color-white);
+}
+.cv-progress-step.completed {
+    color: var(--color-secondary-darker);
+}
+
+
+/* Styles pour chaque étape du formulaire/assistant */
+.cv-step {
+    display: none; /* Caché par défaut */
+    padding: 1.5rem;
+    border: 1px solid var(--color-gray-light);
+    border-radius: var(--radius);
+    margin-top: 1.5rem; /* Espace par rapport à la barre de progression ou l'étape précédente */
+    background-color: var(--color-surface); /* Fond légèrement différent du conteneur principal si souhaité */
+}
+.cv-step.active-step {
+    display: block;
+    animation: fadeIn 0.4s ease-out forwards;
+}
+
+.cv-step h2 { /* Titre de l'étape actuelle */
+    font-size: 1.6rem;
+    color: var(--color-dark);
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+.cv-step .step-description {
+    font-size: 0.95rem;
+    color: var(--color-gray-darker);
+    margin-bottom: 1.5rem;
+}
+
+/* Boîte d'information/conseil */
+.info-box {
+    background-color: var(--color-primary-light);
+    border-left: 4px solid var(--color-primary);
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: var(--radius-sm);
+    display: flex;
+    gap: 0.75rem;
+    align-items: flex-start; /* Aligne l'icône en haut */
+}
+.info-box i {
+    color: var(--color-primary);
+    font-size: 1.2rem;
+    margin-top: 0.2rem; /* Petit ajustement vertical */
+}
+.info-box p, .info-box ul {
+    font-size: 0.9rem;
+    color: var(--color-gray-darker);
+    margin: 0;
+}
+.info-box ul {
+    list-style: disc;
+    padding-left: 1.25rem;
+    margin-top: 0.5rem;
+}
+.info-box ul li {
+    margin-bottom: 0.25rem;
+}
+
+/* Textes d'aide sous les champs */
+.help-text {
+    font-size: 0.8rem;
+    color: var(--color-gray);
+    display: block;
+    margin-top: 0.25rem;
+}
+
+/* Conteneurs pour les listes dynamiques (exp, formation, compétences, langues) */
+#experiences-list-form,
+#formations-list-form,
+.form-list-items { /* Classe commune pour compétences et langues */
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1rem; /* Espace avant le bouton "Ajouter" */
+}
+
+/* Style pour chaque item ajouté dynamiquement (exp, form, comp, lang) DANS LE FORMULAIRE */
+.dynamic-form-item { /* S'applique au div de chaque expérience/formation/compétence ajoutée */
+    border: 1px solid var(--color-gray-light);
+    border-radius: var(--radius-sm);
+    padding: 1rem;
+    background-color: var(--color-light); /* Fond légèrement différent pour les items */
+    position: relative; /* Pour le bouton supprimer */
+}
+.experience-form-item h4, .formation-form-item h4 { /* Titre interne pour numéroter si besoin */
+    font-size: 0.9rem;
+    color: var(--color-gray-darker);
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+    font-weight: 500;
+}
+.btn-remove-item { /* Bouton supprimer pour les items dynamiques */
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    padding: 0.25rem 0.5rem !important; /* Forcer un padding plus petit */
+    font-size: 0.8rem !important; /* Forcer une taille plus petite */
+    background-color: transparent !important;
+    color: var(--color-destructive) !important;
+    border: 1px solid var(--color-destructive) !important;
+}
+.btn-remove-item:hover {
+    background-color: var(--color-destructive) !important;
+    color: var(--color-white) !important;
+}
+
+/* Groupe d'input pour ajouter compétence/langue (input + select + bouton) */
+.input-group-add {
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-end; /* Aligne le bas des éléments */
+    margin-top: 0.5rem;
+}
+.input-group-add .form-control {
+    flex-grow: 1; /* L'input prend l'espace */
+}
+.input-group-add select.form-control {
+    min-width: 150px; /* Largeur minimale pour le select de niveau */
+    flex-grow: 0;
+}
+.input-group-add .btn {
+    flex-shrink: 0; /* Empêche le bouton de rétrécir */
+}
+
+/* Section "Vos Atouts" */
+.form-section {
+    margin-bottom: 2rem; /* Espace entre les sections Compétences et Langues */
+}
+.form-section h3 {
+    font-size: 1.2rem;
+    color: var(--color-dark);
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.3rem;
+    border-bottom: 1px dashed var(--color-gray-light);
+}
+
+/* Aperçu final */
+.cv-preview-final {
+    margin-bottom: 1.5rem;
+}
+.cv-preview-final h3 {
+    text-align: center;
+    font-size: 1.3rem;
+    color: var(--color-primary);
+    margin-bottom: 1rem;
+}
+.cv-preview-area {
+    border: 1px solid var(--color-gray-medium);
+    border-radius: var(--radius-sm);
+    padding: var(--cv-preview-padding, 10mm); /* Utilise les variables déjà définies */
+    min-height: 200px; /* Hauteur minimale pour l'aperçu */
+    background-color: white; /* Fond blanc pour l'aperçu */
+    font-family: var(--font-cv-preview, 'Arial', sans-serif); /* Police spécifique pour l'aperçu */
+    font-size: 9pt; /* Taille de police pour l'aperçu */
+    line-height: 1.3;
+    color: var(--cv-text-color-preview, #333);
+}
+/* Styles pour les éléments DANS l'aperçu final (similaires à #preview-content mais avec sélecteurs enfants) */
+.cv-preview-area h3 { /* Titres de section dans l'aperçu (Expériences, Formations...) */
+    margin-top: 0.8em; margin-bottom: 0.4em; color: var(--color-primary); font-size: 1.15em; font-weight: bold; border-bottom: 1px solid var(--color-gray-light); padding-bottom: 0.2em;
+}
+.cv-preview-area h4 { /* Titres de poste, diplôme */
+    margin-top: 0.5em; margin-bottom: 0.1em; color: var(--cv-text-color-preview, #333); font-size: 1em; font-weight: bold;
+}
+.cv-preview-area h5 { /* Titres de poste, diplôme pour H5 si utilisé */
+    margin-top: 0.4em; margin-bottom: 0.1em; color: var(--cv-text-color-preview, #333); font-size: 0.95em; font-weight: bold;
+}
+.cv-preview-area p { margin-bottom: 0.2em; font-size: 0.95em; }
+.cv-preview-area .contact-info-preview { text-align: center; margin-bottom: 0.7em; padding-bottom: 0.4em; border-bottom: 1px solid var(--color-gray-light); }
+.cv-preview-area .contact-info-preview p { display: inline-block; margin: 0 0.4em 0.15em; font-size: 0.85em; }
+.cv-preview-area .contact-info-preview i { margin-right: 0.25em; color: var(--color-primary); }
+.cv-preview-area .experience-preview-item, .cv-preview-area .formation-preview-item { margin-bottom: 0.6em; }
+.cv-preview-area .dates-preview { font-style: italic; font-size: 0.85em; color: var(--color-gray); margin-bottom: 0.15em; }
+.cv-preview-area .description-preview { font-size: 0.9em; padding-left: 1em; color: #555; }
+.cv-preview-area .skills-preview-container, .cv-preview-area .langues-preview-container { padding: 0.15em 0; }
+.cv-preview-area .skill-preview-item, .cv-preview-area .langue-preview-item { background-color: var(--color-gray-light); border: 1px solid var(--color-gray-medium); color: var(--color-dark); border-radius: 1rem; padding: 0.15em 0.5em; margin: 0.1em; display: inline-block; font-size: 0.8em; }
+
+
+/* Navigation entre les étapes */
+.cv-step-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-gray-light);
+}
+.cv-step-navigation .btn {
+    min-width: 160px; /* Largeur minimale pour les boutons de navigation */
+}
+.cv-step-navigation #prevStepBtn[disabled] {
+    visibility: hidden; /* Cache le bouton Précédent s'il est désactivé, mais garde l'espace */
+}
+
+/* Bouton "Ajouter" pour les sections dynamiques (expériences, formations) */
+.add-item-btn {
+    display: inline-flex; /* Pour que l'icône et le texte soient bien alignés */
+    margin-top: 0.5rem; /* Espace après la liste des items */
+}
+
+
+/* Pour les labels des checkbox (Expérience en cours, Formation en cours) */
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    font-weight: normal;
+    font-size: 0.9rem;
+    color: var(--color-gray-darker);
+}
+.checkbox-label input[type="checkbox"] {
+    margin-right: 0.5rem; /* Espace entre la case et le texte */
+}
+
+/* Ajustements pour les groupes de dates avec la checkbox "en cours" */
+.experience-dates-group, .formation-dates-group { /* Vous devrez ajouter formation-dates-group à votre HTML */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    align-items: start; /* Aligne les labels en haut des inputs */
+}
+.experience-dates-group > div, .formation-dates-group > div { /* Chaque colonne de date */
+    display: flex;
+    flex-direction: column;
+}
+.experience-dates-group .checkbox-label, .formation-dates-group .checkbox-label {
+    grid-column: span 2; /* La checkbox prend toute la largeur */
+    margin-top: 0.5rem;
+}
+/* Fin des styles spécifiques au CV Facile */
+/* ======================================================================= */
