@@ -1852,7 +1852,75 @@ img {
     height: auto;
     display: block;
 }
+/* ============================================= */
+/* === Quizz Express Specific Styles (Questionnaire.html) === */ /* <-- Insérez à partir d'ici */
+/* ============================================= */
 
+/* Styles pour les étapes du quiz (masquées par défaut) */
+.quiz-step {
+    display: none; /* Cacher par défaut, JS gère l'affichage */
+}
+
+.quiz-step.active {
+    display: block; /* Ou 'flex', 'grid', selon comment vous voulez structurer l'intérieur d'une étape */
+    /* Ajouter des animations optionnelles ici */
+     animation: fadeIn 0.5s ease-out forwards; /* Exemple d'animation */
+}
+
+/* Vous pourriez définir les keyframes 'fadeIn' ici si elles ne sont pas déjà ailleurs,
+   ou les regrouper dans la section === Animations === */
+/* @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+} */
+
+
+/* Styles pour les champs de formulaire invalides et messages d'erreur
+   (Peuvent aussi être mis dans la section === Forms === si vous préférez) */
+.form-group input.input-error,
+.form-group select.input-error,
+.form-group textarea.input.error,
+/* Style pour l'indicateur visuel des groupes de radio/checkbox invalides si besoin */
+.form-group fieldset.input-error {
+    border-color: var(--color-destructive); /* Bordure rouge pour les champs invalides */
+    /* Optionnel : Ajouter un fond léger */
+    /* background-color: var(--color-destructive-light, #FEF2F2); */
+}
+ .form-group input.input-error:focus,
+ .form-group select.input-error:focus,
+ .form-group textarea.input.error:focus {
+     border-color: var(--color-destructive);
+     box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2); /* Halo rouge */
+ }
+
+.error-message {
+    color: var(--color-destructive); /* Texte rouge pour les messages d'erreur */
+    font-size: 0.85rem;
+    margin-top: 0.25rem; /* Petit espace au-dessus */
+    margin-bottom: 0.5rem; /* Petit espace en dessous */
+}
+/* Assurer que les messages d'erreur n'ajoutent pas de marge excessive */
+ .form-group .error-message:last-child {
+     margin-bottom: 0;
+ }
+
+
+/* Styles pour la navigation du formulaire (boutons Précédent/Suivant/Terminer) */
+.form-navigation {
+     /* Géré par les utilitaires flex et gap déjà définis (.flex, .justify-between, .gap-X) */
+     /* Si vous utilisez visibility: hidden, le bouton prend de la place. */
+     /* Si vous utilisiez display: none; pour le bouton Précédent, vous devriez ajuster ici. */
+     /* Par exemple, utiliser justify-end pour aligner Suivant/Terminer à droite quand Précédent est caché */
+}
+
+/* Pour gérer l'alignement quand le bouton Précédent est caché par visibility: hidden */
+.form-navigation #prevStepButton[style="visibility: hidden;"] + #nextStepButton,
+.form-navigation #prevStepButton[style="visibility: hidden;"] + #submitQuizButton {
+     margin-left: auto; /* Pousse le bouton Suivant/Terminer vers la droite */
+     /* Note: Cette règle est spécifique et dépend de l'utilisation de visibility: hidden.
+        Si vous passiez à display: none; pour masquer complètement le bouton, cette règle ne serait plus nécessaire. */
+}
+/* Fin du bloc de styles spécifique au Questionnaire */
 
 /* ============================================= */
 /* === Responsive Design (Media Queries) === */
@@ -2269,6 +2337,7 @@ img {
   color: rgba(255, 255, 255, 0.6); /* Texte copyright plus clair */
   font-size: 0.9rem;
 }
+
 
 /* Responsive Footer (intégré à la media query 991px ou 768px si elle est plus grande) */
 /* Si le footer grid n'est pas géré par auto-fit/minmax */
