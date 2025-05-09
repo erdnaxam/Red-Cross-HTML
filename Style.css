@@ -2582,37 +2582,157 @@ img {
     color: var(--color-primary);
     margin-bottom: 1rem;
 }
-.cv-preview-area {
-    border: 1px solid var(--color-gray-medium);
-    border-radius: var(--radius-sm);
-    padding: var(--cv-preview-padding, 10mm); /* Utilise les variables déjà définies */
-    min-height: 200px; /* Hauteur minimale pour l'aperçu */
-    background-color: white; /* Fond blanc pour l'aperçu */
-    font-family: var(--font-cv-preview, 'Arial', sans-serif); /* Police spécifique pour l'aperçu */
-    font-size: 9pt; /* Taille de police pour l'aperçu */
-    line-height: 1.3;
-    color: var(--cv-text-color-preview, #333);
-}
-/* Styles pour les éléments DANS l'aperçu final (similaires à #preview-content mais avec sélecteurs enfants) */
-.cv-preview-area h3 { /* Titres de section dans l'aperçu (Expériences, Formations...) */
-    margin-top: 0.8em; margin-bottom: 0.4em; color: var(--color-primary); font-size: 1.15em; font-weight: bold; border-bottom: 1px solid var(--color-gray-light); padding-bottom: 0.2em;
-}
-.cv-preview-area h4 { /* Titres de poste, diplôme */
-    margin-top: 0.5em; margin-bottom: 0.1em; color: var(--cv-text-color-preview, #333); font-size: 1em; font-weight: bold;
-}
-.cv-preview-area h5 { /* Titres de poste, diplôme pour H5 si utilisé */
-    margin-top: 0.4em; margin-bottom: 0.1em; color: var(--cv-text-color-preview, #333); font-size: 0.95em; font-weight: bold;
-}
-.cv-preview-area p { margin-bottom: 0.2em; font-size: 0.95em; }
-.cv-preview-area .contact-info-preview { text-align: center; margin-bottom: 0.7em; padding-bottom: 0.4em; border-bottom: 1px solid var(--color-gray-light); }
-.cv-preview-area .contact-info-preview p { display: inline-block; margin: 0 0.4em 0.15em; font-size: 0.85em; }
-.cv-preview-area .contact-info-preview i { margin-right: 0.25em; color: var(--color-primary); }
-.cv-preview-area .experience-preview-item, .cv-preview-area .formation-preview-item { margin-bottom: 0.6em; }
-.cv-preview-area .dates-preview { font-style: italic; font-size: 0.85em; color: var(--color-gray); margin-bottom: 0.15em; }
-.cv-preview-area .description-preview { font-size: 0.9em; padding-left: 1em; color: #555; }
-.cv-preview-area .skills-preview-container, .cv-preview-area .langues-preview-container { padding: 0.15em 0; }
-.cv-preview-area .skill-preview-item, .cv-preview-area .langue-preview-item { background-color: var(--color-gray-light); border: 1px solid var(--color-gray-medium); color: var(--color-dark); border-radius: 1rem; padding: 0.15em 0.5em; margin: 0.1em; display: inline-block; font-size: 0.8em; }
 
+.cv-preview-area {
+    background-color: white !important;
+    color: #333333 !important;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10pt;
+    line-height: 1.4;
+    padding: 15mm 12mm; /* Marges internes (Haut/Bas, Droite/Gauche) */
+
+    /* Pour l'affichage navigateur UNIQUEMENT (facultatif) */
+    /* border: 1px solid #ccc;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    margin: 20px auto; /* Centre l'aperçu sur la page web */
+    /* width: 210mm; /* Simule largeur A4 */
+    /* min-height: 297mm; /* Simule hauteur A4 - Ne pas fixer la hauteur pour la capture PDF */
+}
+
+/* Reset de base pour les éléments dans l'aperçu */
+.cv-preview-area * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.cv-preview-header {
+    text-align: center;
+    margin-bottom: 7mm;
+    padding-bottom: 4mm;
+    border-bottom: 1px solid #e0e0e0;
+}
+.cv-preview-header h2 { /* Nom */
+    font-size: 20pt;
+    color: var(--color-primary, #8B5CF6);
+    margin-bottom: 1mm;
+    font-weight: bold;
+}
+.cv-preview-header .cv-preview-jobtitle { /* Titre du poste */
+    font-size: 13pt;
+    color: #444444;
+    margin-bottom: 2mm;
+    font-style: italic;
+}
+
+.contact-info-preview {
+    text-align: center;
+    margin-bottom: 7mm;
+    font-size: 9pt;
+    line-height: 1.5;
+}
+.contact-info-preview p {
+    display: inline-block;
+    margin: 0 3mm 1mm;
+}
+.contact-info-preview i {
+    margin-right: 1.5mm;
+    color: var(--color-primary, #8B5CF6);
+}
+
+.cv-preview-section {
+    margin-bottom: 7mm;
+}
+.cv-preview-section:last-child {
+    margin-bottom: 0;
+}
+.cv-preview-section h3 { /* Titres de section */
+    font-size: 14pt;
+    color: var(--color-primary, #8B5CF6);
+    margin-bottom: 3mm;
+    font-weight: 600;
+    border-bottom: 1px solid #cccccc;
+    padding-bottom: 1.5mm;
+}
+
+.experience-preview-item,
+.formation-preview-item {
+    margin-bottom: 4mm;
+}
+.experience-preview-item:last-child,
+.formation-preview-item:last-child {
+    margin-bottom: 0;
+}
+
+.experience-preview-item h4,
+.formation-preview-item h4 { /* Titre poste/diplôme */
+    font-size: 11pt;
+    color: #2c2c2c; /* Un peu plus foncé */
+    margin-bottom: 0.5mm;
+    font-weight: bold;
+}
+
+.organisation {
+    font-size: 10pt;
+    margin-bottom: 0.5mm;
+}
+.organisation strong {
+    font-weight: 600; /* Plus de contraste pour le nom de l'entreprise/école */
+}
+.organisation em { /* Lieu */
+    font-style: italic;
+    color: #555555;
+}
+
+.dates-preview {
+    font-style: italic;
+    font-size: 9pt;
+    color: #555555;
+    margin-bottom: 1.5mm;
+}
+
+.description-preview {
+    font-size: 10pt;
+    color: #444444;
+    line-height: 1.45; /* Ajuster pour la lisibilité des descriptions */
+    margin-bottom: 1mm;
+    padding-left: 4mm; /* Légère indentation */
+    white-space: pre-wrap;
+}
+.description-preview:empty {
+    display: none;
+}
+
+.skills-preview-container,
+.langues-preview-container {
+    padding-top: 1mm;
+    line-height: 1.7; /* Plus d'espace si les badges sont sur plusieurs lignes */
+}
+.skill-preview-item,
+.langue-preview-item {
+    display: inline-block;
+    background-color: #e9e9e9; /* Fond badge plus clair */
+    border: 1px solid #d0d0d0;
+    color: #333333;
+    border-radius: 3px;
+    padding: 1.2mm 2.8mm;
+    margin-right: 2.5mm;
+    margin-bottom: 1.8mm;
+    font-size: 9pt;
+    white-space: nowrap;
+}
+
+/* S'assurer qu'il n'y a pas de marge en haut du tout premier élément visible */
+.cv-preview-area > *:first-child {
+    margin-top: 0 !important;
+}
+.cv-preview-area > .cv-preview-header:first-child {
+    margin-top: 0 !important; /* Cible plus spécifiquement si le header est le premier */
+}
+
+/* Fin des styles spécifiques pour l'Aperçu CV PDF */
+/* ============================================= */
+}
 
 /* Navigation entre les étapes */
 .cv-step-navigation {
