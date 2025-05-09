@@ -187,15 +187,19 @@
                     </fieldset> <!-- Fin Étape 4 -->
 
                     <!-- Étape 5 : Message de Fin et Redirection -->
+                                      <!-- Étape 5 : Message de Fin et Redirection -->
                     <div class="quiz-step" id="step-5"> <!-- Caché par défaut -->
                          <h2 class="text-center mb-4">Félicitations !</h2> <!-- Titre plus positif -->
                          <p class="text-center mb-6">Votre évaluation est terminée et votre espace personnel est créé.</p>
                          <p class="text-center mb-6">Nous avons maintenant les informations essentielles pour vous proposer un accompagnement adapté à vos besoins.</p>
                          <p class="text-center">Cliquez ci-dessous pour découvrir votre parcours personnalisé et passer à l'étape suivante.</p>
                          <!-- Ce bouton sera géré par le JS pour rediriger et marquer l'étape 0 comme complétée -->
-                         <div class="text-center mt-8">
+                         <div class="text-center mt-8 button-group"> <!-- Optionnel: ajoutez une classe pour espacer les boutons si besoin -->
                              <button type="button" class="button button-primary button-large" id="goToParcoursButton">
                                  Accéder à mon parcours
+                             </button>
+                             <button type="button" class="button button-secondary button-large" id="goToCVLMButton" style="margin-top: 1rem;"> <!-- NOUVEAU BOUTON -->
+                                 Commencer l'Étape 1 : CV & LM
                              </button>
                          </div>
                     </div> <!-- Fin Étape 5 -->
