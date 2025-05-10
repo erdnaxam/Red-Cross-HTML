@@ -50,35 +50,95 @@
       <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Ouvrir le menu de navigation" aria-expanded="false" aria-controls="mainNavLinks">☰</button>
     </div>
   </header>
-
-
   <!-- Contenu principal de la page Parcours -->
-  <main class="container" > <!-- Utilisation de <main>, la classe container peut être ici ou dans une section -->
+<!-- Dans MonParcours.html, modifiez la structure de .parcours-progress-bar -->
+<div class="parcours-progress-container"> <!-- Optionnel: un conteneur pour le titre et la barre -->
+    <!-- <h2>Votre Parcours Personnalisé vers l'Emploi</h2> -->
+    <ul class="parcours-progress-bar mb-4" aria-label="Indicateur de progression dans le parcours">
+        <div class="progress-line-active" style="width: 0%;"></div> <!-- La ligne active reste une div séparée -->
 
-    <!-- Titre principal de la page -->
-    <h1 class="text-center mb-8">Votre Parcours Personnalisé vers l'Emploi</h1>
+        <!-- Étape 0: Évaluation -->
+        <li class="progress-step" data-etape-index="0" id="progress-step-0"> <!-- Ajoutez l'ID ici si vous en avez besoin ailleurs -->
+            <a href="#" class="step-link" aria-label="Aller à l'étape Évaluation">
+                <span class="step-indicator" aria-hidden="true">
+                    <i class="fas fa-clipboard-question"></i> <!-- Icône pour l'étape -->
+                    <!-- <span class="step-number sr-only">0</span> Si vous voulez garder le numéro pour SR -->
+                </span>
+                <span class="step-label">Évaluation</span>
+            </a>
+        </li>
 
-    <!-- Section Barre de Progression Visuelle -->
-<!-- Section Barre de Progression Visuelle -->
-<section class="parcours-progress-bar mb-4" aria-label="Indicateur de progression dans le parcours">
-    <!-- Ligne de progression active (sera gérée par JS/CSS) -->
-    <div class="progress-line-active"></div>
-    <!-- Les étapes visuelles -->
-    <a href="questionnaire.html" class="progress-step is-active" id="progress-step-0" aria-label="Aller à l'étape 0 : Évaluation">
-        <div class="step-indicator" aria-hidden="true">0</div>
-        <div class="step-label">Évaluation</div>
-    </a>
-        <div class="progress-step" id="progress-step-1"> <div class="step-indicator" aria-hidden="true">1</div> <div class="step-label">CV & LM</div> </div>
-        <div class="progress-step" id="progress-step-2"> <div class="step-indicator" aria-hidden="true">2</div> <div class="step-label">Recherche & Candidature</div> </div>
-        <div class="progress-step" id="progress-step-3"> <div class="step-indicator" aria-hidden="true">3</div> <div class="step-label">Préparation Entretien</div> </div>
-        <div class="progress-step" id="progress-step-4"> <div class="step-indicator" aria-hidden="true">4</div> <div class="step-label">L'Après Entretien</div> </div>
-        <div class="progress-step" id="progress-step-5"> <div class="step-indicator" aria-hidden="true">5</div> <div class="step-label">Le Contrat</div> </div>
-        <div class="progress-step" id="progress-step-6"> <div class="step-indicator" aria-hidden="true">6</div> <div class="step-label">Le Suivi</div> </div>
-        <!-- Ajusté pour avoir 7 étapes de progression plus l'évaluation initiale = 8 -->
-        <!-- L'étape 7 (Suivi) est bien la 8ème bulle -->
-        <div class="progress-step" id="progress-step-7"> <div class="step-indicator" aria-hidden="true">7</div> <div class="step-label">Félicitations!</div> </div>
-    </section>
+        <!-- Étape 1: CV & LM -->
+        <li class="progress-step" data-etape-index="1" id="progress-step-1">
+            <a href="#" class="step-link" aria-label="Aller à l'étape CV & LM">
+                <span class="step-indicator" aria-hidden="true">
+                    <i class="fas fa-file-alt"></i>
+                </span>
+                <span class="step-label">CV & LM</span>
+            </a>
+        </li>
 
+        <!-- Étape 2: Recherche & Candidature -->
+        <li class="progress-step" data-etape-index="2" id="progress-step-2">
+            <a href="#" class="step-link" aria-label="Aller à l'étape Recherche & Candidature">
+                <span class="step-indicator" aria-hidden="true">
+                    <i class="fas fa-search"></i>
+                </span>
+                <span class="step-label">Recherche & Candidature</span>
+            </a>
+        </li>
+
+        <!-- Étape 3: Préparation Entretien -->
+        <li class="progress-step" data-etape-index="3" id="progress-step-3">
+            <a href="#" class="step-link" aria-label="Aller à l'étape Préparation Entretien">
+                <span class="step-indicator" aria-hidden="true">
+                    <i class="fas fa-chalkboard-user"></i>
+                </span>
+                <span class="step-label">Préparation Entretien</span>
+            </a>
+        </li>
+
+        <!-- Étape 4: L'Après Entretien -->
+        <li class="progress-step" data-etape-index="4" id="progress-step-4">
+            <a href="#" class="step-link" aria-label="Aller à l'étape L'Après Entretien">
+                <span class="step-indicator" aria-hidden="true">
+                    <i class="fas fa-comments"></i>
+                </span>
+                <span class="step-label">L'Après Entretien</span>
+            </a>
+        </li>
+
+        <!-- Étape 5: Le Contrat -->
+        <li class="progress-step" data-etape-index="5" id="progress-step-5">
+             <a href="#" class="step-link" aria-label="Aller à l'étape Le Contrat">
+                <span class="step-indicator" aria-hidden="true">
+                    <i class="fas fa-file-signature"></i>
+                </span>
+                <span class="step-label">Le Contrat</span>
+            </a>
+        </li>
+
+        <!-- Étape 6: Le Suivi -->
+        <li class="progress-step" data-etape-index="6" id="progress-step-6">
+             <a href="#" class="step-link" aria-label="Aller à l'étape Le Suivi">
+                <span class="step-indicator" aria-hidden="true">
+                    <i class="fas fa-handshake"></i>
+                </span>
+                <span class="step-label">Le Suivi</span>
+            </a>
+        </li>
+
+        <!-- Étape 7: Félicitations! -->
+        <li class="progress-step" data-etape-index="7" id="progress-step-7">
+            <a href="#" class="step-link" aria-label="Aller à l'étape Félicitations">
+                <span class="step-indicator" aria-hidden="true">
+                    <i class="fas fa-champagne-glasses"></i>
+                </span>
+                <span class="step-label">Félicitations!</span>
+            </a>
+        </li>
+    </ul>
+</div>
     <!-- Bouton d'Aide - Transformé en <button> pour accessibilité -->
     <div class="text-center mb-8">
         <!-- Utilise onclick comme dans votre script fourni, mais sur un bouton -->
