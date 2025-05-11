@@ -2786,3 +2786,125 @@ img {
 }
 /* Fin des styles spécifiques au CV Facile */
 /* ======================================================================= */
+/* Dans style.css */
+
+/* Section principale de la page de choix CV/LM */
+.choix-cv-lm-section {
+    padding-top: 2.5rem;
+    padding-bottom: 3rem;
+}
+
+.choix-cv-lm-section .section-header {
+    margin-bottom: 2.5rem;
+}
+
+.choix-cv-lm-section .section-header h1 {
+    font-size: clamp(1.8rem, 5vw, 2.5rem); /* Taille cohérente avec les titres principaux */
+    color: var(--color-dark); /* Ou var(--color-primary) si vous préférez */
+    margin-bottom: 0.75rem;
+}
+
+.choix-cv-lm-section .section-header .intro-text {
+    font-size: 1.1rem;
+    color: var(--color-gray-darker);
+    max-width: 700px; /* Limiter la largeur du texte d'intro */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Grille pour les options de choix */
+.choix-options-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Une colonne par défaut sur mobile */
+    gap: 2rem; /* Espacement entre les cartes */
+    max-width: 900px; /* Limiter la largeur de la grille */
+    margin: 0 auto; /* Centrer la grille */
+}
+
+@media (min-width: 768px) {
+    .choix-options-grid {
+        grid-template-columns: repeat(2, 1fr); /* Deux colonnes sur écrans plus larges */
+    }
+}
+
+/* Styles pour les cartes de choix */
+.choix-carte.card {
+    /* Les styles de .card sont déjà définis, on peut ajouter des spécificités */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centrer le contenu de la carte */
+    padding-top: 2rem; /* Plus d'espace en haut pour l'icône */
+    padding-bottom: 2rem;
+}
+
+.choix-carte .card-icon-container {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background-color: var(--color-primary-light); /* Fond léger pour l'icône */
+    border-radius: 50%;
+    width: 80px; /* Taille du cercle pour l'icône */
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.choix-carte .card-icon-container .icon-primary {
+    color: var(--color-primary);
+}
+.choix-carte .card-icon-container .icon-secondary { /* Pour la deuxième carte si besoin */
+    color: var(--color-secondary); /* Ou une autre couleur */
+}
+/* Si l'icône de la deuxième carte doit avoir un fond différent */
+.choix-carte:nth-child(2) .card-icon-container { /* Cible la deuxième carte */
+    background-color: var(--color-secondary-light); /* Exemple */
+}
+
+
+.choix-carte .card-title {
+    font-size: 1.5rem; /* Titre plus grand pour les options */
+    margin-bottom: 0.75rem;
+}
+
+.choix-carte .card-content p {
+    color: var(--color-gray-darker);
+    margin-bottom: 1.5rem;
+    min-height: 60px; /* Pour aligner les boutons si les descriptions ont des longueurs différentes */
+}
+
+.choix-carte .btn {
+    width: auto; /* Le bouton prend la largeur de son contenu */
+    padding-left: 2rem;
+    padding-right: 2rem;
+}
+
+/* Section Aide */
+.aide-section {
+    background-color: var(--color-light); /* Fond légèrement différent */
+    padding: 2.5rem 1.5rem;
+    border-radius: var(--radius);
+    margin-top: 3rem; /* Espace par rapport aux options */
+    border: 1px solid var(--color-gray-light);
+}
+
+.aide-section h3 {
+    font-size: 1.6rem;
+    color: var(--color-dark);
+    margin-bottom: 0.75rem;
+}
+.aide-section p {
+    color: var(--color-gray-darker);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.aide-options-buttons {
+    display: flex;
+    flex-wrap: wrap; /* Permet aux boutons de passer à la ligne sur mobile */
+    justify-content: center;
+    gap: 1rem; /* Espace entre les boutons d'aide */
+    margin-top: 1.5rem;
+}
+.aide-options-buttons .btn {
+    /* Les styles .btn et .btn-outline sont déjà définis */
+}

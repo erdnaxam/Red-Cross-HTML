@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV & Lettre de Motivation - EmploiAvenir</title>
+    <meta name="description" content="Choisissez entre créer un nouveau CV/LM ou faire analyser un document existant avec EmploiAvenir.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header" id="header">
+        <div class="container flex justify-between items-center">
+            <a href="index.html" class="logo"><span>Emploi</span>Avenir</a>
+            <nav aria-label="Navigation principale">
+                <ul class="nav-links" id="mainNavLinks">
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="MonParcours.html" class="active" aria-current="page">Mon Parcours</a></li>
+                    <li><a href="MesCandidature.html">Mes Candidatures</a></li>
+                    <li><a href="Partenaires.html">Nos partenaires</a></li>
+                    <li><a href="Documents.html">Mes documents</a></li>
+                    <li><a href="Profil.html">Profil</a></li>
+                </ul>
+            </nav>
+            <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Ouvrir le menu de navigation" aria-expanded="false" aria-controls="mainNavLinks">☰</button>
+        </div>
+    </header>
+
+    <main>
+        <section class="choix-cv-lm-section" aria-labelledby="choixCvLmTitle">
+            <div class="container">
+                <div class="section-header text-center">
+                    <h1 id="choixCvLmTitle">Gérez Votre CV et Lettre de Motivation</h1>
+                    <p class="intro-text">Vous êtes à l'étape cruciale de la préparation de vos documents de candidature. Que souhaitez-vous faire ?</p>
+                </div>
+
+                <div class="choix-options-grid">
+                    <!-- Option 1: Créer un CV -->
+                    <article class="choix-carte card">
+                        <div class="card-icon-container">
+                            <i class="fas fa-file-signature fa-3x icon-primary"></i>
+                        </div>
+                        <div class="card-content text-center">
+                            <h2 class="card-title">Créer un Nouveau CV</h2>
+                            <p>Utilisez notre assistant pas à pas pour construire un CV clair et professionnel, même sans expérience.</p>
+                            <a href="generator-cv.html" class="btn btn-primary mt-2">Commencer la création de CV</a>
+                        </div>
+                    </article>
+
+                    <!-- Option 2: Analyser un CV Existant -->
+                    <article class="choix-carte card">
+                        <div class="card-icon-container">
+                            <i class="fas fa-file-import fa-3x icon-secondary"></i>
+                        </div>
+                        <div class="card-content text-center">
+                            <h2 class="card-title">Analyser mon CV Existant</h2>
+                            <p>Importez votre CV actuel (PDF, Word) pour obtenir des conseils personnalisés et des suggestions d'amélioration. <em class="text-muted-foreground">(Fonctionnalité à venir)</em></p>
+                            <!-- Ce bouton pourrait ouvrir une modale d'upload ou aller à une page spécifique -->
+                            <button type="button" class="btn btn-outline-secondary mt-2" id="analyzeCvBtn" disabled>
+                                Télécharger et Analyser <i class="fas fa-cogs ml-1"></i>
+                            </button>
+                            <!-- Input caché pour l'upload -->
+                            <input type="file" id="cvUploadInput" accept=".pdf,.doc,.docx" style="display:none;">
+                        </div>
+                    </article>
+                </div>
+
+                <!-- Section Aide -->
+                <div class="aide-section mt-8 text-center">
+                    <h3>Besoin d'un coup de main ?</h3>
+                    <p class="mb-3">Nos conseillers sont là pour vous aider à chaque étape de la création ou de l'amélioration de vos documents.</p>
+                    <div class="aide-options-buttons">
+                        <button type="button" class="btn btn-outline" id="aideEnLigneBtn">
+                            <i class="fas fa-comments"></i> Aide en ligne (Chat)
+                        </button>
+                        <button type="button" class="btn btn-outline" id="aideVisioBtn">
+                            <i class="fas fa-video"></i> Demander une aide en visio
+                        </button>
+                        <a href="Partenaires.html?tab=appointments" class="btn btn-outline"> <!-- Lien direct vers l'onglet RDV de la page Partenaires -->
+                            <i class="fas fa-calendar-alt"></i> Prendre un RDV
+                        </a>
+                    </div>
+                </div>
+
+            </div> <!-- Fin .container -->
+        </section> <!-- Fin .choix-cv-lm-section -->
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+          <p>© 2024 EmploiAvenir. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <div id="toast-container"></div> <!-- Pour les notifications -->
+    <!-- Si cette page a des interactions JS spécifiques, elles iraient dans Script.js -->
+    <script src="Script.js"></script>
+</body>
+</html>

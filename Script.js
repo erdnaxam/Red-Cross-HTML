@@ -7,69 +7,53 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // --- Utilitaires Communs ---
+    // --- Utilitaires Communs (définis une seule fois ici) ---
 
-    // Fonction utilitaire pour assainir le HTML (prévention XSS)
     function escapeHTML(str) {
-        if (typeof str !== 'string' && typeof str !== 'number') return str; // Retourne l'original si ce n'est pas une chaîne ou un nombre
+        if (typeof str !== 'string' && typeof str !== 'number') return str;
         const div = document.createElement('div');
-        div.appendChild(document.createTextNode(str));
+        div.appendChild(document.createTextNode(String(str)));
         return div.innerHTML;
     }
 
-    // Fonction pour afficher les notifications (Toast)
     function showToast(message, type = 'success') {
         const toastContainer = document.getElementById('toast-container');
         if (!toastContainer) { console.error('Toast container not found'); return; }
-
         const toast = document.createElement('div');
-        // Utilise les classes toast-* que vous avez définies dans style.css
         toast.className = `toast toast-${type}`;
         toast.textContent = message;
-
         toastContainer.appendChild(toast);
-
-        // Gérer l'affichage avec un délai et la classe show (si transition CSS)
         setTimeout(() => {
             toast.classList.add('show');
-            // Masquer et supprimer le toast après un délai
             setTimeout(() => {
                 toast.classList.remove('show');
-                setTimeout(() => toast.remove(), 300); // Attendre la fin de l'animation de disparition
-            }, 3000); // Affiché pendant 3 secondes
-        }, 10); // Petit délai pour permettre au DOM de se mettre à jour avant la transition
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }, 10);
     }
-
 
     // --- Scripts Communs à Toutes les Pages ---
 
     // Header scroll effect
     const header = document.getElementById('header');
-    if (header) { // Vérifie si l'élément existe sur la page
+    if (header) {
         window.addEventListener('scroll', function() {
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
+            if (window.scrollY > 50) header.classList.add('scrolled');
+            else header.classList.remove('scrolled');
         });
     }
-
 
     // Mobile menu toggle
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const mainNavLinks = document.getElementById('mainNavLinks');
-    if (mobileMenuBtn && mainNavLinks) { // Vérifie si les éléments existent
+    if (mobileMenuBtn && mainNavLinks) {
         mobileMenuBtn.addEventListener('click', function() {
-            const isExpanded = mainNavLinks.classList.toggle('show-mobile'); // Utilise la classe définie pour mobile
-            mobileMenuBtn.setAttribute('aria-expanded', isExpanded.toString());
+            const isExpanded = mainNavLinks.classList.toggle('show-mobile');
+            mobileMenuBtn.setAttribute('aria-expanded', String(isExpanded));
             mobileMenuBtn.setAttribute('aria-label', isExpanded ? 'Fermer le menu de navigation' : 'Ouvrir le menu de navigation');
         });
-
-        // Fermer le menu si on clique sur un lien (sur mobile)
         mainNavLinks.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
-                // S'assure que le menu est visible et que le bouton existe
                 if (mainNavLinks.classList.contains('show-mobile') && mobileMenuBtn) {
                     mainNavLinks.classList.remove('show-mobile');
                     mobileMenuBtn.setAttribute('aria-expanded', 'false');
@@ -79,87 +63,61 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-
     // Login Modal functionality
     const loginModal = document.getElementById('loginModal');
-    // Le bouton qui ouvre la modale n'est pas dans toutes les pages HTML fournies,
-    // mais le script le cherchait par ID 'loginBtn'. On garde ce sélecteur.
-    // Si votre bouton d'ouverture a un autre ID (ex: 'loginBtnHeader' sur index.html),
-    // il faut le sélectionner ici.
-    const loginBtn = document.getElementById('loginBtn'); // Assurez-vous qu'un élément cliquable a cet ID
+    const loginBtn = document.getElementById('loginBtn'); // S'assurer qu'un bouton avec cet ID existe si la modale doit être ouverte par lui.
     const closeModalBtn = loginModal ? loginModal.querySelector('.close-modal') : null;
-    const loginForm = loginModal ? document.getElementById('loginForm') : null;
-
-    if (loginModal) { // N'active la logique modale que si la modale HTML existe
-        if (loginBtn) { // N'ajoute l'écouteur que si le bouton d'ouverture existe
+    const loginForm = loginModal ? document.getElementById('loginForm') : null; // Assurez-vous que l'ID du formulaire est correct
+    if (loginModal) {
+        if (loginBtn) {
             loginBtn.addEventListener('click', function(e) {
                 e.preventDefault();
-                loginModal.style.display = 'block'; // Rendre visible avant d'ajouter la classe
-                setTimeout(() => loginModal.classList.add('show'), 10); // Ajouter la classe pour la transition
-                // Mettre le focus sur le premier champ pour l'accessibilité
-                loginModal.querySelector('input[type="email"], input[type="text"], input[type="password"]') ?.focus();
+                loginModal.style.display = 'block';
+                setTimeout(() => loginModal.classList.add('show'), 10);
+                const firstInput = loginModal.querySelector('input[type="email"], input[type="text"], input[type="password"]');
+                if (firstInput) firstInput.focus();
             });
         }
-
         if (closeModalBtn) {
             closeModalBtn.addEventListener('click', function() {
                 loginModal.classList.remove('show');
-                // Cacher complètement après la fin de la transition
                 setTimeout(() => loginModal.style.display = 'none', 300);
             });
         }
-
-        // Fermer la modale en cliquant en dehors
         loginModal.addEventListener('click', function(e) {
             if (e.target === loginModal) {
                 loginModal.classList.remove('show');
                 setTimeout(() => loginModal.style.display = 'none', 300);
             }
         });
-
-        // Fermer la modale avec la touche Échap
         window.addEventListener('keydown', function(e) {
             if (e.key === 'Escape' && loginModal.classList.contains('show')) {
                 loginModal.classList.remove('show');
                 setTimeout(() => loginModal.style.display = 'none', 300);
             }
         });
-
-        // Simulation de soumission du formulaire de connexion
         if (loginForm) {
             loginForm.addEventListener('submit', function(e) {
                 e.preventDefault();
-                // Ici, vous intégreriez la vraie logique de connexion
-                alert('Connexion simulée réussie !');
+                alert('Connexion simulée réussie !'); // Logique de connexion réelle ici
                 loginModal.classList.remove('show');
                 setTimeout(() => loginModal.style.display = 'none', 300);
-                // Redirection ou mise à jour de l'interface utilisateur après connexion réussie
             });
         }
     }
-
 
     // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             const hrefAttribute = this.getAttribute('href');
-            // Vérifie si le lien est une ancre et n'est pas juste "#"
             if (hrefAttribute && hrefAttribute.startsWith('#') && hrefAttribute.length > 1) {
                 const targetElement = document.querySelector(hrefAttribute);
                 if (targetElement) {
-                    e.preventDefault(); // Empêche le comportement par défaut du lien
-
-                    // Calcule la position de défilement en tenant compte du header fixe
-                    const headerOffset = header ? header.offsetHeight : 80; // Hauteur du header ou valeur par défaut
+                    e.preventDefault();
+                    const headerOffset = header ? header.offsetHeight : 80;
                     const elementPosition = targetElement.getBoundingClientRect().top;
                     const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-                    window.scrollTo({
-                        top: offsetPosition,
-                        behavior: 'smooth' // Défilement animé
-                    });
-
-                    // Optionnel: Fermer le menu mobile si on a cliqué sur un lien de navigation
+                    window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
                     if (mainNavLinks && mainNavLinks.classList.contains('show-mobile') && this.closest('.nav-links')) {
                         mainNavLinks.classList.remove('show-mobile');
                         if (mobileMenuBtn) {
@@ -167,168 +125,97 @@ document.addEventListener('DOMContentLoaded', () => {
                             mobileMenuBtn.setAttribute('aria-label', 'Ouvrir le menu de navigation');
                         }
                     }
-                } else if (hrefAttribute === '#') {
-                     e.preventDefault(); // Empêche le saut pour les liens vides href="#"
                 }
+            } else if (hrefAttribute === '#') {
+                e.preventDefault(); // Empêche le saut pour les liens href="#" vides
             }
         });
     });
 
-
-    // Animation on scroll (using Intersection Observer)
+    // Animation on scroll (Intersection Observer)
     const animateElements = document.querySelectorAll('.animate-fade-in, .animate-slide-in-right');
-    // Configuration de l'observateur
-    const intersectionObserverOptions = {
-        root: null, // root: null signifie utiliser le viewport comme conteneur de référence
-        rootMargin: '0px', // Marge autour du root (viewport)
-        threshold: 0.1 // Un élément est considéré comme visible si 10% de sa surface est dans le viewport
-    };
-
-    // Crée l'instance de l'observateur
-    const animObserver = new IntersectionObserver((entries, observerInstance) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                // Si l'élément devient visible
-                // Applique les styles finaux pour déclencher l'animation (basé sur le CSS initial qui animait direct)
-                // OU si votre CSS utilise une classe comme .is-visible pour déclencher, ajoutez cette classe ici :
-                // entry.target.classList.add('is-visible');
-
-                // Dans le cas de votre CSS actuel qui anime directement, on met à jour les styles initiaux
-                 entry.target.style.opacity = '1';
-                 if (entry.target.classList.contains('animate-fade-in')) {
-                    entry.target.style.transform = 'translateY(0)';
-                 } else if (entry.target.classList.contains('animate-slide-in-right')) {
-                    entry.target.style.transform = 'translateX(0)';
-                 }
-
-                // Optionnel: Cesser d'observer l'élément si l'animation ne doit se jouer qu'une fois
-                // observerInstance.unobserve(entry.target);
-            } else {
-                 // Optionnel: Réinitialiser l'état si vous voulez que l'animation se rejoue quand l'élément redevient visible
-                 // C'est souvent non souhaité pour les animations d'apparition au scroll, mais dépend du design.
-                 // entry.target.style.opacity = '0';
-                 // if (entry.target.classList.contains('animate-fade-in')) {
-                 //    entry.target.style.transform = 'translateY(10px)';
-                 // } else if (entry.target.classList.contains('animate-slide-in-right')) {
-                 //    entry.target.style.transform = 'translateX(50px)';
-                 // }
-            }
-        });
-    }, intersectionObserverOptions);
-
-    // Initialise les éléments avant de commencer l'observation et lance l'observation
-    animateElements.forEach(el => {
-        if (el) { // S'assure que l'élément existe
-            // Définit l'état initial pour les éléments qui seront animés
-            // Ces styles doivent correspondre à l'état "from" de vos keyframes CSS ou à l'état par défaut dans votre CSS
-             el.style.opacity = '0';
-             if (el.classList.contains('animate-fade-in')) {
-                 el.style.transform = 'translateY(10px)';
-             } else if (el.classList.contains('animate-slide-in-right')) {
-                 el.style.transform = 'translateX(50px)';
-             }
-            // Commencez à observer l'élément
+    if (typeof IntersectionObserver !== 'undefined') { // Vérifier la compatibilité
+        const animObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    if (entry.target.classList.contains('animate-fade-in')) entry.target.style.transform = 'translateY(0)';
+                    else if (entry.target.classList.contains('animate-slide-in-right')) entry.target.style.transform = 'translateX(0)';
+                    // animObserver.unobserve(entry.target); // Décommenter pour animer une seule fois
+                } else {
+                    // Optionnel: réinitialiser si on veut que ça se rejoue au scroll up/down
+                    // entry.target.style.opacity = '0';
+                    // if (entry.target.classList.contains('animate-fade-in')) entry.target.style.transform = 'translateY(10px)';
+                    // else if (entry.target.classList.contains('animate-slide-in-right')) entry.target.style.transform = 'translateX(50px)';
+                }
+            });
+        }, { threshold: 0.1 });
+        animateElements.forEach(el => {
+            el.style.opacity = '0'; // État initial
+            if (el.classList.contains('animate-fade-in')) el.style.transform = 'translateY(10px)';
+            else if (el.classList.contains('animate-slide-in-right')) el.style.transform = 'translateX(50px)';
             animObserver.observe(el);
-        }
-    });
+        });
+    }
 
+ // Chatbot ORIGINAL (pas le chatbot IA)
+    const chatbotBtn = document.getElementById('chatbotBtn'); // Bouton flottant
+    const chatbotContainer = document.getElementById('chatbotContainer'); // Conteneur du chat
+    const closeChatbotBtn = document.getElementById('closeChatbot'); // Bouton X dans le header du chat
+    const chatbotMessagesEl = document.getElementById('chatbotMessages'); // Zone des messages
+    const chatbotInputEl = document.getElementById('chatbotInput'); // Input de message
+    const sendMessageBtnOriginal = document.getElementById('sendMessageOriginal'); // BOUTON D'ENVOI DU CHATBOT ORIGINAL (ID modifié)
 
-    // Chatbot functionality
-    const chatbotBtn = document.getElementById('chatbotBtn');
-    const chatbotContainer = document.getElementById('chatbotContainer');
-    const closeChatbotBtn = document.getElementById('closeChatbot');
-    const chatbotMessagesEl = document.getElementById('chatbotMessages');
-    const chatbotInputEl = document.getElementById('chatbotInput');
-    const sendMessageBtn = document.getElementById('sendMessage');
-
-    if (chatbotBtn && chatbotContainer && closeChatbotBtn && chatbotMessagesEl && chatbotInputEl && sendMessageBtn) { // Vérifie si tous les éléments existent
-        // Gestion de l'ouverture/fermeture du chatbot
-        chatbotBtn.addEventListener('click', function() {
-            const isChatOpen = chatbotContainer.classList.toggle('show'); // Toggle la classe pour la transition
-            chatbotBtn.setAttribute('aria-expanded', isChatOpen.toString());
-
+    if (chatbotBtn && chatbotContainer && closeChatbotBtn && chatbotMessagesEl && chatbotInputEl && sendMessageBtnOriginal) {
+        chatbotBtn.addEventListener('click', () => {
+            const isChatOpen = chatbotContainer.classList.toggle('show');
+            chatbotBtn.setAttribute('aria-expanded', String(isChatOpen));
             if (isChatOpen) {
-                chatbotContainer.style.display = 'flex'; // Affiche le conteneur (utilisé avec la classe 'show' pour la transition)
-                // Donne un petit délai pour que le display:flex soit appliqué avant la transition d'opacité/transform
-                setTimeout(() => {
-                     chatbotContainer.style.opacity = '1';
-                     chatbotContainer.style.transform = 'translateY(0)';
-                }, 10);
-                chatbotInputEl.focus(); // Met le focus sur l'input
+                chatbotContainer.style.display = 'flex';
+                setTimeout(() => { chatbotContainer.style.opacity = '1'; chatbotContainer.style.transform = 'translateY(0)'; }, 10);
+                if (chatbotInputEl) chatbotInputEl.focus();
             } else {
-                 // Lance la transition de fermeture
-                 chatbotContainer.style.opacity = '0';
-                 chatbotContainer.style.transform = 'translateY(20px)';
-                // Cache complètement après la fin de la transition
+                chatbotContainer.style.opacity = '0'; chatbotContainer.style.transform = 'translateY(20px)';
                 setTimeout(() => chatbotContainer.style.display = 'none', 300);
             }
         });
-
-        // Fermeture via le bouton "X"
-        closeChatbotBtn.addEventListener('click', function() {
-            chatbotContainer.classList.remove('show'); // Retire la classe de transition
+        closeChatbotBtn.addEventListener('click', () => {
+            chatbotContainer.classList.remove('show');
             chatbotBtn.setAttribute('aria-expanded', 'false');
-            // Lance la transition de fermeture
-            chatbotContainer.style.opacity = '0';
-            chatbotContainer.style.transform = 'translateY(20px)';
-            // Cache complètement après la fin de la transition
+            chatbotContainer.style.opacity = '0'; chatbotContainer.style.transform = 'translateY(20px)';
             setTimeout(() => chatbotContainer.style.display = 'none', 300);
         });
-
-        // Ajoute un message à la fenêtre de chat
-        function addMessageToChat(message, isUser = false) {
+        function addMessageToOriginalChat(message, isUser = false) {
             const messageDiv = document.createElement('div');
-            // Utilise les classes CSS pour le style (bot-message ou user-message)
             messageDiv.className = isUser ? 'message user-message' : 'message bot-message';
             messageDiv.textContent = message;
-            chatbotMessagesEl.appendChild(messageDiv);
-            // Fait défiler pour voir le dernier message
-            chatbotMessagesEl.scrollTop = chatbotMessagesEl.scrollHeight;
+            if(chatbotMessagesEl) {
+                chatbotMessagesEl.appendChild(messageDiv);
+                chatbotMessagesEl.scrollTop = chatbotMessagesEl.scrollHeight;
+            }
         }
-
-        // Gère l'envoi d'un message utilisateur
-        function sendChatMessage() {
+        function sendOriginalChatMessage() {
             const messageText = chatbotInputEl.value.trim();
             if (messageText) {
-                addMessageToChat(messageText, true); // Ajoute le message utilisateur
-                chatbotInputEl.value = ''; // Vide l'input
-
-                // Simulation de réponse du bot
+                addMessageToOriginalChat(messageText, true);
+                chatbotInputEl.value = '';
                 setTimeout(() => {
-                    const responses = [
-                        "Bonjour ! Comment puis-je vous aider aujourd'hui ?",
-                        "Je comprends. Vous pouvez trouver des ressources sur la page 'Nos partenaires'.",
-                        "Pour créer ou améliorer votre CV, consultez l'Étape 1 de 'Mon Parcours'.",
-                        "Vous avez une question spécifique ? Un conseiller peut vous rappeler, contactez-nous via la page 'Contact'."
-                    ];
-                    const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-                    addMessageToChat(randomResponse); // Ajoute la réponse du bot
-                }, 500); // Délai pour simuler une "réponse"
+                    const responses = ["Bonjour ! Comment puis-je vous aider aujourd'hui ?", "Je comprends. Consultez nos partenaires.", "Pour votre CV, allez à 'Mon Parcours'."];
+                    addMessageToOriginalChat(responses[Math.floor(Math.random() * responses.length)]);
+                }, 500);
             }
         }
-
-        // Écouteur pour le clic sur le bouton Envoyer
-        sendMessageBtn.addEventListener('click', sendChatMessage);
-
-        // Écouteur pour la touche Entrée dans l'input
-        chatbotInputEl.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                sendChatMessage();
-            }
-        });
-
-        // Message initial du bot (si nécessaire)
-        // addMessageToChat("Bonjour ! Comment puis-je vous aider aujourd'hui ?"); // déjà dans le HTML
+        sendMessageBtnOriginal.addEventListener('click', sendOriginalChatMessage);
+        chatbotInputEl.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendOriginalChatMessage(); });
     }
-
 
     // --- Scripts Spécifiques par Page (Initialisés si les éléments existent) ---
 
     // Logique de la page Mon Parcours
     function initParcoursPage() {
-        // Vérifie si c'est la page Mon Parcours en cherchant un élément clé
-        const progressionBarEl = document.querySelector('.parcours-progress-bar');
-        if (!progressionBarEl) return; // Quitte la fonction si les éléments ne sont pas présents
+        const parcoursContainer = document.querySelector('.parcours-dashboard') || document.querySelector('.parcours-progress-container');
+        if (!parcoursContainer) return;
+        console.log("Initialisation de MonParcoursPage...");
 
         // --- Références DOM spécifiques à Mon Parcours ---
         const etapesValideesSpan = document.getElementById('etapes-validees');
@@ -349,15 +236,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (etapesCompletes < 0 || etapesCompletes > totalEtapes) {
             etapesCompletes = 0;
         }
-
-
-        // --- Mappage des badges ---
+// Dans initParcoursPage
+const etapePageUrls = [
+    'Questionnaire.html',    // Étape 0
+    'cv-lm-choix.html',      // Étape 1 (CV & LM) <--- MODIFICATION IMPORTANTE
+       ]; // --- Mappage des badges ---
         const badges = [ // Définir les badges et quand ils sont gagnés (basé sur les étapes complétées)
            { id: 'medal', icon: 'fa-medal', earnedStep: 1, title: 'Premier Pas !', description: 'Terminez votre première étape (Évaluation).' }, // Gagné après l'étape 0
            { id: 'star', icon: 'fa-star', earnedStep: 4, title: 'Mi-Parcours !', description: 'Atteignez la moitié du parcours.' }, // Gagné après l'étape 3
            { id: 'trophy', icon: 'fa-trophy', earnedStep: 8, title: 'Objectif Atteint !', description: 'Terminez le parcours.' } // Gagné après l'étape 7
         ];
-
         // --- Icônes spécifiques par étape (pour l'état actif/initial) ---
          const etapeIcons = [
             'fa-clipboard-question', // Etape 0
@@ -370,9 +258,7 @@ document.addEventListener('DOMContentLoaded', () => {
             'fa-champagne-glasses' // Etape 7 (Félicitations/Fin)
         ];
 
-
         // --- Fonctions de Rendu/Mise à jour ---
-
         function updateProgressionUI() {
             // Mise à jour du dashboard texte
             etapesValideesSpan.textContent = `${etapesCompletes}/${totalEtapes}`;
@@ -387,7 +273,6 @@ document.addEventListener('DOMContentLoaded', () => {
              } else {
                 derniereActiviteSpan.textContent = "Jamais";
              }
-
 
             // Mise à jour visuelle des bulles de progression
             progressSteps.forEach((step, index) => {
@@ -422,7 +307,6 @@ document.addEventListener('DOMContentLoaded', () => {
              // 0/7, 1/7, 2/7, ..., 7/7 (100%).
               const lineProgressValue = totalEtapes > 1 ? (etapesCompletes / (totalEtapes - 1)) * 100 : 0;
               progressLineActive.style.width = `${lineProgressValue}%`;
-
 
             // Mise à jour visuelle et fonctionnelle des cartes étapes
             detailCards.forEach((card, index) => {
@@ -520,10 +404,8 @@ document.addEventListener('DOMContentLoaded', () => {
              }
         };
 
-
         // --- Initialisation de la page Mon Parcours ---
-        updateProgressionUI(); // Met à jour l'interface au chargement
-
+        updateProgressionUI(); // Met à jour l'interface au chargemen
 
         // Écouteur d'événements pour le bouton Aide (s'il existe sur cette page)
          const aideButton = document.querySelector('.aide-button');
@@ -535,21 +417,16 @@ document.addEventListener('DOMContentLoaded', () => {
                  // if(chatbotBtn) chatbotBtn.click();
              });
          }
-
-
          // Les liens .etape-action sur cette page naviguent simplement vers les pages des étapes.
          // La logique de complétion doit être sur les pages de destination elles-mêmes.
 
-
     } // Fin de initParcoursPage
 
-
     // Logique de la page Mes Documents
-    function initDocumentsPage() {
-        // Vérifie si c'est la page Mes Documents
-        const documentListContainer = document.getElementById('documentList');
-        if (!documentListContainer) return; // Quitte si les éléments ne sont pas présents
-
+      function initDocumentsPage() {
+        const documentListContainer = document.getElementById('documentList'); // Déclarez-le ici
+        if (!documentListContainer) return;
+        console.log("Initialisation de DocumentsPage...");
         // --- Données spécifiques à Mes Documents ---
         // Ces données devraient idéalement venir d'une API ou du stockage local
          let documentsData = JSON.parse(localStorage.getItem('emploiavenir_documents')) || [
@@ -586,9 +463,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const helpDocBtn = document.getElementById('helpDocumentsButton'); // ID corrigé
         const downloadAllBtn = document.getElementById('downloadAllButton'); // ID corrigé
 
-
         // --- Fonctions de Rendu/Mise à jour ---
-
         function renderDocuments() {
             if (!documentListContainer || !noDocumentsMessage) return;
 
@@ -704,7 +579,6 @@ document.addEventListener('DOMContentLoaded', () => {
              }
          }
 
-
         // --- Initialisation de la page Mes Documents ---
         renderDocuments(documentsData); // Affiche la liste au chargement
 
@@ -725,10 +599,7 @@ document.addEventListener('DOMContentLoaded', () => {
                    alert("Fonctionnalité 'Télécharger tous mes documents' à implémenter.");
               });
          }
-
-
     } // Fin de initDocumentsPage
-
 
     // Logique de la page Mes Candidatures
     function initCandidaturesPage() {
@@ -2119,10 +1990,8 @@ function initEvaluationPage() {
 
      // Bouton "Accéder à mon parcours" (dans l'étape finale)
      goToParcoursButton.addEventListener('click', handleGoToParcours);
-
     // --- Initialisation ---
     updateQuizUI(); // Affiche la première étape au chargement de la page
-
     // Optionnel: Gérer la navigation par clavier (touches fléchées?) - Complexifie un peu
     // document.addEventListener('keydown', (event) => {
     //     if (event.key === 'ArrowRight' && nextStepButton.style.display !== 'none') {
@@ -2688,8 +2557,51 @@ function initEvaluationPage() {
         }
         attachMicListenersToContainer(cvAssistantForm);
         showStep(0);
-    }
+    } // <--- FIN DE LA FONCTION initCVGeneratorPage
 
+     // <--- DEBUIT FONCTION INITCVLmChoixPage
+    function initCvLmChoixPage() {
+        const choixSection = document.querySelector('.choix-cv-lm-section');
+        if (!choixSection) return;
+        console.log("Initialisation de CvLmChoixPage...");
+
+        const analyzeCvBtn = document.getElementById('analyzeCvBtn');
+        const cvUploadInput = document.getElementById('cvUploadInput');
+        const aideEnLigneBtn = document.getElementById('aideEnLigneBtn');
+        const aideVisioBtn = document.getElementById('aideVisioBtn');
+
+        if (analyzeCvBtn && cvUploadInput) {
+            analyzeCvBtn.addEventListener('click', () => {
+                if (analyzeCvBtn.hasAttribute('disabled')) {
+                    showToast("Cette fonctionnalité d'analyse de CV sera bientôt disponible !", "info");
+                } else {
+                    cvUploadInput.click();
+                }
+            });
+            cvUploadInput.addEventListener('change', (event) => {
+                const file = event.target.files[0];
+                if (file) {
+                    showToast(`Fichier "${file.name}" sélectionné. L'analyse va commencer (simulation).`, "success");
+                    // Logique d'upload et d'analyse ici
+                }
+            });
+        }
+        if (aideEnLigneBtn) {
+            aideEnLigneBtn.addEventListener('click', () => {
+                const mainChatbotBtn = document.getElementById('chatbotBtn'); // Bouton du chatbot ORIGINAL
+                if (mainChatbotBtn && typeof mainChatbotBtn.click === 'function') {
+                    mainChatbotBtn.click();
+                } else {
+                    showToast("L'aide en ligne (chat) n'est pas disponible pour le moment.", "info");
+                }
+            });
+        }
+        if (aideVisioBtn) {
+            aideVisioBtn.addEventListener('click', () => {
+                showToast("Demande d'aide en visio : cette fonctionnalité sera bientôt disponible.", "info");
+            });
+        }
+    }  // <--- FIN DE LA FONCTIONINITCVLmChoixPage
 
     // Fonction de reconnaissance vocale globale
     window.startDictation = function(targetInputId) {
@@ -2727,7 +2639,8 @@ function initEvaluationPage() {
             showToast("Impossible de démarrer la reconnaissance.", 'error');
         }
     }
-
+if (document.querySelector('.choix-cv-lm-section')) { // Élément clé de la page cv-lm-choix.html
+}
     // --- Point d'entrée : Appeler les fonctions d'initialisation ---
     initParcoursPage();
     initDocumentsPage();
@@ -2735,5 +2648,7 @@ function initEvaluationPage() {
     initProfilPage();
     initPartenairesPage();
     initEvaluationPage();
-    initCVGeneratorPage(); // S'assurer que c'est cette version qui est utilisée
+    initCVGeneratorPage();
+    initCvLmChoixPage();
+    // S'assurer que c'est cette version qui est utilisée
     });
