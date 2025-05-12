@@ -4,3 +4,6 @@
 
 .env
 node_modules/
+# Fichiers sensibles
+.env
+*.env
