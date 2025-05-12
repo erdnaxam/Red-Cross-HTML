@@ -1,4 +1,5 @@
 async function searchJobs() {
+  console.log("🔍 searchJobs() déclenchée");
   const keyword = document.getElementById("keyword").value.trim();
   let url = "http://127.0.0.1:5000/api/jobs";
 
