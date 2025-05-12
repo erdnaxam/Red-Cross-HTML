@@ -3,60 +3,19 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Générateur de Lettre de Motivation</title>
-  <link rel="stylesheet" href="Style.css">
-  <style>
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      background-color: #f8f9fa;
-      font-family: Arial, sans-serif;
-    }
-    .container {
-      background: white;
-      padding: 2rem;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      max-width: 600px;
-      width: 100%;
-    }
-    h1 {
-      text-align: center;
-      margin-bottom: 1.5rem;
-    }
-    form label {
-      font-weight: bold;
-    }
-    form input,
-    form textarea {
-      width: 100%;
-      padding: 0.5rem;
-      margin-bottom: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-    form input[type="submit"] {
-      background-color: #007bff;
-      color: white;
-      border: none;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-    form input[type="submit"]:hover {
-      background-color: #0056b3;
-    }
-    #resultat {
-      margin-top: 2rem;
-      white-space: pre-wrap;
-    }
-  </style>
+  <title>Générateur de Lettre de Motivation - EmploiAvenir</title>
+  <meta name="description" content="Générez une lettre de motivation personnalisée avec EmploiAvenir. Simple, rapide et efficace.">
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-<header class="header" id="header">
+  <!-- HEADER -->
+  <header class="header" id="header">
     <div class="container flex justify-between items-center">
-      <a href="index.html" class="logo"><span>Emploi</span>Avenir</a>
+      <a href="index.html" class="logo" aria-label="Accueil EmploiAvenir"><span>Emploi</span>Avenir</a>
       <nav aria-label="Navigation principale">
         <ul class="nav-links" id="mainNavLinks">
           <li><a href="index.html">Accueil</a></li>
@@ -69,60 +28,96 @@
       </nav>
       <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Ouvrir le menu de navigation" aria-expanded="false" aria-controls="mainNavLinks">☰</button>
     </div>
-</header>
-  <div class="container">
-    <h1>Générateur de Lettre de Motivation</h1>
-    <form id="motivationForm">
-      <label>Nom Prénom:</label>
-      <input type="text" name="nom" required>
+  </header>
 
-      <label>Email:</label>
-      <input type="email" name="email" required>
+  <main>
+    <section class="container mt-8 mb-8" style="max-width:600px;">
+      <header class="section-header text-center mb-4">
+        <h1>Générateur de Lettre de Motivation</h1>
+        <p class="intro-text">Remplissez ce formulaire pour obtenir une lettre personnalisée et professionnelle en quelques secondes.</p>
+      </header>
 
-      <label>Poste visé:</label>
-      <input type="text" name="poste" required>
+      <form id="motivationForm" class="card" autocomplete="on" novalidate>
+        <div class="form-group">
+          <label for="nom">Nom Prénom <span aria-hidden="true" class="text-danger">*</span></label>
+          <input type="text" id="nom" name="nom" required autocomplete="name" class="form-control" placeholder="Ex : Marie Dupont">
+        </div>
+        <div class="form-group">
+          <label for="email">Email <span aria-hidden="true" class="text-danger">*</span></label>
+          <input type="email" id="email" name="email" required autocomplete="email" class="form-control" placeholder="Ex : marie.dupont@email.com">
+        </div>
+        <div class="form-group">
+          <label for="poste">Poste visé <span aria-hidden="true" class="text-danger">*</span></label>
+          <input type="text" id="poste" name="poste" required class="form-control" placeholder="Ex : Assistant administratif">
+        </div>
+        <div class="form-group">
+          <label for="entreprise">Nom de l’entreprise <span aria-hidden="true" class="text-danger">*</span></label>
+          <input type="text" id="entreprise" name="entreprise" required class="form-control" placeholder="Ex : Entreprise Dupuis">
+        </div>
+        <div class="form-group">
+          <label for="motivation_poste">Pourquoi ce poste vous intéresse-t-il ? <span aria-hidden="true" class="text-danger">*</span></label>
+          <textarea id="motivation_poste" name="motivation_poste" required class="form-control" rows="3" placeholder="Exprimez votre motivation..."></textarea>
+        </div>
+        <div class="form-group">
+          <label for="valeur_ajoutee">Ce que vous pouvez apporter à l’entreprise <span aria-hidden="true" class="text-danger">*</span></label>
+          <textarea id="valeur_ajoutee" name="valeur_ajoutee" required class="form-control" rows="3" placeholder="Parlez de vos atouts, qualités, expériences..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-large w-100" id="generateLetterBtn">
+          <i class="fas fa-magic"></i> Générer ma lettre
+        </button>
+      </form>
 
-      <label>Nom de l’entreprise:</label>
-      <input type="text" name="entreprise" required>
+      <div id="resultat" class="card mt-4" style="display:none;"></div>
 
-      <label>Pourquoi ce poste vous intéresse-t-il ?</label>
-      <textarea name="motivation_poste" required></textarea>
+      <div class="cv-step-navigation text-center mt-4">
+        <a href="MonParcours.html" class="btn btn-success" id="finishLetterButton" style="display: none;">
+          <i class="fas fa-check-circle"></i> Terminer et voir mon parcours
+        </a>
+      </div>
+    </section>
+  </main>
 
-      <label>Ce que vous pouvez apporter à l’entreprise :</label>
-      <textarea name="valeur_ajoutee" required></textarea>
-
-      <input type="submit" value="Générer ma lettre">
-    </form>
-    <div id="resultat"></div>
-  </div>
-<div class="cv-step-navigation" style="text-align: center; margin-top: 2rem;">
-    <a href="MonParcours.html" class="btn btn-success" id="finishLetterButton" style="display: none;">
-        <i class="fas fa-check-circle"></i> Terminer et voir mon parcours
-    </a>
-</div>
+  <footer class="footer">
+    <div class="container">
+      <p>© 2024 EmploiAvenir. Tous droits réservés.</p>
+    </div>
+  </footer>
+  <div id="toast-container"></div>
 
   <script>
     const form = document.getElementById('motivationForm');
     const output = document.getElementById('resultat');
     const finishButton = document.getElementById('finishLetterButton');
+    const generateBtn = document.getElementById('generateLetterBtn');
 
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
+      // Validation simple côté client
+      let valid = true;
+      form.querySelectorAll('[required]').forEach(input => {
+        if (!input.value.trim()) {
+          input.classList.add('input-error');
+          valid = false;
+        } else {
+          input.classList.remove('input-error');
+        }
+      });
+      if (!valid) return;
+
+      output.style.display = 'block';
+      output.innerHTML = '<span style="color:#888;">⏳ Génération en cours...</span>';
+      generateBtn.disabled = true;
+
       const formData = new FormData(form);
       const data = Object.fromEntries(formData.entries());
-
-      output.innerText = '⏳ Génération en cours...';
 
       try {
         const response = await fetch("http://localhost:3001/api/generer-lettre", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(data)
         });
-
         const json = await response.json();
 
         if (json.text) {
@@ -132,9 +127,9 @@
           throw new Error('Réponse invalide de l’API');
         }
       } catch (error) {
-        console.error("Erreur API détaillée :", error);
-        output.innerText = '❌ Erreur lors de la génération. Vérifie ta connexion ou contacte le support.';
+        output.innerHTML = '<span style="color:#d32f2f;">❌ Erreur lors de la génération. Vérifiez votre connexion ou contactez le support.</span>';
       }
+      generateBtn.disabled = false;
     });
   </script>
 </body>
