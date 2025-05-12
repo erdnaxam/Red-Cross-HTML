@@ -3,101 +3,97 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Nouvelle description plus adaptée à la page d'accueil tableau de bord -->
-  <meta name="description" content="EmploiAvenir - Suivi personnalisé de votre parcours vers l'emploi. Voyez votre progression et continuez facilement.">
-  <!-- Nouveau titre pour l'onglet du navigateur -->
-  <title>Accueil - Votre Parcours EmploiAvenir</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <title>Accueil – EmploiAvenir</title>
+  <meta name="description" content="EmploiAvenir : Suivi personnalisé de votre parcours vers l'emploi. Visualisez votre progression et accédez à tous vos outils en un clic.">
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <!-- Lien vers votre fichier CSS externe - INDISPENSABLE maintenant ! -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <!-- Lovable script tag for Select feature -->
-  <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
-  <!-- Le bloc <style> a été COMPLÈTEMENT SUPPRIMÉ ici. -->
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <!-- SEO & réseaux sociaux -->
+  <meta property="og:title" content="EmploiAvenir - Votre parcours vers l'emploi">
+  <meta property="og:description" content="Suivi personnalisé et outils pour booster votre insertion professionnelle.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://emploiavenir.fr/">
 </head>
-
 <body>
-  <!-- Header - Conserve l'original -->
-  <header class="header" id="header">
+  <!-- HEADER -->
+  <header class="header" role="banner">
     <div class="container flex justify-between items-center">
-      <!-- Lien du logo corrigé pour pointer vers l'accueil (cette page) -->
-      <a href="index.html" class="logo"><span>Emploi</span>Avenir</a>
+      <a href="index.html" class="logo" aria-label="Accueil EmploiAvenir">
+        <span>Emploi</span>Avenir
+      </a>
       <nav aria-label="Navigation principale">
-        <!-- Ajout de l'ID pour le JS du menu mobile -->
         <ul class="nav-links" id="mainNavLinks">
-          <li><a href="index.html">Accueil</a></li>
+          <li><a href="index.html" aria-current="page">Accueil</a></li>
           <li><a href="MonParcours.html">Mon Parcours</a></li>
           <li><a href="MesCandidature.html">Mes Candidatures</a></li>
-          <li><a href="Partenaires.html">Nos partenaires</a></li> <!-- Renommé pour coller aux pages prévues -->
-          <li><a href="Documents.html">Mes documents</a></li> <!-- Renommé -->
+          <li><a href="Partenaires.html">Nos partenaires</a></li>
+          <li><a href="Documents.html">Mes documents</a></li>
           <li><a href="Profil.html">Profil</a></li>
-          <!-- Laissez ce commentaire ou ajoutez un bouton/lien avec id="loginBtn" si le JS doit l'ouvrir -->
-          <!-- Ex: <li><button type="button" class="btn btn-outline" id="loginBtn" aria-controls="loginModal">Connexion</button></li> -->
         </ul>
       </nav>
-      <!-- Bouton menu mobile - Attributs ARIA améliorés + lien vers l'ID du menu -->
       <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Ouvrir le menu de navigation" aria-expanded="false" aria-controls="mainNavLinks">☰</button>
     </div>
   </header>
 
-  <!-- Contenu principal - Le nouveau "Tableau de Bord Personnalisé" -->
+  <!-- MAIN DASHBOARD -->
   <main>
     <section class="dashboard-accueil" aria-labelledby="dashboardTitle">
-      <div class="container text-center"> <!-- Centrer le contenu principal -->
-        <!-- Titre principal adapté -->
+      <div class="container text-center">
         <h1 id="dashboardTitle">Bonjour <span id="userNamePlaceholder">Utilisateur</span> !</h1>
         <p class="intro-text">Voici où vous en êtes dans votre parcours vers l'emploi.</p>
 
-        <!-- Indicateur de progression visuel (structure HTML) -->
-        <div class="parcours-progression-accueil mt-4 mb-4">
-            <h2>Votre parcours :</h2>
-            <!-- Placeholder pour l'étape actuelle et totale -->
-            <p class="etape-actuelle-text">Étape <span id="currentStepNumber">1</span> sur <span id="totalStepsNumber">7</span></p>
-            <!-- La barre de progression visuelle sera stylisée en CSS -->
-            <div class="progress-bar-visual">
-                <div class="progress-fill-visual" style="width: 14%;"></div> <!-- Largeur initiale exemple (1/7 ≈ 14%) -->
-            </div>
-             <!-- Texte décrivant l'étape actuelle (sera rempli par JS plus tard) -->
-            <p class="etape-description-text mt-2" id="currentStepDescription">Démarrez votre parcours en évaluant votre situation.</p>
+        <!-- Progression -->
+        <div class="parcours-progression-accueil mt-4 mb-4" aria-label="Progression du parcours">
+          <h2 class="sr-only">Votre progression</h2>
+          <p class="etape-actuelle-text">
+            Étape <span id="currentStepNumber">1</span> sur <span id="totalStepsNumber">7</span>
+          </p>
+          <div class="progress-bar-visual" aria-hidden="true">
+            <div class="progress-fill-visual" style="width: 14%;"></div>
+          </div>
+          <p class="etape-description-text mt-2" id="currentStepDescription">
+            Démarrez votre parcours en évaluant votre situation.
+          </p>
         </div>
 
-        <!-- Bouton principal pour continuer -->
+        <!-- Continuer le parcours -->
         <a href="MonParcours.html" class="btn btn-accent btn-large mt-4">
-            Continuer mon parcours à l'étape <span id="nextStepNumber">1</span>
+          Continuer mon parcours à l'étape <span id="nextStepNumber">1</span>
         </a>
 
-        <!-- Accès rapides (optionnel mais utile) -->
-        <div class="acces-rapides-accueil mt-8">
-            <h3>Accès rapides</h3>
-            <div class="quick-links-grid"> <!-- Grid pour aligner les liens rapidement -->
-                 <a href="Documents.html" class="quick-link-card">
-                    <h4>Mes Documents</h4>
-                    <p>CVs, lettres, guides...</p>
-                 </a>
-                 <a href="MesCandidature.html" class="quick-link-card">
-                    <h4>Mes Candidatures</h4>
-                    <p>Suivez vos postulations.</p>
-                 </a>
-                 <!-- Ajoutez d'autres liens rapides si pertinent, ex: Contact -->
-                 <a href="contact.html" class="quick-link-card">
-                    <h4>Contacter un conseiller</h4>
-                    <p>Obtenez de l'aide personnalisée.</p>
-                 </a>
-            </div>
-        </div>
+        <!-- Accès rapides -->
+        <nav class="acces-rapides-accueil mt-8" aria-label="Accès rapides">
+          <h3>Accès rapides</h3>
+          <div class="quick-links-grid">
+            <a href="Documents.html" class="quick-link-card" aria-label="Accéder à mes documents">
+              <h4>Mes Documents</h4>
+              <p>CVs, lettres, guides...</p>
+            </a>
+            <a href="MesCandidature.html" class="quick-link-card" aria-label="Accéder à mes candidatures">
+              <h4>Mes Candidatures</h4>
+              <p>Suivez vos postulations.</p>
+            </a>
+            <a href="contact.html" class="quick-link-card" aria-label="Contacter un conseiller">
+              <h4>Contacter un conseiller</h4>
+              <p>Obtenez de l'aide personnalisée.</p>
+            </a>
+          </div>
+        </nav>
 
-        <!-- Section d'encouragement simple (optionnel) -->
-        <div class="encouragement-section mt-8">
-            <h2>Besoin d'un coup de pouce ?</h2>
-            <p>N'hésitez pas à explorer les <a href="ressources.html">ressources utiles</a> ou à <a href="contact.html">nous contacter</a>.</p>
-        </div>
+        <!-- Encouragement -->
+        <section class="encouragement-section mt-8" aria-labelledby="encouragementTitle">
+          <h2 id="encouragementTitle">Besoin d'un coup de pouce ?</h2>
+          <p>
+            Explorez les <a href="ressources.html">ressources utiles</a> ou <a href="contact.html">contactez-nous</a>.
+          </p>
+        </section>
+      </div>
+    </section>
+  </main>
 
-      </div> <!-- Fin .container -->
-    </section> <!-- Fin section.dashboard-accueil -->
-  </main> <!-- Fin main -->
-
-  <!-- Footer - Conserve l'original -->
+  <!-- FOOTER -->
   <footer class="footer">
     <div class="container">
       <div class="footer-grid">
@@ -105,31 +101,27 @@
           <h3>EmploiAvenir</h3>
           <p>Votre partenaire pour trouver l'emploi de vos rêves et développer votre carrière professionnelle.</p>
         </div>
-        <!-- Liens rapides - Assurez-vous que les href sont corrects -->
         <div class="footer-column">
-          <!-- Le lien autour du titre n'est pas standard, remis en simple H3 -->
           <h3>Liens rapides</h3>
           <ul class="footer-links">
             <li><a href="index.html">Accueil</a></li>
             <li><a href="MonParcours.html">Mon Parcours</a></li>
             <li><a href="MesCandidature.html">Mes Candidatures</a></li>
-            <li><a href="Partenaires.html">Nos partenaires</a></li> <!-- Ajusté nom page -->
-            <li><a href="Documents.html">Mes documents</a></li> <!-- Ajusté nom page -->
+            <li><a href="Partenaires.html">Nos partenaires</a></li>
+            <li><a href="Documents.html">Mes documents</a></li>
             <li><a href="Profil.html">Profil</a></li>
           </ul>
         </div>
-
         <div class="footer-column">
           <h3>Services</h3>
           <ul class="footer-links">
-            <li><a href="#">Création de CV</a></li> <!-- Ces liens pourraient pointer vers des sections de MonParcours.html plus tard -->
+            <li><a href="#">Création de CV</a></li>
             <li><a href="#">Lettres de motivation</a></li>
             <li><a href="#">Coaching</a></li>
             <li><a href="#">Préparation aux entretiens</a></li>
             <li><a href="#">Partenaires entreprises</a></li>
           </ul>
         </div>
-
         <div class="footer-column">
           <h3>Contact</h3>
           <ul class="footer-links">
@@ -139,68 +131,55 @@
           </ul>
         </div>
       </div>
-
       <div class="footer-bottom">
         <p>© 2024 EmploiAvenir. Tous droits réservés.</p>
       </div>
     </div>
   </footer>
 
-  <!-- Login Modal - Conserve l'original mais avec améliorations a11y et display: none; -->
-  <div id="loginModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="loginModalTitle" style="display: none;">
+  <!-- MODALE DE CONNEXION -->
+  <div id="loginModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="loginModalTitle" tabindex="-1" hidden>
     <div class="modal-content">
-      <!-- Bouton de fermeture amélioré -->
-      <button type="button" class="close-modal" aria-label="Fermer la fenêtre de connexion">×</button>
+      <button type="button" class="close-modal" aria-label="Fermer la fenêtre de connexion">&times;</button>
       <h2 id="loginModalTitle">Connexion</h2>
-      <form id="loginForm">
+      <form id="loginForm" autocomplete="on">
         <div class="form-group">
           <label for="email">Email</label>
-          <input type="email" id="email" name="email" required>
+          <input type="email" id="email" name="email" required autocomplete="email">
         </div>
-
         <div class="form-group">
           <label for="password">Mot de passe</label>
-          <input type="password" id="password" name="password" required>
+          <input type="password" id="password" name="password" required autocomplete="current-password">
         </div>
-
         <button type="submit" class="btn" style="width: 100%;">Se connecter</button>
-
         <div class="text-center mt-2">
           <a href="#" class="modal-link">Mot de passe oublié ?</a>
         </div>
-
         <div class="text-center mt-2">
-          <!-- Ajout d'un ID pour une potentielle gestion JS pour ouvrir une modale d'inscription -->
           <p>Pas encore de compte ? <a href="#" class="modal-link" id="openRegisterModal">S'inscrire</a></p>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- Chatbot - Conserve l'original mais en button et avec améliorations a11y et display: none; -->
+  <!-- CHATBOT -->
   <button type="button" class="chatbot-btn" id="chatbotBtn" aria-label="Ouvrir l'assistant virtuel EmploiAvenir" aria-expanded="false" aria-controls="chatbotContainer">💬</button>
-
-  <div class="chatbot-container" id="chatbotContainer" role="log" aria-labelledby="chatbotHeaderTitle" style="display: none;">
+  <div class="chatbot-container" id="chatbotContainer" role="dialog" aria-modal="true" aria-labelledby="chatbotHeaderTitle" tabindex="-1" hidden>
     <div class="chatbot-header">
       <h3 id="chatbotHeaderTitle">Assistant EmploiAvenir</h3>
-      <!-- Bouton de fermeture amélioré -->
-      <button type="button" id="closeChatbot" aria-label="Fermer l'assistant virtuel">✖</button>
+      <button type="button" id="closeChatbot" aria-label="Fermer l'assistant virtuel">&times;</button>
     </div>
-
     <div class="chatbot-messages" id="chatbotMessages" aria-live="polite">
       <div class="message bot-message">
         Bonjour ! Comment puis-je vous aider aujourd'hui ?
       </div>
     </div>
-
-    <div class="chatbot-input">
-      <!-- Ajout name et aria-label -->
-      <input type="text" id="chatbotInput" name="chatbot_message" placeholder="Écrivez votre message..." aria-label="Votre message à l'assistant EmploiAvenir">
-      <button id="sendMessage" type="button">Envoyer</button>
-    </div>
+    <form class="chatbot-input" autocomplete="off">
+      <input type="text" id="chatbotInput" name="chatbot_message" placeholder="Écrivez votre message..." aria-label="Votre message à l'assistant EmploiAvenir" required>
+      <button id="sendMessage" type="submit">Envoyer</button>
+    </form>
   </div>
 
-  <script src="Script.js"></script>
-
+  <script src="Script.js" defer></script>
 </body>
 </html>
