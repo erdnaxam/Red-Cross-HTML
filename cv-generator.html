@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon CV Facile - EmploiAvenir</title>
-    <meta name="description" content="Créez facilement votre CV étape par étape avec l'outil d'aide d'EmploiAvenir. Idéal pour commencer ou reprendre votre parcours professionnel.">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mon CV Facile - EmploiAvenir</title>
+  <meta name="description" content="Créez facilement votre CV étape par étape avec l'outil d'aide d'EmploiAvenir. Idéal pour commencer ou reprendre votre parcours professionnel.">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <link rel="stylesheet" href="style.css">
-    <!-- NOTE: Les styles CSS pour la validation (.is-invalid, .invalid-feedback) sont importants dans style.css -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
-<header class="header" id="header">
+  <!-- HEADER -->
+  <header class="header" id="header">
     <div class="container flex justify-between items-center">
-      <a href="index.html" class="logo"><span>Emploi</span>Avenir</a>
+      <a href="index.html" class="logo" aria-label="Accueil EmploiAvenir"><span>Emploi</span>Avenir</a>
       <nav aria-label="Navigation principale">
         <ul class="nav-links" id="mainNavLinks">
           <li><a href="index.html">Accueil</a></li>
@@ -30,198 +30,186 @@
       </nav>
       <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Ouvrir le menu de navigation" aria-expanded="false" aria-controls="mainNavLinks">☰</button>
     </div>
-</header>
+  </header>
 
-<main class="cv-assistant-container">
-    <div class="cv-assistant-header">
-        <h1>Créez Votre CV Facilement</h1>
-        <p class="intro-text">Nous allons vous guider pas à pas pour créer un CV qui vous ressemble. Répondez simplement aux questions.</p>
-        <div class="cv-progress-bar" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="5" aria-label="Progression de la création du CV">
-            <div class="cv-progress-step active" data-step="1"><span>1</span> Infos Perso</div>
-            <div class="cv-progress-step" data-step="2"><span>2</span> Expériences</div>
-            <div class="cv-progress-step" data-step="3"><span>3</span> Formations</div>
-            <div class="cv-progress-step" data-step="4"><span>4</span> Atouts</div>
-            <div class="cv-progress-step" data-step="5"><span>5</span> Finalisation</div>
+  <main class="cv-assistant-container">
+    <section class="cv-assistant-header text-center" aria-labelledby="cvTitle">
+      <h1 id="cvTitle">Créez Votre CV Facilement</h1>
+      <p class="intro-text">Nous allons vous guider pas à pas pour créer un CV qui vous ressemble. Répondez simplement aux questions.</p>
+      <nav class="cv-progress-bar" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="5" aria-label="Progression de la création du CV">
+        <div class="cv-progress-step active" data-step="1"><span>1</span> Infos Perso</div>
+        <div class="cv-progress-step" data-step="2"><span>2</span> Expériences</div>
+        <div class="cv-progress-step" data-step="3"><span>3</span> Formations</div>
+        <div class="cv-progress-step" data-step="4"><span>4</span> Atouts</div>
+        <div class="cv-progress-step" data-step="5"><span>5</span> Finalisation</div>
+      </nav>
+    </section>
+
+    <form id="cvAssistantForm" novalidate>
+      <!-- ÉTAPE 1: INFORMATIONS PERSONNELLES -->
+      <fieldset class="cv-step active-step" id="step-1-perso" aria-labelledby="step1Title">
+        <legend class="sr-only">Étape 1 : Vos informations personnelles</legend>
+        <h2 id="step1Title">Commençons par vous !</h2>
+        <p class="step-description">Ces informations de base nous aident à démarrer.</p>
+
+        <div class="form-group">
+          <label for="name">Votre Prénom et Nom*</label>
+          <div class="input-with-mic">
+            <input type="text" id="name" name="name" class="form-control" placeholder="Ex: Marie Dupont" required>
+            <button type="button" class="mic-btn" data-target-input="name" aria-label="Saisir par la voix pour Prénom et Nom"><i class="fas fa-microphone"></i></button>
+          </div>
+          <small class="help-text">C'est le nom qui apparaîtra en haut de votre CV.</small>
+          <div class="invalid-feedback">Veuillez indiquer votre prénom et nom.</div>
         </div>
-    </div>
 
-    <form id="cvAssistantForm" novalidate> <!-- novalidate pour gérer la validation via JS -->
-        <!-- ÉTAPE 1: INFORMATIONS PERSONNELLES -->
-        <fieldset class="cv-step active-step" id="step-1-perso" data-step-title="Vos informations personnelles">
-            <legend class="sr-only">Étape 1 : Vos informations personnelles</legend>
-            <h2>Commençons par vous !</h2>
-            <p class="step-description">Ces informations de base nous aident à démarrer.</p>
+        <div class="form-group">
+          <label for="cvTitleInput">Quel type de poste recherchez-vous ? (Ou laissez vide)</label>
+          <div class="input-with-mic">
+            <input type="text" id="cvTitleInput" name="cvTitle" class="form-control" placeholder="Ex: Employé(e) polyvalent(e), Aide à domicile">
+            <button type="button" class="mic-btn" data-target-input="cvTitleInput" aria-label="Saisir par la voix pour le type de poste"><i class="fas fa-microphone"></i></button>
+          </div>
+          <small class="help-text">Cela peut être le titre de votre CV. Si vous ne savez pas, ce n'est pas grave !</small>
+        </div>
 
-            <div class="form-group">
-                <label for="name">Votre Prénom et Nom*</label>
-                <div class="input-with-mic">
-                    <input type="text" id="name" name="name" class="form-control" placeholder="Ex: Marie Dupont" required>
-                    <button type="button" class="mic-btn" data-target-input="name" aria-label="Saisir par la voix pour Prénom et Nom"><i class="fas fa-microphone"></i></button>
-                </div>
-                <small class="help-text">C'est le nom qui apparaîtra en haut de votre CV.</small>
-                <div class="invalid-feedback">Veuillez indiquer votre prénom et nom.</div>
-            </div>
+        <div class="form-group">
+          <label for="email">Votre adresse e-mail*</label>
+          <input type="email" id="email" name="email" class="form-control" placeholder="Ex: marie.dupont@email.com" required>
+          <small class="help-text">Important pour que les recruteurs puissent vous contacter.</small>
+          <div class="invalid-feedback">Veuillez indiquer une adresse e-mail valide.</div>
+        </div>
 
-            <div class="form-group">
-                <label for="cvTitle">Quel type de poste recherchez-vous ? (Ou laissez vide)</label>
-                 <div class="input-with-mic">
-                    <input type="text" id="cvTitle" name="cvTitle" class="form-control" placeholder="Ex: Employé(e) polyvalent(e), Aide à domicile">
-                    <button type="button" class="mic-btn" data-target-input="cvTitle" aria-label="Saisir par la voix pour le type de poste"><i class="fas fa-microphone"></i></button>
-                </div>
-                <small class="help-text">Cela peut être le titre de votre CV. Si vous ne savez pas, ce n'est pas grave !</small>
-            </div>
+        <div class="form-group">
+          <label for="phone">Votre numéro de téléphone</label>
+          <input type="tel" id="phone" name="phone" class="form-control" placeholder="Ex: 06 01 02 03 04">
+          <small class="help-text">Utile si un employeur souhaite vous appeler.</small>
+        </div>
 
-            <div class="form-group">
-                <label for="email">Votre adresse e-mail*</label>
-                <input type="email" id="email" name="email" class="form-control" placeholder="Ex: marie.dupont@email.com" required>
-                <small class="help-text">Important pour que les recruteurs puissent vous contacter.</small>
-                <div class="invalid-feedback">Veuillez indiquer une adresse e-mail valide.</div>
-            </div>
+        <div class="form-group">
+          <label for="address">Ville (et pays si besoin)</label>
+          <div class="input-with-mic">
+            <input type="text" id="address" name="address" class="form-control" placeholder="Ex: Lyon, France">
+            <button type="button" class="mic-btn" data-target-input="address" aria-label="Saisir par la voix pour la ville"><i class="fas fa-microphone"></i></button>
+          </div>
+          <small class="help-text">Juste la ville suffit généralement.</small>
+        </div>
+      </fieldset>
 
-            <div class="form-group">
-                <label for="phone">Votre numéro de téléphone</label>
-                <input type="tel" id="phone" name="phone" class="form-control" placeholder="Ex: 06 01 02 03 04">
-                <small class="help-text">Utile si un employeur souhaite vous appeler.</small>
-            </div>
+      <!-- ÉTAPE 2: EXPÉRIENCES -->
+      <fieldset class="cv-step" id="step-2-experiences" aria-labelledby="step2Title">
+        <legend class="sr-only">Étape 2 : Vos expériences</legend>
+        <h2 id="step2Title">Vos expériences (même non payées)</h2>
+        <p class="step-description">
+          Toute expérience est bonne à partager ! Avez-vous déjà travaillé, fait du bénévolat, aidé votre famille ou des amis, ou participé à des projets ?
+        </p>
+        <div class="info-box">
+          <i class="fas fa-lightbulb"></i>
+          <div>
+            <p><strong>Pas d'expérience professionnelle ? Pas de souci !</strong> Pensez à :</p>
+            <ul>
+              <li>Bénévolat (aide aux devoirs, distribution de repas...)</li>
+              <li>Projets personnels (organisation d'un événement, création d'un blog...)</li>
+              <li>Aide à votre entourage (garde d'enfants, aide à une personne âgée...)</li>
+              <li>Stages, même courts.</li>
+            </ul>
+            <p>Indiquez ce que vous avez fait et ce que cela vous a appris.</p>
+          </div>
+        </div>
+        <div id="experiences-list-form"></div>
+        <button type="button" class="btn btn-outline-secondary add-item-btn" id="addExperienceFormBtn">
+          <i class="fas fa-plus-circle"></i> Ajouter une expérience
+        </button>
+      </fieldset>
 
-             <div class="form-group">
-                <label for="address">Ville (et pays si besoin)</label>
-                 <div class="input-with-mic">
-                    <input type="text" id="address" name="address" class="form-control" placeholder="Ex: Lyon, France">
-                    <button type="button" class="mic-btn" data-target-input="address" aria-label="Saisir par la voix pour la ville"><i class="fas fa-microphone"></i></button>
-                </div>
-                <small class="help-text">Juste la ville suffit généralement.</small>
-            </div>
-        </fieldset>
+      <!-- ÉTAPE 3: FORMATIONS -->
+      <fieldset class="cv-step" id="step-3-formations" aria-labelledby="step3Title">
+        <legend class="sr-only">Étape 3 : Vos formations et diplômes</legend>
+        <h2 id="step3Title">Vos formations et diplômes</h2>
+        <p class="step-description">Avez-vous suivi des formations, même courtes, ou obtenu des diplômes ?</p>
+        <div class="info-box">
+          <i class="fas fa-graduation-cap"></i>
+          <p>Indiquez ici vos diplômes (brevet, CAP, Bac, etc.) ou les formations suivies (permis cariste, premiers secours, cours en ligne...). Même si ce n'est pas terminé, c'est intéressant !</p>
+        </div>
+        <div id="formations-list-form"></div>
+        <button type="button" class="btn btn-outline-secondary add-item-btn" id="addFormationFormBtn">
+          <i class="fas fa-plus-circle"></i> Ajouter une formation
+        </button>
+      </fieldset>
 
-        <!-- ÉTAPE 2: EXPÉRIENCES -->
-        <fieldset class="cv-step" id="step-2-experiences" data-step-title="Vos expériences (même non payées)">
-            <legend class="sr-only">Étape 2 : Vos expériences</legend>
-            <h2>Vos expériences (même non payées)</h2>
-            <p class="step-description">
-                Avez-vous déjà travaillé, fait du bénévolat, aidé votre famille ou des amis, ou participé à des projets ?
-                Toute expérience est bonne à partager !
-            </p>
-            <div class="info-box">
-                <i class="fas fa-lightbulb"></i>
-                <div>
-                    <p><strong>Pas d'expérience professionnelle ? Pas de souci !</strong> Pensez à :</p>
-                    <ul>
-                        <li>Bénévolat (aide aux devoirs, distribution de repas...)</li>
-                        <li>Projets personnels (organisation d'un événement, création d'un blog...)</li>
-                        <li>Aide apportée à votre entourage (garde d'enfants, aide à une personne âgée...)</li>
-                        <li>Stages, même courts.</li>
-                    </ul>
-                    <p>Indiquez ce que vous avez fait et ce que cela vous a appris.</p>
-                </div>
-            </div>
+      <!-- ÉTAPE 4: ATOUTS (Compétences & Langues) -->
+      <fieldset class="cv-step" id="step-4-atouts" aria-labelledby="step4Title">
+        <legend class="sr-only">Étape 4 : Vos qualités et ce que vous savez faire</legend>
+        <h2 id="step4Title">Vos qualités et ce que vous savez faire</h2>
+        <p class="step-description">Quelles sont vos forces ? Que savez-vous bien faire ? Quelles langues parlez-vous ?</p>
 
-            <div id="experiences-list-form">
-                <!-- Les expériences seront ajoutées ici par JS -->
-            </div>
-            <button type="button" class="btn btn-outline-secondary add-item-btn" id="addExperienceFormBtn">
-                <i class="fas fa-plus-circle"></i> Ajouter une expérience
-            </button>
-        </fieldset>
+        <div class="form-section">
+          <h3>Ce que vous savez faire (Compétences)</h3>
+          <p class="help-text">Exemples : "utiliser un ordinateur", "cuisiner", "être à l'écoute", "travailler en équipe", "conduire (permis B)".</p>
+          <div id="competences-list-form" class="form-list-items"></div>
+          <div class="input-group-add">
+            <input type="text" id="newCompetenceInput" class="form-control" placeholder="Ajouter une compétence">
+            <button type="button" class="btn btn-primary" id="addCompetenceToListBtn"><i class="fas fa-plus"></i> Ajouter</button>
+          </div>
+          <div id="newCompetenceInput-feedback" class="invalid-feedback" style="display: none;">Veuillez saisir une compétence.</div>
+        </div>
 
-        <!-- ÉTAPE 3: FORMATIONS -->
-        <fieldset class="cv-step" id="step-3-formations" data-step-title="Vos formations et diplômes">
-            <legend class="sr-only">Étape 3 : Vos formations et diplômes</legend>
-            <h2>Vos formations et diplômes</h2>
-            <p class="step-description">Avez-vous suivi des formations, même courtes, ou obtenu des diplômes ?</p>
-            <div class="info-box">
-                <i class="fas fa-graduation-cap"></i>
-                <p>Indiquez ici vos diplômes (brevet, CAP, Bac, etc.) ou les formations que vous avez suivies (permis cariste, formation aux premiers secours, cours en ligne...). Même si ce n'est pas terminé, c'est intéressant !</p>
-            </div>
+        <div class="form-section">
+          <h3>Langues que vous parlez</h3>
+          <p class="help-text">Même si c'est juste quelques mots, indiquez-le ! Exemple : "Anglais : bases scolaires".</p>
+          <div id="langues-list-form" class="form-list-items"></div>
+          <div class="input-group-add">
+            <input type="text" id="newLangueInput" class="form-control" placeholder="Ajouter une langue">
+            <select id="newLangueLevelSelect" class="form-control">
+              <option value="">Niveau ?</option>
+              <option value="Notions">Notions</option>
+              <option value="Intermédiaire">Sait se débrouiller</option>
+              <option value="Courant">Parle bien</option>
+              <option value="Natif">Langue maternelle</option>
+            </select>
+            <button type="button" class="btn btn-primary" id="addLangueToListBtn"><i class="fas fa-plus"></i> Ajouter</button>
+          </div>
+          <div id="newLangueInput-feedback" class="invalid-feedback" style="display: none;">Veuillez saisir une langue et un niveau.</div>
+        </div>
+      </fieldset>
 
-            <div id="formations-list-form">
-                <!-- Les formations seront ajoutées ici par JS -->
-            </div>
-            <button type="button" class="btn btn-outline-secondary add-item-btn" id="addFormationFormBtn">
-                <i class="fas fa-plus-circle"></i> Ajouter une formation
-            </button>
-        </fieldset>
+      <!-- ÉTAPE 5: FINALISATION ET APERÇU -->
+      <fieldset class="cv-step" id="step-5-finalisation" aria-labelledby="step5Title">
+        <legend class="sr-only">Étape 5 : Vérification et téléchargement</legend>
+        <h2 id="step5Title">Bravo, votre CV est presque prêt !</h2>
+        <p class="step-description">Vérifiez les informations ci-dessous. Vous pourrez toujours revenir en arrière pour modifier.</p>
+        <div class="cv-preview-final">
+          <h3>Aperçu de votre CV</h3>
+          <div id="final-preview-content" class="cv-preview-area">
+            <p style="text-align:center; padding: 2rem; color: var(--color-gray);">Commencez à remplir les étapes pour voir votre CV prendre forme ici !</p>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-primary btn-large" id="downloadPdfBtn">
+            <i class="fas fa-download"></i> Télécharger mon CV en PDF
+          </button>
+        </div>
+      </fieldset>
 
-        <!-- ÉTAPE 4: ATOUTS (Compétences & Langues) -->
-        <fieldset class="cv-step" id="step-4-atouts" data-step-title="Vos qualités et ce que vous savez faire">
-            <legend class="sr-only">Étape 4 : Vos qualités et ce que vous savez faire</legend>
-            <h2>Vos qualités et ce que vous savez faire</h2>
-            <p class="step-description">Quelles sont vos forces ? Que savez-vous bien faire ? Quelles langues parlez-vous ?</p>
-
-            <div class="form-section">
-                <h3>Ce que vous savez faire (Compétences)</h3>
-                <p class="help-text">Pensez à ce que vous avez appris dans vos expériences, vos formations ou vos loisirs. <br>
-                    Exemples : "utiliser un ordinateur", "cuisiner", "être à l'écoute", "travailler en équipe", "conduire (permis B)".
-                </p>
-                <div id="competences-list-form" class="form-list-items">
-                    <!-- Compétences ajoutées ici -->
-                </div>
-                <div class="input-group-add">
-                    <input type="text" id="newCompetenceInput" class="form-control" placeholder="Ajouter une compétence">
-                    <button type="button" class="btn btn-primary" id="addCompetenceToListBtn"><i class="fas fa-plus"></i> Ajouter</button>
-                </div>
-                 <div id="newCompetenceInput-feedback" class="invalid-feedback" style="display: none;">Veuillez saisir une compétence.</div>
-            </div>
-
-            <div class="form-section">
-                <h3>Langues que vous parlez</h3>
-                <p class="help-text">Même si c'est juste quelques mots, indiquez-le ! Exemple : "Anglais : bases scolaires".</p>
-                <div id="langues-list-form" class="form-list-items">
-                    <!-- Langues ajoutées ici -->
-                </div>
-                <div class="input-group-add">
-                    <input type="text" id="newLangueInput" class="form-control" placeholder="Ajouter une langue">
-                    <select id="newLangueLevelSelect" class="form-control">
-                        <option value="">Niveau ?</option>
-                        <option value="Notions">Notions</option>
-                        <option value="Intermédiaire">Sait se débrouiller</option>
-                        <option value="Courant">Parle bien</option>
-                        <option value="Natif">Langue maternelle</option>
-                    </select>
-                    <button type="button" class="btn btn-primary" id="addLangueToListBtn"><i class="fas fa-plus"></i> Ajouter</button>
-                </div>
-                <div id="newLangueInput-feedback" class="invalid-feedback" style="display: none;">Veuillez saisir une langue et un niveau.</div>
-            </div>
-        </fieldset>
-
-        <!-- ÉTAPE 5: FINALISATION ET APERÇU -->
-        <fieldset class="cv-step" id="step-5-finalisation" data-step-title="Vérification et téléchargement">
-            <legend class="sr-only">Étape 5 : Vérification et téléchargement</legend>
-            <h2>Bravo, votre CV est presque prêt !</h2>
-            <p class="step-description">Vérifiez les informations ci-dessous. Vous pourrez toujours revenir en arrière pour modifier.</p>
-
-            <div class="cv-preview-final">
-                <h3>Aperçu de votre CV</h3>
-                <div id="final-preview-content" class="cv-preview-area">
-                    <p style="text-align:center; padding: 2rem; color: var(--color-gray);">Commencez à remplir les étapes pour voir votre CV prendre forme ici !</p>
-                </div>
-            </div>
-            <div class="form-actions">
-                <button type="button" class="btn btn-primary btn-large" id="downloadPdfBtn">
-                    <i class="fas fa-download"></i> Télécharger mon CV en PDF
-                </button>
-            </div>
-        </fieldset>
-
-        <!-- Navigation entre les étapes -->
-        <div class="cv-step-navigation">
-        <button type="button" class="btn btn-outline-secondary" id="prevStepBtn" disabled><i class="fas fa-arrow-left"></i> Étape précédente</button>
-        <button type="button" class="btn btn-primary" id="nextStepBtn">Étape suivante <i class="fas fa-arrow-right"></i></button>
+      <!-- Navigation entre les étapes -->
+      <nav class="cv-step-navigation" aria-label="Navigation entre les étapes du CV">
+        <button type="button" class="btn btn-outline-secondary" id="prevStepBtn" disabled>
+          <i class="fas fa-arrow-left"></i> Étape précédente
+        </button>
+        <button type="button" class="btn btn-primary" id="nextStepBtn">
+          Étape suivante <i class="fas fa-arrow-right"></i>
+        </button>
         <a href="lettre_motivation.html" class="btn btn-success" id="finishCVAssistantBtn" style="display: none;">
-            <i class="fas fa-check-circle"></i> Passer à la lettre de motivation
+          <i class="fas fa-check-circle"></i> Passer à la lettre de motivation
         </a>
-    </div>
+      </nav>
     </form>
+  </main>
 
-</main>
-
-<footer class="footer">
+  <footer class="footer">
     <div class="container">
       <p>© 2024 EmploiAvenir. Tous droits réservés.</p>
     </div>
-</footer>
-<div id="toast-container"></div>
-<script src="script.js"></script>
-<!-- Le JavaScript spécifique à cette page (initCVGeneratorPage) sera dans script.js -->
+  </footer>
+  <div id="toast-container"></div>
+  <script src="script.js"></script>
 </body>
 </html>
