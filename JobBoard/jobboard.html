@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Job Board France Travail</title>
+  <link rel="stylesheet" href="styleJOBBOARD.css" />
+</head>
+<body>
+<header class="header" id="header">
+    <div class="container flex justify-between items-center">
+      <!-- Lien du logo corrigé pour pointer vers l'accueil -->
+      <a href="index.html" class="logo"><span>Emploi</span>Avenir</a>
+      <nav aria-label="Navigation principale">
+        <!-- Ajout de l'ID pour le JS du menu mobile -->
+        <ul class="nav-links" id="mainNavLinks">
+          <li><a href="index.html">Accueil</a></li>
+          <!-- Marquer Mon Parcours comme actif sur cette page -->
+          <li><a href="MonParcours.html">Mon Parcours</a></li>
+          <li><a href="MesCandidature.html">Mes Candidatures</a></li>
+          <li><a href="Partenaires.html">Nos partenaires</a></li>
+          <li><a href="Documents.html">Mes documents</a></li>
+          <li><a href="Profil.html">Profil</a></li>
+          <!-- Laissez ce commentaire ou ajoutez un bouton/lien avec id="loginBtn" si le JS doit l'ouvrir -->
+          <!-- Ex: <li><button type="button" class="btn btn-outline" id="loginBtn" aria-controls="loginModal">Connexion</button></li> -->
+        </ul>
+      </nav>
+      <!-- Bouton menu mobile - Attributs ARIA améliorés + lien vers l'ID du menu -->
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Ouvrir le menu de navigation" aria-expanded="false" aria-controls="mainNavLinks">☰</button>
+    </div>
+  </header>
+  <h1>Offres d'emploi - France Travail</h1>
+  <input type="text" id="keyword" placeholder="Ex: data analyst" />
+  <button onclick="searchJobs()">Rechercher</button>
+
+  <div id="results"></div>
+<button onclick="loadFavorites()">Voir mes favoris</button>
+
+  <script src="scriptJOBBOARD.js"></script>
+</body>
+</html>
