@@ -1,487 +1,204 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Réussir son entretien - Parcours Pro Simplifié</title>
-    <!-- Intégration de Font Awesome pour les icônes -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.6;
-            color: #333;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f9f9f9;
-        }
-        
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            position: relative;
-        }
-        
-        .header-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('https://images.unsplash.com/photo-1551836022-d5d88e9218df?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');
-            background-size: cover;
-            background-position: center;
-            opacity: 0.2;
-            border-radius: 8px;
-            z-index: -1;
-        }
-
-        .logo {
-            font-size: 28px;
-            font-weight: bold;
-            color: #2c6aa0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-        
-        .logo i {
-            color: #2c6aa0;
-        }
-        
-        h1 {
-            color: #2c6aa0;
-        }
-        
-        h2 {
-            color: #2c6aa0;
-            border-left: 4px solid #2c6aa0;
-            padding-left: 10px;
-            margin-top: 30px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        h2 i {
-            color: #2c6aa0;
-        }
-        
-        .card {
-            background-color: white;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .card-icon {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 24px;
-            color: rgba(44, 106, 160, 0.1);
-        }
-        
-        .intro-card {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-        
-        .intro-image {
-            flex: 0 0 200px;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-        
-        .intro-image img {
-            width: 100%;
-            height: auto;
-            transition: transform 0.3s;
-        }
-        
-        .intro-image img:hover {
-            transform: scale(1.05);
-        }
-        
-        .intro-content {
-            flex: 1;
-        }
-        
-        .highlight {
-            background-color: #f0f7ff;
-            padding: 15px;
-            border-radius: 6px;
-            border-left: 4px solid #2c6aa0;
-            margin: 15px 0;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        
-        .highlight i {
-            font-size: 24px;
-            color: #2c6aa0;
-        }
-        
-        ul {
-            padding-left: 5px;
-        }
-        
-        li {
-            margin-bottom: 12px;
-            list-style-type: none;
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-        }
-        
-        li i {
-            color: #2c6aa0;
-            margin-top: 3px;
-        }
-        
-        .checklist {
-            padding-left: 5px;
-        }
-        
-        .image-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin: 20px 0;
-        }
-        
-        .image-grid img {
-            width: 100%;
-            height: 100px;
-            object-fit: cover;
-            border-radius: 6px;
-            transition: transform 0.3s;
-        }
-        
-        .image-grid img:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
-        
-        .skill-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin: 20px 0;
-        }
-        
-        .skill-item {
-            background-color: #f0f7ff;
-            border-radius: 8px;
-            padding: 15px;
-            text-align: center;
-            transition: transform 0.3s;
-        }
-        
-        .skill-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        
-        .skill-item i {
-            font-size: 30px;
-            color: #2c6aa0;
-            margin-bottom: 10px;
-        }
-        
-        .skill-item strong {
-            display: block;
-            margin-bottom: 5px;
-            color: #2c6aa0;
-        }
-        
-        .footer {
-            text-align: center;
-            margin-top: 40px;
-            padding-top: 20px;
-            border-top: 1px solid #ddd;
-            font-size: 14px;
-            color: #666;
-        }
-        
-        .cta-button {
-            display: inline-block;
-            background-color: #2c6aa0;
-            color: white;
-            padding: 12px 24px;
-            text-decoration: none;
-            border-radius: 4px;
-            font-weight: bold;
-            margin-top: 10px;
-            transition: background-color 0.3s;
-        }
-        
-        .cta-button:hover {
-            background-color: #1e5585;
-        }
-        
-        .contact-info {
-            background-color: #f0f7ff;
-            padding: 25px;
-            border-radius: 8px;
-            margin-top: 30px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .contact-bg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');
-            background-size: cover;
-            background-position: center;
-            opacity: 0.1;
-            z-index: -1;
-        }
-        
-        .social-icons {
-            margin-top: 20px;
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-        }
-        
-        .social-icons a {
-            font-size: 20px;
-            color: #2c6aa0;
-            transition: transform 0.3s, color 0.3s;
-        }
-        
-        .social-icons a:hover {
-            transform: translateY(-3px);
-            color: #1e5585;
-        }
-        
-        @media (max-width: 768px) {
-            .intro-card {
-                flex-direction: column;
-            }
-            
-            .intro-image {
-                flex: 0 0 auto;
-                width: 100%;
-                margin-bottom: 15px;
-            }
-            
-            .skill-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .image-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .skill-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .image-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Réussir son entretien - EmploiAvenir</title>
+  <meta name="description" content="Conseils pratiques et checklist pour réussir votre entretien d'embauche et valoriser vos soft skills.">
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-    <header>
-        <div class="header-bg"></div>
-        <div class="logo">
-            <i class="fas fa-briefcase"></i> Parcours Pro Simplifié
-        </div>
-        <p>Facilitons votre insertion professionnelle</p>
-    </header>
-    
-    <div class="card intro-card">
+  <!-- HEADER EmploiAvenir -->
+  <header class="header" id="header">
+    <div class="container flex justify-between items-center">
+      <a href="index.html" class="logo" aria-label="Accueil EmploiAvenir"><span>Emploi</span>Avenir</a>
+      <nav aria-label="Navigation principale">
+        <ul class="nav-links" id="mainNavLinks">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="MonParcours.html">Mon Parcours</a></li>
+          <li><a href="MesCandidature.html">Mes Candidatures</a></li>
+          <li><a href="Partenaires.html">Nos partenaires</a></li>
+          <li><a href="Documents.html">Mes documents</a></li>
+          <li><a href="Profil.html">Profil</a></li>
+        </ul>
+      </nav>
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Ouvrir le menu de navigation" aria-expanded="false" aria-controls="mainNavLinks">☰</button>
+    </div>
+  </header>
+
+  <main>
+    <div class="container pt-8 pb-8">
+      <header class="text-center mb-8">
+        <h1 class="text-3xl font-bold text-primary mb-2"><i class="fas fa-handshake"></i> Réussir votre entretien d'embauche</h1>
+        <p class="text-muted">Conseils pratiques pour faire bonne impression et valoriser vos soft skills lors de vos entretiens.</p>
+      </header>
+
+      <section class="card intro-card flex flex-col md:flex-row items-center gap-6 mb-8">
         <div class="intro-image">
-            <img src="https://images.unsplash.com/photo-1579389083078-4e7018379f7e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="Entretien d'embauche">
+          <img src="https://images.unsplash.com/photo-1579389083078-4e7018379f7e?auto=format&fit=crop&w=600&q=80" alt="Entretien d'embauche" class="rounded-lg shadow">
         </div>
-        <div class="intro-content">
-            <h1>Réussir votre premier entretien d'embauche</h1>
-            <p>L'entretien d'embauche est une étape cruciale dans votre parcours professionnel. Voici des conseils pratiques pour vous aider à faire bonne impression et mettre en valeur vos soft skills.</p>
+        <div class="intro-content flex-1">
+          <h2 class="text-xl font-semibold mb-2">L'entretien, une étape clé de votre parcours</h2>
+          <p>L'entretien d'embauche est une étape cruciale dans votre parcours professionnel. Voici des conseils pratiques pour vous aider à faire bonne impression et mettre en valeur vos soft skills.</p>
+          <div class="highlight mt-4 flex items-center gap-3">
+            <i class="fas fa-lightbulb text-primary"></i>
+            <span><strong>Le saviez-vous ?</strong> 85% des employeurs considèrent que les soft skills sont aussi importantes, voire plus, que les compétences techniques.</span>
+          </div>
         </div>
-        <div class="card-icon">
-            <i class="fas fa-handshake"></i>
-        </div>
-    </div>
-    
-    <div class="highlight">
-        <i class="fas fa-lightbulb"></i>
-        <p><strong>Le saviez-vous ?</strong> 85% des employeurs considèrent que les soft skills sont aussi importantes, voire plus importantes, que les compétences techniques.</p>
-    </div>
-    
-    <h2><i class="fas fa-tshirt"></i> Préparer sa tenue vestimentaire</h2>
-    <div class="card">
-        <div class="card-icon">
-            <i class="fas fa-tshirt"></i>
-        </div>
-        <p>Votre apparence est la première chose que remarque un recruteur. Une tenue appropriée montre votre professionnalisme et votre compréhension des codes de l'entreprise.</p>
-        
-        <ul class="checklist">
+      </section>
+
+      <!-- Tenue vestimentaire -->
+      <section class="mb-8">
+        <h2 class="flex items-center gap-2 text-primary"><i class="fas fa-tshirt"></i> Préparer sa tenue vestimentaire</h2>
+        <div class="card">
+          <p>Votre apparence est la première chose que remarque un recruteur. Une tenue appropriée montre votre professionnalisme et votre compréhension des codes de l'entreprise.</p>
+          <ul class="checklist">
             <li><i class="fas fa-check-circle"></i> Optez pour une tenue propre, repassée et légèrement plus formelle que la tenue quotidienne du poste visé</li>
             <li><i class="fas fa-check-circle"></i> Privilégiez les couleurs sobres (bleu marine, gris, noir) et évitez les motifs trop voyants</li>
             <li><i class="fas fa-check-circle"></i> Limitez les accessoires et le maquillage à quelque chose de discret</li>
             <li><i class="fas fa-check-circle"></i> Assurez-vous que vos chaussures sont propres et adaptées à votre tenue</li>
             <li><i class="fas fa-check-circle"></i> Soignez votre hygiène personnelle (ongles propres, cheveux coiffés)</li>
-        </ul>
-        
-        <div class="image-grid">
-            <img src="https://images.unsplash.com/photo-1611097732516-3a7ee3881514?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" alt="Tenue professionnelle 1">
-            <img src="https://images.unsplash.com/photo-1553034545-32d4cd2168f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" alt="Tenue professionnelle 2">
-            <img src="https://images.unsplash.com/photo-1544717302-de2939b7ef71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" alt="Tenue professionnelle 3">
-        </div>
-        
-        <div class="highlight">
+          </ul>
+          <div class="image-grid mt-4 mb-4">
+            <img src="https://images.unsplash.com/photo-1611097732516-3a7ee3881514?auto=format&fit=crop&w=400&q=80" alt="Tenue professionnelle 1">
+            <img src="https://images.unsplash.com/photo-1553034545-32d4cd2168f1?auto=format&fit=crop&w=400&q=80" alt="Tenue professionnelle 2">
+            <img src="https://images.unsplash.com/photo-1544717302-de2939b7ef71?auto=format&fit=crop&w=400&q=80" alt="Tenue professionnelle 3">
+          </div>
+          <div class="highlight flex items-center gap-3">
             <i class="fas fa-info-circle"></i>
-            <p>Conseil : En cas de doute, il vaut mieux être légèrement trop habillé que pas assez. Vous pourrez toujours retirer une veste ou une cravate si nécessaire.</p>
+            <span>Conseil : En cas de doute, il vaut mieux être légèrement trop habillé que pas assez. Vous pourrez toujours retirer une veste ou une cravate si nécessaire.</span>
+          </div>
         </div>
-    </div>
-    
-    <h2><i class="fas fa-users"></i> Attitude et langage corporel</h2>
-    <div class="card">
-        <div class="card-icon">
-            <i class="fas fa-users"></i>
-        </div>
-        <p>Votre langage corporel communique autant que vos mots. Une attitude positive et ouverte crée immédiatement une bonne impression.</p>
-        
-        <ul class="checklist">
+      </section>
+
+      <!-- Attitude et langage corporel -->
+      <section class="mb-8">
+        <h2 class="flex items-center gap-2 text-primary"><i class="fas fa-users"></i> Attitude et langage corporel</h2>
+        <div class="card">
+          <p>Votre langage corporel communique autant que vos mots. Une attitude positive et ouverte crée immédiatement une bonne impression.</p>
+          <ul class="checklist">
             <li><i class="fas fa-check-circle"></i> Arrivez 10 à 15 minutes en avance pour éviter le stress de dernière minute</li>
             <li><i class="fas fa-check-circle"></i> Offrez une poignée de main ferme (si la situation sanitaire le permet)</li>
             <li><i class="fas fa-check-circle"></i> Maintenez un contact visuel régulier mais naturel</li>
             <li><i class="fas fa-check-circle"></i> Adoptez une posture droite mais détendue, évitez de croiser les bras</li>
             <li><i class="fas fa-check-circle"></i> Souriez naturellement pour montrer votre enthousiasme</li>
             <li><i class="fas fa-check-circle"></i> Écoutez attentivement sans interrompre votre interlocuteur</li>
-        </ul>
-        
-        <div class="image-grid">
-            <img src="https://images.unsplash.com/photo-1505483531331-fc3cf89fd382?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" alt="Poignée de main">
-            <img src="https://images.unsplash.com/photo-1573497491208-6b1acb260507?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" alt="Posture professionnelle">
-            <img src="https://images.unsplash.com/photo-1565688534245-05d6b5be184a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" alt="Contact visuel">
+          </ul>
+          <div class="image-grid mt-4 mb-4">
+            <img src="https://images.unsplash.com/photo-1505483531331-fc3cf89fd382?auto=format&fit=crop&w=400&q=80" alt="Poignée de main">
+            <img src="https://images.unsplash.com/photo-1573497491208-6b1acb260507?auto=format&fit=crop&w=400&q=80" alt="Posture professionnelle">
+            <img src="https://images.unsplash.com/photo-1565688534245-05d6b5be184a?auto=format&fit=crop&w=400&q=80" alt="Contact visuel">
+          </div>
         </div>
-    </div>
-    
-    <h2><i class="fas fa-comments"></i> Sujets à aborder</h2>
-    <div class="card">
-        <div class="card-icon">
-            <i class="fas fa-comments"></i>
-        </div>
-        <p>Préparez-vous à parler de ces sujets qui mettront en valeur vos soft skills et votre adéquation avec le poste.</p>
-        
-        <ul class="checklist">
+      </section>
+
+      <!-- Sujets à aborder -->
+      <section class="mb-8">
+        <h2 class="flex items-center gap-2 text-primary"><i class="fas fa-comments"></i> Sujets à aborder</h2>
+        <div class="card">
+          <p>Préparez-vous à parler de ces sujets qui mettront en valeur vos soft skills et votre adéquation avec le poste.</p>
+          <ul class="checklist">
             <li><i class="fas fa-check-circle"></i> Votre parcours professionnel et formation en lien avec le poste</li>
             <li><i class="fas fa-check-circle"></i> Des exemples concrets de situations où vous avez fait preuve d'adaptabilité</li>
             <li><i class="fas fa-check-circle"></i> Vos expériences de travail en équipe et votre capacité à collaborer</li>
             <li><i class="fas fa-check-circle"></i> Comment vous avez résolu des problèmes ou géré des situations difficiles</li>
             <li><i class="fas fa-check-circle"></i> Vos motivations pour rejoindre cette entreprise en particulier</li>
             <li><i class="fas fa-check-circle"></i> Vos objectifs professionnels à court et moyen terme</li>
-        </ul>
-        
-        <div class="highlight">
+          </ul>
+          <div class="highlight flex items-center gap-3">
             <i class="fas fa-star"></i>
-            <div>
-                <p><strong>Méthode STAR :</strong> Pour structurer vos réponses, utilisez la méthode STAR :</p>
-                <p><strong>S</strong>ituation - <strong>T</strong>âche - <strong>A</strong>ction - <strong>R</strong>ésultat</p>
-            </div>
+            <span>
+              <strong>Méthode STAR :</strong> Pour structurer vos réponses, utilisez la méthode STAR : <br>
+              <strong>S</strong>ituation – <strong>T</strong>âche – <strong>A</strong>ction – <strong>R</strong>ésultat
+            </span>
+          </div>
         </div>
-    </div>
-    
-    <h2><i class="fas fa-award"></i> Les soft skills à mettre en avant</h2>
-    <div class="card">
-        <div class="card-icon">
-            <i class="fas fa-award"></i>
+      </section>
+
+      <!-- Soft skills -->
+      <section class="mb-8">
+        <h2 class="flex items-center gap-2 text-primary"><i class="fas fa-award"></i> Les soft skills à mettre en avant</h2>
+        <div class="card">
+          <p>Les employeurs recherchent ces qualités personnelles qui font la différence au quotidien :</p>
+          <div class="skill-grid">
+            <div class="skill-item">
+              <i class="fas fa-comment-dots"></i>
+              <strong>Communication</strong>
+              <p>Exprimez-vous clairement et écoutez activement</p>
+            </div>
+            <div class="skill-item">
+              <i class="fas fa-sync-alt"></i>
+              <strong>Adaptabilité</strong>
+              <p>Montrez votre capacité à gérer le changement</p>
+            </div>
+            <div class="skill-item">
+              <i class="fas fa-puzzle-piece"></i>
+              <strong>Résolution de problèmes</strong>
+              <p>Abordez les défis avec créativité</p>
+            </div>
+            <div class="skill-item">
+              <i class="fas fa-users"></i>
+              <strong>Travail d'équipe</strong>
+              <p>Collaborez efficacement avec les autres</p>
+            </div>
+            <div class="skill-item">
+              <i class="fas fa-tasks"></i>
+              <strong>Organisation</strong>
+              <p>Gérez votre temps et vos priorités</p>
+            </div>
+            <div class="skill-item">
+              <i class="fas fa-heart"></i>
+              <strong>Intelligence émotionnelle</strong>
+              <p>Comprenez vos émotions et celles des autres</p>
+            </div>
+          </div>
         </div>
-        <p>Les employeurs recherchent ces qualités personnelles qui font la différence au quotidien :</p>
-        
-        <div class="skill-grid">
-            <div class="skill-item">
-                <i class="fas fa-comment-dots"></i>
-                <strong>Communication</strong>
-                <p>Exprimez-vous clairement et écoutez activement</p>
-            </div>
-            <div class="skill-item">
-                <i class="fas fa-sync-alt"></i>
-                <strong>Adaptabilité</strong>
-                <p>Montrez votre capacité à gérer le changement</p>
-            </div>
-            <div class="skill-item">
-                <i class="fas fa-puzzle-piece"></i>
-                <strong>Résolution de problèmes</strong>
-                <p>Abordez les défis avec créativité</p>
-            </div>
-            <div class="skill-item">
-                <i class="fas fa-users"></i>
-                <strong>Travail d'équipe</strong>
-                <p>Collaborez efficacement avec les autres</p>
-            </div>
-            <div class="skill-item">
-                <i class="fas fa-tasks"></i>
-                <strong>Organisation</strong>
-                <p>Gérez votre temps et vos priorités</p>
-            </div>
-            <div class="skill-item">
-                <i class="fas fa-heart"></i>
-                <strong>Intelligence émotionnelle</strong>
-                <p>Comprenez vos émotions et celles des autres</p>
-            </div>
-        </div>
-    </div>
-    
-    <h2><i class="fas fa-question-circle"></i> Questions à préparer</h2>
-    <div class="card">
-        <div class="card-icon">
-            <i class="fas fa-question-circle"></i>
-        </div>
-        <p>Avoir des questions préparées montre votre intérêt pour le poste et l'entreprise :</p>
-        
-        <ul class="checklist">
+      </section>
+
+      <!-- Questions à préparer -->
+      <section class="mb-8">
+        <h2 class="flex items-center gap-2 text-primary"><i class="fas fa-question-circle"></i> Questions à préparer</h2>
+        <div class="card">
+          <p>Avoir des questions préparées montre votre intérêt pour le poste et l'entreprise :</p>
+          <ul class="checklist">
             <li><i class="fas fa-check-circle"></i> "Pouvez-vous me décrire une journée typique à ce poste ?"</li>
             <li><i class="fas fa-check-circle"></i> "Quelles sont les principales qualités nécessaires pour réussir dans cette fonction ?"</li>
             <li><i class="fas fa-check-circle"></i> "Comment se passe l'intégration des nouveaux collaborateurs ?"</li>
             <li><i class="fas fa-check-circle"></i> "Quels sont les défis actuels de l'équipe/du service ?"</li>
             <li><i class="fas fa-check-circle"></i> "Quelles sont les possibilités d'évolution au sein de l'entreprise ?"</li>
-        </ul>
-        
-        <div class="highlight">
+          </ul>
+          <div class="highlight flex items-center gap-3">
             <i class="fas fa-exclamation-triangle"></i>
-            <p>Évitez de poser des questions uniquement sur le salaire, les congés ou les avantages lors du premier entretien. Ces sujets pourront être abordés ultérieurement dans le processus de recrutement.</p>
+            <span>Évitez de poser des questions uniquement sur le salaire, les congés ou les avantages lors du premier entretien. Ces sujets pourront être abordés ultérieurement dans le processus de recrutement.</span>
+          </div>
         </div>
-    </div>
-    
-    <div class="contact-info">
-        <div class="contact-bg"></div>
-        <h2><i class="fas fa-clipboard-list"></i> Besoin d'un accompagnement personnalisé ?</h2>
+      </section>
+
+      <!-- Accompagnement personnalisé -->
+      <section class="contact-info card mt-8 mb-8 text-center">
+        <h2 class="flex items-center gap-2 text-primary justify-center"><i class="fas fa-clipboard-list"></i> Besoin d'un accompagnement personnalisé ?</h2>
         <p>Notre équipe de conseillers est là pour vous aider à préparer vos entretiens, affiner votre CV ou développer vos soft skills. Nous proposons des ateliers, du coaching individuel et des simulations d'entretien.</p>
-        <a href="#contact" class="cta-button"><i class="fas fa-calendar-alt"></i> Prendre rendez-vous</a>
-        
-        <div class="social-icons">
-            <a href="#"><i class="fab fa-facebook"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-linkedin"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-youtube"></i></a>
+        <a href="Partenaires.html?tab=appointments" class="btn btn-primary mt-2"><i class="fas fa-calendar-alt"></i> Prendre rendez-vous</a>
+        <div class="social-icons mt-4" aria-label="Réseaux sociaux">
+          <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
         </div>
+      </section>
     </div>
-    
-    <div class="footer">
-        <p>© 2023 Parcours Pro Simplifié | Accompagnement à l'insertion professionnelle</p>
-        <p><i class="fas fa-map-marker-alt"></i> 12 rue de l'Emploi, 75000 Paris | <i class="fas fa-envelope"></i> contact@parcoursprosimplifie.fr | <i class="fas fa-phone"></i> 01 23 45 67 89</p>
+  </main>
+
+  <footer class="footer">
+    <div class="container text-center">
+      <p>© 2024 EmploiAvenir | Accompagnement à l'insertion professionnelle</p>
+      <p><i class="fas fa-map-marker-alt"></i> 12 rue de l'Emploi, 75000 Paris &nbsp;|&nbsp; <i class="fas fa-envelope"></i> contact@emploiavenir.fr &nbsp;|&nbsp; <i class="fas fa-phone"></i> 01 23 45 67 89</p>
     </div>
+  </footer>
 </body>
 </html>

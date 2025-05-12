@@ -1,327 +1,260 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Titre de la page spécifique - Garde EmploiAvenir -->
-    <title>Mon profil - EmploiAvenir</title>
-    <!-- Description adaptée pour cette page -->
-    <meta name="description" content="Gérez vos informations personnelles, paramètres de sécurité et préférences de compte dans votre espace profil EmploiAvenir.">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- Lien vers le fichier CSS externe - INDISPENSABLE -->
-    <!-- Assurez-vous que ce fichier style.css existe et contient TOUS les styles nécessaires, y compris ceux qui étaient dans le bloc <style> retiré ici. -->
-    <link rel="stylesheet" href="style.css">
-
-    <!-- Lien CDN pour Font Awesome (si tu utilises les icônes <i class="fas ...">) -->
-    <!-- Conserve celui que vous avez fourni -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-    <!-- Lovable script tag for Select feature -->
-    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
-
-    <!-- Le bloc <style> intégré a été COMPLÈTEMENT SUPPRIMÉ ici. -->
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mon profil - EmploiAvenir</title>
+  <meta name="description" content="Gérez vos informations personnelles, sécurité et préférences dans votre espace profil EmploiAvenir.">
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-  <!-- Header - Repris du code standard EmploiAvenir -->
+  <!-- HEADER -->
   <header class="header" id="header">
     <div class="container flex justify-between items-center">
-      <!-- Lien du logo corrigé pour pointer vers l'accueil -->
-      <a href="index.html" class="logo"><span>Emploi</span>Avenir</a>
+      <a href="index.html" class="logo" aria-label="Accueil EmploiAvenir"><span>Emploi</span>Avenir</a>
       <nav aria-label="Navigation principale">
-        <!-- Ajout de l'ID pour le JS du menu mobile -->
         <ul class="nav-links" id="mainNavLinks">
           <li><a href="index.html">Accueil</a></li>
           <li><a href="MonParcours.html">Mon Parcours</a></li>
           <li><a href="MesCandidature.html">Mes Candidatures</a></li>
           <li><a href="Partenaires.html">Nos partenaires</a></li>
           <li><a href="Documents.html">Mes documents</a></li>
-          <!-- Marquer Profil comme actif sur cette page -->
           <li><a href="Profil.html" class="active" aria-current="page">Profil</a></li>
-          <!-- Laissez ce commentaire ou ajoutez un bouton/lien avec id="loginBtn" si le JS doit l'ouvrir -->
-          <!-- Ex: <li><button type="button" class="btn btn-outline" id="loginBtn" aria-controls="loginModal">Connexion</button></li> -->
         </ul>
       </nav>
-      <!-- Bouton menu mobile - Attributs ARIA améliorés + lien vers l'ID du menu -->
       <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Ouvrir le menu de navigation" aria-expanded="false" aria-controls="mainNavLinks">☰</button>
     </div>
   </header>
 
-    <!-- Contenu principal de la page Profil -->
-    <main>
-        <!-- Utilisation de la classe container standard et ajout de padding vertical -->
-        <div class="container py-8">
-            <!-- Titre principal - H1 amélioré pour la page -->
-            <h1 class="text-center mb-8">Mon profil</h1>
-
-            <!-- Grille principale de la page Profil -->
-            <!-- Utilise les classes de grille de l'original -->
-            <div class="profile-grid max-w-4xl mx-auto">
-                <!-- Colonne principale (Informations personnelles, Sécurité) -->
-                <div class="profile-column-main space-y-6">
-                    <!-- Section Informations personnelles -->
-                    <section class="card" aria-labelledby="personalInfoTitle">
-                        <div class="card-header">
-                            <h2 class="card-title" id="personalInfoTitle">Informations personnelles</h2>
-                            <p class="card-description">Mettez à jour vos informations de profil</p>
-                        </div>
-                        <div class="card-content space-y-4">
-                            <!-- Formulaire pour les informations personnelles -->
-                            <form id="personalInfoForm"> <!-- Ajout d'une balise form -->
-                                <div class="form-grid-cols-2 gap-4"> <!-- Utilise la classe de grille pour le formulaire -->
-                                    <div class="form-group">
-                                        <label for="firstName">Prénom <span aria-hidden="true">*</span></label>
-                                        <input type="text" id="firstName" name="firstName" value="Jean" required/>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="lastName">Nom <span aria-hidden="true">*</span></label>
-                                        <input type="text" id="lastName" name="lastName" value="Dupont" required/>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="email">Email <span aria-hidden="true">*</span></label>
-                                    <input type="email" id="email" name="email" value="jean.dupont@example.com" required/>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="phone">Téléphone</label>
-                                    <input type="tel" id="phone" name="phone" value="06 12 34 56 78" />
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="address">Adresse</label>
-                                    <input type="text" id="address" name="address" value="15 rue de la Paix" />
-                                </div>
-
-                                <div class="form-grid-cols-2 gap-4"> <!-- Utilise la classe de grille -->
-                                    <div class="form-group">
-                                        <label for="city">Ville</label>
-                                        <input type="text" id="city" name="city" value="Paris" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="postalCode">Code postal</label>
-                                        <input type="text" id="postalCode" name="postalCode" value="75001" />
-                                    </div>
-                                </div>
-                            </form> <!-- Fin du formulaire -->
-                        </div>
-                    </section>
-
-                    <!-- Section Sécurité -->
-                    <section class="card" aria-labelledby="securityTitle">
-                        <div class="card-header">
-                            <h2 class="card-title" id="securityTitle">Sécurité</h2>
-                            <p class="card-description">Gérez vos informations de connexion</p>
-                        </div>
-                        <div class="card-content space-y-4">
-                             <!-- Formulaire pour changer le mot de passe -->
-                             <form id="changePasswordForm"> <!-- Ajout d'une balise form -->
-                                <div class="form-group">
-                                    <label for="currentPassword">Mot de passe actuel <span aria-hidden="true">*</span></label>
-                                    <input type="password" id="currentPassword" name="currentPassword" required/>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="newPassword">Nouveau mot de passe <span aria-hidden="true">*</span></label>
-                                    <input type="password" id="newPassword" name="newPassword" required/>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="confirmPassword">Confirmer le mot de passe <span aria-hidden="true">*</span></label>
-                                    <input type="password" id="confirmPassword" name="confirmPassword" required/>
-                                </div>
-                             </form> <!-- Fin du formulaire -->
-                        </div>
-                        <div class="card-footer">
-                            <!-- Utilisez type="button" si géré par JS et non une soumission classique -->
-                            <button type="button" class="button button-primary" id="changePasswordButton">Changer le mot de passe</button>
-                        </div>
-                    </section>
+  <main>
+    <div class="container py-8">
+      <h1 class="text-center mb-8">Mon profil</h1>
+      <div class="profile-grid max-w-4xl mx-auto">
+        <!-- Colonne principale -->
+        <div class="profile-column-main space-y-6">
+          <!-- Informations personnelles -->
+          <section class="card" aria-labelledby="personalInfoTitle">
+            <div class="card-header">
+              <h2 class="card-title" id="personalInfoTitle">Informations personnelles</h2>
+              <p class="card-description">Mettez à jour vos informations de profil</p>
+            </div>
+            <div class="card-content space-y-4">
+              <form id="personalInfoForm" autocomplete="on">
+                <div class="form-grid-cols-2 gap-4">
+                  <div class="form-group">
+                    <label for="firstName">Prénom <span aria-hidden="true">*</span></label>
+                    <input type="text" id="firstName" name="firstName" value="Jean" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="lastName">Nom <span aria-hidden="true">*</span></label>
+                    <input type="text" id="lastName" name="lastName" value="Dupont" required>
+                  </div>
                 </div>
-
-                <!-- Colonne latérale (Paramètres, Actions du compte) -->
-                <div class="profile-column-sidebar space-y-6">
-                    <!-- Section Paramètres -->
-                    <section class="card" aria-labelledby="settingsTitle">
-                        <div class="card-header">
-                            <h2 class="card-title" id="settingsTitle">Paramètres</h2>
-                            <p class="card-description">Gérez vos préférences</p>
-                        </div>
-                        <div class="card-content space-y-6">
-                             <!-- Item de paramètre avec switch -->
-                            <div class="setting-item">
-                                <div class="setting-item-label">
-                                    <label for="notifications">Notifications</label>
-                                    <p class="text-sm text-muted-foreground">Recevoir des alertes par email</p>
-                                </div>
-                                <div class="switch-container">
-                                     <!-- Input checkbox associé au label par 'id' et 'for' -->
-                                    <input type="checkbox" id="notifications" name="notifications" role="switch" aria-checked="true" checked>
-                                    <span class="switch-slider"></span>
-                                </div>
-                            </div>
-
-                            <hr class="separator" />
-
-                             <!-- Item de paramètre avec switch -->
-                            <div class="setting-item">
-                                <div class="setting-item-label">
-                                    <label for="accessibility">Mode accessible</label>
-                                    <p class="text-sm text-muted-foreground">Contenu adapté et simplifié</p>
-                                </div>
-                                <div class="switch-container">
-                                    <input type="checkbox" id="accessibility" name="accessibility" role="switch" aria-checked="false">
-                                    <span class="switch-slider"></span>
-                                </div>
-                            </div>
-
-                            <hr class="separator" />
-
-                             <!-- Item de paramètre avec switch -->
-                            <div class="setting-item">
-                                <div class="setting-item-label">
-                                    <label for="reminders">Rappels</label>
-                                    <p class="text-sm text-muted-foreground">Rappels pour continuer votre parcours</p>
-                                </div>
-                                <div class="switch-container">
-                                    <input type="checkbox" id="reminders" name="reminders" role="switch" aria-checked="true" checked>
-                                    <span class="switch-slider"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!-- Section Actions du compte -->
-                    <section class="card" aria-labelledby="accountActionsTitle">
-                        <div class="card-header">
-                            <h2 class="card-title" id="accountActionsTitle">Actions du compte</h2>
-                        </div>
-                        <div class="card-content space-y-2">
-                             <!-- Boutons d'action - Utilisez type="button" si géré par JS -->
-                            <button type="button" class="button button-outline w-full" id="exportDataButton">Exporter mes données</button>
-                            <button type="button" class="button button-destructive w-full" id="deleteAccountButton">Supprimer mon compte</button>
-                        </div>
-                    </section>
+                <div class="form-group">
+                  <label for="email">Email <span aria-hidden="true">*</span></label>
+                  <input type="email" id="email" name="email" value="jean.dupont@example.com" required>
                 </div>
+                <div class="form-group">
+                  <label for="phone">Téléphone</label>
+                  <input type="tel" id="phone" name="phone" value="06 12 34 56 78">
+                </div>
+                <div class="form-group">
+                  <label for="address">Adresse</label>
+                  <input type="text" id="address" name="address" value="15 rue de la Paix">
+                </div>
+                <div class="form-grid-cols-2 gap-4">
+                  <div class="form-group">
+                    <label for="city">Ville</label>
+                    <input type="text" id="city" name="city" value="Paris">
+                  </div>
+                  <div class="form-group">
+                    <label for="postalCode">Code postal</label>
+                    <input type="text" id="postalCode" name="postalCode" value="75001">
+                  </div>
+                </div>
+              </form>
             </div>
-
-            <!-- Bouton principal d'enregistrement des modifications -->
-            <div class="mt-8 flex justify-end">
-                 <!-- Utilisez type="button" si géré par JS et non une soumission classique -->
-                <button type="button" class="button button-primary button-large" id="saveChangesButton">Enregistrer les modifications</button>
+          </section>
+          <!-- Sécurité -->
+          <section class="card" aria-labelledby="securityTitle">
+            <div class="card-header">
+              <h2 class="card-title" id="securityTitle">Sécurité</h2>
+              <p class="card-description">Gérez vos informations de connexion</p>
             </div>
+            <div class="card-content space-y-4">
+              <form id="changePasswordForm" autocomplete="off">
+                <div class="form-group">
+                  <label for="currentPassword">Mot de passe actuel <span aria-hidden="true">*</span></label>
+                  <input type="password" id="currentPassword" name="currentPassword" required>
+                </div>
+                <div class="form-group">
+                  <label for="newPassword">Nouveau mot de passe <span aria-hidden="true">*</span></label>
+                  <input type="password" id="newPassword" name="newPassword" required>
+                </div>
+                <div class="form-group">
+                  <label for="confirmPassword">Confirmer le mot de passe <span aria-hidden="true">*</span></label>
+                  <input type="password" id="confirmPassword" name="confirmPassword" required>
+                </div>
+              </form>
+            </div>
+            <div class="card-footer">
+              <button type="button" class="btn btn-primary" id="changePasswordButton">Changer le mot de passe</button>
+            </div>
+          </section>
         </div>
-    </main>
-
-    <!-- Footer - Repris du code standard EmploiAvenir -->
-    <footer class="footer">
-        <div class="container">
-          <div class="footer-grid">
-            <div class="footer-column">
-              <h3>EmploiAvenir</h3>
-              <p>Votre partenaire pour trouver l'emploi de vos rêves et développer votre carrière professionnelle.</p>
+        <!-- Colonne latérale -->
+        <div class="profile-column-sidebar space-y-6">
+          <!-- Paramètres -->
+          <section class="card" aria-labelledby="settingsTitle">
+            <div class="card-header">
+              <h2 class="card-title" id="settingsTitle">Paramètres</h2>
+              <p class="card-description">Gérez vos préférences</p>
             </div>
-
-            <div class="footer-column">
-              <h3>Liens rapides</h3>
-              <ul class="footer-links">
-                <li><a href="index.html">Accueil</a></li>
-                <li><a href="MonParcours.html">Mon Parcours</a></li>
-                <li><a href="MesCandidature.html">Mes Candidatures</a></li>
-                <li><a href="Partenaires.html">Nos partenaires</a></li>
-                <li><a href="Documents.html">Mes documents</a></li>
-                <li><a href="Profil.html">Profil</a></li>
-              </ul>
+            <div class="card-content space-y-6">
+              <div class="setting-item flex justify-between items-center">
+                <div class="setting-item-label">
+                  <label for="notifications">Notifications</label>
+                  <p class="text-sm text-muted-foreground">Recevoir des alertes par email</p>
+                </div>
+                <div class="switch-container">
+                  <input type="checkbox" id="notifications" name="notifications" role="switch" aria-checked="true" checked>
+                  <span class="switch-slider"></span>
+                </div>
+              </div>
+              <hr class="separator" />
+              <div class="setting-item flex justify-between items-center">
+                <div class="setting-item-label">
+                  <label for="accessibility">Mode accessible</label>
+                  <p class="text-sm text-muted-foreground">Contenu adapté et simplifié</p>
+                </div>
+                <div class="switch-container">
+                  <input type="checkbox" id="accessibility" name="accessibility" role="switch" aria-checked="false">
+                  <span class="switch-slider"></span>
+                </div>
+              </div>
+              <hr class="separator" />
+              <div class="setting-item flex justify-between items-center">
+                <div class="setting-item-label">
+                  <label for="reminders">Rappels</label>
+                  <p class="text-sm text-muted-foreground">Rappels pour continuer votre parcours</p>
+                </div>
+                <div class="switch-container">
+                  <input type="checkbox" id="reminders" name="reminders" role="switch" aria-checked="true" checked>
+                  <span class="switch-slider"></span>
+                </div>
+              </div>
             </div>
-
-            <div class="footer-column">
-              <h3>Services</h3>
-              <ul class="footer-links">
-                <li><a href="#">Création de CV</a></li> <!-- Ces liens pourraient pointer vers des sections de MonParcours.html plus tard -->
-                <li><a href="#">Lettres de motivation</a></li>
-                <li><a href="#">Coaching</a></li>
-                <li><a href="#">Préparation aux entretiens</a></li>
-                <li><a href="#">Partenaires entreprises</a></li>
-              </ul>
+          </section>
+          <!-- Actions du compte -->
+          <section class="card" aria-labelledby="accountActionsTitle">
+            <div class="card-header">
+              <h2 class="card-title" id="accountActionsTitle">Actions du compte</h2>
             </div>
-
-            <div class="footer-column">
-              <h3>Contact</h3>
-              <ul class="footer-links">
-                <li><a href="tel:+33123456789">+33 1 23 45 67 89</a></li>
-                <li><a href="mailto:contact@emploiavenir.fr">contact@emploiavenir.fr</a></li>
-                <li>12 rue de l'Emploi, 75001 Paris</li>
-              </ul>
+            <div class="card-content space-y-2">
+              <button type="button" class="btn btn-outline w-full" id="exportDataButton">Exporter mes données</button>
+              <button type="button" class="btn btn-danger w-full" id="deleteAccountButton">Supprimer mon compte</button>
             </div>
-          </div>
-
-          <div class="footer-bottom">
-            <p>© 2024 EmploiAvenir. Tous droits réservés.</p>
-          </div>
+          </section>
         </div>
-    </footer>
-
-    <!-- Toast Container - Conserve l'original -->
-    <!-- La div elle-même est essentielle pour que le JS fonctionne -->
-    <div id="toast-container"></div>
-
-
-    <!-- Login Modal - Repris des améliorations précédentes -->
-    <div id="loginModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="loginModalTitle" style="display: none;">
-        <div class="modal-content">
-          <button type="button" class="close-modal" aria-label="Fermer la fenêtre de connexion">×</button>
-          <h2 id="loginModalTitle">Connexion</h2>
-          <form id="loginForm">
-            <div class="form-group">
-              <label for="email">Email</label>
-              <input type="email" id="email" name="email" required>
-            </div>
-
-            <div class="form-group">
-              <label for="password">Mot de passe</label>
-              <input type="password" id="password" name="password" required>
-            </div>
-
-            <button type="submit" class="btn" style="width: 100%;">Se connecter</button>
-
-            <div class="text-center mt-2">
-              <a href="#" class="modal-link">Mot de passe oublié ?</a>
-            </div>
-
-            <div class="text-center mt-2">
-              <p>Pas encore de compte ? <a href="#" class="modal-link" id="openRegisterModal">S'inscrire</a></p>
-            </div>
-          </form>
-        </div>
+      </div>
+      <div class="mt-8 flex justify-end">
+        <button type="button" class="btn btn-primary btn-large" id="saveChangesButton">Enregistrer les modifications</button>
+      </div>
     </div>
+  </main>
 
-    <!-- Chatbot - Repris des améliorations précédentes -->
-    <button type="button" class="chatbot-btn" id="chatbotBtn" aria-label="Ouvrir l'assistant virtuel EmploiAvenir" aria-expanded="false" aria-controls="chatbotContainer">💬</button>
-
-    <div class="chatbot-container" id="chatbotContainer" role="log" aria-labelledby="chatbotHeaderTitle" style="display: none;">
-        <div class="chatbot-header">
-          <h3 id="chatbotHeaderTitle">Assistant EmploiAvenir</h3>
-          <button type="button" id="closeChatbot" aria-label="Fermer l'assistant virtuel">✖</button>
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-column">
+          <h3>EmploiAvenir</h3>
+          <p>Votre partenaire pour trouver l'emploi de vos rêves et développer votre carrière professionnelle.</p>
         </div>
-
-        <div class="chatbot-messages" id="chatbotMessages" aria-live="polite">
-          <div class="message bot-message">
-            Bonjour ! Comment puis-je vous aider aujourd'hui ?
-          </div>
+        <div class="footer-column">
+          <h3>Liens rapides</h3>
+          <ul class="footer-links">
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="MonParcours.html">Mon Parcours</a></li>
+            <li><a href="MesCandidature.html">Mes Candidatures</a></li>
+            <li><a href="Partenaires.html">Nos partenaires</a></li>
+            <li><a href="Documents.html">Mes documents</a></li>
+            <li><a href="Profil.html">Profil</a></li>
+          </ul>
         </div>
-
-        <div class="chatbot-input">
-          <input type="text" id="chatbotInput" name="chatbot_message" placeholder="Écrivez votre message..." aria-label="Votre message à l'assistant EmploiAvenir">
-          <button id="sendMessage" type="button">Envoyer</button>
+        <div class="footer-column">
+          <h3>Services</h3>
+          <ul class="footer-links">
+            <li><a href="#">Création de CV</a></li>
+            <li><a href="#">Lettres de motivation</a></li>
+            <li><a href="#">Coaching</a></li>
+            <li><a href="#">Préparation aux entretiens</a></li>
+            <li><a href="#">Partenaires entreprises</a></li>
+          </ul>
         </div>
+        <div class="footer-column">
+          <h3>Contact</h3>
+          <ul class="footer-links">
+            <li><a href="tel:+33123456789">+33 1 23 45 67 89</a></li>
+            <li><a href="mailto:contact@emploiavenir.fr">contact@emploiavenir.fr</a></li>
+            <li>12 rue de l'Emploi, 75001 Paris</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2024 EmploiAvenir. Tous droits réservés.</p>
+      </div>
     </div>
+  </footer>
+
+  <div id="toast-container"></div>
+
+  <!-- MODALE CONNEXION -->
+  <div id="loginModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="loginModalTitle" style="display: none;">
+    <div class="modal-content">
+      <button type="button" class="close-modal" aria-label="Fermer la fenêtre de connexion">×</button>
+      <h2 id="loginModalTitle">Connexion</h2>
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="loginEmail">Email</label>
+          <input type="email" id="loginEmail" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">Mot de passe</label>
+          <input type="password" id="loginPassword" name="password" required>
+        </div>
+        <button type="submit" class="btn" style="width: 100%;">Se connecter</button>
+        <div class="text-center mt-2">
+          <a href="#" class="modal-link">Mot de passe oublié ?</a>
+        </div>
+        <div class="text-center mt-2">
+          <p>Pas encore de compte ? <a href="#" class="modal-link" id="openRegisterModal">S'inscrire</a></p>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- CHATBOT -->
+  <button type="button" class="chatbot-btn" id="chatbotBtn" aria-label="Ouvrir l'assistant virtuel EmploiAvenir" aria-expanded="false" aria-controls="chatbotContainer">💬</button>
+  <div class="chatbot-container" id="chatbotContainer" role="log" aria-labelledby="chatbotHeaderTitle" style="display: none;">
+    <div class="chatbot-header">
+      <h3 id="chatbotHeaderTitle">Assistant EmploiAvenir</h3>
+      <button type="button" id="closeChatbot" aria-label="Fermer l'assistant virtuel">✖</button>
+    </div>
+    <div class="chatbot-messages" id="chatbotMessages" aria-live="polite">
+      <div class="message bot-message">
+        Bonjour ! Comment puis-je vous aider aujourd'hui ?
+      </div>
+    </div>
+    <div class="chatbot-input">
+      <input type="text" id="chatbotInput" name="chatbot_message" placeholder="Écrivez votre message..." aria-label="Votre message à l'assistant EmploiAvenir">
+      <button id="sendMessage" type="button">Envoyer</button>
+    </div>
+  </div>
 
   <script src="Script.js"></script>
-
 </body>
 </html>
