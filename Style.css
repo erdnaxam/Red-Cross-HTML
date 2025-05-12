@@ -1514,6 +1514,72 @@ progress#progression-bar::-moz-progress-bar { background-color: var(--color-prim
       display: none; /* Complètement caché sur très petit écran */
   }
 }
+/* Aperçu CV */
+.cv-preview {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.cv-section {
+  margin-bottom: 1.5rem;
+}
+
+.cv-section h3 {
+  color: var(--color-primary);
+  border-bottom: 2px solid var(--color-primary);
+  padding-bottom: 0.5rem;
+}
+
+.cv-item {
+  margin: 1rem 0;
+}
+/*CV preview style.css */
+/* Styles spécifiques pour la génération PDF */
+.cv-preview-area {
+  width: 794px !important;   /* Largeur A4 à 96dpi */
+  min-height: 1123px !important; /* Hauteur A4 à 96dpi */
+  padding: 40px 32px !important;
+  margin: 0 auto !important;
+  background-color: #fff !important;
+  color: #000 !important;
+  font-family: 'Inter', Arial, sans-serif !important;
+  font-size: 16px !important;
+  line-height: 1.5 !important;
+  position: relative !important;
+  z-index: 1 !important;
+  box-sizing: border-box !important;
+}
+
+.cv-preview-area * {
+  color: #000 !important;
+  background-color: transparent !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: static !important;
+  font-family: 'Inter', Arial, sans-serif !important;
+  line-height: inherit !important;
+  box-shadow: none !important;
+  -webkit-print-color-adjust: exact !important;
+  print-color-adjust: exact !important;
+}
+
+/* Styles pour les sections du CV */
+.cv-preview-area h1,
+.cv-preview-area h2,
+.cv-preview-area h3,
+.cv-preview-area h4 {
+  margin-top: 0 !important;
+  font-weight: bold !important;
+  color: #000 !important;
+}
+
+.cv-section {
+  margin-bottom: 20px !important;
+  page-break-inside: avoid !important;
+}
+
 
 /* ============================================= */
 /* === Fin du Fichier style.css === */

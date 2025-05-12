@@ -41,9 +41,9 @@
           <p>Question <span id="currentQuizQuestion">1</span> sur <span id="totalQuizQuestions">4</span></p>
         </div>
 
-        <div id="quizSteps">
+        <fieldset id="quizSteps">
           <!-- Étape 1 -->
-          <fieldset class="quiz-step active" id="step-1">
+          <fieldset class="quiz-step active" id="step-0">
             <legend class="sr-only">Partie 1 : Votre situation actuelle</legend>
             <h2 class="text-center mb-4">Parlons un peu de vous...</h2>
             <p class="text-center mb-6">Ces questions nous aident à adapter l'aide que nous vous proposons.</p>
@@ -80,7 +80,7 @@
           </fieldset>
 
           <!-- Étape 2 -->
-          <fieldset class="quiz-step" id="step-2">
+          <fieldset class="quiz-step" id="step-1">
             <legend class="sr-only">Partie 2 : Votre expérience</legend>
             <h2 class="text-center mb-4">Votre expérience professionnelle</h2>
             <p class="text-center mb-6">Cela nous aide à préparer votre CV.</p>
@@ -105,7 +105,7 @@
           </fieldset>
 
           <!-- Étape 3 -->
-          <fieldset class="quiz-step" id="step-3">
+          <fieldset class="quiz-step" id="step-2">
             <legend class="sr-only">Partie 3 : Vos objectifs</legend>
             <h2 class="text-center mb-4">Vos objectifs et besoins</h2>
             <p class="text-center mb-6">Quel type d'emploi ou d'aide cherchez-vous ?</p>
@@ -130,7 +130,7 @@
           </fieldset>
 
           <!-- Étape 4 -->
-          <fieldset class="quiz-step" id="step-4">
+          <fieldset class="quiz-step" id="step-3">
             <legend class="sr-only">Partie 4 : Créez votre compte</legend>
             <h2 class="text-center mb-4">Créez votre espace personnel</h2>
             <p class="text-center mb-6">Créez un compte sécurisé pour sauvegarder vos réponses et suivre votre parcours.</p>
@@ -153,7 +153,7 @@
           </fieldset>
 
           <!-- Étape 5 : Fin -->
-          <div class="quiz-step" id="step-5">
+          <fieldset class="quiz-step" id="step-4">
             <h2 class="text-center mb-4">Félicitations !</h2>
             <p class="text-center mb-6">Votre évaluation est terminée et votre espace personnel est créé.</p>
             <p class="text-center mb-6">Nous avons maintenant les informations essentielles pour vous proposer un accompagnement adapté à vos besoins.</p>
@@ -162,12 +162,11 @@
               <button type="button" class="btn btn-primary btn-large" id="goToParcoursButton">
                 Accéder à mon parcours
               </button>
-              <a href="cv-generator.html" id="goToCVLMButton" class="btn btn-secondary btn-large mt-2">
+              <a href="choix-cv.html" id="goToCVLMButton" class="btn btn-secondary btn-large mt-2">
                 Commencer l'Étape 1 : CV & LM
               </a>
             </div>
-          </div>
-        </div>
+        </fieldset>
 
         <!-- Navigation du formulaire -->
         <div class="form-navigation mt-6 flex justify-between">
