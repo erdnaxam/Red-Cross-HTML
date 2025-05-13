@@ -3,23 +3,87 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Réussir son entretien - EmploiAvenir</title>
-  <meta name="description" content="Conseils pratiques et checklist pour réussir votre entretien d'embauche et valoriser vos soft skills.">
+  <title>Réussir son Entretien d'Embauche - EmploiAvenir</title>
+  <meta name="description" content="Conseils pratiques, checklist et stratégies pour réussir votre entretien d'embauche et valoriser vos soft skills avec EmploiAvenir.">
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    /* Styles pour les accordéons (similaires à avant, à affiner dans style.css) */
+    .accordion-section.card {
+        margin-bottom: 1.5rem; /* Espacement entre les accordéons */
+        overflow: hidden; /* Nécessaire pour l'animation max-height */
+    }
+    .accordion-button {
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
+      border: none;
+      background-color: transparent; /* Ou une couleur de fond légère pour le header de l'accordéon */
+      padding: 1.25rem 1.5rem; /* Plus de padding pour le bouton */
+      outline: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background-color 0.2s ease;
+    }
+    .accordion-button:hover, .accordion-button:focus {
+        background-color: var(--color-primary-light); /* Feedback au survol/focus */
+    }
+    .accordion-button h2 {
+        margin-bottom: 0; /* Annuler la marge par défaut du h2 */
+        font-size: 1.25rem; /* Taille de titre pour l'accordéon */
+    }
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease-out, padding 0.35s ease-out, opacity 0.3s ease-out;
+      opacity: 0;
+      padding-left: 1.5rem; /* padding-left/right sur le contenu */
+      padding-right: 1.5rem;
+    }
+    .accordion-content.open {
+      opacity: 1;
+      padding-top: 1rem;   /* padding-top/bottom quand ouvert */
+      padding-bottom: 1.5rem;
+      /* max-height est défini par JS */
+    }
+    .accordion-button .icon-toggle::before {
+      content: '\f078'; /* Font Awesome chevron-down */
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      transition: transform 0.3s ease;
+      display: inline-block;
+      font-size: 0.9em;
+    }
+    .accordion-button[aria-expanded="true"] .icon-toggle::before {
+      transform: rotate(-180deg);
+    }
+
+    /* Styles pour les listes et info-box (comme précédemment) */
+    .checklist li { margin-bottom: 0.75rem; display: flex; align-items: flex-start; }
+    .checklist i { margin-top: 0.125em; /* Petit ajustement vertical pour l'icône */ flex-shrink: 0; }
+    .info-box { border-left-width: 4px; padding: 1rem; display: flex; align-items: flex-start; gap: 0.75rem;}
+    .info-box i.icon-left { margin-top: 0.125em; flex-shrink: 0; }
+    .info-box.highlight-info { border-left-color: var(--color-primary); background-color: var(--color-primary-light); }
+    .info-box.conseil-info { border-left-color: var(--color-info); background-color: var(--color-info-light); }
+    .info-box.warning-info { border-left-color: var(--color-warning); background-color: var(--color-warning-light); }
+    .info-box.highlight-star { border-left-color: var(--color-warning); background-color: var(--color-warning-light); }
+
+    .skill-item { transition: box-shadow 0.3s ease, transform 0.3s ease; }
+    .skill-item:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+  </style>
 </head>
 <body>
-  <!-- HEADER EmploiAvenir -->
   <header class="header" id="header">
     <div class="container flex justify-between items-center">
       <a href="index.html" class="logo" aria-label="Accueil EmploiAvenir"><span>Emploi</span>Avenir</a>
       <nav aria-label="Navigation principale">
         <ul class="nav-links" id="mainNavLinks">
           <li><a href="index.html">Accueil</a></li>
-          <li><a href="MonParcours.html">Mon Parcours</a></li>
+          <li><a href="MonParcours.html" class="active" aria-current="page">Mon Parcours</a></li>
           <li><a href="MesCandidature.html">Mes Candidatures</a></li>
           <li><a href="Partenaires.html">Nos partenaires</a></li>
           <li><a href="Documents.html">Mes documents</a></li>
@@ -30,175 +94,292 @@
     </div>
   </header>
 
-  <main>
-    <div class="container pt-8 pb-8">
-      <header class="text-center mb-8">
-        <h1 class="text-3xl font-bold text-primary mb-2"><i class="fas fa-handshake"></i> Réussir votre entretien d'embauche</h1>
-        <p class="text-muted">Conseils pratiques pour faire bonne impression et valoriser vos soft skills lors de vos entretiens.</p>
+  <main class="page-preparation-entretien">
+    <div class="container pt-8 pb-12">
+      <header class="section-header text-center mb-10">
+        <h1>
+          <i class="fas fa-handshake icon-left text-3xl md:text-4xl" aria-hidden="true"></i> Réussir votre entretien d'embauche
+        </h1>
+        <p class="intro-text text-gray-darker mt-3 text-lg">
+          Découvrez nos conseils pratiques pour faire une excellente impression et mettre en avant vos précieuses soft skills.
+        </p>
       </header>
 
-      <section class="card intro-card flex flex-col md:flex-row items-center gap-6 mb-8">
-        <div class="intro-image">
-          <img src="https://images.unsplash.com/photo-1579389083078-4e7018379f7e?auto=format&fit=crop&w=600&q=80" alt="Entretien d'embauche" class="rounded-lg shadow">
-        </div>
-        <div class="intro-content flex-1">
-          <h2 class="text-xl font-semibold mb-2">L'entretien, une étape clé de votre parcours</h2>
-          <p>L'entretien d'embauche est une étape cruciale dans votre parcours professionnel. Voici des conseils pratiques pour vous aider à faire bonne impression et mettre en valeur vos soft skills.</p>
-          <div class="highlight mt-4 flex items-center gap-3">
-            <i class="fas fa-lightbulb text-primary"></i>
-            <span><strong>Le saviez-vous ?</strong> 85% des employeurs considèrent que les soft skills sont aussi importantes, voire plus, que les compétences techniques.</span>
+      <article class="card intro-card mb-10 p-6 shadow-lg" aria-labelledby="intro-title">
+        <div class="intro-content">
+          <h2 id="intro-title" class="text-2xl font-semibold mb-4 text-primary">L'entretien : Votre opportunité de briller</h2>
+          <p class="mb-4 text-md">L'entretien d'embauche est bien plus qu'une simple formalité ; c'est une étape cruciale où vous pouvez activement façonner la perception du recruteur. Cette page vous guide à travers les stratégies clés pour non seulement répondre aux attentes, mais aussi pour vous démarquer positivement.</p>
+          <div class="info-box highlight-info mt-6">
+            <i class="fas fa-lightbulb icon-left text-primary fa-lg" aria-hidden="true"></i>
+            <p><strong>Le saviez-vous ?</strong> Selon une étude récente, <strong>85%</strong> des recruteurs estiment que les soft skills sont aussi, voire plus, déterminantes que les compétences techniques pures pour le succès à long terme dans un poste.</p>
           </div>
+        </div>
+      </article>
+
+      {/* Conteneur pour les accordéons générés par JS */}
+      <div id="accordionContainer" class="grid grid-cols-1 md:grid-cols-1 gap-0"> {/* gap-0 car la card a déjà un mb */}
+        {/* Les accordéons seront insérés ici par JavaScript */}
+      </div>
+
+      <section class="entretien-section card p-6 mb-10 shadow-md mt-8" aria-labelledby="softskills-title"> {/* mt-8 pour espacer de la dernière section accordéon */}
+        <h2 id="softskills-title" class="section-subtitle text-xl font-semibold flex items-center gap-3 text-primary mb-6">
+          <i class="fas fa-award fa-fw" aria-hidden="true"></i> 5. Valorisez vos Soft Skills : Les qualités qui font la différence
+        </h2>
+        <p class="mb-6 text-md">Les employeurs recherchent activement ces compétences comportementales et relationnelles. Apprenez à les identifier chez vous et à les illustrer par des exemples concrets lors de l'entretien.</p>
+        <div class="skill-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {/* Les items de soft skills seront insérés ici par JavaScript */}
         </div>
       </section>
 
-      <!-- Tenue vestimentaire -->
-      <section class="mb-8">
-        <h2 class="flex items-center gap-2 text-primary"><i class="fas fa-tshirt"></i> Préparer sa tenue vestimentaire</h2>
-        <div class="card">
-          <p>Votre apparence est la première chose que remarque un recruteur. Une tenue appropriée montre votre professionnalisme et votre compréhension des codes de l'entreprise.</p>
-          <ul class="checklist">
-            <li><i class="fas fa-check-circle"></i> Optez pour une tenue propre, repassée et légèrement plus formelle que la tenue quotidienne du poste visé</li>
-            <li><i class="fas fa-check-circle"></i> Privilégiez les couleurs sobres (bleu marine, gris, noir) et évitez les motifs trop voyants</li>
-            <li><i class="fas fa-check-circle"></i> Limitez les accessoires et le maquillage à quelque chose de discret</li>
-            <li><i class="fas fa-check-circle"></i> Assurez-vous que vos chaussures sont propres et adaptées à votre tenue</li>
-            <li><i class="fas fa-check-circle"></i> Soignez votre hygiène personnelle (ongles propres, cheveux coiffés)</li>
-          </ul>
-          <div class="image-grid mt-4 mb-4">
-            <img src="https://images.unsplash.com/photo-1611097732516-3a7ee3881514?auto=format&fit=crop&w=400&q=80" alt="Tenue professionnelle 1">
-            <img src="https://images.unsplash.com/photo-1553034545-32d4cd2168f1?auto=format&fit=crop&w=400&q=80" alt="Tenue professionnelle 2">
-            <img src="https://images.unsplash.com/photo-1544717302-de2939b7ef71?auto=format&fit=crop&w=400&q=80" alt="Tenue professionnelle 3">
-          </div>
-          <div class="highlight flex items-center gap-3">
-            <i class="fas fa-info-circle"></i>
-            <span>Conseil : En cas de doute, il vaut mieux être légèrement trop habillé que pas assez. Vous pourrez toujours retirer une veste ou une cravate si nécessaire.</span>
-          </div>
+      <aside class="contact-info card mt-10 mb-8 p-6 text-center bg-primary-light rounded-lg shadow-lg" aria-labelledby="accompagnement-title">
+        <h2 id="accompagnement-title" class="text-2xl font-semibold flex items-center gap-3 text-primary justify-center mb-4">
+            <i class="fas fa-user-friends fa-fw" aria-hidden="true"></i> Prêt à aller plus loin ?
+        </h2>
+        <p class="mb-6 text-md text-gray-darker">Notre équipe de conseillers est à votre disposition pour un accompagnement personnalisé : préparation ciblée de vos entretiens, optimisation de CV, développement de vos soft skills grâce à des ateliers, du coaching individuel et des simulations pratiques.</p>
+        <a href="Partenaires.html?tab=appointments" class="btn btn-primary btn-large">
+            <i class="fas fa-calendar-alt mr-2" aria-hidden="true"></i> Prendre rendez-vous pour un coaching
+        </a>
+        <div class="social-icons mt-8 flex justify-center gap-6" aria-label="Suivez-nous sur les réseaux sociaux">
+          <a href="#" aria-label="Facebook" class="text-gray-medium hover:text-primary text-3xl transition-colors"><i class="fab fa-facebook-square"></i></a>
+          <a href="#" aria-label="LinkedIn" class="text-gray-medium hover:text-primary text-3xl transition-colors"><i class="fab fa-linkedin"></i></a>
+          <a href="#" aria-label="Twitter" class="text-gray-medium hover:text-primary text-3xl transition-colors"><i class="fab fa-twitter-square"></i></a>
         </div>
-      </section>
+      </aside>
 
-      <!-- Attitude et langage corporel -->
-      <section class="mb-8">
-        <h2 class="flex items-center gap-2 text-primary"><i class="fas fa-users"></i> Attitude et langage corporel</h2>
-        <div class="card">
-          <p>Votre langage corporel communique autant que vos mots. Une attitude positive et ouverte crée immédiatement une bonne impression.</p>
-          <ul class="checklist">
-            <li><i class="fas fa-check-circle"></i> Arrivez 10 à 15 minutes en avance pour éviter le stress de dernière minute</li>
-            <li><i class="fas fa-check-circle"></i> Offrez une poignée de main ferme (si la situation sanitaire le permet)</li>
-            <li><i class="fas fa-check-circle"></i> Maintenez un contact visuel régulier mais naturel</li>
-            <li><i class="fas fa-check-circle"></i> Adoptez une posture droite mais détendue, évitez de croiser les bras</li>
-            <li><i class="fas fa-check-circle"></i> Souriez naturellement pour montrer votre enthousiasme</li>
-            <li><i class="fas fa-check-circle"></i> Écoutez attentivement sans interrompre votre interlocuteur</li>
-          </ul>
-          <div class="image-grid mt-4 mb-4">
-            <img src="https://images.unsplash.com/photo-1505483531331-fc3cf89fd382?auto=format&fit=crop&w=400&q=80" alt="Poignée de main">
-            <img src="https://images.unsplash.com/photo-1573497491208-6b1acb260507?auto=format&fit=crop&w=400&q=80" alt="Posture professionnelle">
-            <img src="https://images.unsplash.com/photo-1565688534245-05d6b5be184a?auto=format&fit=crop&w=400&q=80" alt="Contact visuel">
-          </div>
-        </div>
-      </section>
-
-      <!-- Sujets à aborder -->
-      <section class="mb-8">
-        <h2 class="flex items-center gap-2 text-primary"><i class="fas fa-comments"></i> Sujets à aborder</h2>
-        <div class="card">
-          <p>Préparez-vous à parler de ces sujets qui mettront en valeur vos soft skills et votre adéquation avec le poste.</p>
-          <ul class="checklist">
-            <li><i class="fas fa-check-circle"></i> Votre parcours professionnel et formation en lien avec le poste</li>
-            <li><i class="fas fa-check-circle"></i> Des exemples concrets de situations où vous avez fait preuve d'adaptabilité</li>
-            <li><i class="fas fa-check-circle"></i> Vos expériences de travail en équipe et votre capacité à collaborer</li>
-            <li><i class="fas fa-check-circle"></i> Comment vous avez résolu des problèmes ou géré des situations difficiles</li>
-            <li><i class="fas fa-check-circle"></i> Vos motivations pour rejoindre cette entreprise en particulier</li>
-            <li><i class="fas fa-check-circle"></i> Vos objectifs professionnels à court et moyen terme</li>
-          </ul>
-          <div class="highlight flex items-center gap-3">
-            <i class="fas fa-star"></i>
-            <span>
-              <strong>Méthode STAR :</strong> Pour structurer vos réponses, utilisez la méthode STAR : <br>
-              <strong>S</strong>ituation – <strong>T</strong>âche – <strong>A</strong>ction – <strong>R</strong>ésultat
-            </span>
-          </div>
-        </div>
-      </section>
-
-      <!-- Soft skills -->
-      <section class="mb-8">
-        <h2 class="flex items-center gap-2 text-primary"><i class="fas fa-award"></i> Les soft skills à mettre en avant</h2>
-        <div class="card">
-          <p>Les employeurs recherchent ces qualités personnelles qui font la différence au quotidien :</p>
-          <div class="skill-grid">
-            <div class="skill-item">
-              <i class="fas fa-comment-dots"></i>
-              <strong>Communication</strong>
-              <p>Exprimez-vous clairement et écoutez activement</p>
-            </div>
-            <div class="skill-item">
-              <i class="fas fa-sync-alt"></i>
-              <strong>Adaptabilité</strong>
-              <p>Montrez votre capacité à gérer le changement</p>
-            </div>
-            <div class="skill-item">
-              <i class="fas fa-puzzle-piece"></i>
-              <strong>Résolution de problèmes</strong>
-              <p>Abordez les défis avec créativité</p>
-            </div>
-            <div class="skill-item">
-              <i class="fas fa-users"></i>
-              <strong>Travail d'équipe</strong>
-              <p>Collaborez efficacement avec les autres</p>
-            </div>
-            <div class="skill-item">
-              <i class="fas fa-tasks"></i>
-              <strong>Organisation</strong>
-              <p>Gérez votre temps et vos priorités</p>
-            </div>
-            <div class="skill-item">
-              <i class="fas fa-heart"></i>
-              <strong>Intelligence émotionnelle</strong>
-              <p>Comprenez vos émotions et celles des autres</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Questions à préparer -->
-      <section class="mb-8">
-        <h2 class="flex items-center gap-2 text-primary"><i class="fas fa-question-circle"></i> Questions à préparer</h2>
-        <div class="card">
-          <p>Avoir des questions préparées montre votre intérêt pour le poste et l'entreprise :</p>
-          <ul class="checklist">
-            <li><i class="fas fa-check-circle"></i> "Pouvez-vous me décrire une journée typique à ce poste ?"</li>
-            <li><i class="fas fa-check-circle"></i> "Quelles sont les principales qualités nécessaires pour réussir dans cette fonction ?"</li>
-            <li><i class="fas fa-check-circle"></i> "Comment se passe l'intégration des nouveaux collaborateurs ?"</li>
-            <li><i class="fas fa-check-circle"></i> "Quels sont les défis actuels de l'équipe/du service ?"</li>
-            <li><i class="fas fa-check-circle"></i> "Quelles sont les possibilités d'évolution au sein de l'entreprise ?"</li>
-          </ul>
-          <div class="highlight flex items-center gap-3">
-            <i class="fas fa-exclamation-triangle"></i>
-            <span>Évitez de poser des questions uniquement sur le salaire, les congés ou les avantages lors du premier entretien. Ces sujets pourront être abordés ultérieurement dans le processus de recrutement.</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- Accompagnement personnalisé -->
-      <section class="contact-info card mt-8 mb-8 text-center">
-        <h2 class="flex items-center gap-2 text-primary justify-center"><i class="fas fa-clipboard-list"></i> Besoin d'un accompagnement personnalisé ?</h2>
-        <p>Notre équipe de conseillers est là pour vous aider à préparer vos entretiens, affiner votre CV ou développer vos soft skills. Nous proposons des ateliers, du coaching individuel et des simulations d'entretien.</p>
-        <a href="Partenaires.html?tab=appointments" class="btn btn-primary mt-2"><i class="fas fa-calendar-alt"></i> Prendre rendez-vous</a>
-        <div class="social-icons mt-4" aria-label="Réseaux sociaux">
-          <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
-          <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-          <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-          <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-          <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-        </div>
-      </section>
+      <nav class="form-navigation mt-10 flex justify-between items-center" aria-label="Navigation des étapes du parcours">
+          <button type="button" class="btn btn-outline btn-large" id="backToParcoursFromEntretien">
+              <i class="fas fa-arrow-left mr-2" aria-hidden="true"></i> Retour à Mon Parcours
+          </button>
+          <button type="button" class="btn btn-primary btn-large" id="goToApresEntretienBtn">
+              Étape Suivante : L'Après Entretien <i class="fas fa-arrow-right ml-2" aria-hidden="true"></i>
+          </button>
+      </nav>
     </div>
   </main>
 
   <footer class="footer">
-    <div class="container text-center">
-      <p>© 2024 EmploiAvenir | Accompagnement à l'insertion professionnelle</p>
-      <p><i class="fas fa-map-marker-alt"></i> 12 rue de l'Emploi, 75000 Paris &nbsp;|&nbsp; <i class="fas fa-envelope"></i> contact@emploiavenir.fr &nbsp;|&nbsp; <i class="fas fa-phone"></i> 01 23 45 67 89</p>
+    <div class="container text-center py-6">
+      <p class="mb-2">© 2024 EmploiAvenir | Accompagnement à l'insertion professionnelle</p>
+      <p class="text-sm text-gray">
+        <i class="fas fa-map-marker-alt" aria-hidden="true"></i> 12 rue de l'Emploi, 75000 Paris  | 
+        <i class="fas fa-envelope" aria-hidden="true"></i> contact@emploiavenir.fr  | 
+        <i class="fas fa-phone" aria-hidden="true"></i> 01 23 45 67 89
+      </p>
     </div>
   </footer>
+  <div id="toast-container"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const accordionContainer = document.getElementById('accordionContainer');
+        const skillGridContainer = document.querySelector('.skill-grid');
+
+        const accordionData = [
+            { id: 'tenue', title: '1. Préparer sa tenue vestimentaire', icon: 'fa-tshirt', contentId: 'tenue-content',
+              intro: "Votre apparence est la première chose que remarque un recruteur. Une tenue appropriée montre votre professionnalisme.",
+              checklist: [
+                "Optez pour une tenue <strong>propre, repassée</strong> et légèrement plus formelle que la tenue quotidienne du poste visé.",
+                "Privilégiez les <strong>couleurs sobres</strong> (bleu marine, gris, noir) et évitez les motifs trop voyants.",
+                "Limitez les accessoires et le maquillage à quelque chose de <strong>discret et soigné</strong>.",
+                "Assurez-vous que vos chaussures sont <strong>propres et adaptées</strong> à votre tenue.",
+                "Soignez votre hygiène personnelle (ongles propres, cheveux coiffés)."
+              ],
+              conseil: { text: "En cas de doute, il vaut mieux être légèrement <strong>trop habillé</strong> que pas assez.", icon: 'fa-info-circle', type: 'conseil-info text-info'}
+            },
+            { id: 'attitude', title: '2. Attitude et langage corporel', icon: 'fa-users', contentId: 'attitude-content',
+              intro: "Votre langage corporel communique autant que vos mots. Une attitude positive et ouverte crée une bonne impression.",
+              checklist: [
+                "Arrivez <strong>10 à 15 minutes en avance</strong> pour éviter le stress inutile.",
+                "Offrez une <strong>poignée de main ferme</strong> et un contact visuel direct (si approprié culturellement et sanitairement).",
+                "Maintenez un <strong>contact visuel régulier</strong> mais naturel, sans fixer.",
+                "Adoptez une <strong>posture droite mais détendue</strong> ; évitez de croiser les bras ou de vous avachir.",
+                "<strong>Souriez naturellement</strong> pour montrer votre enthousiasme et votre accessibilité.",
+                "Écoutez <strong>attentivement</strong> sans interrompre votre interlocuteur."
+              ]
+            },
+            { id: 'sujets', title: '3. Sujets à aborder et méthode STAR', icon: 'fa-comments', contentId: 'sujets-content',
+              intro: "Préparez-vous à illustrer vos compétences et votre motivation avec des exemples concrets.",
+              checklist: [
+                "Votre parcours professionnel et formation, en les reliant explicitement aux besoins du poste.",
+                "Des <strong>exemples concrets</strong> de situations où vous avez fait preuve d'adaptabilité ou d'initiative.",
+                "Vos expériences de travail en équipe et votre capacité à collaborer efficacement.",
+                "Comment vous avez <strong>résolu des problèmes</strong> ou géré des situations difficiles avec succès.",
+                "Vos motivations profondes pour rejoindre <strong>cette entreprise</strong> en particulier (recherches à l'appui).",
+                "Vos objectifs professionnels à court et moyen terme, et comment ce poste s'y intègre."
+              ],
+              conseil: { html: "<strong>Méthode STAR :</strong> Pour structurer vos réponses lors de questions comportementales : <ul class='list-disc pl-5 mt-2 space-y-1'><li><strong>S</strong>ituation : Décrivez le contexte.</li><li><strong>T</strong>âche : Quel était votre rôle ou objectif ?</li><li><strong>A</strong>ction : Quelles actions spécifiques avez-vous entreprises ?</li><li><strong>R</strong>ésultat : Quels ont été les résultats de vos actions ?</li></ul>", icon: 'fa-star', type: 'highlight-star text-warning'}
+            },
+            { id: 'questions', title: '4. Questions pertinentes à poser', icon: 'fa-question-circle', contentId: 'questions-content',
+              intro: "Poser des questions intelligentes démontre votre engagement et votre curiosité.",
+              checklist: [
+                "\"Pouvez-vous me décrire plus en détail les <strong>défis quotidiens</strong> de ce poste ?\"",
+                "\"Quelles sont les <strong>qualités et compétences clés</strong> qui définissent le succès au sein de cette équipe ?\"",
+                "\"Comment décririez-vous la <strong>culture d'entreprise</strong> et l'ambiance de travail ici ?\"",
+                "\"Quels sont les <strong>projets majeurs</strong> sur lesquels l'équipe/le service travaille actuellement ou prochainement ?\"",
+                "\"Quelles sont les <strong>opportunités de développement professionnel</strong> ou de formation offertes ?\""
+              ],
+              conseil: { text: "Évitez les questions sur le salaire, les congés ou les avantages lors du premier entretien, sauf si l'employeur aborde le sujet. Concentrez-vous sur le rôle et l'entreprise.", icon: 'fa-exclamation-triangle', type: 'warning-info text-warning'}
+            }
+        ];
+
+        const skillsData = [
+            {icon: 'fa-comments', name: 'Communication Efficace', desc: 'Exprimez vos idées clairement, écoutez activement et adaptez votre message.'},
+            {icon: 'fa-sync-alt', name: 'Adaptabilité & Flexibilité', desc: 'Montrez votre capacité à gérer le changement et les imprévus avec agilité.'},
+            {icon: 'fa-puzzle-piece', name: 'Résolution de Problèmes', desc: 'Abordez les défis avec un esprit analytique et créatif pour trouver des solutions.'},
+            {icon: 'fa-users', name: 'Esprit d\'Équipe & Collaboration', desc: 'Collaborez efficacement, partagez vos connaissances et soutenez vos collègues.'},
+            {icon: 'fa-tasks', name: 'Organisation & Gestion du Temps', desc: 'Planifiez, priorisez vos tâches et respectez les échéances.'},
+            {icon: 'fa-brain', name: 'Intelligence Émotionnelle', desc: 'Comprenez et gérez vos émotions et celles des autres pour des relations constructives.'}
+        ];
+
+        // Fonction pour créer un élément d'accordéon
+        function createAccordionItem(section) {
+            const sectionEl = document.createElement('section');
+            sectionEl.className = 'accordion-section card p-0 overflow-hidden'; // mb-6 sera géré par le gap du conteneur
+            sectionEl.setAttribute('aria-labelledby', `${section.id}-title`);
+
+            const button = document.createElement('button');
+            button.className = 'accordion-button flex justify-between items-center w-full text-left';
+            button.setAttribute('aria-expanded', 'false');
+            button.setAttribute('aria-controls', section.contentId);
+            button.innerHTML = `
+                <h2 id="${section.id}-title" class="section-subtitle text-xl font-semibold flex items-center gap-3 text-primary">
+                  <i class="fas ${section.icon} fa-fw" aria-hidden="true"></i> ${section.title}
+                </h2>
+                <span class="icon-toggle text-primary" aria-hidden="true"></span>`;
+
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'accordion-content';
+            contentDiv.id = section.contentId;
+
+            let contentHTML = `<p class="mb-4 px-6">${section.intro}</p>
+                               <ul class="checklist list-none p-0 mb-4 space-y-2 px-6">`;
+            section.checklist.forEach(item => {
+                contentHTML += `<li><i class="fas fa-check-circle text-secondary mr-2"></i>${item}</li>`;
+            });
+            contentHTML += `</ul>`;
+
+            if (section.conseil) {
+                contentHTML += `
+                  <div class="info-box ${section.conseil.type} mt-4 mx-6 mb-6">
+                    <i class="fas ${section.conseil.icon} icon-left fa-fw" aria-hidden="true"></i>
+                    <div>${section.conseil.html ? section.conseil.html : `<p>${section.conseil.text}</p>`}</div>
+                  </div>`;
+            }
+            contentDiv.innerHTML = contentHTML;
+
+            sectionEl.appendChild(button);
+            sectionEl.appendChild(contentDiv);
+            return sectionEl;
+        }
+
+        // Générer et ajouter les accordéons au DOM
+        if (accordionContainer) {
+            accordionData.forEach(section => {
+                accordionContainer.appendChild(createAccordionItem(section));
+            });
+            // Attacher les écouteurs d'événements après que tous les éléments soient dans le DOM
+            const accordionButtons = accordionContainer.querySelectorAll('.accordion-button');
+            accordionButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const content = document.getElementById(button.getAttribute('aria-controls'));
+                    const isExpanded = button.getAttribute('aria-expanded') === 'true';
+
+                    button.setAttribute('aria-expanded', !isExpanded);
+                    content.classList.toggle('open');
+                    if (!isExpanded) {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                    } else {
+                        content.style.maxHeight = null;
+                    }
+                });
+            });
+        }
+
+        // Générer et ajouter les items de soft skills
+        if (skillGridContainer) {
+            skillsData.forEach(skill => {
+                const skillDiv = document.createElement('div');
+                skillDiv.className = 'skill-item p-5 bg-light rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-300';
+                skillDiv.innerHTML = `
+                    <div class="flex items-center mb-3">
+                      <i class="fas ${skill.icon} fa-2x text-primary mr-3"></i>
+                      <h3 class="font-semibold text-lg text-dark">${skill.name}</h3>
+                    </div>
+                    <p class="text-sm text-gray-darker">${skill.desc}</p>`;
+                skillGridContainer.appendChild(skillDiv);
+            });
+        }
+
+
+        // --- Navigation and Toast Logic (largely unchanged) ---
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNavLinks = document.getElementById('mainNavLinks');
+        if (mobileMenuBtn && mainNavLinks) {
+            mobileMenuBtn.addEventListener('click', () => {
+                const isOpen = mainNavLinks.classList.toggle('show-mobile');
+                mobileMenuBtn.setAttribute('aria-expanded', isOpen);
+            });
+        }
+
+        const backToParcoursBtn = document.getElementById('backToParcoursFromEntretien');
+        const goToApresEntretienBtn = document.getElementById('goToApresEntretienBtn');
+        const NEXT_PAGE_APRES_ENTRETIEN = 'apres-entretien.html';
+
+        const showToast = (message, type = 'info', duration = 3500) => {
+            const toastContainer = document.getElementById('toast-container');
+            if (!toastContainer) {
+                console.warn('Toast container not found');
+                return;
+            }
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type} active`;
+            toast.textContent = message;
+            toast.setAttribute('role', 'alert');
+            toastContainer.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.remove('active');
+                toast.classList.add('fade-out'); // Assurez-vous d'avoir une animation CSS pour .fade-out
+                setTimeout(() => toast.remove(), 500);
+            }, duration);
+        };
+
+        if(backToParcoursBtn) {
+            backToParcoursBtn.addEventListener('click', () => {
+                window.location.href = 'MonParcours.html';
+            });
+        }
+
+        if(goToApresEntretienBtn) {
+            goToApresEntretienBtn.addEventListener('click', () => {
+                try {
+                    let parcoursData = JSON.parse(localStorage.getItem('parcoursEmploiAvenir')) || {};
+                    parcoursData.etapes = parcoursData.etapes || Array(8).fill(null).map((_, i) => ({ id: `etape-${i}`, statut: 'locked' }));
+                    parcoursData.etapeActuelleIndex = parcoursData.etapeActuelleIndex || 0;
+
+                    if(parcoursData.etapes[3]) {
+                        parcoursData.etapes[3].statut = 'completed';
+                        parcoursData.etapes[3].dateCompletion = new Date().toISOString();
+                    } else {
+                         parcoursData.etapes[3] = { id: 'etape-3', statut: 'completed', dateCompletion: new Date().toISOString() };
+                    }
+                    if(parcoursData.etapes[4]) {
+                        parcoursData.etapes[4].statut = 'active';
+                    } else {
+                        parcoursData.etapes[4] = { id: 'etape-4', statut: 'active' };
+                    }
+                    parcoursData.etapeActuelleIndex = 4;
+                    parcoursData.derniereActivite = new Date().toISOString();
+                    localStorage.setItem('parcoursEmploiAvenir', JSON.stringify(parcoursData));
+                    console.log("Préparation Entretien: Statut du parcours mis à jour.", parcoursData);
+                    window.location.href = NEXT_PAGE_APRES_ENTRETIEN;
+                } catch (error) {
+                    console.error("Préparation Entretien: Erreur localStorage:", error);
+                    showToast("Erreur de sauvegarde de progression.", "error");
+                }
+            });
+        }
+    });
+  </script>
 </body>
 </html>

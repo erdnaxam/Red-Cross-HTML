@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>L'Après Entretien - Actions Clés et Suivi - EmploiAvenir</title>
+  <meta name="description" content="Conseils pour le suivi après votre entretien d'embauche : mail de remerciement, auto-évaluation, et gestion des réponses avec EmploiAvenir.">
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    /* Styles pour les accordéons (identiques à preparation-entretien.html) */
+    .accordion-section.card {
+        margin-bottom: 1.5rem;
+        overflow: hidden;
+    }
+    .accordion-button {
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
+      border: none;
+      background-color: transparent;
+      padding: 1.25rem 1.5rem;
+      outline: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background-color 0.2s ease;
+    }
+    .accordion-button:hover, .accordion-button:focus {
+        background-color: var(--color-primary-light);
+    }
+    .accordion-button h2 {
+        margin-bottom: 0;
+        font-size: 1.25rem;
+    }
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease-out, padding 0.35s ease-out, opacity 0.3s ease-out;
+      opacity: 0;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+    .accordion-content.open {
+      opacity: 1;
+      padding-top: 1rem;
+      padding-bottom: 1.5rem;
+      /* max-height est défini par JS */
+    }
+    .accordion-button .icon-toggle::before {
+      content: '\f078'; /* Font Awesome chevron-down */
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      transition: transform 0.3s ease;
+      display: inline-block;
+      font-size: 0.9em;
+    }
+    .accordion-button[aria-expanded="true"] .icon-toggle::before {
+      transform: rotate(-180deg);
+    }
+
+    /* Styles pour les listes et info-box (identiques) */
+    .checklist li { margin-bottom: 0.75rem; display: flex; align-items: flex-start; }
+    .checklist i { margin-top: 0.125em; flex-shrink: 0; }
+    .info-box { border-left-width: 4px; padding: 1rem; display: flex; align-items: flex-start; gap: 0.75rem;}
+    .info-box i.icon-left { margin-top: 0.125em; flex-shrink: 0; }
+    .info-box.highlight-info { border-left-color: var(--color-primary); background-color: var(--color-primary-light); }
+    .info-box.conseil-info { border-left-color: var(--color-info); background-color: var(--color-info-light); }
+    .info-box.warning-info { border-left-color: var(--color-warning); background-color: var(--color-warning-light); }
+  </style>
+</head>
+<body>
+  <header class="header" id="header">
+    <div class="container flex justify-between items-center">
+      <a href="index.html" class="logo" aria-label="Accueil EmploiAvenir"><span>Emploi</span>Avenir</a>
+      <nav aria-label="Navigation principale">
+        <ul class="nav-links" id="mainNavLinks">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="MonParcours.html" class="active" aria-current="page">Mon Parcours</a></li>
+          <li><a href="MesCandidature.html">Mes Candidatures</a></li>
+          <li><a href="Partenaires.html">Nos partenaires</a></li>
+          <li><a href="Documents.html">Mes documents</a></li>
+          <li><a href="Profil.html">Profil</a></li>
+        </ul>
+      </nav>
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Ouvrir le menu de navigation" aria-expanded="false" aria-controls="mainNavLinks">☰</button>
+    </div>
+  </header>
+
+  <main class="page-apres-entretien">
+    <div class="container pt-8 pb-12">
+      <header class="section-header text-center mb-10">
+        <h1>
+          <i class="fas fa-paper-plane icon-left text-3xl md:text-4xl" aria-hidden="true"></i> L'Après Entretien : Actions Clés et Suivi
+        </h1>
+        <p class="intro-text text-gray-darker mt-3 text-lg">
+          L'entretien est terminé, mais le processus de recrutement continue. Découvrez les étapes essentielles pour maximiser vos chances.
+        </p>
+      </header>
+
+      <article class="card intro-card mb-10 p-6 shadow-lg" aria-labelledby="intro-title-apres">
+        <div class="intro-content">
+          <h2 id="intro-title-apres" class="text-2xl font-semibold mb-4 text-primary">Ne sous-estimez pas l'importance du suivi</h2>
+          <p class="mb-4 text-md">Un suivi professionnel et réfléchi peut considérablement influencer la décision finale du recruteur. Cette phase est l'occasion de réitérer votre motivation, de clarifier certains points et de laisser une dernière impression positive.</p>
+          <div class="info-box highlight-info mt-6">
+            <i class="fas fa-check-double icon-left text-primary fa-lg" aria-hidden="true"></i>
+            <p><strong>Bon à savoir :</strong> Un email de remerciement bien rédigé, envoyé rapidement après l'entretien, est apprécié par plus de <strong>90%</strong> des recruteurs et peut vous distinguer des autres candidats.</p>
+          </div>
+        </div>
+      </article>
+
+      <div id="accordionContainerApres" class="grid grid-cols-1 md:grid-cols-1 gap-0">
+        {/* Les accordéons seront insérés ici par JavaScript */}
+      </div>
+
+      <aside class="contact-info card mt-10 mb-8 p-6 text-center bg-primary-light rounded-lg shadow-lg" aria-labelledby="accompagnement-title-apres">
+        <h2 id="accompagnement-title-apres" class="text-2xl font-semibold flex items-center gap-3 text-primary justify-center mb-4">
+            <i class="fas fa-user-friends fa-fw" aria-hidden="true"></i> Besoin de conseils pour votre suivi ?
+        </h2>
+        <p class="mb-6 text-md text-gray-darker">Nos conseillers peuvent vous aider à rédiger des mails de remerciement percutants, à préparer une relance téléphonique ou à analyser les retours de vos entretiens pour améliorer vos futures candidatures.</p>
+        <a href="Partenaires.html?tab=appointments" class="btn btn-primary btn-large">
+            <i class="fas fa-calendar-alt mr-2" aria-hidden="true"></i> Demander un coaching post-entretien
+        </a>
+        <div class="social-icons mt-8 flex justify-center gap-6" aria-label="Suivez-nous sur les réseaux sociaux">
+          <a href="#" aria-label="Facebook" class="text-gray-medium hover:text-primary text-3xl transition-colors"><i class="fab fa-facebook-square"></i></a>
+          <a href="#" aria-label="LinkedIn" class="text-gray-medium hover:text-primary text-3xl transition-colors"><i class="fab fa-linkedin"></i></a>
+          <a href="#" aria-label="Twitter" class="text-gray-medium hover:text-primary text-3xl transition-colors"><i class="fab fa-twitter-square"></i></a>
+        </div>
+      </aside>
+
+      <nav class="form-navigation mt-10 flex justify-between items-center" aria-label="Navigation des étapes du parcours">
+          <button type="button" class="btn btn-outline btn-large" id="backToPreparationEntretienBtn">
+              <i class="fas fa-arrow-left mr-2" aria-hidden="true"></i> Retour à la Préparation
+          </button>
+          <button type="button" class="btn btn-primary btn-large" id="goToContratBtn"> {/* ID MODIFIÉ pour plus de clarté */}
+              Étape Suivante : Le Contrat <i class="fas fa-arrow-right ml-2" aria-hidden="true"></i> {/* TEXTE MODIFIÉ */}
+          </button>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container text-center py-6">
+      <p class="mb-2">© 2024 EmploiAvenir | Accompagnement à l'insertion professionnelle</p>
+      <p class="text-sm text-gray">
+        <i class="fas fa-map-marker-alt" aria-hidden="true"></i> 12 rue de l'Emploi, 75000 Paris  | 
+        <i class="fas fa-envelope" aria-hidden="true"></i> contact@emploiavenir.fr  | 
+        <i class="fas fa-phone" aria-hidden="true"></i> 01 23 45 67 89
+      </p>
+    </div>
+  </footer>
+  <div id="toast-container"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const accordionContainer = document.getElementById('accordionContainerApres');
+
+        const accordionDataApres = [
+            { id: 'remerciement', title: '1. Le Mail de Remerciement : Un Incontournable', icon: 'fa-envelope-open-text', contentId: 'remerciement-content',
+              intro: "Envoyer un mail de remerciement après un entretien est une marque de professionnalisme et d'intérêt qui peut faire la différence.",
+              checklist: [
+                "Envoyez-le dans les <strong>24 à 48 heures</strong> suivant l'entretien.",
+                "Personnalisez votre message : adressez-vous directement à la personne rencontrée.",
+                "Réitérez votre <strong>intérêt pour le poste</strong> et l'entreprise.",
+                "Rappelez brièvement <strong>un ou deux points clés</strong> de votre discussion qui ont retenu votre attention ou où vous avez brillé.",
+                "Si vous avez oublié de mentionner quelque chose d'important, c'est le moment (brièvement).",
+                "Concluez en réaffirmant votre motivation et votre disponibilité."
+              ],
+              conseil: { text: "Soyez concis, professionnel et évitez les fautes d'orthographe. Relisez-vous attentivement !", icon: 'fa-spell-check', type: 'conseil-info text-info'}
+            },
+            { id: 'autoevaluation', title: '2. Auto-Évaluation de Votre Prestation', icon: 'fa-magnifying-glass-chart', contentId: 'autoevaluation-content',
+              intro: "Prenez le temps de réfléchir à votre performance pour identifier vos points forts et les aspects à améliorer pour les prochains entretiens.",
+              checklist: [
+                "Quelles questions m'ont semblé <strong>faciles / difficiles</strong> ? Pourquoi ?",
+                "Mes réponses étaient-elles <strong>claires, concises et illustrées</strong> par des exemples concrets (méthode STAR) ?",
+                "Ai-je réussi à bien présenter mes <strong>compétences clés</strong> et ma valeur ajoutée pour le poste ?",
+                "Mon <strong>langage corporel</strong> était-il approprié (contact visuel, posture, gestuelle) ?",
+                "Ai-je posé des <strong>questions pertinentes</strong> qui ont montré mon intérêt et ma compréhension du rôle ?",
+                "Y a-t-il des points que j'aurais dû aborder ou mieux expliquer ?"
+              ],
+              conseil: { text: "Notez vos réflexions à chaud, tant que les détails sont frais dans votre esprit. Cela vous sera précieux pour la suite.", icon: 'fa-lightbulb', type: 'highlight-info text-primary'}
+            },
+            { id: 'suivi', title: '3. Le Suivi et la Relance (si nécessaire)', icon: 'fa-phone-volume', contentId: 'suivi-content',
+              intro: "Si vous n'avez pas de nouvelles dans le délai annoncé par le recruteur, une relance polie peut être envisagée.",
+              checklist: [
+                "Respectez le <strong>délai indiqué</strong> par le recruteur pour un retour. Ne relancez pas trop tôt.",
+                "Si aucun délai n'a été donné, attendez <strong>une à deux semaines</strong> avant une première relance.",
+                "Privilégiez l'<strong>email</strong> pour une relance, c'est moins intrusif.",
+                "Dans votre message : rappelez l'entretien (date, poste), réitérez votre intérêt, et demandez poliment où en est le processus de recrutement.",
+                "Soyez bref et courtois. Évitez de paraître impatient ou exigeant."
+              ],
+              conseil: { text: "Une absence de réponse immédiate ne signifie pas forcément un refus. Les processus de recrutement peuvent être longs.", icon: 'fa-hourglass-half', type: 'warning-info text-warning'}
+            },
+            { id: 'reponse', title: '4. Gérer la Réponse (Positive ou Négative)', icon: 'fa-comments', contentId: 'reponse-content',
+              intro: "Quelle que soit la réponse, votre réaction doit rester professionnelle et constructive.",
+              checklist: [
+                "<strong>Réponse Positive :</strong> Félicitations ! Remerciez, exprimez votre enthousiasme. Demandez les prochaines étapes, clarifiez les détails (salaire, date de début, contrat) avant d'accepter formellement.",
+                "<strong>Réponse Négative :</strong> Remerciez le recruteur pour son temps et pour vous avoir informé.",
+                "Si vous vous sentez à l'aise, demandez un <strong>feedback constructif</strong> sur votre candidature. Cela peut vous aider pour vos futurs entretiens.",
+                "Restez professionnel et courtois. Le monde est petit, et vous pourriez recroiser ce recruteur.",
+                "Ne vous découragez pas. Chaque entretien est une expérience d'apprentissage."
+              ],
+              conseil: { text: "Même en cas de refus, une réponse professionnelle laisse une bonne impression et maintient la porte ouverte pour de futures opportunités.", icon: 'fa-door-open', type: 'conseil-info text-info'}
+            },
+            { id: 'continuer', title: '5. Continuer Activement sa Recherche', icon: 'fa-person-running', contentId: 'continuer-content',
+              intro: "Ne mettez pas tous vos œufs dans le même panier. Continuez votre recherche d'emploi même si vous attendez une réponse.",
+              checklist: [
+                "Continuez à <strong>postuler à d'autres offres</strong> qui vous intéressent.",
+                "Activez et entretenez votre <strong>réseau professionnel</strong>.",
+                "Profitez de ce temps pour <strong>améliorer votre CV et lettre de motivation</strong> en fonction des retours et de vos réflexions.",
+                "Identifiez d'éventuelles <strong>compétences à acquérir</strong> ou à renforcer.",
+                "Restez positif et persévérant. La recherche d'emploi est un marathon, pas un sprint."
+              ],
+              conseil: { html: "<strong>Astuce :</strong> Tenez un tableau de suivi de vos candidatures (entreprise, poste, date d'envoi, date d'entretien, relances, etc.). Cela vous aidera à rester organisé et proactif. Vous pouvez utiliser notre outil <a href='MesCandidature.html' class='link'>Mes Candidatures</a> pour cela.", icon: 'fa-table-list', type: 'highlight-info text-primary'}
+            }
+        ];
+
+        function createAccordionItem(section) {
+            const sectionEl = document.createElement('section');
+            sectionEl.className = 'accordion-section card p-0 overflow-hidden';
+            sectionEl.setAttribute('aria-labelledby', `${section.id}-title`);
+
+            const button = document.createElement('button');
+            button.className = 'accordion-button flex justify-between items-center w-full text-left';
+            button.setAttribute('aria-expanded', 'false');
+            button.setAttribute('aria-controls', section.contentId);
+            button.innerHTML = `
+                <h2 id="${section.id}-title" class="section-subtitle text-xl font-semibold flex items-center gap-3 text-primary">
+                  <i class="fas ${section.icon} fa-fw" aria-hidden="true"></i> ${section.title}
+                </h2>
+                <span class="icon-toggle text-primary" aria-hidden="true"></span>`;
+
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'accordion-content';
+            contentDiv.id = section.contentId;
+
+            let contentHTML = `<p class="mb-4 px-6">${section.intro}</p>
+                               <ul class="checklist list-none p-0 mb-4 space-y-2 px-6">`;
+            section.checklist.forEach(item => {
+                contentHTML += `<li><i class="fas fa-check-circle text-secondary mr-2"></i>${item}</li>`;
+            });
+            contentHTML += `</ul>`;
+
+            if (section.conseil) {
+                contentHTML += `
+                  <div class="info-box ${section.conseil.type} mt-4 mx-6 mb-6">
+                    <i class="fas ${section.conseil.icon} icon-left fa-fw" aria-hidden="true"></i>
+                    <div>${section.conseil.html ? section.conseil.html : `<p>${section.conseil.text}</p>`}</div>
+                  </div>`;
+            }
+            contentDiv.innerHTML = contentHTML;
+
+            sectionEl.appendChild(button);
+            sectionEl.appendChild(contentDiv);
+            return sectionEl;
+        }
+
+        if (accordionContainer) {
+            accordionDataApres.forEach(section => {
+                accordionContainer.appendChild(createAccordionItem(section));
+            });
+            const accordionButtons = accordionContainer.querySelectorAll('.accordion-button');
+            accordionButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const content = document.getElementById(button.getAttribute('aria-controls'));
+                    const isExpanded = button.getAttribute('aria-expanded') === 'true';
+
+                    button.setAttribute('aria-expanded', !isExpanded);
+                    content.classList.toggle('open');
+                    if (!isExpanded) {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                    } else {
+                        content.style.maxHeight = null;
+                    }
+                });
+            });
+        }
+
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNavLinks = document.getElementById('mainNavLinks');
+        if (mobileMenuBtn && mainNavLinks) {
+            mobileMenuBtn.addEventListener('click', () => {
+                const isOpen = mainNavLinks.classList.toggle('show-mobile');
+                mobileMenuBtn.setAttribute('aria-expanded', isOpen);
+            });
+        }
+
+        const backToPreparationBtn = document.getElementById('backToPreparationEntretienBtn');
+        const goToContratBtn = document.getElementById('goToContratBtn'); // ID du bouton mis à jour
+        const NEXT_PAGE_CONTRAT = 'Contrat.html'; // VARIABLE ET VALEUR MODIFIÉES
+
+        const showToast = (message, type = 'info', duration = 3500) => {
+            const toastContainer = document.getElementById('toast-container');
+            if (!toastContainer) {
+                console.warn('Toast container not found');
+                return;
+            }
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type} active`;
+            toast.textContent = message;
+            toast.setAttribute('role', 'alert');
+            toastContainer.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.remove('active');
+                toast.classList.add('fade-out');
+                setTimeout(() => toast.remove(), 500);
+            }, duration);
+        };
+
+        if(backToPreparationBtn) {
+            backToPreparationBtn.addEventListener('click', () => {
+                window.location.href = 'preparation-entretien.html';
+            });
+        }
+
+        if(goToContratBtn) { // Écouteur d'événement pour le bouton mis à jour
+            goToContratBtn.addEventListener('click', () => {
+                try {
+                    let parcoursData = JSON.parse(localStorage.getItem('parcoursEmploiAvenir')) || {};
+                    parcoursData.etapes = parcoursData.etapes || Array(8).fill(null).map((_, i) => ({ id: `etape-${i}`, statut: 'locked' }));
+                    parcoursData.etapeActuelleIndex = parcoursData.etapeActuelleIndex || 0;
+
+                    // Marquer l'étape "Après Entretien" (index 4) comme complétée
+                    if(parcoursData.etapes[4]) {
+                        parcoursData.etapes[4].statut = 'completed';
+                        parcoursData.etapes[4].dateCompletion = new Date().toISOString();
+                    } else {
+                         parcoursData.etapes[4] = { id: 'etape-4', statut: 'completed', dateCompletion: new Date().toISOString() };
+                    }
+                    // Activer l'étape "Le Contrat" (index 5)
+                    // (En supposant l'ordre : 0:ObjPro, 1:CV, 2:LM, 3:PrépaEntretien, 4:AprèsEntretien, 5:Contrat, 6:Intégration, 7:Bilan)
+                    if(parcoursData.etapes[5]) {
+                        parcoursData.etapes[5].statut = 'active';
+                    } else {
+                        parcoursData.etapes[5] = { id: 'etape-5', statut: 'active' }; // Si "Le Contrat" est l'étape 5
+                    }
+                    parcoursData.etapeActuelleIndex = 5; // Mettre à jour l'index de l'étape actuelle vers "Le Contrat"
+                    parcoursData.derniereActivite = new Date().toISOString();
+                    localStorage.setItem('parcoursEmploiAvenir', JSON.stringify(parcoursData));
+                    console.log("Après Entretien: Statut du parcours mis à jour. Prochaine étape: Contrat.", parcoursData);
+                    window.location.href = NEXT_PAGE_CONTRAT; // Redirection vers Contrat.html
+                } catch (error) {
+                    console.error("Après Entretien: Erreur localStorage:", error);
+                    showToast("Erreur de sauvegarde de progression.", "error");
+                }
+            });
+        }
+    });
+  </script>
+</body>
+</html>

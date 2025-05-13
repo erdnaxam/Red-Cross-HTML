@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Comprendre son Contrat de Travail - EmploiAvenir</title>
+  <meta name="description" content="Guide pour analyser votre offre d'emploi, comprendre les clauses de votre contrat de travail, négocier et répondre à une proposition avec EmploiAvenir.">
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    /* Styles pour les accordéons (identiques aux pages précédentes) */
+    .accordion-section.card {
+        margin-bottom: 1.5rem;
+        overflow: hidden;
+    }
+    .accordion-button {
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
+      border: none;
+      background-color: transparent;
+      padding: 1.25rem 1.5rem;
+      outline: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background-color 0.2s ease;
+    }
+    .accordion-button:hover, .accordion-button:focus {
+        background-color: var(--color-primary-light);
+    }
+    .accordion-button h2 {
+        margin-bottom: 0;
+        font-size: 1.25rem;
+    }
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease-out, padding 0.35s ease-out, opacity 0.3s ease-out;
+      opacity: 0;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+    .accordion-content.open {
+      opacity: 1;
+      padding-top: 1rem;
+      padding-bottom: 1.5rem;
+    }
+    .accordion-button .icon-toggle::before {
+      content: '\f078'; /* Font Awesome chevron-down */
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      transition: transform 0.3s ease;
+      display: inline-block;
+      font-size: 0.9em;
+    }
+    .accordion-button[aria-expanded="true"] .icon-toggle::before {
+      transform: rotate(-180deg);
+    }
+
+    /* Styles pour les listes et info-box (identiques) */
+    .checklist li { margin-bottom: 0.75rem; display: flex; align-items: flex-start; }
+    .checklist i { margin-top: 0.125em; flex-shrink: 0; }
+    .info-box { border-left-width: 4px; padding: 1rem; display: flex; align-items: flex-start; gap: 0.75rem;}
+    .info-box i.icon-left { margin-top: 0.125em; flex-shrink: 0; }
+    .info-box.highlight-info { border-left-color: var(--color-primary); background-color: var(--color-primary-light); }
+    .info-box.conseil-info { border-left-color: var(--color-info); background-color: var(--color-info-light); }
+    .info-box.warning-info { border-left-color: var(--color-warning); background-color: var(--color-warning-light); }
+  </style>
+</head>
+<body>
+  <header class="header" id="header">
+    <div class="container flex justify-between items-center">
+      <a href="index.html" class="logo" aria-label="Accueil EmploiAvenir"><span>Emploi</span>Avenir</a>
+      <nav aria-label="Navigation principale">
+        <ul class="nav-links" id="mainNavLinks">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="MonParcours.html" class="active" aria-current="page">Mon Parcours</a></li>
+          <li><a href="MesCandidature.html">Mes Candidatures</a></li>
+          <li><a href="Partenaires.html">Nos partenaires</a></li>
+          <li><a href="Documents.html">Mes documents</a></li>
+          <li><a href="Profil.html">Profil</a></li>
+        </ul>
+      </nav>
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Ouvrir le menu de navigation" aria-expanded="false" aria-controls="mainNavLinks">☰</button>
+    </div>
+  </header>
+
+  <main class="page-contrat">
+    <div class="container pt-8 pb-12">
+      <header class="section-header text-center mb-10">
+        <h1>
+          <i class="fas fa-file-signature icon-left text-3xl md:text-4xl" aria-hidden="true"></i> Offre d'Emploi et Contrat de Travail
+        </h1>
+        <p class="intro-text text-gray-darker mt-3 text-lg">
+          Vous avez reçu une proposition ! Apprenez à décortiquer votre offre et votre contrat pour prendre une décision éclairée.
+        </p>
+      </header>
+
+      <article class="card intro-card mb-10 p-6 shadow-lg" aria-labelledby="intro-title-contrat">
+        <div class="intro-content">
+          <h2 id="intro-title-contrat" class="text-2xl font-semibold mb-4 text-primary">Félicitations pour cette offre !</h2>
+          <p class="mb-4 text-md">Recevoir une offre d'emploi est une étape excitante. Avant de signer, il est crucial de bien comprendre tous les aspects de votre contrat de travail. Cette page vous guide à travers les points essentiels à vérifier et les questions à poser.</p>
+          <div class="info-box highlight-info mt-6">
+            <i class="fas fa-balance-scale icon-left text-primary fa-lg" aria-hidden="true"></i>
+            <p><strong>Le saviez-vous ?</strong> Une compréhension claire de votre contrat prévient les malentendus futurs et assure que le poste correspond réellement à vos attentes et besoins professionnels.</p>
+          </div>
+        </div>
+      </article>
+
+      <div id="accordionContainerContrat" class="grid grid-cols-1 md:grid-cols-1 gap-0">
+        {/* Les accordéons seront insérés ici par JavaScript */}
+      </div>
+
+      <aside class="contact-info card mt-10 mb-8 p-6 text-center bg-primary-light rounded-lg shadow-lg" aria-labelledby="accompagnement-title-contrat">
+        <h2 id="accompagnement-title-contrat" class="text-2xl font-semibold flex items-center gap-3 text-primary justify-center mb-4">
+            <i class="fas fa-user-check fa-fw" aria-hidden="true"></i> Besoin d'aide pour analyser votre contrat ?
+        </h2>
+        <p class="mb-6 text-md text-gray-darker">Nos conseillers sont là pour vous aider à décrypter les clauses de votre contrat, à préparer une éventuelle négociation salariale ou à comprendre vos droits et devoirs. N'hésitez pas à solliciter leur expertise.</p>
+        <a href="Partenaires.html?tab=appointments" class="btn btn-primary btn-large">
+            <i class="fas fa-calendar-alt mr-2" aria-hidden="true"></i> Prendre rendez-vous avec un conseiller
+        </a>
+        <div class="social-icons mt-8 flex justify-center gap-6" aria-label="Suivez-nous sur les réseaux sociaux">
+          <a href="#" aria-label="Facebook" class="text-gray-medium hover:text-primary text-3xl transition-colors"><i class="fab fa-facebook-square"></i></a>
+          <a href="#" aria-label="LinkedIn" class="text-gray-medium hover:text-primary text-3xl transition-colors"><i class="fab fa-linkedin"></i></a>
+          <a href="#" aria-label="Twitter" class="text-gray-medium hover:text-primary text-3xl transition-colors"><i class="fab fa-twitter-square"></i></a>
+        </div>
+      </aside>
+
+      <nav class="form-navigation mt-10 flex justify-between items-center" aria-label="Navigation des étapes du parcours">
+          <button type="button" class="btn btn-outline btn-large" id="backToApresEntretienBtn"> {/* ID AJUSTÉ pour cohérence si on vient de apres-entretien */}
+              <i class="fas fa-arrow-left mr-2" aria-hidden="true"></i> Retour à l'Après Entretien
+          </button>
+          <button type="button" class="btn btn-primary btn-large" id="goToSuiviBtn"> {/* ID MODIFIÉ */}
+              Étape Suivante : Intégration et Suivi <i class="fas fa-user-tie ml-2" aria-hidden="true"></i> {/* TEXTE ET ICÔNE MODIFIÉS */}
+          </button>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container text-center py-6">
+      <p class="mb-2">© 2024 EmploiAvenir | Accompagnement à l'insertion professionnelle</p>
+      <p class="text-sm text-gray">
+        <i class="fas fa-map-marker-alt" aria-hidden="true"></i> 12 rue de l'Emploi, 75000 Paris  | 
+        <i class="fas fa-envelope" aria-hidden="true"></i> contact@emploiavenir.fr  | 
+        <i class="fas fa-phone" aria-hidden="true"></i> 01 23 45 67 89
+      </p>
+    </div>
+  </footer>
+  <div id="toast-container"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const accordionContainer = document.getElementById('accordionContainerContrat');
+
+        const accordionDataContrat = [
+            { id: 'receptionOffre', title: '1. Réception et Première Analyse de l\'Offre', icon: 'fa-envelope-circle-check', contentId: 'reception-offre-content',
+              intro: "Vous avez reçu une promesse d'embauche ou une offre formelle. Prenez le temps de l'examiner calmement.",
+              checklist: [
+                "Accusez réception de l'offre rapidement et remerciez l'employeur.",
+                "Vérifiez que les informations de base sont correctes : intitulé du poste, lieu de travail, nom de l'entreprise.",
+                "Notez la date limite pour donner votre réponse.",
+                "Si l'offre est verbale, demandez une confirmation écrite (promesse d'embauche ou contrat).",
+                "Prévoyez un moment dédié pour lire attentivement tous les documents fournis."
+              ],
+              conseil: { text: "Ne vous précipitez pas pour accepter. Une lecture attentive est essentielle même si vous êtes enthousiaste.", icon: 'fa-clock', type: 'conseil-info text-info'}
+            },
+            { id: 'elementsContrat', title: '2. Les Éléments Clés du Contrat de Travail', icon: 'fa-file-contract', contentId: 'elements-contrat-content',
+              intro: "Un contrat de travail contient des informations cruciales qui définiront votre relation professionnelle.",
+              checklist: [
+                "<strong>Type de contrat :</strong> CDI, CDD (avec motif et terme), intérim, etc.",
+                "<strong>Rémunération :</strong> Salaire brut annuel/mensuel, primes (objectifs, participation, intéressement), avantages en nature (voiture, tickets restaurant, mutuelle).",
+                "<strong>Durée du travail :</strong> Temps plein, temps partiel (nombre d'heures), jours de RTT, horaires.",
+                "<strong>Période d'essai :</strong> Durée et conditions de renouvellement ou de rupture.",
+                "<strong>Congés payés :</strong> Nombre de jours, modalités de prise.",
+                "<strong>Clauses spécifiques :</strong> Clause de non-concurrence, de mobilité, de confidentialité, d'exclusivité. Comprenez leurs implications.",
+                "<strong>Convention collective applicable :</strong> Elle peut prévoir des dispositions plus favorables que le Code du travail."
+              ],
+              conseil: { html: "N'hésitez pas à demander des clarifications sur les termes ou clauses que vous ne comprenez pas. Il vaut mieux poser des questions <strong>avant</strong> de signer.", icon: 'fa-question-circle', type: 'warning-info text-warning'}
+            },
+            { id: 'negociation', title: '3. Négocier son Contrat (si pertinent)', icon: 'fa-handshake-angle', contentId: 'negociation-content',
+              intro: "Certains aspects du contrat, notamment le salaire, peuvent parfois être négociés. Préparez bien vos arguments.",
+              checklist: [
+                "Recherchez les <strong>salaires du marché</strong> pour un poste similaire avec votre niveau d'expérience.",
+                "Identifiez les points que vous souhaitez négocier (salaire, télétravail, flexibilité horaire, équipement...).",
+                "Préparez des <strong>arguments basés sur vos compétences</strong>, expériences et la valeur que vous apporterez.",
+                "Soyez réaliste et fixez-vous une marge de négociation (un objectif idéal et un seuil minimum).",
+                "Abordez la négociation de manière professionnelle, positive et constructive.",
+                "Si un accord est trouvé, demandez une <strong>confirmation écrite</strong> des modifications."
+              ],
+              conseil: { text: "La négociation n'est pas toujours possible ou appropriée. Évaluez la situation et la culture de l'entreprise.", icon: 'fa-scale-balanced', type: 'conseil-info text-info'}
+            },
+            { id: 'acceptation', title: '4. Accepter l\'Offre Formellement', icon: 'fa-check-to-slot', contentId: 'acceptation-content',
+              intro: "Une fois que vous êtes satisfait des termes, il est temps d'accepter officiellement.",
+              checklist: [
+                "Répondez par écrit (email ou courrier recommandé selon les instructions) avant la date limite.",
+                "Exprimez clairement votre acceptation des termes de l'offre/du contrat.",
+                "Confirmez votre date de début.",
+                "Conservez une copie signée de tous les documents (offre, contrat).",
+                "Renseignez-vous sur les prochaines étapes (documents à fournir pour l'embauche, accueil le premier jour)."
+              ],
+              conseil: { text: "Votre acceptation formelle vous engage. Assurez-vous d'être certain de votre décision.", icon: 'fa-signature', type: 'highlight-info text-primary'}
+            },
+            { id: 'refus', title: '5. Refuser une Offre avec Professionnalisme', icon: 'fa-times-circle', contentId: 'refus-content',
+              intro: "Si le poste ne vous convient finalement pas, il est important de refuser de manière courtoise et professionnelle.",
+              checklist: [
+                "Informez le recruteur de votre décision dès que possible, idéalement par téléphone puis confirmé par écrit.",
+                "Remerciez-le pour l'offre et le temps qu'il vous a consacré.",
+                "Expliquez brièvement et poliment les raisons de votre refus (sans dénigrer l'entreprise ou le poste).",
+                "Exprimez votre gratitude pour l'opportunité.",
+                "Laissez la porte ouverte pour de futures collaborations si cela vous semble pertinent."
+              ],
+              conseil: { text: "Un refus professionnel préserve votre réputation et votre réseau. Le monde du travail est petit.", icon: 'fa-network-wired', type: 'conseil-info text-info'}
+            }
+        ];
+
+        function createAccordionItem(section) {
+            const sectionEl = document.createElement('section');
+            sectionEl.className = 'accordion-section card p-0 overflow-hidden';
+            sectionEl.setAttribute('aria-labelledby', `${section.id}-title`);
+            const button = document.createElement('button');
+            button.className = 'accordion-button flex justify-between items-center w-full text-left';
+            button.setAttribute('aria-expanded', 'false');
+            button.setAttribute('aria-controls', section.contentId);
+            button.innerHTML = `
+                <h2 id="${section.id}-title" class="section-subtitle text-xl font-semibold flex items-center gap-3 text-primary">
+                  <i class="fas ${section.icon} fa-fw" aria-hidden="true"></i> ${section.title}
+                </h2>
+                <span class="icon-toggle text-primary" aria-hidden="true"></span>`;
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'accordion-content';
+            contentDiv.id = section.contentId;
+            let contentHTML = `<p class="mb-4 px-6">${section.intro}</p>
+                               <ul class="checklist list-none p-0 mb-4 space-y-2 px-6">`;
+            section.checklist.forEach(item => {
+                contentHTML += `<li><i class="fas fa-check-circle text-secondary mr-2"></i>${item}</li>`;
+            });
+            contentHTML += `</ul>`;
+            if (section.conseil) {
+                contentHTML += `
+                  <div class="info-box ${section.conseil.type} mt-4 mx-6 mb-6">
+                    <i class="fas ${section.conseil.icon} icon-left fa-fw" aria-hidden="true"></i>
+                    <div>${section.conseil.html ? section.conseil.html : `<p>${section.conseil.text}</p>`}</div>
+                  </div>`;
+            }
+            contentDiv.innerHTML = contentHTML;
+            sectionEl.appendChild(button);
+            sectionEl.appendChild(contentDiv);
+            return sectionEl;
+        }
+
+        if (accordionContainer) {
+            accordionDataContrat.forEach(section => {
+                accordionContainer.appendChild(createAccordionItem(section));
+            });
+            const accordionButtons = accordionContainer.querySelectorAll('.accordion-button');
+            accordionButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const content = document.getElementById(button.getAttribute('aria-controls'));
+                    const isExpanded = button.getAttribute('aria-expanded') === 'true';
+                    button.setAttribute('aria-expanded', !isExpanded);
+                    content.classList.toggle('open');
+                    if (!isExpanded) {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                    } else {
+                        content.style.maxHeight = null;
+                    }
+                });
+            });
+        }
+
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNavLinks = document.getElementById('mainNavLinks');
+        if (mobileMenuBtn && mainNavLinks) {
+            mobileMenuBtn.addEventListener('click', () => {
+                const isOpen = mainNavLinks.classList.toggle('show-mobile');
+                mobileMenuBtn.setAttribute('aria-expanded', isOpen);
+            });
+        }
+
+        const backToApresEntretienBtn = document.getElementById('backToApresEntretienBtn'); // ID du bouton retour
+        const goToSuiviBtn = document.getElementById('goToSuiviBtn'); // ID du bouton mis à jour
+        const NEXT_PAGE_SUIVI = 'Suivi.html'; // VARIABLE ET VALEUR MODIFIÉES
+
+        const showToast = (message, type = 'info', duration = 3500) => {
+            const toastContainer = document.getElementById('toast-container');
+            if (!toastContainer) {
+                console.warn('Toast container not found');
+                return;
+            }
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type} active`;
+            toast.textContent = message;
+            toast.setAttribute('role', 'alert');
+            toastContainer.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.remove('active');
+                toast.classList.add('fade-out');
+                setTimeout(() => toast.remove(), 500);
+            }, duration);
+        };
+
+        if(backToApresEntretienBtn) { // Ajuster si besoin la page de retour
+            backToApresEntretienBtn.addEventListener('click', () => {
+                window.location.href = 'apres-entretien.html'; // Page précédente (Après Entretien)
+            });
+        }
+
+        if(goToSuiviBtn) { // Écouteur d'événement pour le bouton mis à jour
+            goToSuiviBtn.addEventListener('click', () => {
+                try {
+                    let parcoursData = JSON.parse(localStorage.getItem('parcoursEmploiAvenir')) || {};
+                    parcoursData.etapes = parcoursData.etapes || Array(8).fill(null).map((_, i) => ({ id: `etape-${i}`, statut: 'locked' }));
+                    parcoursData.etapeActuelleIndex = parcoursData.etapeActuelleIndex || 0;
+
+                    // Marquer l'étape "Contrat" (index 5) comme complétée
+                    // Ordre: 0:ObjPro, 1:CV, 2:LM, 3:PrépaEntretien, 4:AprèsEntretien, 5:Contrat, 6:Suivi/Intégration
+                    const indexEtapeContrat = 5;
+                    const indexEtapeSuivi = 6;
+
+                    if(parcoursData.etapes[indexEtapeContrat]) {
+                        parcoursData.etapes[indexEtapeContrat].statut = 'completed';
+                        parcoursData.etapes[indexEtapeContrat].dateCompletion = new Date().toISOString();
+                    } else {
+                         parcoursData.etapes[indexEtapeContrat] = { id: `etape-${indexEtapeContrat}`, statut: 'completed', dateCompletion: new Date().toISOString() };
+                    }
+                    // Activer l'étape "Suivi / Intégration" (index 6)
+                    if(parcoursData.etapes[indexEtapeSuivi]) {
+                        parcoursData.etapes[indexEtapeSuivi].statut = 'active';
+                    } else {
+                        parcoursData.etapes[indexEtapeSuivi] = { id: `etape-${indexEtapeSuivi}`, statut: 'active' };
+                    }
+                    parcoursData.etapeActuelleIndex = indexEtapeSuivi; // Mettre à jour l'index de l'étape actuelle
+                    parcoursData.derniereActivite = new Date().toISOString();
+                    localStorage.setItem('parcoursEmploiAvenir', JSON.stringify(parcoursData));
+                    console.log("Contrat: Statut du parcours mis à jour. Prochaine étape: Suivi/Intégration.", parcoursData);
+                    window.location.href = NEXT_PAGE_SUIVI; // Redirection vers Suivi.html
+                } catch (error) {
+                    console.error("Contrat: Erreur localStorage:", error);
+                    showToast("Erreur de sauvegarde de progression.", "error");
+                }
+            });
+        }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Intégration, Suivi et Contribution - EmploiAvenir</title>
+  <meta name="description" content="Conseils pour votre intégration, partagez votre expérience et devenez mentor avec EmploiAvenir.">
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    /* Styles pour les accordéons (identiques aux pages précédentes) */
+    .accordion-section.card {
+        margin-bottom: 1.5rem;
+        overflow: hidden;
+    }
+    .accordion-button {
+      cursor: pointer;
+      width: 100%;
+      text-align: left;
+      border: none;
+      background-color: transparent;
+      padding: 1.25rem 1.5rem;
+      outline: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background-color 0.2s ease;
+    }
+    .accordion-button:hover, .accordion-button:focus {
+        background-color: var(--color-primary-light);
+    }
+    .accordion-button h2 {
+        margin-bottom: 0;
+        font-size: 1.25rem;
+    }
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease-out, padding 0.35s ease-out, opacity 0.3s ease-out;
+      opacity: 0;
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+    .accordion-content.open {
+      opacity: 1;
+      padding-top: 1rem;
+      padding-bottom: 1.5rem;
+    }
+    .accordion-button .icon-toggle::before {
+      content: '\f078'; /* Font Awesome chevron-down */
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
+      transition: transform 0.3s ease;
+      display: inline-block;
+      font-size: 0.9em;
+    }
+    .accordion-button[aria-expanded="true"] .icon-toggle::before {
+      transform: rotate(-180deg);
+    }
+
+    /* Styles pour les listes et info-box (identiques) */
+    .checklist li { margin-bottom: 0.75rem; display: flex; align-items: flex-start; }
+    .checklist i { margin-top: 0.125em; flex-shrink: 0; }
+    .info-box { border-left-width: 4px; padding: 1rem; display: flex; align-items: flex-start; gap: 0.75rem;}
+    .info-box i.icon-left { margin-top: 0.125em; flex-shrink: 0; }
+    .info-box.highlight-info { border-left-color: var(--color-primary); background-color: var(--color-primary-light); }
+    .info-box.conseil-info { border-left-color: var(--color-info); background-color: var(--color-info-light); }
+    .info-box.warning-info { border-left-color: var(--color-warning); background-color: var(--color-warning-light); }
+
+    /* Styles pour le formulaire de feedback */
+    .feedback-form .form-group {
+        margin-bottom: 1.5rem;
+    }
+    .feedback-form label {
+        display: block;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        color: var(--color-dark);
+    }
+    .feedback-form textarea, .feedback-form input[type="email"] /* Si on ajoute un email plus tard */ {
+        width: 100%;
+        padding: 0.75rem 1rem;
+        border: 1px solid var(--color-gray-light);
+        border-radius: var(--rounded-md);
+        font-size: 1rem;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .feedback-form textarea:focus, .feedback-form input[type="email"]:focus {
+        border-color: var(--color-primary);
+        box-shadow: 0 0 0 3px var(--color-primary-light);
+        outline: none;
+    }
+    .feedback-form .checkbox-group {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .feedback-form input[type="checkbox"] {
+        width: 1.25em;
+        height: 1.25em;
+        accent-color: var(--color-primary);
+    }
+  </style>
+</head>
+<body>
+  <header class="header" id="header">
+    <div class="container flex justify-between items-center">
+      <a href="index.html" class="logo" aria-label="Accueil EmploiAvenir"><span>Emploi</span>Avenir</a>
+      <nav aria-label="Navigation principale">
+        <ul class="nav-links" id="mainNavLinks">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="MonParcours.html" class="active" aria-current="page">Mon Parcours</a></li>
+          <li><a href="MesCandidature.html">Mes Candidatures</a></li>
+          <li><a href="Partenaires.html">Nos partenaires</a></li>
+          <li><a href="Documents.html">Mes documents</a></li>
+          <li><a href="Profil.html">Profil</a></li>
+        </ul>
+      </nav>
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Ouvrir le menu de navigation" aria-expanded="false" aria-controls="mainNavLinks">☰</button>
+    </div>
+  </header>
+
+  <main class="page-suivi-integration">
+    <div class="container pt-8 pb-12">
+      <header class="section-header text-center mb-10">
+        <h1>
+          <i class="fas fa-user-tie icon-left text-3xl md:text-4xl" aria-hidden="true"></i> Intégration, Suivi et Contribution
+        </h1>
+        <p class="intro-text text-gray-darker mt-3 text-lg">
+          Réussissez votre intégration, partagez votre expérience et aidez les autres à réussir !
+        </p>
+      </header>
+
+      <article class="card intro-card mb-10 p-6 shadow-lg" aria-labelledby="intro-title-suivi">
+        <div class="intro-content">
+          <h2 id="intro-title-suivi" class="text-2xl font-semibold mb-4 text-primary">Bien Démarrer et Donner en Retour</h2>
+          <p class="mb-4 text-md">L'intégration est une phase clé. Une bonne préparation et une attitude proactive faciliteront votre adaptation. Une fois bien installé(e), votre expérience peut devenir précieuse pour d'autres.</p>
+          <div class="info-box highlight-info mt-6">
+            <i class="fas fa-users-cog icon-left text-primary fa-lg" aria-hidden="true"></i>
+            <p><strong>Partage d'expérience :</strong> Votre parcours est une source d'inspiration. En partageant vos retours, vous contribuez à améliorer nos services et pouvez aider d'autres chercheurs d'emploi.</p>
+          </div>
+        </div>
+      </article>
+
+      <div id="accordionContainerSuivi" class="grid grid-cols-1 md:grid-cols-1 gap-0">
+        {/* Les accordéons sur l'intégration seront insérés ici par JavaScript */}
+      </div>
+
+      <!-- NOUVELLE SECTION: Feedback et Mentorat -->
+      <section class="feedback-mentorat-section card p-6 md:p-8 mt-10 shadow-md" aria-labelledby="feedback-title">
+        <h2 id="feedback-title" class="section-subtitle text-xl font-semibold flex items-center gap-3 text-primary mb-6">
+          <i class="fas fa-comments fa-fw" aria-hidden="true"></i> Partagez Votre Expérience et Devenez Mentor
+        </h2>
+        <p class="mb-6 text-md text-gray-darker">Maintenant que vous avez trouvé un emploi, votre avis sur EmploiAvenir nous est précieux ! Aidez-nous à nous améliorer et envisagez de devenir une source d'inspiration pour d'autres.</p>
+
+        <form id="feedbackForm" class="feedback-form">
+          <div class="form-group">
+            <label for="avisSite">Votre avis sur notre site et vos suggestions d'amélioration :</label>
+            <textarea id="avisSite" name="avisSite" rows="5" class="w-full p-3 border border-gray-light rounded-md focus:border-primary focus:ring-primary-light" placeholder="Qu'avez-vous apprécié ? Que pourrions-nous améliorer ? Quelles fonctionnalités vous ont le plus aidé ?..." required></textarea>
+          </div>
+
+          <div class="form-group checkbox-group">
+            <input type="checkbox" id="devenirMentor" name="devenirMentor" class="h-5 w-5 text-primary focus:ring-primary-light border-gray-light rounded">
+            <label for="devenirMentor" class="mb-0 text-md">Oui, je serais intéressé(e) pour devenir mentor et partager mon expérience avec d'autres utilisateurs d'EmploiAvenir.</label>
+          </div>
+          <p class="text-sm text-gray-medium mb-6">Si vous cochez cette case, nous pourrons vous recontacter pour discuter des modalités du mentorat.</p>
+
+          <button type="submit" class="btn btn-secondary btn-large w-full sm:w-auto">
+            <i class="fas fa-paper-plane mr-2"></i> Envoyer mon avis
+          </button>
+        </form>
+        <p class="mt-6 text-sm text-center text-gray-darker">Vos retours sont confidentiels et nous aident à mieux vous accompagner.</p>
+      </section>
+      <!-- FIN NOUVELLE SECTION -->
+
+
+      <aside class="contact-info card mt-10 mb-8 p-6 text-center bg-primary-light rounded-lg shadow-lg" aria-labelledby="accompagnement-title-suivi">
+        <h2 id="accompagnement-title-suivi" class="text-2xl font-semibold flex items-center gap-3 text-primary justify-center mb-4">
+            <i class="fas fa-hands-helping fa-fw" aria-hidden="true"></i> Un accompagnement pour votre intégration ?
+        </h2>
+        <p class="mb-6 text-md text-gray-darker">Même après la signature, nos conseillers peuvent vous aider à préparer votre prise de poste, à définir vos objectifs pour les premières semaines, et à gérer au mieux votre période d'essai.</p>
+        <a href="Partenaires.html?tab=appointments" class="btn btn-primary btn-large">
+            <i class="fas fa-calendar-alt mr-2" aria-hidden="true"></i> Solliciter un coaching d'intégration
+        </a>
+        <div class="social-icons mt-8 flex justify-center gap-6" aria-label="Suivez-nous sur les réseaux sociaux">
+          <a href="#" aria-label="Facebook" class="text-gray-medium hover:text-primary text-3xl transition-colors"><i class="fab fa-facebook-square"></i></a>
+          <a href="#" aria-label="LinkedIn" class="text-gray-medium hover:text-primary text-3xl transition-colors"><i class="fab fa-linkedin"></i></a>
+          <a href="#" aria-label="Twitter" class="text-gray-medium hover:text-primary text-3xl transition-colors"><i class="fab fa-twitter-square"></i></a>
+        </div>
+      </aside>
+
+      <nav class="form-navigation mt-10 flex justify-between items-center" aria-label="Navigation des étapes du parcours">
+          <button type="button" class="btn btn-outline btn-large" id="backToContratBtn">
+              <i class="fas fa-arrow-left mr-2" aria-hidden="true"></i> Retour au Contrat
+          </button>
+          <button type="button" class="btn btn-primary btn-large" id="completeParcoursBtn">
+              Terminer et Voir Mon Parcours <i class="fas fa-flag-checkered ml-2" aria-hidden="true"></i>
+          </button>
+      </nav>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container text-center py-6">
+      <p class="mb-2">© 2024 EmploiAvenir | Accompagnement à l'insertion professionnelle</p>
+      <p class="text-sm text-gray">
+        <i class="fas fa-map-marker-alt" aria-hidden="true"></i> 12 rue de l'Emploi, 75000 Paris  | 
+        <i class="fas fa-envelope" aria-hidden="true"></i> contact@emploiavenir.fr  | 
+        <i class="fas fa-phone" aria-hidden="true"></i> 01 23 45 67 89
+      </p>
+    </div>
+  </footer>
+  <div id="toast-container"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const accordionContainer = document.getElementById('accordionContainerSuivi');
+        const feedbackForm = document.getElementById('feedbackForm');
+
+        const accordionDataSuivi = [
+            // ... (données de l'accordéon inchangées) ...
+            { id: 'avantPremierJour', title: '1. Préparatifs Avant le Premier Jour', icon: 'fa-calendar-check', contentId: 'avant-premier-jour-content',
+              intro: "Une bonne préparation en amont facilitera grandement votre arrivée.",
+              checklist: [
+                "Confirmez l'heure et le lieu de votre arrivée, ainsi que la personne à contacter.",
+                "Préparez les <strong>documents administratifs</strong> demandés (RIB, carte d'identité, carte vitale, etc.).",
+                "Renseignez-vous sur le <strong>dress code</strong> de l'entreprise si ce n'est pas déjà clair.",
+                "Planifiez votre <strong>trajet</strong> pour arriver à l'heure et sans stress.",
+                "Préparez quelques questions de base sur l'organisation de la première journée."
+              ],
+              conseil: { text: "Reposez-vous bien la veille pour être en forme et attentif le jour J.", icon: 'fa-bed', type: 'conseil-info text-info'}
+            },
+            { id: 'premierJour', title: '2. Le Premier Jour : Faire Bonne Impression', icon: 'fa-door-open', contentId: 'premier-jour-content',
+              intro: "Votre premier jour est l'occasion de marquer des points et de commencer à tisser des liens.",
+              checklist: [
+                "Soyez <strong>ponctuel</strong>, voire légèrement en avance.",
+                "Adoptez une <strong>attitude ouverte, souriante et positive</strong>.",
+                "Présentez-vous clairement à vos nouveaux collègues. Essayez de retenir leurs noms et fonctions.",
+                "Écoutez attentivement les informations qui vous sont transmises (consignes, présentations).",
+                "N'hésitez pas à <strong>poser des questions</strong> si quelque chose n'est pas clair, cela montre votre intérêt.",
+                "Observez la culture d'entreprise et les codes non-écrits."
+              ],
+              conseil: { html: "Prévoyez de quoi prendre des notes. Cela vous sera utile et montrera votre sérieux.", icon: 'fa-clipboard-list', type: 'highlight-info text-primary'}
+            },
+            { id: 'premieresSemaines', title: '3. Les Premières Semaines : S\'adapter et Apprendre', icon: 'fa-seedling', contentId: 'premieres-semaines-content',
+              intro: "Cette période est cruciale pour comprendre votre rôle, l'équipe et les attentes.",
+              checklist: [
+                "Concentrez-vous sur la <strong>compréhension de vos missions</strong> et des objectifs de votre poste.",
+                "Identifiez les <strong>personnes clés</strong> avec qui vous allez interagir et développez de bonnes relations.",
+                "Soyez proactif pour rencontrer vos collègues et comprendre leur rôle.",
+                "Prenez des initiatives mesurées, montrez votre envie d'apprendre et de contribuer.",
+                "Demandez régulièrement du <strong>feedback informel</strong> à votre manager et à vos collègues.",
+                "Familiarisez-vous avec les outils, processus et la culture de l'entreprise."
+              ],
+              conseil: { text: "Ne cherchez pas à tout révolutionner dès le début. L'observation et l'écoute sont primordiales.", icon: 'fa-ear-listen', type: 'conseil-info text-info'}
+            },
+            { id: 'periodeEssai', title: '4. Gérer sa Période d\'Essai', icon: 'fa-hourglass-half', contentId: 'periode-essai-content',
+              intro: "La période d'essai est un moment d'évaluation mutuelle. Mettez toutes les chances de votre côté.",
+              checklist: [
+                "Comprenez bien la <strong>durée et les conditions</strong> de votre période d'essai.",
+                "Fixez-vous des <strong>objectifs clairs</strong> avec votre manager pour cette période.",
+                "Soyez particulièrement attentif à la qualité de votre travail et à votre comportement professionnel.",
+                "Documentez vos réalisations et les compétences que vous développez.",
+                "N'attendez pas la fin pour discuter de votre progression : sollicitez des <strong>points réguliers</strong> avec votre manager.",
+                "Si des difficultés apparaissent, parlez-en rapidement pour trouver des solutions."
+              ],
+              conseil: { text: "La période d'essai est aussi pour vous l'occasion de valider si le poste et l'entreprise vous conviennent.", icon: 'fa-user-check', type: 'warning-info text-warning'}
+            },
+            { id: 'suiviLongTerme', title: '5. Suivi et Développement Continu', icon: 'fa-chart-line', contentId: 'suivi-long-terme-content',
+              intro: "L'intégration ne s'arrête pas après quelques semaines. Continuez à vous investir pour votre succès.",
+              checklist: [
+                "Continuez à chercher des occasions d'<strong>apprendre et de développer vos compétences</strong>.",
+                "Participez activement à la vie de l'équipe et de l'entreprise.",
+                "Préparez vos <strong>entretiens annuels</strong> ou de suivi en réfléchissant à vos accomplissements et axes d'amélioration.",
+                "Construisez et entretenez votre <strong>réseau professionnel interne</strong>.",
+                "Restez curieux et adaptable face aux évolutions de votre poste ou de l'entreprise."
+              ],
+              conseil: { html: "Pensez à mettre à jour votre profil sur les réseaux professionnels (comme LinkedIn) une fois votre période d'essai validée, si pertinent.", icon: 'fa-linkedin', type: 'highlight-info text-primary'}
+            }
+        ];
+
+        function createAccordionItem(section) {
+            const sectionEl = document.createElement('section');
+            sectionEl.className = 'accordion-section card p-0 overflow-hidden';
+            sectionEl.setAttribute('aria-labelledby', `${section.id}-title`);
+            const button = document.createElement('button');
+            button.className = 'accordion-button flex justify-between items-center w-full text-left';
+            button.setAttribute('aria-expanded', 'false');
+            button.setAttribute('aria-controls', section.contentId);
+            button.innerHTML = `
+                <h2 id="${section.id}-title" class="section-subtitle text-xl font-semibold flex items-center gap-3 text-primary">
+                  <i class="fas ${section.icon} fa-fw" aria-hidden="true"></i> ${section.title}
+                </h2>
+                <span class="icon-toggle text-primary" aria-hidden="true"></span>`;
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'accordion-content';
+            contentDiv.id = section.contentId;
+            let contentHTML = `<p class="mb-4 px-6">${section.intro}</p>
+                               <ul class="checklist list-none p-0 mb-4 space-y-2 px-6">`;
+            section.checklist.forEach(item => {
+                contentHTML += `<li><i class="fas fa-check-circle text-secondary mr-2"></i>${item}</li>`;
+            });
+            contentHTML += `</ul>`;
+            if (section.conseil) {
+                contentHTML += `
+                  <div class="info-box ${section.conseil.type} mt-4 mx-6 mb-6">
+                    <i class="fas ${section.conseil.icon} icon-left fa-fw" aria-hidden="true"></i>
+                    <div>${section.conseil.html ? section.conseil.html : `<p>${section.conseil.text}</p>`}</div>
+                  </div>`;
+            }
+            contentDiv.innerHTML = contentHTML;
+            sectionEl.appendChild(button);
+            sectionEl.appendChild(contentDiv);
+            return sectionEl;
+        }
+
+        if (accordionContainer) {
+            accordionDataSuivi.forEach(section => {
+                accordionContainer.appendChild(createAccordionItem(section));
+            });
+            const accordionButtons = accordionContainer.querySelectorAll('.accordion-button');
+            accordionButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const content = document.getElementById(button.getAttribute('aria-controls'));
+                    const isExpanded = button.getAttribute('aria-expanded') === 'true';
+                    button.setAttribute('aria-expanded', !isExpanded);
+                    content.classList.toggle('open');
+                    if (!isExpanded) {
+                        content.style.maxHeight = content.scrollHeight + "px";
+                    } else {
+                        content.style.maxHeight = null;
+                    }
+                });
+            });
+        }
+
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNavLinks = document.getElementById('mainNavLinks');
+        if (mobileMenuBtn && mainNavLinks) {
+            mobileMenuBtn.addEventListener('click', () => {
+                const isOpen = mainNavLinks.classList.toggle('show-mobile');
+                mobileMenuBtn.setAttribute('aria-expanded', isOpen);
+            });
+        }
+
+        const backToContratBtn = document.getElementById('backToContratBtn');
+        const completeParcoursBtn = document.getElementById('completeParcoursBtn');
+        // MODIFICATION ICI :
+        const FINAL_DESTINATION_PARCOURS = 'felicitation.html';
+
+        const showToast = (message, type = 'info', duration = 3500) => {
+            const toastContainer = document.getElementById('toast-container');
+            if (!toastContainer) {
+                console.warn('Toast container not found');
+                return;
+            }
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type} active`;
+            toast.textContent = message;
+            toast.setAttribute('role', 'alert');
+            toastContainer.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.remove('active');
+                toast.classList.add('fade-out');
+                setTimeout(() => toast.remove(), 500);
+            }, duration);
+        };
+
+        if (feedbackForm) {
+            feedbackForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+                const avis = document.getElementById('avisSite').value;
+                const veutEtreMentor = document.getElementById('devenirMentor').checked;
+                console.log("Avis soumis : ", { avis, veutEtreMentor });
+                showToast("Merci pour votre avis ! Nous l'étudierons avec attention.", "success", 5000);
+                if (veutEtreMentor) {
+                    showToast("C'est formidable que vous envisagiez le mentorat ! Nous vous recontacterons bientôt.", "info", 6000);
+                }
+                feedbackForm.reset();
+            });
+        }
+
+        if(backToContratBtn) {
+            backToContratBtn.addEventListener('click', () => {
+                window.location.href = 'Contrat.html';
+            });
+        }
+
+        if(completeParcoursBtn) {
+            completeParcoursBtn.addEventListener('click', () => {
+                try {
+                    let parcoursData = JSON.parse(localStorage.getItem('parcoursEmploiAvenir')) || {};
+                    parcoursData.etapes = parcoursData.etapes || Array(8).fill(null).map((_, i) => ({ id: `etape-${i}`, statut: 'locked' }));
+                    if(parcoursData.etapes[6]) {
+                        parcoursData.etapes[6].statut = 'completed';
+                        parcoursData.etapes[6].dateCompletion = new Date().toISOString();
+                    } else {
+                         parcoursData.etapes[6] = { id: 'etape-6', statut: 'completed', dateCompletion: new Date().toISOString() };
+                    }
+                    parcoursData.parcoursPrincipalTermine = true;
+                    parcoursData.dateFinParcoursPrincipal = new Date().toISOString();
+                    parcoursData.etapeActuelleIndex = 6;
+                    parcoursData.derniereActivite = new Date().toISOString();
+                    localStorage.setItem('parcoursEmploiAvenir', JSON.stringify(parcoursData));
+                    console.log("Suivi/Intégration & Feedback: Statut du parcours mis à jour comme terminé.", parcoursData);
+                    window.location.href = FINAL_DESTINATION_PARCOURS; // Redirige vers felicitation.html
+                } catch (error) {
+                    console.error("Suivi/Intégration & Feedback: Erreur localStorage:", error);
+                    showToast("Erreur de sauvegarde de progression.", "error");
+                }
+            });
+        }
+    });
+  </script>
+</body>
+</html>

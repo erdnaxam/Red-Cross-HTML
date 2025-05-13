@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Félicitations pour Votre Parcours ! - EmploiAvenir</title>
+  <meta name="description" content="Félicitations pour avoir complété votre parcours d'accompagnement à l'emploi avec EmploiAvenir. Découvrez les prochaines étapes.">
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    .hero-felicitation {
+        background-color: var(--color-primary-light);
+        padding: 4rem 1.5rem;
+        text-align: center;
+        border-radius: var(--rounded-lg);
+        margin-bottom: 2.5rem;
+    }
+    .hero-felicitation h1 {
+        color: var(--color-primary);
+        font-size: 2.5rem; /* Responsive: md:text-4xl */
+        margin-bottom: 1rem;
+    }
+    .hero-felicitation p {
+        font-size: 1.125rem; /* Responsive: text-lg */
+        color: var(--color-gray-darker);
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .hero-felicitation .icon-tada {
+        font-size: 4rem;
+        color: var(--color-secondary); /* Ou var(--color-primary) */
+        margin-bottom: 1.5rem;
+        animation: tadaAnimation 1.5s ease-in-out infinite;
+    }
+
+    @keyframes tadaAnimation {
+      0% {transform: scale(1);}
+      10%, 20% {transform: scale(0.9) rotate(-3deg);}
+      30%, 50%, 70%, 90% {transform: scale(1.1) rotate(3deg);}
+      40%, 60%, 80% {transform: scale(1.1) rotate(-3deg);}
+      100% {transform: scale(1) rotate(0);}
+    }
+
+    .parcours-summary .card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .parcours-summary .card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+    }
+    .parcours-summary .card-title {
+        color: var(--color-primary);
+        font-weight: 600;
+    }
+    .parcours-summary i {
+      margin-right: 0.5rem;
+      color: var(--color-secondary);
+    }
+
+    .cta-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem;
+        margin-top: 2.5rem;
+    }
+  </style>
+</head>
+<body>
+  <header class="header" id="header">
+    <div class="container flex justify-between items-center">
+      <a href="index.html" class="logo" aria-label="Accueil EmploiAvenir"><span>Emploi</span>Avenir</a>
+      <nav aria-label="Navigation principale">
+        <ul class="nav-links" id="mainNavLinks">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="MonParcours.html" class="active" aria-current="page">Mon Parcours</a></li>
+          <li><a href="MesCandidature.html">Mes Candidatures</a></li>
+          <li><a href="Partenaires.html">Nos partenaires</a></li>
+          <li><a href="Documents.html">Mes documents</a></li>
+          <li><a href="Profil.html">Profil</a></li>
+        </ul>
+      </nav>
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Ouvrir le menu de navigation" aria-expanded="false" aria-controls="mainNavLinks">☰</button>
+    </div>
+  </header>
+
+  <main class="page-felicitation">
+    <div class="container pt-8 pb-12">
+
+      <section class="hero-felicitation shadow-md">
+        <i class="fas fa-tada icon-tada" aria-hidden="true"></i>
+        <h1>Félicitations, <span id="userName">[Utilisateur]</span> !</h1>
+        <p class="mb-6">
+          Vous avez brillamment complété toutes les étapes de votre parcours d'accompagnement vers l'emploi sur EmploiAvenir.
+          C'est une grande réussite, et nous sommes fiers de vous avoir accompagné(e) dans cette démarche !
+        </p>
+        <p>
+          Vous êtes maintenant mieux armé(e) pour naviguer dans le monde professionnel.
+        </p>
+      </section>
+
+      <section class="parcours-summary mb-10" aria-labelledby="summary-title">
+        <h2 id="summary-title" class="text-2xl font-semibold text-center mb-8 text-primary">Votre Parcours en un Clin d'Œil</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="etapesParcoursContainer">
+          {/* Les étapes complétées seront injectées ici par JavaScript */}
+        </div>
+        <div class="info-box conseil-info mt-8 p-6">
+          <i class="fas fa-info-circle icon-left fa-lg" aria-hidden="true"></i>
+          <div>
+            <h3 class="font-semibold mb-2">Rappel :</h3>
+            <p>Vous pouvez toujours revisiter ces étapes et accéder à vos documents et candidatures depuis votre espace "Mon Parcours". N'oubliez pas de mettre à jour votre profil si votre situation évolue.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="prochaines-etapes text-center" aria-labelledby="next-steps-title">
+        <h2 id="next-steps-title" class="text-2xl font-semibold mb-6 text-primary">Et Maintenant ?</h2>
+        <p class="mb-8 text-lg text-gray-darker max-w-3xl mx-auto">
+          Votre aventure professionnelle continue ! Voici quelques suggestions pour la suite :
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="card p-6 shadow-md hover:shadow-lg transition-shadow">
+            <i class="fas fa-user-shield fa-2x text-secondary mb-3"></i>
+            <h3 class="text-xl font-semibold mb-2 text-primary">Consolidez votre Poste</h3>
+            <p class="text-gray-darker">Mettez en pratique les conseils d'intégration, continuez d'apprendre et de grandir dans votre nouveau rôle.</p>
+          </div>
+          <div class="card p-6 shadow-md hover:shadow-lg transition-shadow">
+            <i class="fas fa-users fa-2x text-secondary mb-3"></i>
+            <h3 class="text-xl font-semibold mb-2 text-primary">Développez Votre Réseau</h3>
+            <p class="text-gray-darker">Continuez à entretenir et étendre votre réseau professionnel. Il est précieux tout au long de votre carrière.</p>
+          </div>
+          <div class="card p-6 shadow-md hover:shadow-lg transition-shadow">
+            <i class="fas fa-hands-helping fa-2x text-secondary mb-3"></i>
+            <h3 class="text-xl font-semibold mb-2 text-primary">Devenez Mentor (si intéressé)</h3>
+            <p class="text-gray-darker">Si vous avez exprimé votre intérêt pour le mentorat, nous vous contacterons. Votre expérience est une aide précieuse !</p>
+          </div>
+        </div>
+        <div class="cta-buttons mt-10">
+            <a href="MonParcours.html" class="btn btn-primary btn-large">
+                <i class="fas fa-user-circle mr-2"></i> Accéder à Mon Tableau de Bord
+            </a>
+            <a href="Partenaires.html?tab=workshops" class="btn btn-outline btn-large">
+                <i class="fas fa-chalkboard-teacher mr-2"></i> Découvrir nos Ateliers
+            </a>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container text-center py-6">
+      <p class="mb-2">© 2024 EmploiAvenir | Accompagnement à l'insertion professionnelle</p>
+      <p class="text-sm text-gray">
+        <i class="fas fa-map-marker-alt" aria-hidden="true"></i> 12 rue de l'Emploi, 75000 Paris  | 
+        <i class="fas fa-envelope" aria-hidden="true"></i> contact@emploiavenir.fr  | 
+        <i class="fas fa-phone" aria-hidden="true"></i> 01 23 45 67 89
+      </p>
+    </div>
+  </footer>
+  <div id="toast-container"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNavLinks = document.getElementById('mainNavLinks');
+        const userNameSpan = document.getElementById('userName');
+        const etapesParcoursContainer = document.getElementById('etapesParcoursContainer');
+
+        if (mobileMenuBtn && mainNavLinks) {
+            mobileMenuBtn.addEventListener('click', () => {
+                const isOpen = mainNavLinks.classList.toggle('show-mobile');
+                mobileMenuBtn.setAttribute('aria-expanded', isOpen);
+            });
+        }
+
+        // Tenter de récupérer le nom de l'utilisateur (simulé ici)
+        // Dans une vraie application, cela viendrait du profil utilisateur stocké ou d'une session.
+        const profilData = JSON.parse(localStorage.getItem('profilEmploiAvenir'));
+        if (profilData && profilData.prenom) {
+            userNameSpan.textContent = profilData.prenom;
+        } else {
+            userNameSpan.textContent = "Cher utilisateur"; // Valeur par défaut
+        }
+
+        // Afficher les étapes complétées du parcours
+        try {
+            const parcoursData = JSON.parse(localStorage.getItem('parcoursEmploiAvenir'));
+            if (parcoursData && parcoursData.etapes && etapesParcoursContainer) {
+                // Noms des étapes (doivent correspondre aux IDs ou être définis autrement)
+                const nomEtapes = [
+                    { id: 'etape-0', nom: "Définition de l'Objectif Professionnel", icon: "fa-bullseye", page: "ObjectifPro.html" },
+                    { id: 'etape-1', nom: "Création du CV", icon: "fa-file-alt", page: "CreationCV.html" },
+                    { id: 'etape-2', nom: "Rédaction de la Lettre de Motivation", icon: "fa-envelope-open-text", page: "LettreMotivation.html" },
+                    { id: 'etape-3', nom: "Préparation à l'Entretien", icon: "fa-handshake", page: "preparation-entretien.html" },
+                    { id: 'etape-4', nom: "L'Après Entretien", icon: "fa-paper-plane", page: "apres-entretien.html" },
+                    { id: 'etape-5', nom: "Offre et Contrat de Travail", icon: "fa-file-signature", page: "Contrat.html" },
+                    { id: 'etape-6', nom: "Intégration et Suivi en Poste", icon: "fa-user-tie", page: "Suivi.html" }
+                ];
+
+                nomEtapes.forEach((etapeInfo, index) => {
+                    const etapeData = parcoursData.etapes[index];
+                    if (etapeData && etapeData.statut === 'completed') {
+                        const card = document.createElement('a'); // Rendre la carte cliquable
+                        card.href = etapeInfo.page; // Lien vers la page de l'étape
+                        card.className = 'card p-4 shadow-sm flex items-center bg-green-50 border-l-4 border-green-500'; // Style pour étape complétée
+                        card.innerHTML = `
+                            <i class="fas ${etapeInfo.icon} fa-lg text-green-600 mr-3"></i>
+                            <div>
+                                <h3 class="font-semibold text-green-700">${etapeInfo.nom}</h3>
+                                <p class="text-sm text-green-600">Terminée le ${new Date(etapeData.dateCompletion).toLocaleDateString('fr-FR')}</p>
+                            </div>
+                        `;
+                        etapesParcoursContainer.appendChild(card);
+                    }
+                });
+                 // Vérifier si le conteneur est vide après l'itération
+                if (etapesParcoursContainer.children.length === 0) {
+                    etapesParcoursContainer.innerHTML = '<p class="text-center col-span-full text-gray-medium">Aucune information sur le parcours disponible.</p>';
+                }
+
+            } else if (etapesParcoursContainer) {
+                 etapesParcoursContainer.innerHTML = '<p class="text-center col-span-full text-gray-medium">Aucune information sur le parcours disponible.</p>';
+            }
+        } catch (error) {
+            console.error("Erreur lors de la récupération des données du parcours :", error);
+            if (etapesParcoursContainer) {
+                etapesParcoursContainer.innerHTML = '<p class="text-center col-span-full text-red-500">Erreur lors du chargement du résumé du parcours.</p>';
+            }
+        }
+
+        // La logique de progression du localStorage est déjà gérée dans la page Suivi.html.
+        // Cette page est purement informative.
+    });
+  </script>
+</body>
+</html>
