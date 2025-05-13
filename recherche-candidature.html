@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recherche & Candidature - EmploiAvenir</title>
+  <meta name="description" content="Gérez vos candidatures et explorez les offres d'emploi pour avancer dans votre parcours avec EmploiAvenir.">
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="header" id="header">
+    <div class="container flex justify-between items-center">
+      <a href="index.html" class="logo" aria-label="Accueil EmploiAvenir"><span>Emploi</span>Avenir</a>
+      <nav aria-label="Navigation principale">
+        <ul class="nav-links" id="mainNavLinks">
+          <li><a href="index.html">Accueil</a></li>
+          <li><a href="MonParcours.html" class="active" aria-current="page">Mon Parcours</a></li>
+          <li><a href="MesCandidature.html">Mes Candidatures</a></li>
+          <li><a href="Partenaires.html">Nos partenaires</a></li>
+          <li><a href="Documents.html">Mes documents</a></li>
+          <li><a href="Profil.html">Profil</a></li>
+        </ul>
+      </nav>
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Ouvrir le menu de navigation" aria-expanded="false" aria-controls="mainNavLinks">☰</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="container mt-8 mb-8">
+      <header class="section-header text-center mb-8">
+        <h1>Recherche & Candidature</h1>
+        <p class="intro-text">
+          Vous avez préparé vos outils (CV et lettre de motivation). Il est temps de passer à l'action !
+          Choisissez une option ci-dessous pour continuer.
+        </p>
+      </header>
+
+      <div class="choix-options-grid"> {/* Réutilisation de la classe de grille de choix-cv-lm.html si le style convient */}
+        <!-- Box 1: Mes Candidatures -->
+        <a href="MesCandidature.html" class="choix-carte card text-decoration-none"> {/* Lien direct */}
+          <div class="card-icon-container">
+            <i class="fas fa-folder-open fa-2x icon-primary"></i> {/* Icône ajustée */}
+          </div>
+          <h3 class="card-title">Gérer Mes Candidatures</h3>
+          <div class="card-content">
+            <p>
+              Suivez l'avancement de vos candidatures existantes, ajoutez-en de nouvelles
+              ou mettez à jour les informations.
+            </p>
+          </div>
+          {/* Le lien global de la carte suffit, pas besoin d'un bouton interne si toute la carte est cliquable */}
+        </a>
+
+        <!-- Box 2: Candidater à des offres (pour l'instant vide/placeholder) -->
+        <div class="choix-carte card is-disabled"> {/* Ajout de is-disabled pour styler différemment */}
+          <div class="card-icon-container">
+            <i class="fas fa-search-dollar fa-2x icon-secondary"></i> {/* Icône ajustée */}
+          </div>
+          <h3 class="card-title">Rechercher et Candidater à des Offres</h3>
+          <div class="card-content">
+            <p>
+              (Fonctionnalité à venir) Explorez les offres d'emploi correspondant
+              à votre profil et postulez directement.
+            </p>
+          </div>
+          <button type="button" class="btn btn-primary" disabled>Prochainement</button>
+        </div>
+      </div>
+
+      {/* Navigation vers l'étape suivante du parcours */}
+      <div class="form-navigation mt-8 flex justify-end"> {/* aligné à droite */}
+        <button type="button" class="btn btn-primary" id="goToPreparationEntretienBtn">
+          Étape Suivante : Préparation Entretien <i class="fas fa-arrow-right ml-2"></i>
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container text-center py-4">
+      <p>© 2024 EmploiAvenir. Tous droits réservés.</p>
+    </div>
+  </footer>
+  <div id="toast-container"></div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const goToPreparationEntretienBtn = document.getElementById('goToPreparationEntretienBtn');
+        const NEXT_PAGE_PREPARATION_ENTRETIEN = 'preparation-entretien.html';
+        // Fonction pour afficher les toasts (si vous n'avez pas de module global App.showToast)
+        const showToast = (message, type = 'info', duration = 3000) => {
+            const toastContainer = document.getElementById('toast-container');
+            if (!toastContainer) return;
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            toast.textContent = message;
+            toastContainer.appendChild(toast);
+            setTimeout(() => {
+                toast.remove();
+            }, duration);
+        };
+
+        // Fonction pour mettre à jour le statut du parcours dans localStorage
+        const updateParcoursForNextStep = () => {
+            try {
+                let parcoursData = JSON.parse(localStorage.getItem('parcoursEmploiAvenir')) || {};
+                // Assurer une structure minimale
+                parcoursData.etapes = parcoursData.etapes || Array(8).fill(null).map((_, i) => ({ id: `etape-${i}`, statut: 'locked' }));
+                parcoursData.etapeActuelleIndex = parcoursData.etapeActuelleIndex || 0;
+
+                // Étape 2 (Recherche & Candidature, index 2) complétée
+                if(parcoursData.etapes[2]) {
+                    parcoursData.etapes[2].statut = 'completed';
+                    parcoursData.etapes[2].dateCompletion = new Date().toISOString();
+                } else {
+                    parcoursData.etapes[2] = { id: 'etape-2', statut: 'completed', dateCompletion: new Date().toISOString() };
+                }
+
+                // Étape 3 (Préparation Entretien, index 3) devient active
+                if(parcoursData.etapes[3]) {
+                    parcoursData.etapes[3].statut = 'active';
+                } else {
+                    parcoursData.etapes[3] = { id: 'etape-3', statut: 'active' };
+                }
+
+                parcoursData.etapeActuelleIndex = 3; // L'étape Préparation Entretien est maintenant l'étape active
+                parcoursData.derniereActivite = new Date().toISOString();
+
+                localStorage.setItem('parcoursEmploiAvenir', JSON.stringify(parcoursData));
+                console.log("Recherche & Candidature: Statut du parcours mis à jour pour Préparation Entretien.", parcoursData);
+                return true;
+            } catch (error) {
+                console.error("Recherche & Candidature: Erreur lors de la mise à jour du statut du parcours:", error);
+                showToast("Erreur lors de la sauvegarde de votre progression.", "error");
+                return false;
+            }
+        };
+
+        if (goToPreparationEntretienBtn) {
+            goToPreparationEntretienBtn.addEventListener('click', () => {
+                if (updateParcoursForNextStep()) {
+                    window.location.href = NEXT_PAGE_PREPARATION_ENTRETIEN;
+                }
+            });
+        }
+
+        // Initialisation du menu mobile (si votre script.js principal ne le fait pas déjà pour toutes les pages)
+        // Si vous avez un App.init() global qui gère ça, ce bloc n'est pas nécessaire ici.
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mainNavLinks = document.getElementById('mainNavLinks');
+        if (mobileMenuBtn && mainNavLinks) {
+            mobileMenuBtn.addEventListener('click', () => {
+                const isOpen = mainNavLinks.classList.toggle('show-mobile');
+                mobileMenuBtn.setAttribute('aria-expanded', isOpen);
+            });
+        }
+    });
+  </script>
+</body>
+</html>

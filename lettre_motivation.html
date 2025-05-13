@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-  <!-- HEADER -->
+  <!-- HEADER (inchangé) -->
   <header class="header" id="header">
     <div class="container flex justify-between items-center">
       <a href="index.html" class="logo" aria-label="Accueil EmploiAvenir"><span>Emploi</span>Avenir</a>
@@ -31,20 +31,22 @@
   </header>
 
   <main>
-    <section class="container mt-8 mb-8" style="max-width:600px;">
-      <header class="section-header text-center mb-4">
+    <section class="container mt-8 mb-8" style="max-width:700px;"> {/* Légèrement plus large pour le contenu */}
+      <header class="section-header text-center mb-6"> {/* Augmentation marge */}
         <h1>Générateur de Lettre de Motivation</h1>
         <p class="intro-text">Remplissez ce formulaire pour obtenir une lettre personnalisée et professionnelle en quelques secondes.</p>
       </header>
 
-      <form id="motivationForm" class="card" autocomplete="on" novalidate>
-        <div class="form-group">
-          <label for="nom">Nom Prénom <span aria-hidden="true" class="text-danger">*</span></label>
-          <input type="text" id="nom" name="nom" required autocomplete="name" class="form-control" placeholder="Ex : Marie Dupont">
-        </div>
-        <div class="form-group">
-          <label for="email">Email <span aria-hidden="true" class="text-danger">*</span></label>
-          <input type="email" id="email" name="email" required autocomplete="email" class="form-control" placeholder="Ex : marie.dupont@email.com">
+      <form id="motivationForm" class="card p-6" autocomplete="on"> {/* Ajout padding à la carte */}
+        <div class="form-grid form-grid-cols-2 gap-4"> {/* Optionnel: Grille pour nom/email */}
+            <div class="form-group">
+              <label for="nom">Nom Prénom <span aria-hidden="true" class="text-danger">*</span></label>
+              <input type="text" id="nom" name="nom" required autocomplete="name" class="form-control" placeholder="Ex : Marie Dupont">
+            </div>
+            <div class="form-group">
+              <label for="email">Email <span aria-hidden="true" class="text-danger">*</span></label>
+              <input type="email" id="email" name="email" required autocomplete="email" class="form-control" placeholder="Ex : marie.dupont@email.com">
+            </div>
         </div>
         <div class="form-group">
           <label for="poste">Poste visé <span aria-hidden="true" class="text-danger">*</span></label>
@@ -56,80 +58,197 @@
         </div>
         <div class="form-group">
           <label for="motivation_poste">Pourquoi ce poste vous intéresse-t-il ? <span aria-hidden="true" class="text-danger">*</span></label>
-          <textarea id="motivation_poste" name="motivation_poste" required class="form-control" rows="3" placeholder="Exprimez votre motivation..."></textarea>
+          <textarea id="motivation_poste" name="motivation_poste" required class="form-control" rows="4" placeholder="Exprimez votre motivation..."></textarea> {/* rows augmenté */}
         </div>
         <div class="form-group">
           <label for="valeur_ajoutee">Ce que vous pouvez apporter à l’entreprise <span aria-hidden="true" class="text-danger">*</span></label>
-          <textarea id="valeur_ajoutee" name="valeur_ajoutee" required class="form-control" rows="3" placeholder="Parlez de vos atouts, qualités, expériences..."></textarea>
+          <textarea id="valeur_ajoutee" name="valeur_ajoutee" required class="form-control" rows="4" placeholder="Parlez de vos atouts, qualités, expériences..."></textarea> {/* rows augmenté */}
         </div>
-        <button type="submit" class="btn btn-primary btn-large w-100" id="generateLetterBtn">
-          <i class="fas fa-magic"></i> Générer ma lettre
+        <button type="submit" class="btn btn-primary btn-large button-full mt-2" id="generateLetterBtn"> {/* button-full pour pleine largeur */}
+          <i class="fas fa-magic mr-2"></i> Générer ma Lettre
         </button>
       </form>
 
-      <div id="resultat" class="card mt-4" style="display:none;"></div>
+      {/* Section pour afficher le résultat et les actions post-génération */}
+      <div id="letterResultSection" class="mt-6" style="display:none;">
+        <h2 class="section-title centered">Votre Lettre de Motivation</h2>
+        <div id="resultat" class="card p-4 mb-4" style="white-space: pre-wrap; min-height: 200px; border: 1px solid var(--color-gray-light);">
+          {/* La lettre générée sera insérée ici */}
+        </div>
 
-      <div class="cv-step-navigation text-center mt-4">
-        <a href="MonParcours.html" class="btn btn-success" id="finishLetterButton" style="display: none;">
-          <i class="fas fa-check-circle"></i> Terminer et voir mon parcours
-        </a>
+        {/* NOUVELLE NAVIGATION POST-GÉNÉRATION */}
+        <div class="form-navigation flex justify-between items-center">
+          <button type="button" class="btn btn-outline" id="backToParcoursLetterBtn">
+            <i class="fas fa-arrow-left mr-2"></i> Retour à Mon Parcours
+          </button>
+          <button type="button" class="btn btn-primary" id="nextStepAfterLetterBtn">
+            Étape Suivante : Recherche <i class="fas fa-arrow-right ml-2"></i>
+          </button>
+        </div>
       </div>
+
     </section>
   </main>
 
   <footer class="footer">
-    <div class="container">
+    <div class="container text-center py-4"> {/* Simplifié pour l'exemple */}
       <p>© 2024 EmploiAvenir. Tous droits réservés.</p>
     </div>
   </footer>
   <div id="toast-container"></div>
 
   <script>
-    const form = document.getElementById('motivationForm');
-    const output = document.getElementById('resultat');
-    const finishButton = document.getElementById('finishLetterButton');
-    const generateBtn = document.getElementById('generateLetterBtn');
+    document.addEventListener('DOMContentLoaded', () => {
+        const motivationForm = document.getElementById('motivationForm');
+        const generateLetterBtn = document.getElementById('generateLetterBtn');
+        const letterResultOutput = document.getElementById('resultat');
+        const letterResultSection = document.getElementById('letterResultSection'); // Conteneur pour résultat + boutons
 
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
+        // Nouveaux boutons de navigation post-génération
+        const backToParcoursLetterBtn = document.getElementById('backToParcoursLetterBtn');
+        const nextStepAfterLetterBtn = document.getElementById('nextStepAfterLetterBtn');
 
-      // Validation simple côté client
-      let valid = true;
-      form.querySelectorAll('[required]').forEach(input => {
-        if (!input.value.trim()) {
-          input.classList.add('input-error');
-          valid = false;
-        } else {
-          input.classList.remove('input-error');
-        }
-      });
-      if (!valid) return;
+        // URL de la prochaine étape
+        const NEXT_PAGE_URL = 'recherche-candidature.html'; // À CRÉER
 
-      output.style.display = 'block';
-      output.innerHTML = '<span style="color:#888;">⏳ Génération en cours...</span>';
-      generateBtn.disabled = true;
+        // Fonction pour afficher les toasts (à adapter si vous avez un module App.showToast)
+        const showToast = (message, type = 'info', duration = 3000) => {
+            const toastContainer = document.getElementById('toast-container');
+            if (!toastContainer) return;
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`; // Assurez-vous que ces classes existent dans style.css
+            toast.textContent = message;
+            toastContainer.appendChild(toast);
+            setTimeout(() => {
+                toast.remove();
+            }, duration);
+        };
 
-      const formData = new FormData(form);
-      const data = Object.fromEntries(formData.entries());
 
-      try {
-        const response = await fetch("http://localhost:3001/api/generer-lettre", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data)
+        motivationForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // Validation simple côté client
+            let isValid = true;
+            motivationForm.querySelectorAll('[required]').forEach(input => {
+                input.classList.remove('input-error'); // Nettoyer les erreurs précédentes
+                const errorMsgSibling = input.parentNode.querySelector('.error-message');
+                if (errorMsgSibling) errorMsgSibling.remove();
+
+                if (!input.value.trim()) {
+                    input.classList.add('input-error');
+                    const error = document.createElement('span');
+                    error.className = 'error-message';
+                    error.textContent = 'Ce champ est requis.';
+                    input.parentNode.appendChild(error);
+                    isValid = false;
+                }
+            });
+
+            if (!isValid) {
+                showToast('Veuillez remplir tous les champs requis.', 'error');
+                return;
+            }
+
+            letterResultOutput.innerHTML = '<div class="text-center p-4"><i class="fas fa-spinner fa-spin fa-2x text-primary"></i><p class="mt-2">Génération en cours...</p></div>';
+            letterResultSection.style.display = 'block'; // Afficher la section résultat immédiatement
+            generateLetterBtn.disabled = true;
+            generateLetterBtn.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i> Génération...`;
+
+            const formData = new FormData(motivationForm);
+            const data = Object.fromEntries(formData.entries());
+
+            try {
+                // REMPLACEZ par votre URL d'API réelle si différente
+                const response = await fetch("http://localhost:3001/api/generer-lettre", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data)
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({ message: 'Erreur serveur inconnue.' }));
+                    throw new Error(errorData.message || `Erreur HTTP: ${response.status}`);
+                }
+
+                const json = await response.json();
+
+                if (json.text) {
+                    letterResultOutput.innerText = json.text; // Affiche le texte brut, conserve les retours à la ligne
+                    showToast('Lettre générée avec succès !', 'success');
+                    // Les boutons de navigation post-génération sont déjà dans letterResultSection et deviennent visibles
+                } else {
+                    throw new Error('Réponse invalide de l’API : texte manquant.');
+                }
+            } catch (error) {
+                console.error("Erreur API:", error);
+                letterResultOutput.innerHTML = `<div class="text-center p-4 text-destructive"><i class="fas fa-exclamation-triangle fa-2x"></i><p class="mt-2">Erreur lors de la génération: ${error.message}</p></div>`;
+                showToast(`Erreur: ${error.message}`, 'error', 5000);
+            } finally {
+                generateLetterBtn.disabled = false;
+                generateLetterBtn.innerHTML = `<i class="fas fa-magic mr-2"></i> Générer ma Lettre`;
+            }
         });
-        const json = await response.json();
 
-        if (json.text) {
-          output.innerText = json.text;
-          finishButton.style.display = 'inline-block';
-        } else {
-          throw new Error('Réponse invalide de l’API');
+        // Fonction pour mettre à jour le statut du parcours dans localStorage
+        const updateParcoursStatusForNextStep = () => {
+            try {
+                let parcoursData = JSON.parse(localStorage.getItem('parcoursEmploiAvenir')) || {};
+                parcoursData.etapes = parcoursData.etapes || Array(8).fill(null).map((_, i) => ({ id: `etape-${i}`, statut: 'locked' }));
+                parcoursData.etapeActuelleIndex = parcoursData.etapeActuelleIndex || 0;
+
+                // Étape 1 (CV & LM) complétée
+                if(parcoursData.etapes[1]) {
+                    parcoursData.etapes[1].statut = 'completed';
+                    parcoursData.etapes[1].dateCompletion = new Date().toISOString();
+                } else {
+                     parcoursData.etapes[1] = { id: 'etape-1', statut: 'completed', dateCompletion: new Date().toISOString() };
+                }
+
+
+                // Étape 2 (Recherche & Candidature) devient active
+                if(parcoursData.etapes[2]) {
+                    parcoursData.etapes[2].statut = 'active';
+                } else {
+                    parcoursData.etapes[2] = { id: 'etape-2', statut: 'active' };
+                }
+
+
+                parcoursData.etapeActuelleIndex = 2; // L'étape Recherche & Candidature est maintenant l'étape active
+                parcoursData.derniereActivite = new Date().toISOString();
+
+                localStorage.setItem('parcoursEmploiAvenir', JSON.stringify(parcoursData));
+                console.log("Générateur LM: Statut du parcours mis à jour pour l'étape suivante.", parcoursData);
+                return true;
+            } catch (error) {
+                console.error("Générateur LM: Erreur lors de la mise à jour du statut du parcours:", error);
+                showToast("Erreur lors de la sauvegarde de votre progression.", "error");
+                return false;
+            }
+        };
+
+        // Écouteur pour le bouton "Étape Suivante"
+        if (nextStepAfterLetterBtn) {
+            nextStepAfterLetterBtn.addEventListener('click', () => {
+                console.log("Clic sur 'Étape Suivante : Recherche'");
+                if (updateParcoursStatusForNextStep()) {
+                    window.location.href = NEXT_PAGE_URL;
+                }
+            });
         }
-      } catch (error) {
-        output.innerHTML = '<span style="color:#d32f2f;">❌ Erreur lors de la génération. Vérifiez votre connexion ou contactez le support.</span>';
-      }
-      generateBtn.disabled = false;
+
+        // Écouteur pour le bouton "Retour à Mon Parcours"
+        if (backToParcoursLetterBtn) {
+            backToParcoursLetterBtn.addEventListener('click', () => {
+                console.log("Clic sur 'Retour à Mon Parcours'");
+                // Optionnel: Mettre à jour le statut si on considère que générer une lettre valide l'étape.
+                // Si l'utilisateur n'a pas cliqué sur "Étape Suivante",
+                // on pourrait juste le renvoyer à MonParcours sans changer l'étape active,
+                // ou considérer que l'étape CV/LM est en cours mais pas "validée" pour passer à la suivante.
+                // Pour l'instant, on ne met à jour le statut que via "Étape Suivante".
+                window.location.href = 'MonParcours.html';
+            });
+        }
     });
   </script>
 </body>
