@@ -620,6 +620,11 @@ main .container {
   margin-bottom: 3rem;
 }
 .footer-column h3 { color: inherit; margin-bottom: 1.5rem; font-size: 1.25rem; }
+.footer-column p { /* NOUVELLE RÈGLE ou MODIFICATION */
+  color: rgba(255, 255, 255, 0.9); /* Assure que le texte du paragraphe est blanc/clair */
+  font-size: 1rem; /* Optionnel: ajuster la taille si besoin */
+  line-height: 1.6; /* Optionnel: ajuster l'interligne */
+}
 .footer-links { list-style: none; margin: 0; padding: 0; }
 .footer-links li { margin-bottom: 0.75rem; }
 .footer-links a { color: rgba(255, 255, 255, 0.8); transition: color var(--transition-fast); }
