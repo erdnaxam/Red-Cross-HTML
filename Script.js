@@ -236,89 +236,90 @@ const App = (() => {
   };
 })();
 
-// Gestion du questionnaire
 // ==================== GESTION SPÉCIFIQUE QUESTIONNAIRE ====================
 document.addEventListener('DOMContentLoaded', () => {
-    console.log("QUESTIONNAIRE: Initialisation...");
-
     const questionnaireForm = document.getElementById('evaluationForm');
     if (!questionnaireForm) {
-        // Si le formulaire principal n'est pas là, on n'est probablement pas sur la bonne page.
-        // On peut retourner silencieusement ou afficher un log si on s'attend à ce qu'il soit là.
-        // console.log("QUESTIONNAIRE: Formulaire 'evaluationForm' non trouvé. Arrêt.");
-        return;
+        return; // Pas sur la page du questionnaire
     }
+    console.log("QUESTIONNAIRE: Initialisation...");
 
-    // Les étapes sont les fieldsets directs avec la classe .quiz-step
-    const steps = Array.from(questionnaireForm.querySelectorAll('fieldset.quiz-step'));
+    const steps = Array.from(questionnaireForm.querySelectorAll('fieldset.quiz-step, div.quiz-step')); // Inclut les fieldsets et le div final
     const nextBtn = document.getElementById('nextStepButton');
     const prevBtn = document.getElementById('prevStepButton');
-    const submitBtn = document.getElementById('submitQuizButton'); // Bouton pour la soumission finale
+    const submitAccountBtn = document.getElementById('submitQuizButton'); // Renommé pour clarté
     const currentQuestionDisplay = document.getElementById('currentQuizQuestion');
     const totalQuestionDisplay = document.getElementById('totalQuizQuestions');
 
-    // Les "vraies" étapes de questions (excluant la dernière étape "Félicitations")
-    const questionStepsCount = steps.findIndex(step => step.id === 'step-4'); // L'ID de l'étape "Félicitations"
+    // IDs des étapes spéciales
+    const ACCOUNT_CREATION_STEP_ID = 'step-4'; // L'étape où l'on crée le compte
+    const CONGRATS_STEP_ID = 'step-5';       // L'étape finale de félicitations
 
-    if (steps.length === 0 || !nextBtn || !prevBtn || !submitBtn) {
-        console.warn("QUESTIONNAIRE: Éléments essentiels manquants. Vérifiez les IDs et classes.");
-        if (steps.length === 0) console.log(" -> Aucune étape avec la classe '.quiz-step' trouvée DANS #evaluationForm.");
-        if (!nextBtn) console.log(" -> Bouton #nextStepButton non trouvé.");
-        if (!prevBtn) console.log(" -> Bouton #prevStepButton non trouvé.");
-        if (!submitBtn) console.log(" -> Bouton #submitQuizButton non trouvé.");
+    if (steps.length === 0 || !nextBtn || !prevBtn || !submitAccountBtn) {
+        console.warn("QUESTIONNAIRE: Éléments essentiels (étapes, boutons nav) manquants.");
         return;
     }
-    console.log(`QUESTIONNAIRE: ${steps.length} étapes au total trouvées, ${questionStepsCount} étapes de questions.`);
 
-    if (totalQuestionDisplay && questionStepsCount > 0) {
-        totalQuestionDisplay.textContent = questionStepsCount.toString();
+    // Calcul du nombre d'étapes "de questions" (avant l'étape de félicitations)
+    // Cela inclut l'étape de création de compte comme une étape à "valider"
+    const totalInteractiveSteps = steps.findIndex(step => step.id === CONGRATS_STEP_ID);
+    if (totalInteractiveSteps === -1) {
+        console.error("QUESTIONNAIRE: L'étape de félicitations avec l'ID '" + CONGRATS_STEP_ID + "' est introuvable!");
+        return;
+    }
+
+    // Nombre d'étapes affichées à l'utilisateur (ex: "Question X sur Y")
+    // C'est le nombre d'étapes avant celle de création de compte.
+    // Si step-4 est la création de compte, les étapes de "questions" sont step-1, step-2, step-3 (indices 0, 1, 2)
+    // donc, questionCountForDisplay = index de step-4
+    const questionCountForDisplay = steps.findIndex(step => step.id === ACCOUNT_CREATION_STEP_ID);
+
+    if (totalQuestionDisplay && questionCountForDisplay > 0) {
+        totalQuestionDisplay.textContent = questionCountForDisplay.toString(); // Affiche "sur 3" si step-1,2,3 sont des questions
+    } else if (totalQuestionDisplay) {
+        totalQuestionDisplay.textContent = "N/A"; // Ou cacher l'élément
     }
 
     let currentStepIndex = 0;
 
-    // Optionnel: Barre de progression (si tu en ajoutes une)
-    // const progressBar = questionnaireForm.querySelector('.quiz-progress-bar-fill');
-    // function updateProgressBar() { /* ... */ }
-
     function showStep(index) {
-        console.log(`QUESTIONNAIRE: Affichage étape ${index} (ID: ${steps[index]?.id})`);
+        const currentStepId = steps[index]?.id;
+        console.log(`QUESTIONNAIRE: Affichage étape ${index} (ID: ${currentStepId})`);
+
         steps.forEach((step, i) => {
             step.style.display = i === index ? 'block' : 'none';
-            step.classList.toggle('active-quiz-step', i === index);
+            step.classList.toggle('active-quiz-step', i === index); // Assurez-vous que cette classe est utile ou retirez-la
         });
 
-        // Gestion des boutons
-        prevBtn.style.visibility = index === 0 ? 'hidden' : 'visible';
-        prevBtn.disabled = index === 0;
+        // Gestion des boutons de navigation principaux (Précédent, Suivant, Terminer/Créer Compte)
+        prevBtn.style.visibility = (index === 0 || currentStepId === CONGRATS_STEP_ID) ? 'hidden' : 'visible';
+        prevBtn.disabled = (index === 0 || currentStepId === CONGRATS_STEP_ID);
 
-        // Si l'étape actuelle est l'avant-dernière (création de compte, step-3)
-        if (index === questionStepsCount -1) { // -1 car questionStepsCount est le nombre, et l'index est 0-based
+        if (currentStepId === ACCOUNT_CREATION_STEP_ID) { // Étape de création de compte
             nextBtn.style.display = 'none';
-            submitBtn.style.display = 'inline-block';
-            submitBtn.textContent = 'Créer mon compte et Terminer';
-        }
-        // Si l'étape actuelle est la dernière (félicitations, step-4)
-        else if (index === questionStepsCount) {
+            submitAccountBtn.style.display = 'inline-block';
+            submitAccountBtn.textContent = 'Créer mon compte et Terminer';
+        } else if (currentStepId === CONGRATS_STEP_ID) { // Étape de félicitations
             nextBtn.style.display = 'none';
-            submitBtn.style.display = 'none';
-            prevBtn.style.visibility = 'hidden'; // Pas de retour depuis l'étape finale
-            prevBtn.disabled = true;
-        }
-        // Pour toutes les autres étapes "questions"
-        else {
+            submitAccountBtn.style.display = 'none';
+            // Les boutons spécifiques à cette étape ("Retour à Mon Parcours", "Poursuivre") sont gérés séparément.
+        } else { // Étapes de questions "normales"
             nextBtn.style.display = 'inline-block';
-            submitBtn.style.display = 'none';
+            submitAccountBtn.style.display = 'none';
             nextBtn.textContent = 'Suivant →';
         }
 
-
-        if (currentQuestionDisplay && index < questionStepsCount) { // Ne pas afficher pour l'étape "Félicitations"
+        // Mise à jour du compteur "Question X sur Y"
+        if (currentQuestionDisplay && index < questionCountForDisplay) { // Si index < 3 (pour steps 1,2,3)
             currentQuestionDisplay.textContent = (index + 1).toString();
+        } else if (currentQuestionDisplay && currentStepId === ACCOUNT_CREATION_STEP_ID) {
+             currentQuestionDisplay.textContent = (questionCountForDisplay).toString(); // Affiche "3 sur 3" pour création compte
+        } else if (currentQuestionDisplay) {
+            currentQuestionDisplay.textContent = "-"; // Ou vide pour l'étape félicitations
         }
 
-        // updateProgressBar(); // Si tu as une barre de progression
-
-        const firstFocusableElement = steps[index].querySelector('input:not([type="hidden"]), select, textarea, button');
+        // Focus sur le premier élément interactif de l'étape
+        const firstFocusableElement = steps[index].querySelector('input:not([type="hidden"]), select, textarea, button:not([disabled])');
         if (firstFocusableElement) {
             firstFocusableElement.focus();
         }
@@ -327,23 +328,23 @@ document.addEventListener('DOMContentLoaded', () => {
     function validateStep(stepIndex) {
         const currentStepElement = steps[stepIndex];
         let isValid = true;
-        console.log(`QUESTIONNAIRE: Validation étape ${stepIndex} (ID: ${currentStepElement.id})`);
+        // console.log(`QUESTIONNAIRE: Validation étape ${stepIndex} (ID: ${currentStepElement.id})`);
 
+        // Nettoyer les erreurs précédentes pour cette étape
         currentStepElement.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
         currentStepElement.querySelectorAll('.error-message-quiz').forEach(el => el.remove());
 
         currentStepElement.querySelectorAll('[required]').forEach(field => {
             let fieldIsValid = true;
-            let errorMessage = "Ce champ est requis.";
-
+            let errorMessageText = "Ce champ est requis.";
             const fieldParentGroup = field.closest('.form-group') || field.closest('fieldset[role="radiogroup"]');
 
             if (field.type === 'radio') {
                 const groupName = field.name;
                 if (!currentStepElement.querySelector(`[name="${groupName}"]:checked`)) {
                     fieldIsValid = false;
-                    if (fieldParentGroup) fieldParentGroup.classList.add('input-error');
-                    errorMessage = "Veuillez faire une sélection.";
+                    errorMessageText = "Veuillez faire une sélection.";
+                    if (fieldParentGroup) fieldParentGroup.classList.add('input-error'); // Erreur sur le groupe
                 } else {
                     if (fieldParentGroup) fieldParentGroup.classList.remove('input-error');
                 }
@@ -351,111 +352,178 @@ document.addEventListener('DOMContentLoaded', () => {
                 fieldIsValid = false;
             } else if (field.type === 'email' && field.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(field.value.trim())) {
                 fieldIsValid = false;
-                errorMessage = "Adresse e-mail invalide.";
-            } else if (field.type === 'password' && field.name === "userPassword" && field.value.length < 6) {
+                errorMessageText = "Adresse e-mail invalide.";
+            } else if (field.type === 'password' && field.id === "user-password" && field.value.length < 6) {
                  fieldIsValid = false;
-                 errorMessage = "Le mot de passe doit contenir au moins 6 caractères.";
-            } else if (field.type === 'password' && field.name === "confirmPassword") {
+                 errorMessageText = "Le mot de passe doit contenir au moins 6 caractères.";
+            } else if (field.type === 'password' && field.id === "confirm-password") {
                 const mainPasswordField = questionnaireForm.querySelector('#user-password');
-                if (mainPasswordField && field.value !== mainPasswordField.value) {
+                if (!mainPasswordField || field.value !== mainPasswordField.value) { // Vérifier si mainPasswordField existe
                     fieldIsValid = false;
-                    errorMessage = "Les mots de passe ne correspondent pas.";
-                } else if (field.value.length < 6) {
+                    errorMessageText = "Les mots de passe ne correspondent pas.";
+                } else if (field.value.length < 6) { // Vérifier aussi la longueur de la confirmation
                     fieldIsValid = false;
-                    errorMessage = "La confirmation doit aussi faire au moins 6 caractères.";
+                    errorMessageText = "La confirmation doit aussi faire au moins 6 caractères.";
                 }
-            } else if (field.value.trim() === "" && field.tagName.toLowerCase() !== 'select') { // Pour inputs text, textarea
+            } else if (field.value.trim() === "" && field.tagName.toLowerCase() !== 'select' && field.type !== 'radio') {
                 fieldIsValid = false;
             }
 
-
             if (!fieldIsValid) {
                 isValid = false;
-                if (fieldParentGroup && field.type !== 'radio') { // Ne pas ajouter sur chaque radio individuel mais sur son groupe
-                    field.classList.add('input-error');
-                } else if (field.type !== 'radio') { // Pour les champs sans .form-group
-                    field.classList.add('input-error');
-                }
+                // Appliquer la classe d'erreur au champ lui-même (sauf pour les radios)
+                if (field.type !== 'radio' && fieldParentGroup) field.classList.add('input-error');
+                else if (field.type !== 'radio') field.classList.add('input-error');
 
 
                 const errorSpan = document.createElement('span');
-                errorSpan.className = 'error-message-quiz';
-                errorSpan.textContent = errorMessage;
-                // Insérer après le champ ou son conteneur (ex: pour les radios, après le fieldset)
-                const targetForError = fieldParentGroup || field.parentNode;
-                targetForError.appendChild(errorSpan); // Ou insérer après le dernier enfant du groupe
+                errorSpan.className = 'error-message error-message-quiz'; // Utiliser la classe 'error-message' du CSS général
+                errorSpan.textContent = errorMessageText;
+                // Insérer après le champ ou son groupe
+                const targetForErrorMsg = fieldParentGroup || field.parentNode;
+                // Insérer le message d'erreur après le champ lui-même ou à la fin du groupe
+                if (fieldParentGroup && field.type === 'radio') { // Pour groupe de radio, à la fin du fieldset
+                    fieldParentGroup.appendChild(errorSpan);
+                } else if (field.nextSibling) {
+                    field.parentNode.insertBefore(errorSpan, field.nextSibling);
+                } else {
+                    field.parentNode.appendChild(errorSpan);
+                }
             }
         });
 
         if (!isValid) {
-            App.showToast("Veuillez corriger les erreurs indiquées.", "warning");
+            if (typeof App !== 'undefined' && App.showToast) { // Vérifier si App.showToast est disponible
+                App.showToast("Veuillez corriger les erreurs indiquées.", "warning");
+            }
             console.warn("QUESTIONNAIRE: Validation échouée.");
         } else {
-            console.log("QUESTIONNAIRE: Validation réussie.");
+            // console.log("QUESTIONNAIRE: Validation réussie.");
         }
         return isValid;
     }
 
+    // Afficher la première étape
     showStep(currentStepIndex);
 
     nextBtn.addEventListener('click', () => {
-        console.log("QUESTIONNAIRE: Clic sur Suivant");
         if (validateStep(currentStepIndex)) {
-            if (currentStepIndex < questionStepsCount -1) { // S'arrêter avant l'étape de création de compte
+            // Vérifier si l'étape suivante N'EST PAS l'étape de félicitations
+            // totalInteractiveSteps est l'index de l'étape CONGRATS_STEP_ID
+            if (currentStepIndex < totalInteractiveSteps -1) { // -1 car on compare à l'index de l'étape AVANT CONGRATS_STEP_ID
                 currentStepIndex++;
                 showStep(currentStepIndex);
             } else {
-                 // Normalement, ne devrait pas être atteint si la logique de showStep cache bien nextBtn
-                 console.warn("QUESTIONNAIRE: nextBtn cliqué sur une étape où il devrait être masqué.");
+                 console.warn("QUESTIONNAIRE: nextBtn cliqué sur une étape où il devrait être masqué (probablement avant la création de compte).");
             }
         }
     });
 
-    submitBtn.addEventListener('click', (e) => { // Le bouton submit a son propre listener
-        e.preventDefault(); // Empêcher la soumission HTML par défaut
-        console.log("QUESTIONNAIRE: Clic sur Terminer/Créer Compte");
-        if (validateStep(currentStepIndex)) { // Valider l'étape actuelle (création de compte)
-            console.log("QUESTIONNAIRE: Étape de création de compte validée, soumission...");
+    submitAccountBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (steps[currentStepIndex].id !== ACCOUNT_CREATION_STEP_ID) {
+            console.warn("QUESTIONNAIRE: Tentative de soumission de compte sur une étape incorrecte.");
+            return;
+        }
 
-            // Logique de soumission du formulaire (peut être AJAX)
-            // Pour l'instant, on simule et on passe à l'étape "Félicitations"
-            // Ici, tu ferais ton appel fetch pour créer le compte
+        if (validateStep(currentStepIndex)) {
+            console.log("QUESTIONNAIRE: Étape de création de compte validée, simulation de soumission...");
+            // ICI: Mettre la logique AJAX pour envoyer les données du formulaire (new FormData(questionnaireForm))
+            // et créer le compte sur le serveur.
 
-            // Simulation d'une soumission réussie
-            App.showToast("Compte créé et évaluation sauvegardée !", "success");
-            currentStepIndex++; // Passer à l'étape "Félicitations"
-            showStep(currentStepIndex);
+            // Pour la démo, on simule un succès :
+            if (typeof App !== 'undefined' && App.showToast) {
+                App.showToast("Compte créé et évaluation sauvegardée !", "success");
+            }
+            // Passer à l'étape "Félicitations"
+            const congratsStepIndex = steps.findIndex(step => step.id === CONGRATS_STEP_ID);
+            if (congratsStepIndex !== -1) {
+                currentStepIndex = congratsStepIndex;
+                showStep(currentStepIndex);
+            } else {
+                console.error("QUESTIONNAIRE: Impossible de trouver l'étape de félicitations après soumission.");
+            }
         }
     });
 
-
     prevBtn.addEventListener('click', () => {
-        console.log("QUESTIONNAIRE: Clic sur Précédent");
-        if (currentStepIndex > 0) {
+        if (currentStepIndex > 0 && steps[currentStepIndex].id !== CONGRATS_STEP_ID) {
             currentStepIndex--;
             showStep(currentStepIndex);
         }
     });
 
-    // Gestion des boutons sur la dernière page "Félicitations"
-    const goToParcoursButton = document.getElementById('goToParcoursButton');
-    const goToCVLMButton = document.getElementById('goToCVLMButton');
+    // --- GESTION DES BOUTONS DE L'ÉTAPE "FÉLICITATIONS" ---
+    const congratsStepElement = document.getElementById(CONGRATS_STEP_ID);
+    if (congratsStepElement) {
+        const backToParcoursBtnFinal = congratsStepElement.querySelector('#backToParcoursButton');
+        const goToCVLMBtnFinal = congratsStepElement.querySelector('#goToCVLMButton'); // C'est un <a>
 
-    if (goToParcoursButton) {
-        goToParcoursButton.addEventListener('click', () => {
-            // Rediriger vers la page Mon Parcours
-            window.location.href = 'MonParcours.html'; // Adapte le nom du fichier si besoin
-        });
+        const updateParcoursStatusAndRedirect = (redirectUrl) => {
+            try {
+                let parcoursData = JSON.parse(localStorage.getItem('parcoursEmploiAvenir')) || {};
+                // S'assurer que la structure existe
+                parcoursData.etapes = parcoursData.etapes || Array(8).fill(null).map((_, i) => ({ id: `etape-${i}`, statut: 'locked' }));
+                parcoursData.etapeActuelleIndex = parcoursData.etapeActuelleIndex || 0;
+
+
+                // Marquer l'étape 0 (Évaluation) comme complétée
+                if (parcoursData.etapes[0]) {
+                    parcoursData.etapes[0].statut = 'completed';
+                    parcoursData.etapes[0].dateCompletion = new Date().toISOString();
+                } else { // Fallback si la structure est corrompue/vide
+                    parcoursData.etapes[0] = { id: 'etape-0', statut: 'completed', dateCompletion: new Date().toISOString() };
+                }
+
+
+                // Marquer l'étape 1 (CV & LM) comme active
+                if (parcoursData.etapes[1]) {
+                    parcoursData.etapes[1].statut = 'active';
+                } else {
+                    parcoursData.etapes[1] = { id: 'etape-1', statut: 'active' };
+                }
+
+                parcoursData.etapeActuelleIndex = 1; // L'étape CV & LM devient l'étape active
+                parcoursData.derniereActivite = new Date().toISOString();
+
+                localStorage.setItem('parcoursEmploiAvenir', JSON.stringify(parcoursData));
+                console.log("QUESTIONNAIRE (Félicitations): Statut du parcours mis à jour.", parcoursData);
+
+                if (redirectUrl) {
+                    window.location.href = redirectUrl;
+                }
+            } catch (error) {
+                console.error("QUESTIONNAIRE (Félicitations): Erreur lors de la mise à jour du statut:", error);
+                if (typeof App !== 'undefined' && App.showToast) {
+                    App.showToast("Erreur lors de la sauvegarde de la progression.", "error");
+                }
+                // On redirige quand même si une URL est fournie, pour ne pas bloquer l'utilisateur
+                if (redirectUrl) {
+                     setTimeout(() => window.location.href = redirectUrl, 500); // Petite pause pour voir le toast
+                }
+            }
+        };
+
+        if (backToParcoursBtnFinal) {
+            backToParcoursBtnFinal.addEventListener('click', () => {
+                console.log("QUESTIONNAIRE (Félicitations): Clic sur 'Retour à Mon Parcours'");
+                updateParcoursStatusAndRedirect('MonParcours.html');
+            });
+        }
+
+        if (goToCVLMBtnFinal) { // C'est un lien <a>
+            goToCVLMBtnFinal.addEventListener('click', (e) => {
+                // On empêche la redirection par défaut pour exécuter notre logique d'abord
+                e.preventDefault();
+                console.log("QUESTIONNAIRE (Félicitations): Clic sur 'Poursuivre mon parcours'");
+                updateParcoursStatusAndRedirect(goToCVLMBtnFinal.href); // Utilise l'href du lien
+            });
+        }
+    } else {
+        console.warn(`QUESTIONNAIRE: L'étape de félicitations (ID: ${CONGRATS_STEP_ID}) ou ses boutons spécifiques n'ont pas été trouvés.`);
     }
-    if (goToCVLMButton) {
-         goToCVLMButton.addEventListener('click', (e) => { // Pour un lien, on peut laisser le comportement par défaut ou gérer via JS
-            // window.location.href = e.target.href; // Inutile si c'est un lien <a>
-            console.log("Redirection vers CV/LM...");
-        });
-    }
 
-
-    console.log("QUESTIONNAIRE: Gestionnaire d'événements initialisé.");
+    console.log("QUESTIONNAIRE: Fin de l'initialisation.");
 });
 // Gestion du générateur de CV
 document.addEventListener('DOMContentLoaded', () => {

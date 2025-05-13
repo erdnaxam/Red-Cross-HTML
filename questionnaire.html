@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 <body>
-  <!-- HEADER -->
+  <!-- HEADER (inchangé) -->
   <header class="header" id="header">
     <div class="container flex justify-between items-center">
       <a href="index.html" class="logo" aria-label="Accueil EmploiAvenir"><span>Emploi</span>Avenir</a>
@@ -37,17 +37,18 @@
 
       <form id="evaluationForm" autocomplete="off">
         <!-- Indicateur de progression -->
-        <div class="text-center mb-4">
-          <p>Question <span id="currentQuizQuestion">1</span> sur <span id="totalQuizQuestions">4</span></p>
+        <div id="quizProgressIndicator" class="text-center mb-4">
+          <p>Question <span id="currentQuizQuestion">1</span> sur <span id="totalQuizQuestions">3</span></p>
         </div>
 
         <div id="quizSteps">
-          <!-- Étape 1 -->
+
+         <!--  Étape 1 -->
           <fieldset class="quiz-step active" id="step-1">
             <legend class="sr-only">Partie 1 : Votre situation actuelle</legend>
             <h2 class="text-center mb-4">Parlons un peu de vous...</h2>
             <p class="text-center mb-6">Ces questions nous aident à adapter l'aide que nous vous proposons.</p>
-
+         <!--  Champs de Étape 1 -->
             <div class="form-group">
               <label for="lang-comprehension">Est-ce facile pour vous de lire et comprendre le français ? <span aria-hidden="true">*</span></label>
               <select id="lang-comprehension" name="langComprehension" required>
@@ -58,7 +59,6 @@
                 <option value="tres-difficile">Très difficile</option>
               </select>
             </div>
-
             <div class="form-group">
               <label for="contact-preference">Pour échanger avec un conseiller, préférez-vous : <span aria-hidden="true">*</span></label>
               <select id="contact-preference" name="contactPreference" required>
@@ -69,7 +69,6 @@
                 <option value="indifferent">Indifférent</option>
               </select>
             </div>
-
             <fieldset class="form-group" role="radiogroup" aria-labelledby="physical-needs-legend">
               <legend id="physical-needs-legend">Avez-vous des besoins spécifiques (ex: besoin d'aide pour vous déplacer) ? <span aria-hidden="true">*</span></legend>
               <div class="flex gap-2">
@@ -79,12 +78,12 @@
             </fieldset>
           </fieldset>
 
-          <!-- Étape 2 -->
-          <fieldset class="quiz-step" id="step-2">
+         <!--  Étape 2 -->
+          <fieldset class="quiz-step" id="step-2" style="display: none;">
             <legend class="sr-only">Partie 2 : Votre expérience</legend>
             <h2 class="text-center mb-4">Votre expérience professionnelle</h2>
             <p class="text-center mb-6">Cela nous aide à préparer votre CV.</p>
-
+         <!--  Champs de Étape 2 -->
             <fieldset class="form-group" role="radiogroup" aria-labelledby="worked-before-legend">
               <legend id="worked-before-legend">Avez-vous déjà travaillé (même bénévolement ou en stage) ? <span aria-hidden="true">*</span></legend>
               <div class="flex gap-2">
@@ -92,29 +91,26 @@
                 <label><input type="radio" name="workedBefore" value="no" required> Non</label>
               </div>
             </fieldset>
-
             <div class="form-group">
               <label for="previous-domain">Dans quel domaine avez-vous travaillé ?</label>
               <input type="text" id="previous-domain" name="previousDomain" placeholder="Ex: Bâtiment, services à la personne, restauration...">
             </div>
-
             <div class="form-group">
               <label for="skills">Qu'est-ce que vous aimez ou savez bien faire ?</label>
               <input type="text" id="skills" name="skills" placeholder="Ex: travailler en équipe, organiser, cuisiner...">
             </div>
           </fieldset>
 
-          <!-- Étape 3 -->
-          <fieldset class="quiz-step" id="step-3">
+         <!--  Étape 3 -->
+          <fieldset class="quiz-step" id="step-3" style="display: none;">
             <legend class="sr-only">Partie 3 : Vos objectifs</legend>
             <h2 class="text-center mb-4">Vos objectifs et besoins</h2>
             <p class="text-center mb-6">Quel type d'emploi ou d'aide cherchez-vous ?</p>
-
+         <!--  Champs de Étape 3 -->
             <div class="form-group">
               <label for="job-type">Quel type d'emploi vous intéresse ?</label>
               <input type="text" id="job-type" name="jobType" placeholder="Ex: CDI, CDD, formation, stage...">
             </div>
-
             <div class="form-group">
               <label for="help-needed">Quel type d'aide serait le plus utile maintenant ? <span aria-hidden="true">*</span></label>
               <select id="help-needed" name="helpNeeded" required>
@@ -129,48 +125,47 @@
             </div>
           </fieldset>
 
-          <!-- Étape 4 -->
-          <fieldset class="quiz-step" id="step-4">
+         <!--  Étape 4 -->
+          <fieldset class="quiz-step" id="step-4" style="display: none;">
             <legend class="sr-only">Partie 4 : Créez votre compte</legend>
             <h2 class="text-center mb-4">Créez votre espace personnel</h2>
             <p class="text-center mb-6">Créez un compte sécurisé pour sauvegarder vos réponses et suivre votre parcours.</p>
-
+         <!-- Champs de Étape 4 -->
             <div class="form-group">
               <label for="user-email">Votre email <span aria-hidden="true">*</span></label>
               <input type="email" id="user-email" name="userEmail" placeholder="Votre email" required autocomplete="email">
             </div>
-
             <div class="form-group">
               <label for="user-password">Choisissez un mot de passe <span aria-hidden="true">*</span></label>
               <input type="password" id="user-password" name="userPassword" required minlength="6" autocomplete="new-password">
               <p class="text-sm" style="margin-top: 0.25rem;">Minimum 6 caractères.</p>
             </div>
-
             <div class="form-group">
               <label for="confirm-password">Confirmer le mot de passe <span aria-hidden="true">*</span></label>
               <input type="password" id="confirm-password" name="confirmPassword" required minlength="6" autocomplete="new-password">
             </div>
           </fieldset>
 
-          <!-- Étape 5 : Fin -->
-          <div class="quiz-step" id="step-5">
+         <!--  Étape 5 -->
+          <div class="quiz-step" id="step-5" style="display: none;">
             <h2 class="text-center mb-4">Félicitations !</h2>
             <p class="text-center mb-6">Votre évaluation est terminée et votre espace personnel est créé.</p>
             <p class="text-center mb-6">Nous avons maintenant les informations essentielles pour vous proposer un accompagnement adapté à vos besoins.</p>
             <p class="text-center">Cliquez ci-dessous pour découvrir votre parcours personnalisé et passer à l'étape suivante.</p>
-            <div class="text-center mt-8 button-group">
-              <button type="button" class="btn btn-primary btn-large" id="goToParcoursButton">
-                Accéder à mon parcours
-              </button>
-              <a href="choix-cv.html" id="goToCVLMButton" class="btn btn-secondary btn-large mt-2">
-                Commencer l'Étape 1 : CV & LM
-              </a>
+            <div class="text-center mt-8">
+              <div class="form-navigation flex justify-between items-center">
+                <button type="button" class="btn btn-outline" id="backToParcoursButton">
+                  <i class="fas fa-arrow-left" aria-hidden="true"></i> Retour à Mon Parcours
+                </button>
+                <a href="choix-cv.html" id="goToCVLMButton" class="btn btn-primary">
+                  Poursuivre mon parcours <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                </a>
+              </div>
             </div>
           </div>
         </div>
 
-        <!-- Navigation du formulaire -->
-        <div class="form-navigation mt-6 flex justify-between">
+        <div class="form-navigation mt-6 flex justify-between" id="mainQuizNavigation">
           <button type="button" class="btn btn-outline" id="prevStepButton" style="visibility: hidden;">
             <i class="fas fa-arrow-left" aria-hidden="true"></i> Précédent
           </button>
@@ -178,7 +173,7 @@
             Suivant <i class="fas fa-arrow-right" aria-hidden="true"></i>
           </button>
           <button type="submit" class="btn btn-primary" id="submitQuizButton" style="display: none;">
-            Terminer <i class="fas fa-check" aria-hidden="true"></i>
+            Créer mon compte et Terminer
           </button>
         </div>
       </form>
