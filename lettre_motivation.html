@@ -31,14 +31,14 @@
   </header>
 
   <main>
-    <section class="container mt-8 mb-8" style="max-width:700px;"> {/* Légèrement plus large pour le contenu */}
-      <header class="section-header text-center mb-6"> {/* Augmentation marge */}
+    <section class="container mt-8 mb-8" style="max-width:700px;"> 
+      <header class="section-header text-center mb-6"> 
         <h1>Générateur de Lettre de Motivation</h1>
         <p class="intro-text">Remplissez ce formulaire pour obtenir une lettre personnalisée et professionnelle en quelques secondes.</p>
       </header>
 
-      <form id="motivationForm" class="card p-6" autocomplete="on"> {/* Ajout padding à la carte */}
-        <div class="form-grid form-grid-cols-2 gap-4"> {/* Optionnel: Grille pour nom/email */}
+      <form id="motivationForm" class="card p-6" autocomplete="on"> 
+        <div class="form-grid form-grid-cols-2 gap-4"> 
             <div class="form-group">
               <label for="nom">Nom Prénom <span aria-hidden="true" class="text-danger">*</span></label>
               <input type="text" id="nom" name="nom" required autocomplete="name" class="form-control" placeholder="Ex : Marie Dupont">
@@ -64,19 +64,16 @@
           <label for="valeur_ajoutee">Ce que vous pouvez apporter à l’entreprise <span aria-hidden="true" class="text-danger">*</span></label>
           <textarea id="valeur_ajoutee" name="valeur_ajoutee" required class="form-control" rows="4" placeholder="Parlez de vos atouts, qualités, expériences..."></textarea> {/* rows augmenté */}
         </div>
-        <button type="submit" class="btn btn-primary btn-large button-full mt-2" id="generateLetterBtn"> {/* button-full pour pleine largeur */}
+        <button type="submit" class="btn btn-primary btn-large button-full mt-2" id="generateLetterBtn"> 
           <i class="fas fa-magic mr-2"></i> Générer ma Lettre
         </button>
       </form>
 
-      {/* Section pour afficher le résultat et les actions post-génération */}
       <div id="letterResultSection" class="mt-6" style="display:none;">
         <h2 class="section-title centered">Votre Lettre de Motivation</h2>
         <div id="resultat" class="card p-4 mb-4" style="white-space: pre-wrap; min-height: 200px; border: 1px solid var(--color-gray-light);">
-          {/* La lettre générée sera insérée ici */}
         </div>
 
-        {/* NOUVELLE NAVIGATION POST-GÉNÉRATION */}
         <div class="form-navigation flex justify-between items-center">
           <button type="button" class="btn btn-outline" id="backToParcoursLetterBtn">
             <i class="fas fa-arrow-left mr-2"></i> Retour à Mon Parcours
@@ -91,7 +88,7 @@
   </main>
 
   <footer class="footer">
-    <div class="container text-center py-4"> {/* Simplifié pour l'exemple */}
+    <div class="container text-center py-4"> 
       <p>© 2024 EmploiAvenir. Tous droits réservés.</p>
     </div>
   </footer>
