@@ -17,5 +17,20 @@
   "VotreLM": "Votre Lettre de Motivation",
   "BackParcours": "",
   "NextStep": "Étape Suivante : Recherche",
-  "Credits": "© 2024 EmploiAvenir. Tous droits réservés."
+  "Credits": "© 2024 EmploiAvenir. Tous droits réservés.",
+  "Offre d'emploi": "Offres d'emploi - France Travail",
+  "Rechercher": "Rechercher",
+  "Voirfavoris": "Voir mes favoris",
+  "ApresEntretien": "L'Après Entretien : Actions Clés et Suivi",
+  "Introapresentretien": "L'entretien est terminé, mais le processus de recrutement continue. Découvrez les étapes essentielles pour maximiser vos chances.",
+  "introTitle": "Ne sous-estimez pas l'importance du suivi",
+  "introDescription": "Un suivi professionnel et réfléchi peut considérablement influencer la décision finale du recruteur. Cette phase est l'occasion de réitérer votre motivation, de clarifier certains points et de laisser une dernière impression positive.",
+  "bonASavoir": "Bon à savoir : Un email de remerciement bien rédigé, envoyé rapidement après l'entretien, est apprécié par plus de 90% des recruteurs et peut vous distinguer des autres candidats.",
+  "accompagnementTitle": "Besoin de conseils pour votre suivi ?",
+  "accompagnementText": "Nos conseillers peuvent vous aider à rédiger des mails de remerciement percutants, à préparer une relance téléphonique ou à analyser les retours de vos entretiens pour améliorer vos futures candidatures.",
+  "coachingButton": "Demander un coaching post-entretien",
+  "backToPreparation": "Retour à la Préparation",
+  "nextToContract": "Étape Suivante : Le Contrat",
+  "footerCopyright": "© 2024 EmploiAvenir | Accompagnement à l'insertion professionnelle"
+
 }
