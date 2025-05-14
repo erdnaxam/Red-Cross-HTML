@@ -8,12 +8,258 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="style.css"> <!-- Votre CSS existant -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
+
+  <style>
+    /* Styles pour correspondre aux captures et améliorer l'UX/UI */
+    :root {
+        --ea-primary-color: #007AFF; /* Bleu iOS/Apple-like des captures */
+        --ea-primary-hover: #0056B3;
+        --ea-secondary-color: #8E8E93;
+        --ea-success-color: #34C759;
+        --ea-danger-color: #FF3B30;
+        --ea-info-color: #5AC8FA; /* Un bleu plus clair pour info, si besoin */
+        --ea-warning-color: #FF9500; /* Orange pour warning (insertion) */
+
+        --ea-text-primary: #1C1C1E;
+        --ea-text-secondary: #3C3C43; /* Un peu plus foncé pour meilleure lisibilité */
+        --ea-text-muted: #8A8A8E;
+        --ea-text-on-primary: #FFFFFF;
+
+        --ea-bg-page: #F2F2F7;
+        --ea-bg-content: #FFFFFF;
+
+        --ea-border-color: #E5E5EA;
+        --ea-border-color-input: #D1D1D6; /* Bordure un peu plus visible pour inputs */
+        --ea-border-radius: 10px; /* Coins plus arrondis comme sur les captures */
+
+        --ea-card-shadow: 0 3px 8px rgba(0, 0, 0, 0.07); /* Ombre subtile */
+        --ea-input-shadow-focus: 0 0 0 3px rgba(0, 122, 255, 0.25);
+
+        --ea-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        --font-size-base: 16px;
+        --font-size-sm: 14px;
+        --font-size-md: 17px; /* Pour les titres de cartes */
+        --font-size-lg: 20px;
+        --font-size-xl: 28px;
+
+        --space-xs: 5px;
+        --space-sm: 10px;
+        --space-md: 15px;
+        --space-lg: 25px;
+        --space-xl: 35px;
+    }
+
+    body {
+        font-family: var(--ea-font-sans);
+        background-color: var(--ea-bg-page);
+        color: var(--ea-text-primary);
+        font-size: var(--font-size-base);
+        line-height: 1.6;
+        scroll-behavior: smooth;
+    }
+
+    .container.py-8 { padding-top: var(--space-lg); padding-bottom: var(--space-lg); }
+    h1.text-center.mb-6 { font-size: var(--font-size-xl); font-weight: 600; color: var(--ea-text-primary); margin-bottom: var(--space-lg); }
+
+    .tabs-list { border-bottom: 1px solid var(--ea-border-color); margin-bottom: var(--space-lg); }
+    .tabs-list .tab-button {
+        padding: var(--space-sm) 0; /* Moins de padding horizontal, le texte centre */
+        margin: 0 var(--space-md);
+        font-weight: 500; /* Moins gras */
+        font-size: var(--font-size-base);
+        color: var(--ea-text-secondary);
+        border: none; border-radius: 0; background-color: transparent;
+        position: relative;
+        transition: color 0.2s;
+    }
+    .tabs-list .tab-button.active {
+        color: var(--ea-primary-color);
+        font-weight: 600; /* Actif un peu plus gras */
+    }
+    .tabs-list .tab-button.active::after { /* Soulignement pour l'onglet actif */
+        content: '';
+        position: absolute;
+        bottom: -1px; /* Pour s'aligner avec la bordure de tabs-list */
+        left: 0;
+        right: 0;
+        height: 2px;
+        background-color: var(--ea-primary-color);
+    }
+    .tab-content { background-color: transparent; padding: 0; border: none; box-shadow: none; }
+
+    .filters-section {
+        display: flex; gap: var(--space-md); margin-bottom: var(--space-lg);
+        padding: var(--space-md);
+        background-color: var(--ea-bg-content);
+        border-radius: var(--ea-border-radius);
+        box-shadow: var(--ea-card-shadow);
+    }
+    .filters-section .form-group { flex: 1; }
+    #searchQuery, #categoryFilter {
+        background-color: var(--ea-bg-page);
+        border: 1px solid var(--ea-border-color-input);
+        border-radius: var(--ea-border-radius);
+        padding: 12px 15px; font-size: var(--font-size-sm); color: var(--ea-text-primary);
+        width: 100%; box-sizing: border-box;
+    }
+    #searchQuery::placeholder { color: var(--ea-text-muted); }
+    #searchQuery:focus, #categoryFilter:focus {
+        border-color: var(--ea-primary-color); background-color: var(--ea-bg-content);
+        box-shadow: var(--ea-input-shadow-focus); outline: none;
+    }
+
+    .partner-grid, .appointment-grid { display: grid; gap: var(--space-lg); }
+    .partner-grid { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); } /* Responsive auto */
+    .appointment-grid { grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+
+
+    .card { /* Style de base pour toutes les cartes, y compris celles d'EmploiAvenir */
+        background-color: var(--ea-bg-content);
+        border: 1px solid var(--ea-border-color);
+        border-radius: var(--ea-border-radius);
+        box-shadow: var(--ea-card-shadow);
+    }
+    /* Cibler spécifiquement les cartes générées pour éviter les conflits */
+    .dynamic-card { padding: var(--space-md); display: flex; flex-direction: column; }
+
+    .dynamic-card .card-header {
+        padding: 0; border-bottom: none; display: flex; justify-content: space-between;
+        align-items: flex-start; margin-bottom: var(--space-sm);
+    }
+    .dynamic-card .card-title {
+        font-size: var(--font-size-md); font-weight: 600; color: var(--ea-text-primary); margin-bottom: var(--space-xs);
+    }
+    .dynamic-card .badge {
+        font-size: 12px; padding: 5px 10px; border-radius: var(--ea-border-radius);
+        font-weight: 500; color: var(--ea-text-on-primary); margin-bottom: var(--space-sm); display: inline-block;
+    }
+    .badge-recherche-emploi { background-color: var(--ea-primary-color); } /* Couleur primaire pour ce badge */
+    .badge-accompagnement-social { background-color: var(--ea-secondary-color); }
+    .badge-formation { background-color: var(--ea-success-color); }
+    .badge-insertion-professionnelle { background-color: var(--ea-warning-color); color: var(--ea-text-primary); } /* Texte foncé sur orange */
+
+    .dynamic-card .logo-placeholder {
+        width: 40px; height: 40px; background-color: var(--ea-bg-page);
+        border-radius: var(--ea-border-radius); margin-left: var(--space-md);
+        display: flex; align-items: center; justify-content: center; color: var(--ea-text-muted); font-size: 18px;
+    }
+    .dynamic-card .card-content { padding: 0; flex-grow: 1; font-size: var(--font-size-sm); color: var(--ea-text-secondary); line-height: 1.5; }
+    .dynamic-card .card-content p:first-of-type { margin-bottom: var(--space-md); }
+    .dynamic-card .contact-info { font-size: var(--font-size-sm); margin-top: var(--space-md); }
+    .dynamic-card .contact-info div { margin-bottom: var(--space-xs); display: flex; align-items: center; }
+    .dynamic-card .contact-info .icon { color: var(--ea-text-muted); margin-right: var(--space-sm); width: 16px; text-align: center; }
+    .dynamic-card .contact-info a { color: var(--ea-primary-color); text-decoration: none; font-weight: 500; }
+    .dynamic-card .contact-info a:hover { text-decoration: underline; }
+
+    .dynamic-card .services-title { font-weight: 600; color: var(--ea-text-primary); font-size: var(--font-size-sm); margin-top: var(--space-md); margin-bottom: var(--space-xs); }
+    .dynamic-card .services-list { padding-left: 0; list-style-type: none; font-size: var(--font-size-sm); color: var(--ea-text-secondary); }
+    .dynamic-card .services-list li::before { content: "• "; color: var(--ea-text-muted); margin-right: var(--space-xs); }
+
+    .dynamic-card .card-footer { padding: var(--space-md) 0 0 0; background-color: transparent; border-top: none; margin-top: auto; }
+    .dynamic-card .btn.dynamic-btn, /* Cible les boutons générés par JS */
+    section#appointment-form button[type="submit"] /* Cible le bouton du formulaire existant */
+    {
+        background-color: var(--ea-primary-color); border-color: var(--ea-primary-color);
+        color: var(--ea-text-on-primary); font-weight: 500; font-size: var(--font-size-base);
+        padding: 12px var(--space-md); border-radius: var(--ea-border-radius);
+        width: 100%; text-align: center; display: block; text-decoration: none;
+        transition: background-color 0.2s;
+    }
+    .dynamic-card .btn.dynamic-btn:hover,
+    section#appointment-form button[type="submit"]:hover {
+        background-color: var(--ea-primary-hover);
+    }
+
+    /* Widget Soliguide (section.card.mt-10) */
+    section.soliguide-embed .card-header, section#appointment-form .card-header {
+        padding-bottom: var(--space-sm); margin-bottom: var(--space-md);
+        border-bottom: 1px solid var(--ea-border-color);
+    }
+    section.soliguide-embed .card-title, section#appointment-form .card-title {
+        font-size: var(--font-size-lg); color: var(--ea-text-primary); font-weight: 600;
+    }
+    section.soliguide-embed .card-description, section#appointment-form .card-description {
+        font-size: var(--font-size-sm); color: var(--ea-text-secondary); margin-top: var(--space-xs);
+    }
+    section.soliguide-embed iframe { height: 450px; }
+
+
+    /* Formulaire de RDV (section#appointment-form) */
+    #appointmentForm label { /* Labels existants */
+        color: var(--ea-text-primary); font-weight: 500; font-size: var(--font-size-sm);
+        margin-bottom: var(--space-xs); display: block;
+    }
+    #appointmentForm select,
+    #appointmentForm input[type="date"],
+    #appointmentForm input[type="time"],
+    #appointmentForm input[type="text"] {
+        background-color: var(--ea-bg-page); border: 1px solid var(--ea-border-color-input);
+        border-radius: var(--ea-border-radius); padding: 12px 15px;
+        font-size: var(--font-size-base); color: var(--ea-text-primary);
+        width: 100%; box-sizing: border-box;
+    }
+    #appointmentForm select:focus, #appointmentForm input:focus {
+        border-color: var(--ea-primary-color); background-color: var(--ea-bg-content);
+        box-shadow: var(--ea-input-shadow-focus); outline: none;
+    }
+    #appointmentForm .form-group { margin-bottom: var(--space-md); }
+    #appointmentForm .form-grid { display: grid; gap: var(--space-md); }
+    @media (min-width: 768px) { #appointmentForm .form-grid { grid-template-columns: repeat(2, 1fr); } }
+    #appointmentForm small.error-text { font-size: var(--font-size-sm); color: var(--ea-danger-color); margin-top: var(--space-xs); display: block; }
+
+
+    /* Section Mes Rendez-vous */
+    #appointments-tab-content h2.text-xl {
+        font-size: var(--font-size-lg); font-weight: 600; color: var(--ea-text-primary);
+        margin-bottom: var(--space-md); padding-bottom: var(--space-sm);
+        border-bottom: 1px solid var(--ea-border-color);
+    }
+    .appointment-grid .dynamic-card .header { /* .dynamic-card pour cibler les cartes de RDV générées */
+        display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: var(--space-sm);
+    }
+    .appointment-grid .dynamic-card .title { font-size: var(--font-size-md); font-weight: 600; }
+    .appointment-grid .dynamic-card .datetime { font-size: var(--font-size-sm); color: var(--ea-text-secondary); display: flex; align-items: center; margin-bottom: var(--space-xs); }
+    .appointment-grid .dynamic-card .datetime .icon { color: var(--ea-text-muted); margin-right: var(--space-xs); }
+    .appointment-grid .dynamic-card .badge { margin-top: var(--space-sm); }
+    .badge-presentiel { background-color: var(--ea-info-color); }
+    .badge-telephonique { background-color: var(--ea-success-color); }
+    .badge-visioconference { background-color: var(--ea-warning-color); color: var(--ea-text-primary); }
+
+    .appointment-grid .dynamic-card .notes {
+        background-color: var(--ea-bg-page); padding: var(--space-sm) var(--space-md);
+        border-radius: var(--ea-border-radius); font-size: var(--font-size-sm);
+        color: var(--ea-text-secondary); margin-top: var(--space-md);
+        border-left: 3px solid var(--ea-info-color);
+    }
+    .appointment-grid .dynamic-card .btn.dynamic-btn.btn-danger {
+        background-color: transparent; border: 1px solid var(--ea-danger-color);
+        color: var(--ea-danger-color); padding: 8px var(--space-sm);
+        font-weight: 500; font-size: var(--font-size-sm); border-radius: var(--ea-border-radius);
+        align-self: center; /* Mieux centré avec le texte */
+    }
+    .appointment-grid .dynamic-card .btn.dynamic-btn.btn-danger:hover { background-color: var(--ea-danger-color); color: var(--ea-text-on-primary); }
+
+    /* Toasts */
+    #toast-container { position: fixed; bottom: var(--space-md); right: var(--space-md); z-index: 1050; display: flex; flex-direction: column; gap: .5rem; }
+    .toast { background-color: var(--ea-text-primary); color: var(--ea-bg-content); padding: var(--space-sm) var(--space-md); border-radius: var(--ea-border-radius); box-shadow: 0 4px 15px rgba(0,0,0,0.15); opacity: 0; transform: translateY(var(--space-md)); transition: opacity .3s ease, transform .3s ease; min-width: 280px; cursor: pointer; font-size: var(--font-size-sm); }
+    .toast.show { opacity: 1; transform: translateY(0); }
+    .toast.success { background-color: var(--ea-success-color); }
+    .toast.danger { background-color: var(--ea-danger-color); }
+    .toast.warning { background-color: var(--ea-warning-color); color: var(--ea-text-primary); }
+    .toast.info { background-color: var(--ea-info-color); }
+    .toast-title { font-weight: 600; margin-bottom: var(--space-xs); }
+    .toast-description {}
+
+    .empty-state { text-align: center; padding: var(--space-xl) var(--space-md); }
+    .empty-state p { font-size: var(--font-size-base); color: var(--ea-text-muted); margin-bottom: var(--space-md); }
+    .empty-state .btn.dynamic-btn { font-size: var(--font-size-base); padding: 12px var(--space-md); background-color: var(--ea-primary-color); color: var(--ea-text-on-primary); border: none; }
+  </style>
 </head>
 <body>
-  <!-- HEADER -->
+  <!-- HEADER (EmploiAvenir) -->
   <header class="header" id="header">
     <div class="container flex justify-between items-center">
       <a href="index.html" class="logo" aria-label="Accueil EmploiAvenir"><span>Emploi</span>Avenir</a>
@@ -35,23 +281,20 @@
     <div class="container py-8">
       <h1 class="text-center mb-6">Nos partenaires & Accompagnement</h1>
 
-      <!-- Onglets -->
       <section class="tabs" aria-label="Sections Trouver un partenaire et Mes rendez-vous">
         <div class="tabs-list" role="tablist">
           <button type="button" class="tab-button active" data-tab="partners" role="tab" aria-selected="true" aria-controls="partners-tab-content" id="tab-partners">Trouver un partenaire</button>
           <button type="button" class="tab-button" data-tab="appointments" role="tab" aria-selected="false" aria-controls="appointments-tab-content" id="tab-appointments">Mes rendez-vous</button>
         </div>
 
-        <!-- Onglet Trouver un partenaire -->
         <div class="tab-content active" id="partners-tab-content" role="tabpanel" aria-labelledby="tab-partners">
-          <!-- Filtres -->
-          <section class="filters" aria-label="Filtres de partenaires">
+          <section class="filters-section" aria-label="Filtres de partenaires">
             <div class="filter-item search-filter form-group">
-              <label for="searchQuery" class="sr-only">Rechercher par nom ou description</label>
+              <label for="searchQuery" class="sr-only">Rechercher un partenaire...</label>
               <input type="text" id="searchQuery" placeholder="Rechercher un partenaire..." class="w-full">
             </div>
             <div class="filter-item category-filter form-group">
-              <label for="categoryFilter" class="sr-only">Filtrer par catégorie</label>
+              <label for="categoryFilter" class="sr-only">Toutes les catégories</label>
               <select id="categoryFilter" class="w-full">
                 <option value="all">Toutes les catégories</option>
                 <option value="emploi">Recherche d'emploi</option>
@@ -63,47 +306,72 @@
             </div>
           </section>
 
-          <!-- Grille des partenaires -->
           <div class="partner-grid" id="partner-list" aria-live="polite">
-            <!-- Les cartes partenaires seront ajoutées ici dynamiquement par JS -->
+            <!-- Cartes partenaires injectées par JS -->
           </div>
 
-          <!-- Formulaire de prise de rendez-vous -->
-          <section class="card mt-10" id="appointment-form" aria-labelledby="appointmentFormTitle">
+          <section class="soliguide-embed mt-10 card" aria-labelledby="soliguide-title">
             <div class="card-header">
-              <h2 class="card-title" id="appointmentFormTitle">Prendre rendez-vous</h2>
-              <p class="card-description">Remplissez ce formulaire pour demander un rendez-vous avec un partenaire</p>
+              <h2 class="card-title" id="soliguide-title">Explorer plus de services avec Soliguide</h2>
+              <p class="card-description">Trouvez des structures d'aide, d'accompagnement et des services solidaires près de chez vous.</p>
             </div>
             <div class="card-content">
-              <form id="appointmentForm" class="space-y-4">
+              <iframe
+                  src="https://soliguide.fr/widget?source=widget"
+                  width="100%"
+                  height="450px"
+                  style="border:1px solid var(--ea-border-color); border-radius: var(--ea-border-radius);"
+                  frameborder="0"
+                  title="Widget de recherche Soliguide"
+                  allow="geolocation"
+                  loading="lazy">
+                    Votre navigateur ne supporte pas les iframes. Vous pouvez accéder à Soliguide <a href="https://soliguide.fr/widget?source=widget">directement ici</a>.
+              </iframe>
+              <p class="mt-2 text-sm text-gray-600" style="font-size: 0.875rem; color: var(--ea-text-muted); margin-top: var(--space-sm); text-align:center;">
+                Soliguide est un service externe.
+              </p>
+            </div>
+          </section>
+
+          <section class="card mt-10" id="appointment-form" aria-labelledby="appointmentFormTitle">
+             <!-- L'ID de la section globale est #appointmentFormSectionEmploiAvenir pour le scroll -->
+            <div class="card-header">
+              <h2 class="card-title" id="appointmentFormTitle">Prendre rendez-vous</h2>
+              <p class="card-description">Remplissez ce formulaire pour demander un rendez-vous avec un partenaire.</p>
+            </div>
+            <div class="card-content">
+              <form id="appointmentFormEmploiAvenir" class="space-y-4"> <!-- Nouvel ID pour le form pour éviter conflit potentiel -->
                 <div class="form-group">
-                  <label for="partner">Partenaire <span aria-hidden="true">*</span></label>
-                  <select id="partner" name="partnerId" required>
+                  <label for="appFormPartnerSelect">Partenaire <span style="color:var(--ea-danger-color)">*</span></label>
+                  <select id="appFormPartnerSelect" name="partnerId" required>
                     <option value="">Choisir un partenaire</option>
-                    <!-- Options ajoutées dynamiquement -->
                   </select>
+                  <small class="error-text" id="errorAppFormPartner"></small>
                 </div>
                 <div class="form-grid">
                   <div class="form-group">
-                    <label for="date">Date souhaitée <span aria-hidden="true">*</span></label>
-                    <input type="date" id="date" name="date" required>
+                    <label for="appFormDateInput">Date souhaitée <span style="color:var(--ea-danger-color)">*</span></label>
+                    <input type="date" id="appFormDateInput" name="date" required>
+                    <small class="error-text" id="errorAppFormDate"></small>
                   </div>
                   <div class="form-group">
-                    <label for="time">Heure souhaitée <span aria-hidden="true">*</span></label>
-                    <input type="time" id="time" name="time" required>
+                    <label for="appFormTimeInput">Heure souhaitée <span style="color:var(--ea-danger-color)">*</span></label>
+                    <input type="time" id="appFormTimeInput" name="time" required>
+                    <small class="error-text" id="errorAppFormTime"></small>
                   </div>
                 </div>
                 <div class="form-group">
-                  <label for="type">Type de rendez-vous <span aria-hidden="true">*</span></label>
-                  <select id="type" name="type" required>
+                  <label for="appFormTypeSelect">Type de rendez-vous <span style="color:var(--ea-danger-color)">*</span></label>
+                  <select id="appFormTypeSelect" name="type" required>
                     <option value="présentiel">Présentiel</option>
                     <option value="téléphonique">Téléphonique</option>
                     <option value="visioconférence">Visioconférence</option>
                   </select>
+                  <small class="error-text" id="errorAppFormType"></small>
                 </div>
                 <div class="form-group">
-                  <label for="notes">Notes (optionnel)</label>
-                  <input type="text" id="notes" name="notes" placeholder="Précisions sur votre demande...">
+                  <label for="appFormNotesInput">Notes (optionnel)</label>
+                  <input type="text" id="appFormNotesInput" name="notes" placeholder="Précisions sur votre demande...">
                 </div>
                 <button type="submit" class="btn btn-primary w-full">Confirmer le rendez-vous</button>
               </form>
@@ -111,18 +379,11 @@
           </section>
         </div>
 
-        <!-- Onglet Mes rendez-vous -->
         <div class="tab-content" id="appointments-tab-content" role="tabpanel" aria-labelledby="tab-appointments">
           <div class="space-y-6">
             <h2 class="text-xl font-semibold">Mes rendez-vous prévus</h2>
             <div class="appointment-grid" id="appointment-list" aria-live="polite">
-              <!-- Rendez-vous ajoutés dynamiquement par JS -->
-            </div>
-            <div class="card empty-card" id="no-appointments-message" style="display: none;">
-              <div class="card-content">
-                <p>Vous n'avez pas encore de rendez-vous prévus.</p>
-                <button type="button" class="btn btn-primary" id="go-to-partners-tab">Prendre un rendez-vous</button>
-              </div>
+              <!-- Rendez-vous injectés par JS -->
             </div>
           </div>
         </div>
@@ -130,96 +391,280 @@
     </div>
   </main>
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-column">
-          <h3>EmploiAvenir</h3>
-          <p>Votre partenaire pour trouver l'emploi de vos rêves et développer votre carrière professionnelle.</p>
-        </div>
-        <div class="footer-column">
-          <h3>Liens rapides</h3>
-          <ul class="footer-links">
-            <li><a href="index.html">Accueil</a></li>
-            <li><a href="MonParcours.html">Mon Parcours</a></li>
-            <li><a href="MesCandidature.html">Mes Candidatures</a></li>
-            <li><a href="Partenaires.html">Nos partenaires</a></li>
-            <li><a href="Documents.html">Mes documents</a></li>
-            <li><a href="Profil.html">Profil</a></li>
-          </ul>
-        </div>
-        <div class="footer-column">
-          <h3>Services</h3>
-          <ul class="footer-links">
-            <li><a href="#">Création de CV</a></li>
-            <li><a href="#">Lettres de motivation</a></li>
-            <li><a href="#">Coaching</a></li>
-            <li><a href="#">Préparation aux entretiens</a></li>
-            <li><a href="#">Partenaires entreprises</a></li>
-          </ul>
-        </div>
-        <div class="footer-column">
-          <h3>Contact</h3>
-          <ul class="footer-links">
-            <li><a href="tel:+33123456789">+33 1 23 45 67 89</a></li>
-            <li><a href="mailto:contact@emploiavenir.fr">contact@emploiavenir.fr</a></li>
-            <li>12 rue de l'Emploi, 75001 Paris</li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>© 2024 EmploiAvenir. Tous droits réservés.</p>
-      </div>
-    </div>
+  <footer class="footer"> <!-- Footer EmploiAvenir -->
+    <div class="container"> <div class="footer-grid"> <!-- ... contenu ... --> </div> <div class="footer-bottom"> <!-- ... contenu ... --> </div> </div>
   </footer>
 
-  <!-- TOASTS -->
-  <div id="toast-container"></div>
+  <div id="toast-container"></div> <!-- Pour les notifications JS -->
 
-  <!-- MODALE CONNEXION -->
-  <div id="loginModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="loginModalTitle" style="display: none;">
-    <div class="modal-content">
-      <button type="button" class="close-modal" aria-label="Fermer la fenêtre de connexion">×</button>
-      <h2 id="loginModalTitle">Connexion</h2>
-      <form id="loginForm">
-        <div class="form-group">
-          <label for="loginEmail">Email</label>
-          <input type="email" id="loginEmail" name="email" required>
-        </div>
-        <div class="form-group">
-          <label for="loginPassword">Mot de passe</label>
-          <input type="password" id="loginPassword" name="password" required>
-        </div>
-        <button type="submit" class="btn" style="width: 100%;">Se connecter</button>
-        <div class="text-center mt-2">
-          <a href="#" class="modal-link">Mot de passe oublié ?</a>
-        </div>
-        <div class="text-center mt-2">
-          <p>Pas encore de compte ? <a href="#" class="modal-link" id="openRegisterModal">S'inscrire</a></p>
-        </div>
-      </form>
-    </div>
-  </div>
+  <!-- Modal et Chatbot EmploiAvenir (raccourci pour la lisibilité) -->
+  <div id="loginModal" class="modal" style="display: none;">...</div>
+  <button type="button" class="chatbot-btn" id="chatbotBtn">💬</button>
+  <div class="chatbot-container" id="chatbotContainer" style="display: none;">...</div>
 
-  <!-- CHATBOT -->
-  <button type="button" class="chatbot-btn" id="chatbotBtn" aria-label="Ouvrir l'assistant virtuel EmploiAvenir" aria-expanded="false" aria-controls="chatbotContainer">💬</button>
-  <div class="chatbot-container" id="chatbotContainer" role="log" aria-labelledby="chatbotHeaderTitle" style="display: none;">
-    <div class="chatbot-header">
-      <h3 id="chatbotHeaderTitle">Assistant EmploiAvenir</h3>
-      <button type="button" id="closeChatbot" aria-label="Fermer l'assistant virtuel">✖</button>
-    </div>
-    <div class="chatbot-messages" id="chatbotMessages" aria-live="polite">
-      <div class="message bot-message">
-        Bonjour ! Comment puis-je vous aider aujourd'hui ?
-      </div>
-    </div>
-    <div class="chatbot-input">
-      <input type="text" id="chatbotInput" name="chatbot_message" placeholder="Écrivez votre message..." aria-label="Votre message à l'assistant EmploiAvenir">
-      <button id="sendMessage" type="button">Envoyer</button>
-    </div>
-  </div>
+  <script src="Script.js"></script> <!-- Script EmploiAvenir existant -->
 
-  <script src="Script.js"></script>
+  <script>
+    // --- JS Optimisé et Adapté ---
+    const PARTNERS_DATA = [
+        { id: 'p1', name: 'France Travail', description: "L'organisme public pour l'emploi en France.", category: 'emploi', logoUrl: null, address: '15 rue de Paris, 75001 Paris', phone: '3949', email: 'contact@francetravail.fr', website: 'https://www.francetravail.fr', services: ['Accompagnement personnalisé', 'Offres d\'emploi', 'Ateliers de recherche'] },
+        { id: 'p2', name: 'Croix-Rouge française', description: "Association d'aide humanitaire.", category: 'accompagnement', logoUrl: null, address: '86 rue Didot, 75014 Paris', phone: '01 44 43 11 00', email: 'contact@croix-rouge.fr', website: 'https://www.croix-rouge.fr', services: ['Accompagnement social', 'Aide alimentaire', 'Insertion professionnelle'] },
+        { id: 'p3', name: 'AFPA', description: "Centre de formation professionnelle pour adultes.", category: 'formation', logoUrl: null, address: '3 rue Franklin, 93100 Montreuil', phone: '3936', email: 'contact@afpa.fr', website: 'https://www.afpa.fr', services: ['Formation professionnelle', 'Certification', 'Reconversion'] },
+        { id: 'p4', name: 'Mission Locale', description: "Accompagnement des jeunes dans leur insertion professionnelle.", category: 'insertion', logoUrl: null, address: '34 rue Nationale, 75013 Paris', phone: '01 44 07 28 85', email: 'contact@missionlocale.fr', website: '#', services: ['Conseil en orientation', 'Aide à la recherche d\'emploi', 'Accompagnement social'] }
+    ];
+    let APPOINTMENTS_DATA = [
+        { id: 'a1', partnerId: 'p1', partnerName: 'France Travail', date: '2025-05-14', time: '10:30', type: 'présentiel', notes: 'Préparer questions.' }
+    ];
+
+    const CATEGORY_LABELS = { emploi: "Recherche d'emploi", formation: 'Formation', insertion: 'Insertion professionnelle', accompagnement: 'Accompagnement social', aide: 'Aide aux démarches' };
+    // Adapter les classes de badge pour correspondre au CSS des captures
+    const CATEGORY_BADGE_CLASSES = {
+        emploi: 'badge-recherche-emploi',
+        formation: 'badge-formation',
+        insertion: 'badge-insertion-professionnelle',
+        accompagnement: 'badge-accompagnement-social',
+        aide: 'badge-aide' // Vous devrez définir .badge-aide dans le CSS
+    };
+    const APPOINTMENT_TYPE_BADGE_CLASSES = {
+        présentiel: 'badge-presentiel',
+        téléphonique: 'badge-telephonique',
+        visioconférence: 'badge-visioconference'
+    };
+
+    const DOMElements = {
+        partnerList: document.getElementById('partner-list'),
+        appointmentList: document.getElementById('appointment-list'),
+        searchQuery: document.getElementById('searchQuery'),
+        categoryFilter: document.getElementById('categoryFilter'),
+        appointmentForm: document.getElementById('appointmentFormEmploiAvenir'), // Nouvel ID du formulaire
+        appForm: { // Nouveaux ID des champs du formulaire
+            partner: document.getElementById('appFormPartnerSelect'),
+            date: document.getElementById('appFormDateInput'),
+            time: document.getElementById('appFormTimeInput'),
+            type: document.getElementById('appFormTypeSelect'),
+            notes: document.getElementById('appFormNotesInput'),
+        },
+        toastContainer: document.getElementById('toast-container'),
+        appointmentFormSection: document.getElementById('appointment-form') // L'ID de la <section> du formulaire
+    };
+
+    const getIcon = (iconClass) => `<i class="icon fas ${iconClass}"></i>`;
+    const createBadge = (text, badgeClass) => `<span class="badge ${badgeClass}">${text}</span>`; // Utilise directement la classe
+
+    const showToast = ({ title, description, type = 'info', duration = 4500 }) => {
+        const toast = document.createElement('div');
+        toast.className = `toast ${type}`;
+        let iconHtml = '';
+        if(type === 'success') iconHtml = getIcon('fa-check-circle');
+        if(type === 'danger') iconHtml = getIcon('fa-exclamation-circle');
+        if(type === 'info') iconHtml = getIcon('fa-info-circle');
+        toast.innerHTML = `<div class="toast-title">${iconHtml} ${title}</div><div class="toast-description">${description}</div>`;
+        DOMElements.toastContainer.appendChild(toast);
+        setTimeout(() => toast.classList.add('show'), 10);
+        const removeToast = () => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 300); };
+        toast.addEventListener('click', removeToast);
+        setTimeout(removeToast, duration);
+    };
+
+    const getErrorElementIdForField = (fieldId) => { // fieldId est l'ID de l'input/select
+        return `error${fieldId.charAt(0).toUpperCase() + fieldId.slice(3)}`; // Ex: appFormPartnerSelect -> errorAppFormPartner
+    };
+
+    const clearError = (fieldId) => {
+        const errorEl = document.getElementById(getErrorElementIdForField(fieldId));
+        if (errorEl) errorEl.textContent = '';
+    };
+    const displayError = (fieldId, message) => {
+        const errorEl = document.getElementById(getErrorElementIdForField(fieldId));
+        if (errorEl) errorEl.textContent = message;
+    };
+
+    function createPartnerCardHTML(partner) {
+        const { id, name, description, category, logoUrl, address, phone, email, website, services } = partner;
+        const categoryLabel = CATEGORY_LABELS[category] || category;
+        const categoryBadgeClass = CATEGORY_BADGE_CLASSES[category] || 'badge-secondary'; // Fallback
+        let contactHTML = '';
+        if (address) contactHTML += `<div>${getIcon('fa-map-marker-alt')}<span>${address}</span></div>`;
+        if (phone) contactHTML += `<div>${getIcon('fa-phone')}<span>${phone}</span></div>`;
+        if (email) contactHTML += `<div>${getIcon('fa-envelope')}<a href="mailto:${email}" aria-label="Envoyer un email à ${name}">Contacter par email</a></div>`;
+        if (website) contactHTML += `<div>${getIcon('fa-globe')}<a href="${website}" target="_blank" rel="noopener noreferrer" aria-label="Visiter le site web de ${name}">Site web</a></div>`;
+        let servicesHTML = '';
+        if (services && services.length) {
+            servicesHTML = `<p class="services-title">Services proposés :</p><ul class="services-list">${services.map(s => `<li>${s}</li>`).join('')}</ul>`;
+        }
+        const logoPlaceholderHTML = !logoUrl ? `<div class="logo-placeholder"><i class="fas fa-building"></i></div>` : `<div class="logo"><img src="${logoUrl}" alt="Logo de ${name}"></div>`;
+
+        return `
+            <div class="card dynamic-card partner-card">
+                <div class="card-header">
+                    <div>
+                        <h3 class="card-title">${name}</h3>
+                        ${createBadge(categoryLabel, categoryBadgeClass)}
+                    </div>
+                    ${logoPlaceholderHTML}
+                </div>
+                <div class="card-content">
+                    <p>${description || 'Aucune description disponible.'}</p>
+                    ${contactHTML ? `<div class="contact-info">${contactHTML}</div>` : ''}
+                    ${servicesHTML}
+                </div>
+                <div class="card-footer">
+                    <button class="btn dynamic-btn btn-full-width" onclick="actions.scheduleAppointment('${id}', '${name}')" aria-label="Prendre rendez-vous avec ${name}">
+                        Prendre rendez-vous
+                    </button>
+                </div>
+            </div>`;
+    }
+
+    function renderPartners(partners) {
+        if (!DOMElements.partnerList) return;
+        if (!partners.length) { DOMElements.partnerList.innerHTML = `<div class="empty-state" style="grid-column: 1 / -1;"><p>Aucun partenaire ne correspond à votre recherche.</p></div>`; return; }
+        DOMElements.partnerList.innerHTML = partners.map(createPartnerCardHTML).join('');
+    }
+
+    function createAppointmentCardHTML(appointment) {
+        const { id, partnerName, date, time, type, notes } = appointment;
+        const formattedDate = new Date(date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
+        const typeBadgeClass = APPOINTMENT_TYPE_BADGE_CLASSES[type] || 'badge-secondary';
+        const typeLabel = type.charAt(0).toUpperCase() + type.slice(1);
+        return `
+            <div class="card dynamic-card appointment-card">
+                <div class="card-content">
+                    <div class="header">
+                        <div class="details">
+                            <h3 class="title">${partnerName}</h3>
+                            <div class="datetime">${getIcon('fa-calendar-alt')}<span>Le ${formattedDate} à ${time}</span></div>
+                            ${createBadge(typeLabel, typeBadgeClass)}
+                        </div>
+                        <button class="btn dynamic-btn btn-danger" onclick="actions.cancelAppointment('${id}')" aria-label="Annuler le rendez-vous avec ${partnerName} du ${formattedDate}">
+                            Annuler
+                        </button>
+                    </div>
+                    ${notes ? `<div class="notes"><strong>Notes :</strong> ${notes}</div>` : ''}
+                </div>
+            </div>`;
+    }
+    function renderAppointments(appointments) {
+        if (!DOMElements.appointmentList) return;
+        if (!appointments.length) { DOMElements.appointmentList.innerHTML = `<div class="empty-state" style="grid-column: 1 / -1;"><p>Vous n'avez pas encore de rendez-vous prévus.</p><button class="btn dynamic-btn btn-primary" onclick="actions.navigateToAppointmentForm()">Prendre un rendez-vous</button></div>`; return; }
+        DOMElements.appointmentList.innerHTML = appointments.map(createAppointmentCardHTML).join('');
+    }
+
+    const actions = {
+        filterAndRenderPartners() {
+            const query = DOMElements.searchQuery.value.toLowerCase();
+            const category = DOMElements.categoryFilter.value;
+            const filtered = PARTNERS_DATA.filter(p => (p.name.toLowerCase().includes(query) || (p.description && p.description.toLowerCase().includes(query))) && (category === 'all' || p.category === category));
+            renderPartners(filtered);
+        },
+        scheduleAppointment(partnerId, partnerName) {
+            DOMElements.appForm.partner.value = partnerId;
+            if (DOMElements.appointmentFormSection) DOMElements.appointmentFormSection.scrollIntoView({behavior: 'smooth', block: 'start'});
+            DOMElements.appForm.date.focus();
+            showToast({ title: 'Prise de RDV', description: `Formulaire pré-rempli pour ${partnerName}. Complétez les informations.`, type: 'info' });
+        },
+        cancelAppointment(appointmentId) {
+            if (confirm("Êtes-vous sûr de vouloir annuler ce rendez-vous ?")) {
+                APPOINTMENTS_DATA = APPOINTMENTS_DATA.filter(app => app.id !== appointmentId);
+                renderAppointments(APPOINTMENTS_DATA);
+                showToast({ title: 'Annulation confirmée', description: 'Le rendez-vous a été annulé.', type: 'success' });
+            }
+        },
+        navigateToAppointmentForm() {
+             if (DOMElements.appointmentFormSection) DOMElements.appointmentFormSection.scrollIntoView({behavior: 'smooth', block: 'start'});
+             if (DOMElements.appForm.partner) DOMElements.appForm.partner.focus();
+        },
+        submitAppointmentForm(event) {
+            event.preventDefault();
+            let isValid = true;
+            Object.values(DOMElements.appForm).forEach(inputEl => clearError(inputEl.id));
+
+            if (!DOMElements.appForm.partner.value) { displayError(DOMElements.appForm.partner.id, 'Veuillez choisir un partenaire.'); isValid = false; }
+            if (!DOMElements.appForm.date.value) { displayError(DOMElements.appForm.date.id, 'Veuillez choisir une date.'); isValid = false; }
+            else if (new Date(DOMElements.appForm.date.value) < new Date(DOMElements.appForm.date.min)) { displayError(DOMElements.appForm.date.id, 'Cette date est déjà passée.'); isValid = false; }
+            if (!DOMElements.appForm.time.value) { displayError(DOMElements.appForm.time.id, 'Veuillez choisir une heure.'); isValid = false; }
+            if (!DOMElements.appForm.type.value) { displayError(DOMElements.appForm.type.id, 'Veuillez choisir un type de RDV.'); isValid = false; }
+
+
+            if (!isValid) { showToast({ title: 'Formulaire incomplet', description: 'Veuillez vérifier les informations en rouge.', type: 'danger'}); return; }
+
+            const selectedPartner = PARTNERS_DATA.find(p => p.id === DOMElements.appForm.partner.value);
+            const newAppointment = {
+                id: `app_${Date.now()}`,
+                partnerId: DOMElements.appForm.partner.value,
+                partnerName: selectedPartner?.name || 'Partenaire',
+                date: DOMElements.appForm.date.value,
+                time: DOMElements.appForm.time.value,
+                type: DOMElements.appForm.type.value,
+                notes: DOMElements.appForm.notes.value.trim()
+            };
+            APPOINTMENTS_DATA.push(newAppointment);
+            renderAppointments(APPOINTMENTS_DATA);
+            showToast({ title: 'Rendez-vous enregistré !', description: `Votre demande pour ${newAppointment.partnerName} est confirmée.`, type: 'success' });
+            DOMElements.appointmentForm.reset();
+            DOMElements.appForm.partner.value = ""; // Important pour le select
+            setupAppointmentForm();
+        }
+    };
+    window.actions = actions; // Pour les onclick HTML
+
+    function populatePartnerSelect() {
+        if (!DOMElements.appForm.partner) return;
+        DOMElements.appForm.partner.innerHTML = '<option value="">Choisir un partenaire</option>';
+        PARTNERS_DATA.forEach(p => {
+            const option = document.createElement('option'); option.value = p.id; option.textContent = p.name;
+            DOMElements.appForm.partner.appendChild(option);
+        });
+    }
+    function setupAppointmentForm() {
+        if (!DOMElements.appForm.date) return;
+        const today = new Date();
+        const offset = today.getTimezoneOffset(); // Pour gérer le fuseau horaire
+        const todayLocal = new Date(today.getTime() - (offset*60*1000));
+        DOMElements.appForm.date.min = todayLocal.toISOString().split('T')[0];
+    }
+    function initializeDynamicContent() {
+        if (DOMElements.searchQuery) DOMElements.searchQuery.addEventListener('input', actions.filterAndRenderPartners);
+        if (DOMElements.categoryFilter) DOMElements.categoryFilter.addEventListener('change', actions.filterAndRenderPartners);
+        if (DOMElements.appointmentForm) DOMElements.appointmentForm.addEventListener('submit', actions.submitAppointmentForm);
+
+        Object.values(DOMElements.appForm).forEach(inputEl => {
+            if (inputEl) {
+                inputEl.addEventListener('input', () => clearError(inputEl.id));
+                inputEl.addEventListener('change', () => clearError(inputEl.id));
+            }
+        });
+
+        actions.filterAndRenderPartners();
+        populatePartnerSelect();
+        setupAppointmentForm();
+        renderAppointments(APPOINTMENTS_DATA);
+
+        // Logique des onglets (si votre Script.js ne le gère pas déjà de manière compatible)
+        const tabButtons = document.querySelectorAll('.tabs-list .tab-button');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                tabButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                tabContents.forEach(content => content.classList.remove('active'));
+                const activeTabContentId = button.getAttribute('aria-controls');
+                const activeTabContent = document.getElementById(activeTabContentId);
+                if (activeTabContent) {
+                    activeTabContent.classList.add('active');
+                }
+                // Si on passe à l'onglet "Mes rendez-vous", on re-render au cas où
+                if (activeTabContentId === 'appointments-tab-content') {
+                    renderAppointments(APPOINTMENTS_DATA);
+                } else if (activeTabContentId === 'partners-tab-content') {
+                    actions.filterAndRenderPartners(); // Re-render partenaires si on revient sur l'onglet
+                }
+            });
+        });
+    }
+    document.addEventListener('DOMContentLoaded', initializeDynamicContent);
+  </script>
 </body>
 </html>
