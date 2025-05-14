@@ -1,0 +1,21 @@
+{
+  "Home": "Accueil",
+  "Parcours": "Mon Parcours",
+  "Candidatures": "Mes Candidatures",
+  "Partenaires": "Nos partenaires",
+  "Documents": "Mes documents",
+  "Profil": "Profil",
+  "generateur": "Générateur de Lettre de Motivation",
+  "Consigne LM": "Remplissez ce formulaire pour obtenir une lettre personnalisée et professionnelle en quelques secondes.",
+  "labelName": "Nom Prénom",
+  "labelEmail": "Email*",
+  "labelPoste": "Poste visé*",
+  "labelEntreprise": "Nom de l’entreprise*",
+  "labelMotivation": "Pourquoi ce poste vous intéresse-t-il ?*",
+  "labelValue": "Ce que vous pouvez apporter à l’entreprise*",
+  "generateBtn": "Générer ma Lettre",
+  "VotreLM": "Votre Lettre de Motivation",
+  "BackParcours": "",
+  "NextStep": "Étape Suivante : Recherche",
+  "Credits": "© 2024 EmploiAvenir. Tous droits réservés."
+}

@@ -18,67 +18,73 @@
       <a href="index.html" class="logo" aria-label="Accueil EmploiAvenir"><span>Emploi</span>Avenir</a>
       <nav aria-label="Navigation principale">
         <ul class="nav-links" id="mainNavLinks">
-          <li><a href="index.html">Accueil</a></li>
-          <li><a href="MonParcours.html" class="active" aria-current="page">Mon Parcours</a></li>
-          <li><a href="MesCandidature.html">Mes Candidatures</a></li>
-          <li><a href="Partenaires.html">Nos partenaires</a></li>
-          <li><a href="Documents.html">Mes documents</a></li>
-          <li><a href="Profil.html">Profil</a></li>
+          <li><a href="index.html"data-i18n="Home">Accueil</a></li>
+          <li><a href="MonParcours.html" aria-current="page"data-i18n="Parcours">Mon Parcours</a></li>
+          <li><a href="MesCandidature.html" data-i18n="Candidatures">Mes Candidatures</a></li>
+          <li><a href="Partenaires.html" data-i18n="Partenaires">Nos partenaires</a></li>
+          <li><a href="Documents.html" data-i18n="Documents">Mes documents</a></li>
+          <li><a href="Profil.html" data-i18n="Profil">Profil</a></li>
         </ul>
       </nav>
       <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Ouvrir le menu de navigation" aria-expanded="false" aria-controls="mainNavLinks">☰</button>
     </div>
   </header>
+<select id="langSwitcher" aria-label="Choisir la langue">
+  <option value="fr">🇫🇷 Français</option>
+  <option value="en">🇬🇧 English</option>
+  <option value="ar">🇸🇦 العربية</option>
+  <option value="uk">UK  українська мова</option>
+</select>
 
   <main>
     <section class="container mt-8 mb-8" style="max-width:700px;"> 
       <header class="section-header text-center mb-6"> 
-        <h1>Générateur de Lettre de Motivation</h1>
-        <p class="intro-text">Remplissez ce formulaire pour obtenir une lettre personnalisée et professionnelle en quelques secondes.</p>
+        <h1 data-i18n="generateur">Générateur de Lettre de Motivation</h1>
+        <p class="intro-text" data-i18n="Consigne LM">Remplissez ce formulaire pour obtenir une lettre personnalisée et professionnelle en quelques secondes.</p>
       </header>
 
       <form id="motivationForm" class="card p-6" autocomplete="on"> 
         <div class="form-grid form-grid-cols-2 gap-4"> 
             <div class="form-group">
-              <label for="nom">Nom Prénom <span aria-hidden="true" class="text-danger">*</span></label>
-              <input type="text" id="nom" name="nom" required autocomplete="name" class="form-control" placeholder="Ex : Marie Dupont">
+              <label for="nom" data-i18n="labelName">Nom Prénom</label>
+              <input type="text" id="nom" name="nom" required placeholder="Ex : Marie Dupont">
             </div>
             <div class="form-group">
-              <label for="email">Email <span aria-hidden="true" class="text-danger">*</span></label>
+              <label for="email" data-i18n="labelEmail">Email <span aria-hidden="true" class="text-danger">*</span></label>
               <input type="email" id="email" name="email" required autocomplete="email" class="form-control" placeholder="Ex : marie.dupont@email.com">
             </div>
         </div>
         <div class="form-group">
-          <label for="poste">Poste visé <span aria-hidden="true" class="text-danger">*</span></label>
+          <label for="poste" data-i18n="labelPoste">Poste visé <span aria-hidden="true" class="text-danger">*</span></label>
           <input type="text" id="poste" name="poste" required class="form-control" placeholder="Ex : Assistant administratif">
         </div>
         <div class="form-group">
-          <label for="entreprise">Nom de l’entreprise <span aria-hidden="true" class="text-danger">*</span></label>
+          <label for="entreprise" data-i18n="labelEntreprise">Nom de l’entreprise <span aria-hidden="true" class="text-danger">*</span></label>
           <input type="text" id="entreprise" name="entreprise" required class="form-control" placeholder="Ex : Entreprise Dupuis">
         </div>
         <div class="form-group">
-          <label for="motivation_poste">Pourquoi ce poste vous intéresse-t-il ? <span aria-hidden="true" class="text-danger">*</span></label>
-          <textarea id="motivation_poste" name="motivation_poste" required class="form-control" rows="4" placeholder="Exprimez votre motivation..."></textarea> {/* rows augmenté */}
+          <label for="motivation_poste" data-i18n="labelMotivation">Pourquoi ce poste vous intéresse-t-il ? <span aria-hidden="true" class="text-danger">*</span></label>
+          <textarea id="motivation_poste" name="motivation_poste" required class="form-control" rows="4" placeholder="Exprimez votre motivation..."></textarea> 
         </div>
         <div class="form-group">
-          <label for="valeur_ajoutee">Ce que vous pouvez apporter à l’entreprise <span aria-hidden="true" class="text-danger">*</span></label>
-          <textarea id="valeur_ajoutee" name="valeur_ajoutee" required class="form-control" rows="4" placeholder="Parlez de vos atouts, qualités, expériences..."></textarea> {/* rows augmenté */}
+          <label for="valeur_ajoutee" data-i18n="labelValue"> Ce que vous pouvez apporter à l’entreprise <span aria-hidden="true" class="text-danger">*</span></label>
+          <textarea id="valeur_ajoutee" name="valeur_ajoutee" required class="form-control" rows="4" placeholder="Parlez de vos atouts, qualités, expériences..."></textarea> 
         </div>
-        <button type="submit" class="btn btn-primary btn-large button-full mt-2" id="generateLetterBtn"> 
+        <button type="submit" class="btn btn-primary btn-large button-full mt-2" id="generateLetterBtn" data-i18n="generateBtn"> 
           <i class="fas fa-magic mr-2"></i> Générer ma Lettre
         </button>
       </form>
 
       <div id="letterResultSection" class="mt-6" style="display:none;">
-        <h2 class="section-title centered">Votre Lettre de Motivation</h2>
+        <h2 class="section-title centered" data-i18n="VotreLM">Votre Lettre de Motivation</h2>
         <div id="resultat" class="card p-4 mb-4" style="white-space: pre-wrap; min-height: 200px; border: 1px solid var(--color-gray-light);">
         </div>
 
         <div class="form-navigation flex justify-between items-center">
           <button type="button" class="btn btn-outline" id="backToParcoursLetterBtn">
-            <i class="fas fa-arrow-left mr-2"></i> Retour à Mon Parcours
+            <i class="fas fa-arrow-left mr-2" data-i18n="BackParcours"></i> Retour à Mon Parcours
           </button>
-          <button type="button" class="btn btn-primary" id="nextStepAfterLetterBtn">
+          <button type="button" class="btn btn-primary" id="nextStepAfterLetterBtn" data-i18n="NextStep">
             Étape Suivante : Recherche <i class="fas fa-arrow-right ml-2"></i>
           </button>
         </div>
@@ -89,7 +95,7 @@
 
   <footer class="footer">
     <div class="container text-center py-4"> 
-      <p>© 2024 EmploiAvenir. Tous droits réservés.</p>
+      <p data-i18n="Credits">© 2024 EmploiAvenir. Tous droits réservés.</p>
     </div>
   </footer>
   <div id="toast-container"></div>
@@ -248,5 +254,6 @@
         }
     });
   </script>
+  <script src="langue.js"></script>
 </body>
 </html>

@@ -1,0 +1,21 @@
+{
+  "Home": "Home",
+  "Parcours": "My Journey",
+  "Candidatures": "My Applications",
+  "Partenaires": "Our Partners",
+  "Documents": "My Documents",
+  "Profil": "Profile",
+  "generateur": "Cover Letter Generator",
+  "Consigne LM": "Fill out this form to get a personalized and professional cover letter in seconds.",
+  "labelName": "Full Name",
+  "labelEmail": "Email*",
+  "labelPoste": "Target Position*",
+  "labelEntreprise": "Company Name*",
+  "labelMotivation": "Why are you interested in this position?*",
+  "labelValue": "What can you bring to the company?*",
+  "generateBtn": "Generate My Letter",
+  "VotreLM": "Your Cover Letter",
+  "BackParcours": "Back to My Journey",
+  "NextStep": "Next Step: Job Search",
+  "Credits": "© 2024 EmploiAvenir. All rights reserved."
+}

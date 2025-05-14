@@ -18,18 +18,23 @@
       <a href="index.html" class="logo" aria-label="Accueil EmploiAvenir"><span>Emploi</span>Avenir</a>
       <nav aria-label="Navigation principale">
         <ul class="nav-links" id="mainNavLinks">
-          <li><a href="index.html">Accueil</a></li>
-          <li><a href="MonParcours.html" class="active" aria-current="page">Mon Parcours</a></li>
-          <li><a href="MesCandidature.html">Mes Candidatures</a></li>
-          <li><a href="Partenaires.html">Nos partenaires</a></li>
-          <li><a href="Documents.html">Mes documents</a></li>
-          <li><a href="Profil.html">Profil</a></li>
+          <li><a href="index.html"data-i18n="Home">Accueil</a></li>
+          <li><a href="MonParcours.html" data-i18n="Parcours">Mon Parcours</a></li>
+          <li><a href="MesCandidature.html" data-i18n="Candidatures">Mes Candidatures</a></li>
+          <li><a href="Partenaires.html" data-i18n="Partenaires">Nos partenaires</a></li>
+          <li><a href="Documents.html" data-i18n="Documents">Mes documents</a></li>
+          <li><a href="Profil.html" data-i18n="Profil">Profil</a></li>
         </ul>
       </nav>
       <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Ouvrir le menu de navigation" aria-expanded="false" aria-controls="mainNavLinks">☰</button>
     </div>
   </header>
-
+<select id="langSwitcher" aria-label="Choisir la langue">
+  <option value="fr">🇫🇷 Français</option>
+  <option value="en">🇬🇧 English</option>
+  <option value="ar">🇸🇦 العربية</option>
+  <option value="uk">UK  українська мова</option>
+</select>
   <main>
     <div class="container py-8 max-w-xl mx-auto">
       <h1 class="text-center mb-6">Quizz Express</h1>
@@ -270,5 +275,6 @@
   </div>
 
   <script src="script.js"></script>
+  <script src="langue.js"></script>
 </body>
 </html>
