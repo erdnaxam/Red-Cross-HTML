@@ -29,6 +29,10 @@
       <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Ouvrir le menu de navigation" aria-expanded="false" aria-controls="mainNavLinks">☰</button>
     </div>
   </header>
+<section class="mt-10">
+  <h2 class="text-xl font-semibold mb-4">Offres favorites enregistrées</h2>
+  <div id="favoriteJobsList" class="grid gap-4"></div>
+</section>
 
   <main>
     <div class="container py-8">
@@ -193,5 +197,28 @@
   </div>
 
   <script src="Script.js"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const favorites = JSON.parse(localStorage.getItem('favoriteJobs')) || [];
+    const listContainer = document.getElementById('favoriteJobsList');
+
+    if (favorites.length === 0) {
+      listContainer.innerHTML = "<p>Vous n'avez pas encore de favoris.</p>";
+      return;
+    }
+
+    favorites.forEach(job => {
+      const jobCard = document.createElement('div');
+      jobCard.className = 'p-4 border rounded shadow';
+      jobCard.innerHTML = `
+        <h3 class="text-lg font-bold">${job.title}</h3>
+        <p class="text-sm text-gray-600">${job.company}</p>
+        <p class="text-sm">${job.location || ''}</p>
+      `;
+      listContainer.appendChild(jobCard);
+    });
+  });
+</script>
+
 </body>
 </html>

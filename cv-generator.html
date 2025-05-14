@@ -215,5 +215,61 @@
   </footer>
   <div id="toast-container"></div>
   <script src="script.js"></script>
+
+<script> document.addEventListener('DOMContentLoaded', () => {
+  // Vérifie la compatibilité navigateur
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  if (!SpeechRecognition) {
+    console.warn("SpeechRecognition API non supportée dans ce navigateur.");
+    return;
+  }
+
+  // Initialiser une instance globale
+  const recognition = new SpeechRecognition();
+  recognition.lang = 'fr-FR'; // Français
+  recognition.interimResults = false; // On ne veut que les résultats finaux
+  recognition.maxAlternatives = 1;
+
+  let currentTargetInput = null;
+
+  // Gère le clic sur chaque bouton micro
+  document.querySelectorAll('.mic-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const inputId = btn.dataset.targetInput;
+      const input = document.getElementById(inputId);
+
+      if (!input) {
+        console.error(`Champ introuvable pour l'ID: ${inputId}`);
+        return;
+      }
+
+      currentTargetInput = input;
+      input.focus(); // Fait le focus sur l'input
+      recognition.start(); // Lance la reconnaissance vocale
+    });
+  });
+
+  // Quand la reconnaissance retourne un résultat
+  recognition.addEventListener('result', (event) => {
+    const transcript = event.results[0][0].transcript;
+    if (currentTargetInput) {
+      currentTargetInput.value = transcript;
+      currentTargetInput.dispatchEvent(new Event('input')); // Pour déclencher la mise à jour de l'aperçu
+    }
+  });
+
+  recognition.addEventListener('speechend', () => {
+    recognition.stop();
+  });
+
+  recognition.addEventListener('error', (event) => {
+    console.error('Erreur de reconnaissance vocale:', event.error);
+    if (typeof App?.showToast === 'function') {
+      App.showToast(`Erreur vocale : ${event.error}`, 'error');
+    }
+  });
+});
+</script>
 </body>
 </html>
