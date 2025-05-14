@@ -528,8 +528,9 @@ document.addEventListener('DOMContentLoaded', () => {
 // Gestion du générateur de CV
 document.addEventListener('DOMContentLoaded', () => {
   const steps = document.querySelectorAll('.cv-step');
-  const nextBtn = document.getElementById('nextStepBtn');
-  const prevBtn = document.getElementById('prevStepBtn');
+  const nextBtn = document.getElementById('CvNextStepBtn');
+  console.log('nextBtn trouvé ?', nextBtn);
+const prevBtn = document.getElementById('CvPrevStepBtn');
   const preview = document.getElementById('final-preview-content');
   const form = document.getElementById('cvAssistantForm');
 

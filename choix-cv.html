@@ -35,81 +35,95 @@
   <option value="uk">UK  українська мова</option>
 </select>
   <main>
-    <section class="choix-cv-lm-section" aria-labelledby="choixCvLmTitle">
-      <div class="container">
-        <header class="section-header text-center">
-          <h1 id="choixCvLmTitle">Gérez Votre CV et Lettre de Motivation</h1>
-          <p class="intro-text">Vous êtes à l'étape cruciale de la préparation de vos documents de candidature. Que souhaitez-vous faire&nbsp;?</p>
-        </header>
-
-        <div class="choix-options-grid" role="list">
-          <!-- Créer un CV -->
-          <article class="choix-carte card" role="listitem">
-            <div class="card-icon-container">
-              <i class="fas fa-file-signature fa-3x icon-primary" aria-hidden="true"></i>
-            </div>
-            <div class="card-content text-center">
-              <h2 class="card-title">Créer un Nouveau CV</h2>
-              <p>Utilisez notre assistant pas à pas pour construire un CV clair et professionnel, même sans expérience.</p>
-              <a href="cv-generator.html" class="btn btn-primary mt-2" aria-label="Commencer la création de CV">Commencer la création de CV</a>
-            </div>
-          </article>
-
-          <!-- Analyser un CV existant -->
-          <article class="choix-carte card" role="listitem">
-            <div class="card-icon-container">
-              <i class="fas fa-file-import fa-3x icon-secondary" aria-hidden="true"></i>
-            </div>
-            <div class="card-content text-center">
-              <h2 class="card-title">Analyser mon CV Existant</h2>
-              <p>Importez votre CV actuel (PDF, Word) pour obtenir des conseils personnalisés et des suggestions d'amélioration. <em class="text-muted-foreground">(Fonctionnalité à venir)</em></p>
-              <button type="button" class="btn btn-outline-secondary mt-2" id="analyzeCvBtn" disabled aria-disabled="true">
-                Télécharger et Analyser <i class="fas fa-cogs ml-1" aria-hidden="true"></i>
-              </button>
-              <input type="file" id="cvUploadInput" accept=".pdf,.doc,.docx" style="display:none;">
-            </div>
-          </article>
-        </div>
-
-        <!-- Section Aide -->
-        <section class="aide-section mt-8 text-center" aria-labelledby="aideTitle">
-          <h3 id="aideTitle">Besoin d'un coup de main&nbsp;?</h3>
-          <p class="mb-3">Nos conseillers sont là pour vous aider à chaque étape de la création ou de l'amélioration de vos documents.</p>
-          <div class="aide-options-buttons" role="group" aria-label="Options d'aide">
-            <button type="button" class="btn btn-outline" id="aideEnLigneBtn" aria-label="Aide en ligne (Chat)">
-              <i class="fas fa-comments"></i> Aide en ligne (Chat)
-            </button>
-            <button type="button" class="btn btn-outline" id="aideVisioBtn" aria-label="Demander une aide en visio">
-              <i class="fas fa-video"></i> Demander une aide en visio
-            </button>
-            <a href="Partenaires.html?tab=appointments" class="btn btn-outline" aria-label="Prendre un rendez-vous avec un conseiller">
-              <i class="fas fa-calendar-alt"></i> Prendre un RDV
-            </a>
-          </div>
-        </section>
-
-        <!-- Conseils rédactionnels -->
-        <section class="mt-8" aria-labelledby="conseilsTitle">
-          <h3 id="conseilsTitle">Conseils pour un CV et une lettre de motivation efficaces</h3>
-          <ul class="text-left" style="max-width:600px;margin:1rem auto;">
-            <li>Votre CV doit être clair, aéré, et tenir sur une page&nbsp;: mettez en avant vos compétences clés et vos expériences récentes.<br>
-              <span class="text-muted-foreground">Astuce&nbsp;: <a href="https://mobirise.com/html-templates/fr/resume/" target="_blank" rel="noopener">Voir des modèles de CV HTML modernes</a></span>
-            </li>
-            <li>Votre lettre de motivation doit être personnalisée pour chaque candidature, tenir sur une page et suivre la structure recommandée (voir <a href="https://www.francetravail.fr/candidat/vos-recherches/preparer-votre-candidature/cv-lettre-de-motivation-e-mail/10-astuces-pour-ecrire-votre-let.html" target="_blank" rel="noopener">ces conseils France Travail</a>).</li>
-            <li>Pensez à utiliser les bons mots-clés en lien avec l’offre d’emploi.</li>
-            <li>Soignez la mise en page et relisez-vous pour éviter les fautes.</li>
-          </ul>
-        </section>
-
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
+  <section class="choix-cv-lm-section" aria-labelledby="choixCvLmTitle">
     <div class="container">
-      <p>© 2024 EmploiAvenir. Tous droits réservés.</p>
+      <header class="section-header text-center">
+        <h1 id="choixCvLmTitle" data-i18n="choixTitle">Gérez Votre CV et Lettre de Motivation</h1>
+        <p class="intro-text" data-i18n="choixIntro">
+          Vous êtes à l'étape cruciale de la préparation de vos documents de candidature. Que souhaitez-vous faire&nbsp;?
+        </p>
+      </header>
+
+      <div class="choix-options-grid" role="list">
+        <!-- Créer un CV -->
+        <article class="choix-carte card" role="listitem">
+          <div class="card-icon-container">
+            <i class="fas fa-file-signature fa-3x icon-primary" aria-hidden="true"></i>
+          </div>
+          <div class="card-content text-center">
+            <h2 class="card-title" data-i18n="createCvTitle">Créer un Nouveau CV</h2>
+            <p data-i18n="createCvDesc">Utilisez notre assistant pas à pas pour construire un CV clair et professionnel, même sans expérience.</p>
+            <a href="cv-generator.html" class="btn btn-primary mt-2" aria-label="Commencer la création de CV" data-i18n="startCvBtn">Commencer la création de CV</a>
+          </div>
+        </article>
+
+        <!-- Analyser un CV existant -->
+        <article class="choix-carte card" role="listitem">
+          <div class="card-icon-container">
+            <i class="fas fa-file-import fa-3x icon-secondary" aria-hidden="true"></i>
+          </div>
+          <div class="card-content text-center">
+            <h2 class="card-title" data-i18n="analyzeCvTitle">Analyser mon CV Existant</h2>
+            <p data-i18n="analyzeCvDesc">
+              Importez votre CV actuel (PDF, Word) pour obtenir des conseils personnalisés et des suggestions d'amélioration. 
+              <em class="text-muted-foreground" data-i18n="comingSoon">(Fonctionnalité à venir)</em>
+            </p>
+            <button type="button" class="btn btn-outline-secondary mt-2" id="analyzeCvBtn" disabled aria-disabled="true" data-i18n="analyzeCvBtn">
+              Télécharger et Analyser <i class="fas fa-cogs ml-1" aria-hidden="true"></i>
+            </button>
+            <input type="file" id="cvUploadInput" accept=".pdf,.doc,.docx" style="display:none;">
+          </div>
+        </article>
+      </div>
+
+      <!-- Section Aide -->
+      <section class="aide-section mt-8 text-center" aria-labelledby="aideTitle">
+        <h3 id="aideTitle" data-i18n="aideTitle">Besoin d'un coup de main&nbsp;?</h3>
+        <p class="mb-3" data-i18n="aideText">
+          Nos conseillers sont là pour vous aider à chaque étape de la création ou de l'amélioration de vos documents.
+        </p>
+        <div class="aide-options-buttons" role="group" aria-label="Options d'aide">
+          <button type="button" class="btn btn-outline" id="aideEnLigneBtn" aria-label="Aide en ligne (Chat)" data-i18n="chatHelpBtn">
+            <i class="fas fa-comments"></i> Aide en ligne (Chat)
+          </button>
+          <button type="button" class="btn btn-outline" id="aideVisioBtn" aria-label="Demander une aide en visio" data-i18n="visioHelpBtn">
+            <i class="fas fa-video"></i> Demander une aide en visio
+          </button>
+          <a href="Partenaires.html?tab=appointments" class="btn btn-outline" aria-label="Prendre un rendez-vous avec un conseiller" data-i18n="rdvBtn">
+            <i class="fas fa-calendar-alt"></i> Prendre un RDV
+          </a>
+        </div>
+      </section>
+
+      <!-- Conseils rédactionnels -->
+      <section class="mt-8" aria-labelledby="conseilsTitle">
+        <h3 id="conseilsTitle" data-i18n="conseilsTitle">Conseils pour un CV et une lettre de motivation efficaces</h3>
+        <ul class="text-left" style="max-width:600px;margin:1rem auto;">
+          <li data-i18n="conseil1">
+            Votre CV doit être clair, aéré, et tenir sur une page&nbsp;: mettez en avant vos compétences clés et vos expériences récentes.<br>
+            <span class="text-muted-foreground">
+              Astuce&nbsp;: <a href="https://mobirise.com/html-templates/fr/resume/" target="_blank" rel="noopener" data-i18n="conseil1Link">Voir des modèles de CV HTML modernes</a>
+            </span>
+          </li>
+          <li data-i18n="conseil2">
+            Votre lettre de motivation doit être personnalisée pour chaque candidature, tenir sur une page et suivre la structure recommandée 
+            (voir <a href="https://www.francetravail.fr/candidat/vos-recherches/preparer-votre-candidature/cv-lettre-de-motivation-e-mail/10-astuces-pour-ecrire-votre-let.html" target="_blank" rel="noopener" data-i18n="conseil2Link">ces conseils France Travail</a>).
+          </li>
+          <li data-i18n="conseil3">Pensez à utiliser les bons mots-clés en lien avec l’offre d’emploi.</li>
+          <li data-i18n="conseil4">Soignez la mise en page et relisez-vous pour éviter les fautes.</li>
+        </ul>
+      </section>
+
     </div>
-  </footer>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <p data-i18n="footerText">© 2024 EmploiAvenir. Tous droits réservés.</p>
+  </div>
+</footer>
+
 
   <div id="toast-container"></div>
   <script src="Script.js"></script>

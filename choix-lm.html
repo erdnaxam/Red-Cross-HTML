@@ -35,83 +35,96 @@
   <option value="uk">UK  українська мова</option>
 </select>
   <main>
-    <section class="choix-cv-lm-section" aria-labelledby="choixLettreTitle">
-      <div class="container">
-        <header class="section-header text-center">
-          <h1 id="choixLettreTitle">Gérez Votre Lettre de Motivation</h1>
-          <p class="intro-text">Rédigez ou améliorez votre lettre de motivation avec nos conseils et outils dédiés.</p>
-        </header>
+  <section class="choix-cv-lm-section" aria-labelledby="choixLettreTitle">
+    <div class="container">
+      <header class="section-header text-center">
+        <h1 id="choixLettreTitle" data-i18n="choixLettreTitle">Gérez Votre Lettre de Motivation</h1>
+        <p class="intro-text" data-i18n="choixLettreIntro">
+          Rédigez ou améliorez votre lettre de motivation avec nos conseils et outils dédiés.
+        </p>
+      </header>
 
-        <div class="choix-options-grid" role="list">
-          <!-- Nouvelle lettre de motivation -->
-          <article class="choix-carte card" role="listitem">
-            <div class="card-icon-container">
-              <i class="fas fa-pen-to-square fa-3x icon-primary" aria-hidden="true"></i>
-            </div>
-            <div class="card-content text-center">
-              <h2 class="card-title">Nouvelle Lettre de Motivation</h2>
-              <p>Rédigez une lettre percutante grâce à nos conseils et modèles adaptés à votre situation.</p>
-              <a href="lettre_motivation.html" class="btn btn-primary mt-2" id="creerLettreBtn" aria-label="Commencer la rédaction d'une nouvelle lettre">Commencer la rédaction</a>
-            </div>
-          </article>
-
-          <!-- Retravailler une lettre existante -->
-          <article class="choix-carte card" role="listitem">
-            <div class="card-icon-container">
-              <i class="fas fa-file-pen fa-3x icon-secondary" aria-hidden="true"></i>
-            </div>
-            <div class="card-content text-center">
-              <h2 class="card-title">Retravailler une Lettre Existante</h2>
-              <p>Importez une lettre ou sélectionnez une ébauche sauvegardée pour l'améliorer ou la finaliser.</p>
-              <a href="modifier_lettre.html" class="btn btn-outline-secondary mt-2" id="modifierLettreBtn" aria-label="Modifier une lettre existante">Modifier une lettre</a>
-              <!-- Préparation à l'upload futur -->
-              <!--
-              <button type="button" class="btn btn-outline-secondary mt-2" id="analyzeLettreBtn" disabled aria-disabled="true">
-                Télécharger et Modifier <i class="fas fa-upload ml-1" aria-hidden="true"></i>
-              </button>
-              <input type="file" id="lettreUploadInput" accept=".pdf,.doc,.docx,.txt" style="display:none;">
-              -->
-            </div>
-          </article>
-        </div>
-
-        <!-- Section Aide -->
-        <section class="aide-section mt-8 text-center" aria-labelledby="aideTitle">
-          <h3 id="aideTitle">Besoin d'un coup de main&nbsp;?</h3>
-          <p class="mb-3">Nos conseillers sont là pour vous aider à chaque étape de la création ou de l'amélioration de vos documents.</p>
-          <div class="aide-options-buttons" role="group" aria-label="Options d'aide">
-            <button type="button" class="btn btn-outline" id="aideEnLigneBtn" aria-label="Aide en ligne (Chat)">
-              <i class="fas fa-comments"></i> Aide en ligne (Chat)
-            </button>
-            <button type="button" class="btn btn-outline" id="aideVisioBtn" aria-label="Demander une aide en visio">
-              <i class="fas fa-video"></i> Demander une aide en visio
-            </button>
-            <a href="Partenaires.html?tab=appointments" class="btn btn-outline" aria-label="Prendre un rendez-vous avec un conseiller">
-              <i class="fas fa-calendar-alt"></i> Prendre un RDV
+      <div class="choix-options-grid" role="list">
+        <!-- Nouvelle lettre de motivation -->
+        <article class="choix-carte card" role="listitem">
+          <div class="card-icon-container">
+            <i class="fas fa-pen-to-square fa-3x icon-primary" aria-hidden="true"></i>
+          </div>
+          <div class="card-content text-center">
+            <h2 class="card-title" data-i18n="newLettreTitle">Nouvelle Lettre de Motivation</h2>
+            <p data-i18n="newLettreDesc">
+              Rédigez une lettre percutante grâce à nos conseils et modèles adaptés à votre situation.
+            </p>
+            <a href="lettre_motivation.html" class="btn btn-primary mt-2" id="creerLettreBtn" data-i18n="newLettreBtn" aria-label="Commencer la rédaction d'une nouvelle lettre">
+              Commencer la rédaction
             </a>
           </div>
-        </section>
+        </article>
 
-        <!-- Conseils rédactionnels -->
-        <section class="mt-8" aria-labelledby="conseilsLettreTitle">
-          <h3 id="conseilsLettreTitle">Conseils pour une lettre de motivation efficace</h3>
-          <ul class="text-left" style="max-width:600px;margin:1rem auto;">
-            <li>Adoptez une structure claire : introduction (vous), présentation de votre parcours (moi), et projection commune (nous). <span class="text-muted-foreground">Voir le <a href="https://www.hellowork.com/fr-fr/medias/lettre-motivation-2023-astuces-conseils.html" target="_blank" rel="noopener">plan « vous-moi-nous »</a>.</span></li>
-            <li>Soignez la mise en page : lettre aérée, paragraphes courts, une seule page, police lisible (<a href="https://www.francetravail.fr/candidat/vos-recherches/preparer-votre-candidature/cv-lettre-de-motivation-e-mail/10-astuces-pour-ecrire-votre-let.html" target="_blank" rel="noopener">conseils France Travail</a>).</li>
-            <li>Personnalisez chaque lettre pour l’entreprise et le poste visé. Mentionnez ce qui vous attire dans l’entreprise.</li>
-            <li>Utilisez des phrases courtes, un ton positif et évitez le conditionnel.</li>
-            <li>Terminez par une formule de politesse professionnelle : « Cordialement », « Bien à vous ».</li>
-          </ul>
-        </section>
+        <!-- Retravailler une lettre existante -->
+        <article class="choix-carte card" role="listitem">
+          <div class="card-icon-container">
+            <i class="fas fa-file-pen fa-3x icon-secondary" aria-hidden="true"></i>
+          </div>
+          <div class="card-content text-center">
+            <h2 class="card-title" data-i18n="editLettreTitle">Retravailler une Lettre Existante</h2>
+            <p data-i18n="editLettreDesc">
+              Importez une lettre ou sélectionnez une ébauche sauvegardée pour l'améliorer ou la finaliser.
+            </p>
+            <a href="modifier_lettre.html" class="btn btn-outline-secondary mt-2" id="modifierLettreBtn" data-i18n="editLettreBtn" aria-label="Modifier une lettre existante">
+              Modifier une lettre
+            </a>
+          </div>
+        </article>
       </div>
-    </section>
-  </main>
 
-  <footer class="footer">
-    <div class="container">
-      <p>© 2024 EmploiAvenir. Tous droits réservés.</p>
+      <!-- Section Aide -->
+      <section class="aide-section mt-8 text-center" aria-labelledby="aideLettreTitle">
+        <h3 id="aideLettreTitle" data-i18n="aideLettreTitle">Besoin d'un coup de main&nbsp;?</h3>
+        <p class="mb-3" data-i18n="aideLettreText">
+          Nos conseillers sont là pour vous aider à chaque étape de la création ou de l'amélioration de vos documents.
+        </p>
+        <div class="aide-options-buttons" role="group" aria-label="Options d'aide">
+          <button type="button" class="btn btn-outline" id="aideEnLigneBtn" aria-label="Aide en ligne (Chat)" data-i18n="aideChatBtn">
+            <i class="fas fa-comments"></i> Aide en ligne (Chat)
+          </button>
+          <button type="button" class="btn btn-outline" id="aideVisioBtn" aria-label="Demander une aide en visio" data-i18n="aideVisioBtn">
+            <i class="fas fa-video"></i> Demander une aide en visio
+          </button>
+          <a href="Partenaires.html?tab=appointments" class="btn btn-outline" aria-label="Prendre un rendez-vous avec un conseiller" data-i18n="aideRDVBtn">
+            <i class="fas fa-calendar-alt"></i> Prendre un RDV
+          </a>
+        </div>
+      </section>
+
+      <!-- Conseils rédactionnels -->
+      <section class="mt-8" aria-labelledby="conseilsLettreTitle">
+        <h3 id="conseilsLettreTitle" data-i18n="conseilsLettreTitle">Conseils pour une lettre de motivation efficace</h3>
+        <ul class="text-left" style="max-width:600px;margin:1rem auto;">
+          <li data-i18n="conseilLettre1">
+            Adoptez une structure claire : introduction (vous), présentation de votre parcours (moi), et projection commune (nous).
+            <span class="text-muted-foreground">
+              Voir le <a href="https://www.hellowork.com/fr-fr/medias/lettre-motivation-2023-astuces-conseils.html" target="_blank" rel="noopener" data-i18n="conseilLettre1Link">plan « vous-moi-nous »</a>.
+            </span>
+          </li>
+          <li data-i18n="conseilLettre2">
+            Soignez la mise en page : lettre aérée, paragraphes courts, une seule page, police lisible.
+            <a href="https://www.francetravail.fr/candidat/vos-recherches/preparer-votre-candidature/cv-lettre-de-motivation-e-mail/10-astuces-pour-ecrire-votre-let.html" target="_blank" rel="noopener" data-i18n="conseilLettre2Link">(conseils France Travail)</a>
+          </li>
+          <li data-i18n="conseilLettre3">Personnalisez chaque lettre pour l’entreprise et le poste visé. Mentionnez ce qui vous attire dans l’entreprise.</li>
+          <li data-i18n="conseilLettre4">Utilisez des phrases courtes, un ton positif et évitez le conditionnel.</li>
+          <li data-i18n="conseilLettre5">Terminez par une formule de politesse professionnelle : « Cordialement », « Bien à vous ».</li>
+        </ul>
+      </section>
     </div>
-  </footer>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <p data-i18n="footerLettre">© 2024 EmploiAvenir. Tous droits réservés.</p>
+  </div>
+</footer>
 
   <div id="toast-container"></div>
   <script src="Script.js"></script>
