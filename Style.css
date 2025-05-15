@@ -1468,7 +1468,6 @@ progress#progression-bar::-moz-progress-bar { background-color: var(--color-prim
 
 
 /* --- Rendez-vous (MesRendezVous.html - Style similaire à Candidatures) --- */
-/* (Supposant que cette page existe et utilise une grille/liste) */
 .appointment-grid { display: flex; flex-direction: column; gap: 1rem; }
 .appointment-card.card { padding: 1.5rem; }
 .appointment-details {

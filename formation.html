@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Se Former - EmploiAvenir</title>
+    <meta name="description" content="Découvrez et inscrivez-vous aux formations proposées par EmploiAvenir et ses partenaires comme France Travail et la Croix Rouge : informatique, bureautique, et plus encore.">
+    <link rel="stylesheet" href="style.css"> <!-- Votre CSS principal -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* Styles spécifiques pour la page formations (à intégrer dans style.css ou ici) */
+        /* Rappel des variables (assurez-vous qu'elles sont définies) */
+        :root {
+            --color-primary: #8B5CF6;
+            --color-primary-darker: #7C3AED;
+            --color-primary-light: #EDE9FE;
+            --color-secondary: #22C55E;
+            --color-dark: #1A1F2C;
+            --color-light: #F9FAFB;
+            --color-surface: #ffffff;
+            --color-gray: #6B7280;
+            --color-gray-light: #E5E7EB;
+            --color-gray-medium: #9CA3AF;
+            --color-gray-darker: #4B5563;
+            --radius: 8px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --header-height: calc(4rem + 2px);
+            --font-primary: 'Inter', sans-serif;
+            --spacing-unit: 0.25rem;
+        }
+
+        body {
+            font-family: var(--font-primary);
+            background-color: var(--color-light);
+            color: var(--color-dark);
+            line-height: 1.6;
+            padding-top: var(--header-height); /* Pour le header fixe */
+        }
+        .page-container { /* Nouveau conteneur pour la page */
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: calc(var(--spacing-unit) * 8) calc(var(--spacing-unit) * 6); /* 32px 24px */
+        }
+        .page-title {
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            font-weight: 700;
+            text-align: center;
+            color: var(--color-dark);
+            margin-bottom: calc(var(--spacing-unit) * 10); /* 40px */
+        }
+        .intro-text {
+            text-align: center;
+            font-size: 1.1rem;
+            color: var(--color-gray-darker);
+            max-width: 700px;
+            margin: 0 auto calc(var(--spacing-unit) * 10); /* 40px */
+        }
+
+        /* Filtres pour les formations */
+        .formation-filters {
+            background-color: var(--color-surface);
+            padding: calc(var(--spacing-unit) * 6); /* 24px */
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: calc(var(--spacing-unit) * 10); /* 40px */
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: calc(var(--spacing-unit) * 6); /* 24px */
+        }
+        .formation-filters .form-group label { /* Utilise les styles de .form-group de style.css */
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: var(--color-dark);
+        }
+        .formation-filters .form-group select,
+        .formation-filters .form-group input { /* Utilise les styles des inputs de style.css */
+            font-size: 1rem;
+        }
+
+        /* Liste des formations */
+        .formations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: calc(var(--spacing-unit) * 8); /* 32px */
+        }
+        .formation-card { /* Utilise .card de style.css mais avec des spécificités */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Pousse le bouton en bas */
+        }
+        .formation-card .card-header {
+            padding-bottom: calc(var(--spacing-unit) * 2); /* 8px */
+        }
+        .formation-card .card-title { /* Utilise .card-title de style.css */
+            font-size: 1.3rem; /* Taille spécifique */
+            color: var(--color-primary); /* Titre en couleur primaire */
+        }
+        .formation-card .formation-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: calc(var(--spacing-unit) * 4); /* 16px */
+            margin-top: calc(var(--spacing-unit) * 2);
+            font-size: 0.85rem;
+            color: var(--color-gray-darker);
+        }
+        .formation-card .formation-meta span {
+            display: flex;
+            align-items: center;
+            gap: calc(var(--spacing-unit) * 1.5); /* 6px */
+        }
+        .formation-card .formation-meta i {
+            color: var(--color-primary);
+        }
+        .formation-card .card-content p { /* Description */
+            font-size: 0.95rem;
+            color: var(--color-gray-darker);
+            min-height: 60px; /* Pour aligner les cartes */
+        }
+        .formation-card .card-footer {
+            padding-top: calc(var(--spacing-unit) * 4); /* 16px */
+            margin-top: auto; /* Assure que le footer est en bas */
+        }
+        .formation-card .btn-inscription { /* Style pour le bouton d'inscription */
+            width: 100%;
+        }
+
+        /* Modale d'inscription */
+        /* Utilise les styles .dialog de style.css */
+        #inscriptionFormModal .dialog-title {
+            color: var(--color-primary);
+        }
+        #inscriptionFormModal .form-group label {
+            font-weight: 500;
+        }
+        #inscriptionFormModal #formationNameToRegister {
+            font-weight: 600;
+            color: var(--color-dark);
+            margin-bottom: var(--spacing-unit) * 4;
+            font-size: 1.1rem;
+        }
+
+        /* Message "Aucune formation" */
+        #noFormationsMessage {
+            text-align: center;
+            font-size: 1.1rem;
+            color: var(--color-gray-darker);
+            padding: calc(var(--spacing-unit) * 10); /* 40px */
+            background-color: var(--color-surface);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER (Copiez/collez votre header EmploiAvenir ici) -->
+      <header class="header" id="header">
+    <div class="container flex justify-between items-center">
+      <a href="index.html" class="logo" aria-label="Accueil EmploiAvenir"><span>Emploi</span>Avenir</a>
+      <nav aria-label="Navigation principale">
+        <ul class="nav-links" id="mainNavLinks">
+          <li><a href="index.html"data-i18n="Home" class="active" aria-current="page">Accueil</a></li>
+          <li><a href="MonParcours.html" data-i18n="Parcours">Mon Parcours</a></li>
+          <li><a href="MesCandidature.html" data-i18n="Candidatures">Mes Candidatures</a></li>
+          <li><a href="Partenaires.html" data-i18n="Partenaires">Nos partenaires</a></li>
+          <li><a href="Documents.html"  data-i18n="Documents">Mes documents</a></li>
+          <li><a href="Profil.html" data-i18n="Profil">Profil</a></li>
+        </ul>
+      </nav>
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Ouvrir le menu de navigation" aria-expanded="false" aria-controls="mainNavLinks">☰</button>
+    </div>
+  </header>
+<select id="langSwitcher" aria-label="Choisir la langue">
+  <option value="fr">🇫🇷 Français</option>
+  <option value="en">🇬🇧 English</option>
+  <option value="ar">🇸🇦 العربية</option>
+  <option value="uk">🇺🇦  українська мова</option>
+</select>
+
+    <main>
+        <div class="page-container">
+            <h1 class="page-title">Découvrez nos Formations</h1>
+            <p class="intro-text">
+                EmploiAvenir et ses partenaires vous proposent un catalogue de formations pour développer vos compétences, que vous soyez débutant ou souhaitiez vous perfectionner. Trouvez la formation qui vous convient et inscrivez-vous en quelques clics !
+            </p>
+
+            <!-- Filtres -->
+            <section class="formation-filters" aria-labelledby="filters-title">
+                <h2 id="filters-title" class="sr-only">Filtrer les formations</h2>
+                <div class="form-group">
+                    <label for="filterType">Type de formation :</label>
+                    <select id="filterType" class="form-control" aria-label="Filtrer par type de formation">
+                        <option value="all">Tous types</option>
+                        <option value="informatique">Informatique de base</option>
+                        <option value="bureautique">Bureautique (Excel, Word)</option>
+                        <option value="professionnelle">Professionnelle (France Travail)</option>
+                        <option value="secourisme">Secourisme (Croix Rouge)</option>
+                        <!-- Ajoutez d'autres types si nécessaire -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="filterFormat">Format :</label>
+                    <select id="filterFormat" class="form-control" aria-label="Filtrer par format de formation">
+                        <option value="all">Tous formats</option>
+                        <option value="en-ligne">En ligne</option>
+                        <option value="presentiel">En présentiel</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="filterOrganisme">Organisme :</label>
+                    <select id="filterOrganisme" class="form-control" aria-label="Filtrer par organisme de formation">
+                        <option value="all">Tous organismes</option>
+                        <option value="EmploiAvenir">EmploiAvenir</option>
+                        <option value="France Travail">France Travail</option>
+                        <option value="Croix Rouge">Croix Rouge</option>
+                    </select>
+                </div>
+            </section>
+
+            <!-- Grille des formations -->
+            <section aria-labelledby="formations-list-title">
+                <h2 id="formations-list-title" class="sr-only">Liste des formations disponibles</h2>
+                <div id="formationsGrid" class="formations-grid">
+                    <!-- Les cartes de formation seront injectées ici par JavaScript -->
+                </div>
+                <p id="noFormationsMessage" style="display:none;">Aucune formation ne correspond à vos critères de recherche.</p>
+            </section>
+        </div>
+    </main>
+
+    <!-- Modale d'inscription (utilise le style .dialog de style.css) -->
+    <div id="inscriptionFormModal" class="dialog" role="dialog" aria-modal="true" aria-labelledby="inscriptionModalTitle" hidden>
+        <div class="dialog-content">
+            <button type="button" class="dialog-close-btn" aria-label="Fermer">×</button>
+            <div class="dialog-header">
+                <h2 id="inscriptionModalTitle" class="dialog-title">Inscription à la formation</h2>
+            </div>
+            <div class="dialog-body">
+                <p>Vous souhaitez vous inscrire à la formation :</p>
+                <p id="formationNameToRegister" style="font-weight: 600;"></p>
+                <form id="inscriptionForm">
+                    <input type="hidden" id="formationIdToRegister" name="formationId">
+                    <div class="form-group">
+                        <label for="userName">Votre Nom et Prénom <span aria-hidden="true">*</span></label>
+                        <input type="text" id="userName" name="userName" class="form-control" placeholder="Ex: Jean Dupont" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="userEmail">Votre Email <span aria-hidden="true">*</span></label>
+                        <input type="email" id="userEmail" name="userEmail" class="form-control" placeholder="Ex: jean.dupont@email.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="userMessage">Un message pour l'organisme (optionnel)</label>
+                        <textarea id="userMessage" name="userMessage" class="form-control" rows="3" placeholder="Posez vos questions ou précisez votre motivation..."></textarea>
+                    </div>
+                    <p style="font-size: 0.8rem; color: var(--color-gray);">
+                        En cliquant sur "Confirmer mon inscription", une demande sera envoyée. L'organisme de formation vous recontactera pour finaliser les détails.
+                    </p>
+                </form>
+            </div>
+            <div class="dialog-footer">
+                <button type="button" class="btn btn-outline" id="cancelInscriptionBtn">Annuler</button>
+                <button type="submit" form="inscriptionForm" class="btn btn-primary">Confirmer mon inscription</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Conteneur pour les Toasts -->
+    <div id="toast-container"></div>
+
+    <!-- FOOTER (Copiez/collez votre footer EmploiAvenir ici) -->
+    <footer class="footer">
+        <!-- ... contenu du footer ... -->
+    </footer>
+
+    <script>
+        // Données de formations (normalement viendraient d'un backend ou d'un fichier JSON)
+        const allFormations = [
+            {
+                id: "info_base_01",
+                title: "Découverte de l'Ordinateur et Internet",
+                description: "Apprenez les bases de l'utilisation d'un ordinateur, de la souris, du clavier et naviguez sur Internet en toute sécurité.",
+                type: "informatique",
+                format: "presentiel",
+                organisme: "EmploiAvenir",
+                duree: "10 heures",
+                prerequis: "Aucun",
+                icon: "fa-mouse"
+            },
+            {
+                id: "bureautique_excel_01",
+                title: "Initiation à Excel",
+                description: "Maîtrisez les fonctionnalités de base d'Excel pour créer des tableaux, des graphiques et gérer vos données.",
+                type: "bureautique",
+                format: "en-ligne",
+                organisme: "EmploiAvenir",
+                duree: "15 heures",
+                prerequis: "Savoir utiliser un ordinateur",
+                icon: "fa-file-excel"
+            },
+            {
+                id: "bureautique_word_01",
+                title: "Prise en main de Word",
+                description: "Apprenez à rédiger, mettre en page et structurer des documents professionnels avec Microsoft Word.",
+                type: "bureautique",
+                format: "presentiel",
+                organisme: "EmploiAvenir",
+                duree: "12 heures",
+                prerequis: "Savoir utiliser un ordinateur",
+                icon: "fa-file-word"
+            },
+            {
+                id: "ft_pro_devweb_01",
+                title: "Développeur Web - Les Fondamentaux (France Travail)",
+                description: "Formation intensive pour acquérir les bases du développement web (HTML, CSS, JavaScript) et démarrer une carrière dans le numérique.",
+                type: "professionnelle",
+                format: "presentiel",
+                organisme: "France Travail",
+                duree: "3 mois",
+                prerequis: "Forte motivation, logique",
+                icon: "fa-code"
+            },
+            {
+                id: "cr_secourisme_01",
+                title: "PSC1 - Prévention et Secours Civiques de niveau 1 (Croix Rouge)",
+                description: "Apprenez les gestes qui sauvent pour pouvoir intervenir efficacement en cas d'accident.",
+                type: "secourisme",
+                format: "presentiel",
+                organisme: "Croix Rouge",
+                duree: "7 heures",
+                prerequis: "Aucun",
+                icon: "fa-briefcase-medical"
+            },
+            {
+                id: "info_av_01",
+                title: "Cybersécurité pour Tous",
+                description: "Comprendre les menaces en ligne et adopter les bonnes pratiques pour protéger vos données personnelles et professionnelles.",
+                type: "informatique",
+                format: "en-ligne",
+                organisme: "EmploiAvenir",
+                duree: "8 heures",
+                prerequis: "Utilisation basique d'Internet",
+                icon: "fa-shield-alt"
+            }
+        ];
+
+        // Éléments DOM
+        const formationsGrid = document.getElementById('formationsGrid');
+        const noFormationsMessage = document.getElementById('noFormationsMessage');
+        const filterType = document.getElementById('filterType');
+        const filterFormat = document.getElementById('filterFormat');
+        const filterOrganisme = document.getElementById('filterOrganisme');
+
+        // Modale d'inscription
+        const inscriptionModal = document.getElementById('inscriptionFormModal');
+        const inscriptionForm = document.getElementById('inscriptionForm');
+        const formationNameToRegister = document.getElementById('formationNameToRegister');
+        const formationIdToRegisterInput = document.getElementById('formationIdToRegister');
+        const cancelInscriptionBtn = document.getElementById('cancelInscriptionBtn');
+        const closeDialogBtns = document.querySelectorAll('.dialog-close-btn'); // Pour toutes les modales
+
+        // Fonction pour afficher les formations
+        function displayFormations(formationsToDisplay) {
+            formationsGrid.innerHTML = ''; // Vider la grille
+            if (formationsToDisplay.length === 0) {
+                noFormationsMessage.style.display = 'block';
+                return;
+            }
+            noFormationsMessage.style.display = 'none';
+
+            formationsToDisplay.forEach(formation => {
+                const card = document.createElement('article');
+                card.className = 'card formation-card'; // Utilise la classe .card de style.css
+                card.innerHTML = `
+                    <div class="card-header">
+                        <h3 class="card-title">${formation.title}</h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="formation-meta">
+                            <span><i class="fas fa-chalkboard-teacher" aria-hidden="true"></i> ${formation.organisme}</span>
+                            <span><i class="fas fa-laptop-house" aria-hidden="true"></i> ${formation.format === 'en-ligne' ? 'En ligne' : 'En présentiel'}</span>
+                            <span><i class="fas fa-clock" aria-hidden="true"></i> ${formation.duree}</span>
+                        </div>
+                        <p>${formation.description}</p>
+                        ${formation.prerequis !== "Aucun" ? `<p style="font-size:0.85rem; margin-top:auto;"><strong>Prérequis :</strong> ${formation.prerequis}</p>` : ''}
+                    </div>
+                    <div class="card-footer">
+                        <button type="button" class="btn btn-primary btn-inscription" data-formation-id="${formation.id}" data-formation-title="${formation.title}">
+                            <i class="fas fa-edit" aria-hidden="true"></i> M'inscrire / En savoir plus
+                        </button>
+                    </div>
+                `;
+                formationsGrid.appendChild(card);
+            });
+
+            // Ajouter les écouteurs d'événements aux nouveaux boutons d'inscription
+            document.querySelectorAll('.btn-inscription').forEach(button => {
+                button.addEventListener('click', handleInscriptionClick);
+            });
+        }
+
+        // Fonction pour filtrer les formations
+        function filterAndDisplayFormations() {
+            const type = filterType.value;
+            const format = filterFormat.value;
+            const organisme = filterOrganisme.value;
+
+            const filtered = allFormations.filter(formation => {
+                return (type === 'all' || formation.type === type) &&
+                       (format === 'all' || formation.format === format) &&
+                       (organisme === 'all' || formation.organisme === organisme);
+            });
+            displayFormations(filtered);
+        }
+
+        // Logique d'inscription (simulation)
+        function handleInscriptionClick(event) {
+            const formationId = event.currentTarget.dataset.formationId;
+            const formationTitle = event.currentTarget.dataset.formationTitle;
+
+            formationNameToRegister.textContent = formationTitle;
+            formationIdToRegisterInput.value = formationId;
+            inscriptionModal.removeAttribute('hidden');
+            // Mettre le focus sur le premier champ du formulaire
+            inscriptionModal.querySelector('input, select, textarea').focus();
+        }
+
+        function closeInscriptionModal() {
+            inscriptionForm.reset(); // Vider le formulaire
+            inscriptionModal.setAttribute('hidden', '');
+        }
+
+        inscriptionForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formationId = formationIdToRegisterInput.value;
+            const formationTitle = formationNameToRegister.textContent;
+            const userName = document.getElementById('userName').value;
+            const userEmail = document.getElementById('userEmail').value;
+
+            // Simulation d'envoi de demande
+            console.log(`Demande d'inscription pour ${formationTitle} (ID: ${formationId}) par ${userName} (${userEmail})`);
+
+            // Ajouter à localStorage pour suivi (similaire à MesCandidatures)
+            let inscriptions = JSON.parse(localStorage.getItem('formationInscriptions')) || [];
+            inscriptions.push({
+                id: `insc_${Date.now()}`,
+                formationId: formationId,
+                formationTitle: formationTitle,
+                userName: userName,
+                userEmail: userEmail,
+                dateDemande: new Date().toISOString(),
+                statut: "Demande envoyée"
+            });
+            localStorage.setItem('formationInscriptions', JSON.stringify(inscriptions));
+
+            showToast({ title: "Demande envoyée !", description: `Votre demande pour la formation "${formationTitle}" a été envoyée. Vous serez recontacté(e).`, type: 'success' });
+            closeInscriptionModal();
+        });
+
+        if (cancelInscriptionBtn) cancelInscriptionBtn.addEventListener('click', closeInscriptionModal);
+        closeDialogBtns.forEach(btn => { // Pour le bouton X générique des modales
+            if (btn.closest('#inscriptionFormModal')) { // S'assurer que c'est le bouton de cette modale
+                btn.addEventListener('click', closeInscriptionModal);
+            }
+        });
+
+        // Fonction showToast (copiez-la depuis un autre fichier ou définissez-la ici)
+        const showToast = ({ title, description, type = 'info', duration = 4000 }) => {
+            const toastContainer = document.getElementById('toast-container');
+            if (!toastContainer) { /* ... (création du conteneur si besoin) ... */ return; }
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`; // Assurez-vous d'avoir les classes .toast.success, .toast.info etc. dans style.css
+            let iconHtml = '';
+            if(type === 'success') iconHtml = '<i class="fas fa-check-circle" style="margin-right: 5px;"></i>';
+            if(type === 'danger') iconHtml = '<i class="fas fa-exclamation-circle" style="margin-right: 5px;"></i>';
+            if(type === 'info') iconHtml = '<i class="fas fa-info-circle" style="margin-right: 5px;"></i>';
+            toast.innerHTML = `${title ? `<div class="toast-title">${iconHtml}${title}</div>` : ''}<div class="toast-description">${description}</div>`;
+            toastContainer.appendChild(toast);
+            setTimeout(() => { toast.classList.add('show'); }, 10);
+            const removeToast = () => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 300); };
+            toast.addEventListener('click', removeToast);
+            setTimeout(removeToast, duration);
+        };
+
+
+        // Initialisation
+        filterType.addEventListener('change', filterAndDisplayFormations);
+        filterFormat.addEventListener('change', filterAndDisplayFormations);
+        filterOrganisme.addEventListener('change', filterAndDisplayFormations);
+
+        displayFormations(allFormations); // Afficher toutes les formations au début
+    </script>
+    <!-- Votre Script.js habituel pour le menu, etc. -->
+    <!-- <script src="Script.js" defer></script> -->
+</body>
+</html>
