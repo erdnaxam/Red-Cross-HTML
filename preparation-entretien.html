@@ -99,65 +99,80 @@
   <option value="ar">🇸🇦 العربية</option>
   <option value="uk">UK  українська мова</option>
 </select>
-  <main class="page-preparation-entretien">
-    <div class="container pt-8 pb-12">
-      <header class="section-header text-center mb-10">
-        <h1>
-          <i class="fas fa-handshake icon-left text-3xl md:text-4xl" aria-hidden="true"></i> Réussir votre entretien d'embauche
-        </h1>
-        <p class="intro-text text-gray-darker mt-3 text-lg">
-          Découvrez nos conseils pratiques pour faire une excellente impression et mettre en avant vos précieuses soft skills.
+<main class="page-preparation-entretien">
+  <div class="container pt-8 pb-12">
+
+    <header class="section-header text-center mb-10">
+      <h1 data-i18n="entretienTitrePrincipal">
+        <i class="fas fa-handshake icon-left text-3xl md:text-4xl" aria-hidden="true"></i> Réussir votre entretien d'embauche
+      </h1>
+      <p class="intro-text text-gray-darker mt-3 text-lg" data-i18n="entretienIntro">
+        Découvrez nos conseils pratiques pour faire une excellente impression et mettre en avant vos précieuses soft skills.
+      </p>
+    </header>
+
+    <article class="card intro-card mb-10 p-6 shadow-lg" aria-labelledby="intro-title">
+      <div class="intro-content">
+        <h2 id="intro-title" class="text-2xl font-semibold mb-4 text-primary" data-i18n="entretienTitre1">
+          L'entretien : Votre opportunité de briller
+        </h2>
+        <p class="mb-4 text-md" data-i18n="entretienTexte1">
+          L'entretien d'embauche est bien plus qu'une simple formalité ; c'est une étape cruciale où vous pouvez activement façonner la perception du recruteur...
         </p>
-      </header>
-
-      <article class="card intro-card mb-10 p-6 shadow-lg" aria-labelledby="intro-title">
-        <div class="intro-content">
-          <h2 id="intro-title" class="text-2xl font-semibold mb-4 text-primary">L'entretien : Votre opportunité de briller</h2>
-          <p class="mb-4 text-md">L'entretien d'embauche est bien plus qu'une simple formalité ; c'est une étape cruciale où vous pouvez activement façonner la perception du recruteur. Cette page vous guide à travers les stratégies clés pour non seulement répondre aux attentes, mais aussi pour vous démarquer positivement.</p>
-          <div class="info-box highlight-info mt-6">
-            <i class="fas fa-lightbulb icon-left text-primary fa-lg" aria-hidden="true"></i>
-            <p><strong>Le saviez-vous ?</strong> Selon une étude récente, <strong>85%</strong> des recruteurs estiment que les soft skills sont aussi, voire plus, déterminantes que les compétences techniques pures pour le succès à long terme dans un poste.</p>
-          </div>
+        <div class="info-box highlight-info mt-6">
+          <i class="fas fa-lightbulb icon-left text-primary fa-lg" aria-hidden="true"></i>
+          <p data-i18n="entretienSaviezVous">
+            <strong>Le saviez-vous ?</strong> Selon une étude récente, <strong>85%</strong> des recruteurs estiment que les soft skills sont aussi, voire plus, déterminantes...
+          </p>
         </div>
-      </article>
-
-      <div id="accordionContainer" class="grid grid-cols-1 md:grid-cols-1 gap-0"> 
       </div>
+    </article>
 
-      <section class="entretien-section card p-6 mb-10 shadow-md mt-8" aria-labelledby="softskills-title"> {/* mt-8 pour espacer de la dernière section accordéon */}
-        <h2 id="softskills-title" class="section-subtitle text-xl font-semibold flex items-center gap-3 text-primary mb-6">
-          <i class="fas fa-award fa-fw" aria-hidden="true"></i> 5. Valorisez vos Soft Skills : Les qualités qui font la différence
-        </h2>
-        <p class="mb-6 text-md">Les employeurs recherchent activement ces compétences comportementales et relationnelles. Apprenez à les identifier chez vous et à les illustrer par des exemples concrets lors de l'entretien.</p>
-        <div class="skill-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        </div>
-      </section>
-
-      <aside class="contact-info card mt-10 mb-8 p-6 text-center bg-primary-light rounded-lg shadow-lg" aria-labelledby="accompagnement-title">
-        <h2 id="accompagnement-title" class="text-2xl font-semibold flex items-center gap-3 text-primary justify-center mb-4">
-            <i class="fas fa-user-friends fa-fw" aria-hidden="true"></i> Prêt à aller plus loin ?
-        </h2>
-        <p class="mb-6 text-md text-gray-darker">Notre équipe de conseillers est à votre disposition pour un accompagnement personnalisé : préparation ciblée de vos entretiens, optimisation de CV, développement de vos soft skills grâce à des ateliers, du coaching individuel et des simulations pratiques.</p>
-        <a href="Partenaires.html?tab=appointments" class="btn btn-primary btn-large">
-            <i class="fas fa-calendar-alt mr-2" aria-hidden="true"></i> Prendre rendez-vous pour un coaching
-        </a>
-        <div class="social-icons mt-8 flex justify-center gap-6" aria-label="Suivez-nous sur les réseaux sociaux">
-          <a href="#" aria-label="Facebook" class="text-gray-medium hover:text-primary text-3xl transition-colors"><i class="fab fa-facebook-square"></i></a>
-          <a href="#" aria-label="LinkedIn" class="text-gray-medium hover:text-primary text-3xl transition-colors"><i class="fab fa-linkedin"></i></a>
-          <a href="#" aria-label="Twitter" class="text-gray-medium hover:text-primary text-3xl transition-colors"><i class="fab fa-twitter-square"></i></a>
-        </div>
-      </aside>
-
-      <nav class="form-navigation mt-10 flex justify-between items-center" aria-label="Navigation des étapes du parcours">
-          <button type="button" class="btn btn-outline btn-large" id="backToParcoursFromEntretien">
-              <i class="fas fa-arrow-left mr-2" aria-hidden="true"></i> Retour à Mon Parcours
-          </button>
-          <button type="button" class="btn btn-primary btn-large" id="goToApresEntretienBtn">
-              Étape Suivante : L'Après Entretien <i class="fas fa-arrow-right ml-2" aria-hidden="true"></i>
-          </button>
-      </nav>
+    <div id="accordionContainer" class="grid grid-cols-1 md:grid-cols-1 gap-0">
+      <!-- Sections accordéon injectées dynamiquement -->
     </div>
-  </main>
+
+    <section class="entretien-section card p-6 mb-10 shadow-md mt-8" aria-labelledby="softskills-title">
+      <h2 id="softskills-title" class="section-subtitle text-xl font-semibold flex items-center gap-3 text-primary mb-6" data-i18n="entretienTitre2">
+        <i class="fas fa-award fa-fw" aria-hidden="true"></i> 5. Valorisez vos Soft Skills : Les qualités qui font la différence
+      </h2>
+      <p class="mb-6 text-md" data-i18n="entretienTexte2">
+        Les employeurs recherchent activement ces compétences comportementales et relationnelles. Apprenez à les identifier chez vous et à les illustrer...
+      </p>
+      <div class="skill-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Grille des compétences comportementales -->
+      </div>
+    </section>
+
+    <aside class="contact-info card mt-10 mb-8 p-6 text-center bg-primary-light rounded-lg shadow-lg" aria-labelledby="accompagnement-title">
+      <h2 id="accompagnement-title" class="text-2xl font-semibold flex items-center gap-3 text-primary justify-center mb-4" data-i18n="accompagnementTitre">
+        <i class="fas fa-user-friends fa-fw" aria-hidden="true"></i> Prêt à aller plus loin ?
+      </h2>
+      <p class="mb-6 text-md text-gray-darker" data-i18n="accompagnementTexte">
+        Notre équipe de conseillers est à votre disposition pour un accompagnement personnalisé...
+      </p>
+      <a href="Partenaires.html?tab=appointments" class="btn btn-primary btn-large" data-i18n="btnPrendreRdvCoaching">
+        <i class="fas fa-calendar-alt mr-2" aria-hidden="true"></i> Prendre rendez-vous pour un coaching
+      </a>
+      <div class="social-icons mt-8 flex justify-center gap-6" aria-label="Suivez-nous sur les réseaux sociaux">
+        <a href="#" aria-label="Facebook" class="text-gray-medium hover:text-primary text-3xl transition-colors"><i class="fab fa-facebook-square"></i></a>
+        <a href="#" aria-label="LinkedIn" class="text-gray-medium hover:text-primary text-3xl transition-colors"><i class="fab fa-linkedin"></i></a>
+        <a href="#" aria-label="Twitter" class="text-gray-medium hover:text-primary text-3xl transition-colors"><i class="fab fa-twitter-square"></i></a>
+      </div>
+    </aside>
+
+    <nav class="form-navigation mt-10 flex justify-between items-center" aria-label="Navigation des étapes du parcours">
+      <button type="button" class="btn btn-outline btn-large" id="backToParcoursFromEntretien" data-i18n="btnRetourParcours">
+        <i class="fas fa-arrow-left mr-2" aria-hidden="true"></i> Retour à Mon Parcours
+      </button>
+      <button type="button" class="btn btn-primary btn-large" id="goToApresEntretienBtn" data-i18n="btnEtapeSuivanteApresEntretien">
+        Étape Suivante : L'Après Entretien <i class="fas fa-arrow-right ml-2" aria-hidden="true"></i>
+      </button>
+    </nav>
+
+  </div>
+</main>
+
 
   <footer class="footer">
     <div class="container text-center py-6">

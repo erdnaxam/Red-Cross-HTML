@@ -41,165 +41,166 @@
   <option value="uk">UK  українська мова</option>
 </select>
   <!-- MAIN DASHBOARD -->
-  <main>
-    <section class="dashboard-accueil" aria-labelledby="dashboardTitle">
-      <div class="container text-center">
-        <h1 id="dashboardTitle">Bonjour <span id="userNamePlaceholder">Utilisateur</span> !</h1>
-        <p class="intro-text">Voici où vous en êtes dans votre parcours vers l'emploi.</p>
+<main>
+  <section class="dashboard-accueil" aria-labelledby="dashboardTitle">
+    <div class="container text-center">
+      <h1 id="dashboardTitle" data-i18n="dashboardGreeting">Bonjour <span id="userNamePlaceholder">Utilisateur</span> !</h1>
+      <p class="intro-text" data-i18n="dashboardIntro">Voici où vous en êtes dans votre parcours vers l'emploi.</p>
 
-        <!-- Progression -->
-        <div class="parcours-progression-accueil mt-4 mb-4" aria-label="Progression du parcours">
-          <h2 class="sr-only">Votre progression</h2>
-          <p class="etape-actuelle-text">
-            Étape <span id="currentStepNumber">1</span> sur <span id="totalStepsNumber">7</span>
-          </p>
-          <div class="progress-bar-visual" aria-hidden="true">
-            <div class="progress-fill-visual" style="width: 0%;"></div>
-          </div>
-          <p class="etape-description-text mt-2" id="currentStepDescription">
-            Démarrez votre parcours en évaluant votre situation.
-          </p>
+      <!-- Progression -->
+      <div class="parcours-progression-accueil mt-4 mb-4" aria-label="Progression du parcours">
+        <h2 class="sr-only" data-i18n="progressionTitle">Votre progression</h2>
+        <p class="etape-actuelle-text" data-i18n="currentStepText">
+          Étape <span id="currentStepNumber">1</span> sur <span id="totalStepsNumber">7</span>
+        </p>
+        <div class="progress-bar-visual" aria-hidden="true">
+          <div class="progress-fill-visual" style="width: 0%;"></div>
         </div>
-
-        <!-- Continuer le parcours -->
-        <a href="MonParcours.html" class="btn btn-accent btn-large mt-4">
-          <span id="mainButtonActionText">Démarrer</span> mon parcours <span id="mainButtonStepText" style="display:none;">à l'étape <span id="nextStepNumber">1</span></span>
-        </a>
-
-        <!-- Accès rapides -->
-        <nav class="acces-rapides-accueil mt-8" aria-label="Accès rapides">
-          <h3>Accès rapides</h3>
-          <div class="quick-links-grid">
-            <a href="Documents.html" class="quick-link-card" aria-label="Accéder à mes documents">
-              <h4>Mes Documents</h4>
-              <p>CVs, lettres, guides...</p>
-            </a>
-            <a href="MesCandidature.html" class="quick-link-card" aria-label="Accéder à mes candidatures">
-              <h4>Mes Candidatures</h4>
-              <p>Suivez vos postulations.</p>
-            </a>
-            <a href="Partenaires.html" class="quick-link-card" aria-label="Contacter un conseiller">
-              <h4>Contacter un conseiller</h4>
-              <p>Obtenez de l'aide personnalisée.</p>
-            </a>
-          </div>
-        </nav>
-
-        <!-- Encouragement -->
-        <section class="encouragement-section mt-8" aria-labelledby="encouragementTitle">
-          <h2 id="encouragementTitle">Besoin d'un coup de pouce ?</h2>
-          <p>
-            Explorez les <a href="Documents.html">ressources utiles</a> ou <a href="Partenaires.html">contactez-nous</a>.
-          </p>
-        </section>
+        <p class="etape-description-text mt-2" id="currentStepDescription" data-i18n="currentStepDescription">
+          Démarrez votre parcours en évaluant votre situation.
+        </p>
       </div>
-    </section>
-  </main>
 
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-column">
-          <h3>EmploiAvenir</h3>
-          <p>Votre guide personnalisé pour atteindre vos objectifs professionnels.</p>
+      <!-- Continuer le parcours -->
+      <a href="MonParcours.html" class="btn btn-accent btn-large mt-4">
+        <span id="mainButtonActionText" data-i18n="mainButtonAction">Démarrer</span> mon parcours <span id="mainButtonStepText" style="display:none;" data-i18n="mainButtonStep">à l'étape <span id="nextStepNumber">1</span></span>
+      </a>
+
+      <!-- Accès rapides -->
+      <nav class="acces-rapides-accueil mt-8" aria-label="Accès rapides">
+        <h3 data-i18n="quickAccessTitle">Accès rapides</h3>
+        <div class="quick-links-grid">
+          <a href="Documents.html" class="quick-link-card" aria-label="Accéder à mes documents">
+            <h4 data-i18n="quickLinkDocuments">Mes Documents</h4>
+            <p data-i18n="quickLinkDocumentsDesc">CVs, lettres, guides...</p>
+          </a>
+          <a href="MesCandidature.html" class="quick-link-card" aria-label="Accéder à mes candidatures">
+            <h4 data-i18n="quickLinkCandidatures">Mes Candidatures</h4>
+            <p data-i18n="quickLinkCandidaturesDesc">Suivez vos postulations.</p>
+          </a>
+          <a href="Partenaires.html" class="quick-link-card" aria-label="Contacter un conseiller">
+            <h4 data-i18n="quickLinkConseiller">Contacter un conseiller</h4>
+            <p data-i18n="quickLinkConseillerDesc">Obtenez de l'aide personnalisée.</p>
+          </a>
         </div>
-        <div class="footer-column">
-          <h3>Liens rapides</h3>
-          <ul class="footer-links">
-            <li><a href="index.html">Accueil</a></li>
-            <li><a href="MonParcours.html">Mon Parcours</a></li>
-            <li><a href="MesCandidature.html">Mes Candidatures</a></li>
-            <li><a href="Partenaires.html">Nos partenaires</a></li>
-            <li><a href="Documents.html">Mes documents</a></li>
-            <li><a href="Profil.html">Profil</a></li>
-          </ul>
-        </div>
-        <div class="footer-column">
-          <h3>Services</h3>
-          <ul class="footer-links">
-            <li><a href="#">Création de CV</a></li>
-            <li><a href="#">Lettres de motivation</a></li>
-            <li><a href="#">Coaching</a></li>
-            <li><a href="#">Préparation aux entretiens</a></li>
-            <li><a href="#">Partenaires entreprises</a></li>
-          </ul>
-        </div>
-        <div class="footer-column">
-          <h3>Contact</h3>
-          <ul class="footer-links">
-            <li><a href="tel:+33123456789">+33 1 23 45 67 89</a></li>
-            <li><a href="mailto:contact@emploiavenir.fr">contact@emploiavenir.fr</a></li>
-            <li>12 rue de l'Emploi, 75001 Paris</li>
-          </ul>
-        </div>
+      </nav>
+
+      <!-- Encouragement -->
+      <section class="encouragement-section mt-8" aria-labelledby="encouragementTitle">
+        <h2 id="encouragementTitle" data-i18n="encouragementTitle">Besoin d'un coup de pouce ?</h2>
+        <p data-i18n="encouragementText">
+          Explorez les <a href="Documents.html">ressources utiles</a> ou <a href="Partenaires.html">contactez-nous</a>.
+        </p>
+      </section>
+    </div>
+  </section>
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-column">
+        <h3 data-i18n="footerBrand">EmploiAvenir</h3>
+        <p data-i18n="footerDescription">Votre guide personnalisé pour atteindre vos objectifs professionnels.</p>
       </div>
-      <div class="footer-bottom">
-        <p>© 2024 EmploiAvenir. Tous droits réservés.</p>
+      <div class="footer-column">
+        <h3 data-i18n="quickLinksTitle">Liens rapides</h3>
+        <ul class="footer-links">
+          <li><a href="index.html" data-i18n="linkHome">Accueil</a></li>
+          <li><a href="MonParcours.html" data-i18n="linkParcours">Mon Parcours</a></li>
+          <li><a href="MesCandidature.html" data-i18n="linkCandidatures">Mes Candidatures</a></li>
+          <li><a href="Partenaires.html" data-i18n="linkPartenaires">Nos partenaires</a></li>
+          <li><a href="Documents.html" data-i18n="linkDocuments">Mes documents</a></li>
+          <li><a href="Profil.html" data-i18n="linkProfil">Profil</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3 data-i18n="servicesTitle">Services</h3>
+        <ul class="footer-links">
+          <li><a href="#" data-i18n="linkCv">Création de CV</a></li>
+          <li><a href="#" data-i18n="linkLettres">Lettres de motivation</a></li>
+          <li><a href="#" data-i18n="linkCoaching">Coaching</a></li>
+          <li><a href="#" data-i18n="linkEntretien">Préparation aux entretiens</a></li>
+          <li><a href="#" data-i18n="linkPartenaireEntreprise">Partenaires entreprises</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3 data-i18n="contactTitle">Contact</h3>
+        <ul class="footer-links">
+          <li><a href="tel:+33123456789" data-i18n="phone">+33 1 23 45 67 89</a></li>
+          <li><a href="mailto:contact@emploiavenir.fr" data-i18n="email">contact@emploiavenir.fr</a></li>
+          <li data-i18n="address">12 rue de l'Emploi, 75001 Paris</li>
+        </ul>
       </div>
     </div>
-  </footer>
+    <div class="footer-bottom">
+      <p data-i18n="footerRights">© 2024 EmploiAvenir. Tous droits réservés.</p>
+    </div>
+  </div>
+</footer>
+
 
   <!-- MODALE DE CONNEXION -->
-  <div id="loginModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="loginModalTitle" tabindex="-1" hidden>
-    <div class="modal-content">
-      <button type="button" class="close-modal" aria-label="Fermer la fenêtre de connexion">×</button>
-      <h2 id="loginModalTitle">Connexion</h2>
-      <form id="loginForm" autocomplete="on">
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" required autocomplete="email">
-        </div>
-        <div class="form-group">
-          <label for="password">Mot de passe</label>
-          <input type="password" id="password" name="password" required autocomplete="current-password">
-        </div>
-        <button type="submit" class="btn" style="width: 100%;">Se connecter</button>
-        <div class="text-center mt-2">
-          <a href="#" class="modal-link">Mot de passe oublié ?</a>
-        </div>
-        <div class="text-center mt-2">
-          <p>Pas encore de compte ? <a href="#" class="modal-link" id="openRegisterModal">S'inscrire</a></p>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- CHATBOT -->
-  <button type="button" class="chatbot-btn" id="chatbotBtn" aria-label="Ouvrir l'assistant virtuel EmploiAvenir" aria-expanded="false" aria-controls="chatbotContainer">💬</button>
-  <div class="chatbot-container" id="chatbotContainer" role="dialog" aria-modal="true" aria-labelledby="chatbotHeaderTitle" tabindex="-1" hidden>
-    <div class="chatbot-header">
-      <h3 id="chatbotHeaderTitle">Assistant EmploiAvenir</h3>
-      <button type="button" id="closeChatbot" aria-label="Fermer l'assistant virtuel">×</button>
-    </div>
-    <div class="chatbot-messages" id="chatbotMessages" aria-live="polite">
-      <div class="message bot-message">
-        Bonjour ! Comment puis-je vous aider aujourd'hui ?
+<div id="loginModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="loginModalTitle" tabindex="-1" hidden>
+  <div class="modal-content">
+    <button type="button" class="close-modal" aria-label="Fermer la fenêtre de connexion">×</button>
+    <h2 id="loginModalTitle" data-i18n="loginTitle">Connexion</h2>
+    <form id="loginForm" autocomplete="on">
+      <div class="form-group">
+        <label for="email" data-i18n="labelEmail">Email</label>
+        <input type="email" id="email" name="email" required autocomplete="email">
       </div>
-    </div>
-    <form class="chatbot-input" autocomplete="off">
-      <input type="text" id="chatbotInput" name="chatbot_message" placeholder="Écrivez votre message..." aria-label="Votre message à l'assistant EmploiAvenir" required>
-      <button id="sendMessage" type="submit">Envoyer</button>
+      <div class="form-group">
+        <label for="password" data-i18n="labelPassword">Mot de passe</label>
+        <input type="password" id="password" name="password" required autocomplete="current-password">
+      </div>
+      <button type="submit" class="btn" style="width: 100%;" data-i18n="loginBtn">Se connecter</button>
+      <div class="text-center mt-2">
+        <a href="#" class="modal-link" data-i18n="forgotPassword">Mot de passe oublié ?</a>
+      </div>
+      <div class="text-center mt-2">
+        <p data-i18n="noAccount">Pas encore de compte ? <a href="#" class="modal-link" id="openRegisterModal" data-i18n="signUp">S'inscrire</a></p>
+      </div>
     </form>
   </div>
+</div>
 
-  <!-- NOUVEAU : BANNIÈRE RGPD & IA -->
-  <div id="rgpdAiBanner" class="rgpd-banner" role="dialog" aria-modal="true" aria-labelledby="rgpdBannerTitle" aria-describedby="rgpdBannerDescription" hidden>
-      <div class="rgpd-banner-content">
-          <div class="rgpd-banner-text">
-              <h2 id="rgpdBannerTitle" class="rgpd-title">Votre vie privée et l'utilisation de l'IA</h2>
-              <p id="rgpdBannerDescription" class="rgpd-description">
-                  EmploiAvenir sauvegarde certaines de vos données localement sur votre navigateur pour personnaliser votre expérience (progression, documents simulés). Notre assistant virtuel utilise l'intelligence artificielle. Vos données personnelles ne sont pas envoyées à nos serveurs.
-              </p>
-          </div>
-          <div class="rgpd-banner-actions">
-              <button type="button" id="acceptRgpdAi" class="btn btn-primary btn-rgpd">J'accepte</button>
-              <a href="politique-confidentialite.html" class="btn btn-outline btn-rgpd" id="learnMoreRgpdAi" aria-label="En savoir plus sur notre politique de confidentialité et l'utilisation de l'IA">En savoir plus</a>
-              <button type="button" id="refuseRgpdAi" class="btn btn-link btn-rgpd">Refuser</button>
-          </div>
-      </div>
+<!-- CHATBOT -->
+<button type="button" class="chatbot-btn" id="chatbotBtn" aria-label="Ouvrir l'assistant virtuel EmploiAvenir" aria-expanded="false" aria-controls="chatbotContainer">💬</button>
+<div class="chatbot-container" id="chatbotContainer" role="dialog" aria-modal="true" aria-labelledby="chatbotHeaderTitle" tabindex="-1" hidden>
+  <div class="chatbot-header">
+    <h3 id="chatbotHeaderTitle" data-i18n="chatbotTitle">Assistant EmploiAvenir</h3>
+    <button type="button" id="closeChatbot" aria-label="Fermer l'assistant virtuel">×</button>
   </div>
-  <!-- FIN BANNIÈRE RGPD & IA -->
+  <div class="chatbot-messages" id="chatbotMessages" aria-live="polite">
+    <div class="message bot-message" data-i18n="chatbotWelcome">
+      Bonjour ! Comment puis-je vous aider aujourd'hui ?
+    </div>
+  </div>
+  <form class="chatbot-input" autocomplete="off">
+    <input type="text" id="chatbotInput" name="chatbot_message" placeholder="Écrivez votre message..." aria-label="Votre message à l'assistant EmploiAvenir" required data-i18n-placeholder="chatbotPlaceholder">
+    <button id="sendMessage" type="submit" data-i18n="sendMessage">Envoyer</button>
+  </form>
+</div>
+
+<!-- NOUVEAU : BANNIÈRE RGPD & IA -->
+<div id="rgpdAiBanner" class="rgpd-banner" role="dialog" aria-modal="true" aria-labelledby="rgpdBannerTitle" aria-describedby="rgpdBannerDescription" hidden>
+  <div class="rgpd-banner-content">
+    <div class="rgpd-banner-text">
+      <h2 id="rgpdBannerTitle" class="rgpd-title" data-i18n="rgpdTitle">Votre vie privée et l'utilisation de l'IA</h2>
+      <p id="rgpdBannerDescription" class="rgpd-description" data-i18n="rgpdDescription">
+        EmploiAvenir sauvegarde certaines de vos données localement sur votre navigateur pour personnaliser votre expérience (progression, documents simulés). Notre assistant virtuel utilise l'intelligence artificielle. Vos données personnelles ne sont pas envoyées à nos serveurs.
+      </p>
+    </div>
+    <div class="rgpd-banner-actions">
+      <button type="button" id="acceptRgpdAi" class="btn btn-primary btn-rgpd" data-i18n="acceptRgpd">J'accepte</button>
+      <a href="politique-confidentialite.html" class="btn btn-outline btn-rgpd" id="learnMoreRgpdAi" aria-label="En savoir plus sur notre politique de confidentialité et l'utilisation de l'IA" data-i18n="learnMoreRgpd">En savoir plus</a>
+      <button type="button" id="refuseRgpdAi" class="btn btn-link btn-rgpd" data-i18n="refuseRgpd">Refuser</button>
+    </div>
+  </div>
+</div>
+
 
   <script src="Script.js" defer></script>
   <script src="langue.js"></script>

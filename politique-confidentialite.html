@@ -35,83 +35,73 @@
         <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Ouvrir le menu de navigation" aria-expanded="false" aria-controls="mainNavLinks">☰</button>
       </div>
     </header>
+<select id="langSwitcher" aria-label="Choisir la langue">
+  <option value="fr">🇫🇷 Français</option>
+  <option value="en">🇬🇧 English</option>
+  <option value="ar">🇸🇦 العربية</option>
+  <option value="uk">UK  українська мова</option>
+</select>
 
     <main>
-        <div class="privacy-container">
-            <h1>Informations sur la Confidentialité et l'Utilisation des Données</h1>
+  <div class="privacy-container">
+    <h1 data-i18n="confidentialiteTitre">Informations sur la Confidentialité et l'Utilisation des Données</h1>
 
-            <p>Dernière mise à jour : [Date de la dernière mise à jour]</p>
+    <p data-i18n="confidentialiteMaj">Dernière mise à jour : [Date de la dernière mise à jour]</p>
 
-            <p>Bienvenue sur EmploiAvenir. Votre confiance est importante pour nous. Cette page explique comment nous traitons vos informations personnelles et comment l'intelligence artificielle (IA) est utilisée sur notre site.</p>
+    <p data-i18n="confidentialiteIntro">Bienvenue sur EmploiAvenir. Votre confiance est importante pour nous. Cette page explique comment nous traitons vos informations personnelles et comment l'intelligence artificielle (IA) est utilisée sur notre site.</p>
 
-            <h2>1. Conservation de vos Données Personnelles</h2>
-            <p>
-                <strong>Stockage des données :</strong> Actuellement, EmploiAvenir est conçu pour fonctionner principalement avec les données stockées <strong>localement dans votre navigateur</strong> via la technologie `localStorage`. Cela signifie que les informations que vous générez (progression dans le parcours, simulations de candidatures, documents créés, etc.) sont sauvegardées directement sur votre appareil et ne sont pas envoyées à nos serveurs.
-            </p>
-            <ul>
-                <li><strong>Ce qui est stocké localement :</strong> Votre progression dans "Mon Parcours", les informations des formulaires que vous remplissez (comme les candidatures simulées, les informations pour la génération de CV/LM si applicable), et vos préférences (comme la langue).</li>
-                <li><strong>Ce qui n'est PAS stocké (actuellement) :</strong> Nous ne collectons ni ne stockons d'informations personnelles identifiables sur des serveurs distants sans votre consentement explicite pour des fonctionnalités spécifiques qui pourraient être ajoutées à l'avenir (par exemple, la création d'un compte utilisateur avec identifiants).</li>
-            </ul>
-            <p>
-                <strong>Durée de conservation :</strong> Les données stockées localement dans votre navigateur y restent tant que vous ne videz pas le cache de votre navigateur pour ce site, ou tant que vous n'utilisez pas une fonctionnalité explicite de suppression de données si elle est proposée.
-            </p>
-            <p>
-                <strong>Vos droits :</strong> Puisque les données sont stockées localement :
-            </p>
-            <ul>
-                <li><strong>Droit d'accès et de rectification :</strong> Vous pouvez accéder et modifier vos informations directement via les fonctionnalités du site (par exemple, modifier une candidature dans "Mes Candidatures").</li>
-                <li><strong>Droit à l'effacement ("droit à l'oubli") :</strong> Vous pouvez effacer toutes les données stockées par EmploiAvenir en vidant les données de site de votre navigateur (cache et stockage local). Si une fonctionnalité de "Supprimer mon compte" ou "Réinitialiser mes données" est ajoutée, elle effectuera cette action.</li>
-                <li><strong>Droit à la portabilité :</strong> Certaines données, comme les documents générés, peuvent être téléchargées.</li>
-            </ul>
-            <p>
-                <strong>Sécurité :</strong> Bien que les données soient locales, nous vous encourageons à sécuriser l'accès à votre navigateur et à votre appareil.
-            </p>
-            <p>
-                <strong>Évolution future :</strong> Si EmploiAvenir évolue pour inclure un système de comptes utilisateurs avec stockage de données sur serveur, cette politique sera mise à jour et votre consentement sera requis pour de tels traitements.
-            </p>
+    <h2 data-i18n="confidentialiteTitre1">1. Conservation de vos Données Personnelles</h2>
+    <p data-i18n="stockageLocalIntro"><strong>Stockage des données :</strong> Actuellement, EmploiAvenir est conçu pour fonctionner principalement avec les données stockées <strong>localement dans votre navigateur</strong> via la technologie `localStorage`...</p>
 
-            <h2>2. Utilisation d'une Intelligence Artificielle (IA)</h2>
-            <p>
-                <strong>Assistant Virtuel (Chatbot) :</strong> Notre site utilise un assistant virtuel (chatbot) pour vous aider à naviguer et à trouver des informations. Cet assistant est propulsé par une technologie d'intelligence artificielle.
-            </p>
-            <p>
-                <strong>Fonctionnement de l'IA :</strong>
-            </p>
-            <ul>
-                <li>Actuellement, notre chatbot [**CHOISIR ET COMPLÉTER L'UNE DES OPTIONS CI-DESSOUS ET SUPPRIMER L'AUTRE**] :
-                    <ul>
-                        <li>**Option A (IA locale/simulée) :** ... fonctionne avec une logique prédéfinie et des réponses scriptées directement dans le navigateur. Il ne fait pas appel à des services d'IA externes pour générer ses réponses en temps réel. Les interactions restent locales à votre session.</li>
-                        <li>**Option B (IA via service externe) :** ... fait appel à un service d'intelligence artificielle externe [Nom du service, ex: OpenAI, Google AI, etc., si vous pouvez le divulguer] via une API pour comprendre vos questions et générer des réponses. Dans ce cas, les requêtes que vous tapez dans le chatbot sont envoyées à ce service externe pour traitement. Nous nous efforçons de minimiser les données personnelles envoyées et de travailler avec des fournisseurs respectueux de la confidentialité. Veuillez consulter la politique de confidentialité du fournisseur de service IA pour plus de détails sur leur traitement des données.</li>
-                    </ul>
-                </li>
-                <li><strong>Génération de documents (si applicable) :</strong> Si des fonctionnalités de génération de CV ou de lettres de motivation utilisent une IA pour suggérer du contenu : [Expliquer si c'est local ou via un service externe, et quelles données sont traitées].</li>
-            </ul>
-            <p>
-                <strong>Données traitées par l'IA :</strong> Les textes que vous saisissez dans le chatbot [et/ou les informations fournies pour la génération de documents] sont traités par l'IA pour vous fournir une réponse ou un service. Nous vous conseillons de ne pas partager d'informations personnelles très sensibles dans ces interactions si l'IA fait appel à un service externe.
-            </p>
+    <ul>
+      <li data-i18n="stockageLocalContenu"><strong>Ce qui est stocké localement :</strong> Votre progression dans "Mon Parcours", les informations des formulaires que vous remplissez...</li>
+      <li data-i18n="nonStocke"><strong>Ce qui n'est PAS stocké (actuellement) :</strong> Nous ne collectons ni ne stockons d'informations personnelles identifiables sur des serveurs distants sans votre consentement explicite...</li>
+    </ul>
 
-            <h2>3. Cookies et Technologies Similaires</h2>
-            <p>
-                EmploiAvenir utilise `localStorage` pour sauvegarder votre progression et vos préférences. Nous n'utilisons pas de cookies de suivi tiers à des fins publicitaires.
-                [Si vous utilisez des cookies pour des analyses basiques anonymes (ex: Matomo auto-hébergé, Plausible) ou des cookies techniques essentiels, mentionnez-le ici de manière simple.]
-                Par exemple : "Nous pouvons utiliser des cookies techniques essentiels au bon fonctionnement du site (comme la gestion de session pour le changement de langue) ou des cookies d'analyse anonymisés pour améliorer nos services."
-            </p>
+    <p data-i18n="dureeConservation"><strong>Durée de conservation :</strong> Les données stockées localement dans votre navigateur y restent tant que vous ne videz pas le cache...</p>
 
-            <h2>4. Modifications de cette politique</h2>
-            <p>
-                Nous pouvons mettre à jour cette politique de temps à autre. Nous vous informerons de tout changement significatif.
-            </p>
+    <p data-i18n="vosDroitsIntro"><strong>Vos droits :</strong> Puisque les données sont stockées localement :</p>
+    <ul>
+      <li data-i18n="droitAcces"><strong>Droit d'accès et de rectification :</strong> Vous pouvez accéder et modifier vos informations directement via les fonctionnalités du site...</li>
+      <li data-i18n="droitOubli"><strong>Droit à l'effacement ("droit à l'oubli") :</strong> Vous pouvez effacer toutes les données stockées par EmploiAvenir en vidant les données de site de votre navigateur...</li>
+      <li data-i18n="droitPortabilite"><strong>Droit à la portabilité :</strong> Certaines données, comme les documents générés, peuvent être téléchargées.</li>
+    </ul>
 
-            <h2>5. Nous contacter</h2>
-            <p>
-                Si vous avez des questions concernant cette politique ou vos données personnelles, veuillez nous contacter à : [Votre adresse email de contact pour la vie privée, ex: confidentialite@emploiavenir.fr]
-            </p>
+    <p data-i18n="securite"><strong>Sécurité :</strong> Bien que les données soient locales, nous vous encourageons à sécuriser l'accès à votre navigateur et à votre appareil.</p>
+    <p data-i18n="evolution"><strong>Évolution future :</strong> Si EmploiAvenir évolue pour inclure un système de comptes utilisateurs avec stockage de données sur serveur...</p>
 
-            <div class="back-link-container">
-                <a href="index.html" class="btn btn-outline">Retour à l'accueil</a>
-            </div>
-        </div>
-    </main>
+    <h2 data-i18n="confidentialiteTitre2">2. Utilisation d'une Intelligence Artificielle (IA)</h2>
+    <p data-i18n="chatbotIntro"><strong>Assistant Virtuel (Chatbot) :</strong> Notre site utilise un assistant virtuel (chatbot) pour vous aider à naviguer et à trouver des informations...</p>
+
+    <p data-i18n="fonctionnementIa"><strong>Fonctionnement de l'IA :</strong></p>
+    <ul>
+      <li data-i18n="choixOptionIa">
+        Actuellement, notre chatbot :
+        <ul>
+          <li data-i18n="optionIaLocale"><strong>Option A (IA locale/simulée) :</strong> ... fonctionne avec une logique prédéfinie et des réponses scriptées...</li>
+          <li data-i18n="optionIaExterne"><strong>Option B (IA via service externe) :</strong> ... fait appel à un service d'intelligence artificielle externe...</li>
+        </ul>
+      </li>
+      <li data-i18n="generationDocIa"><strong>Génération de documents (si applicable) :</strong> Si des fonctionnalités de génération de CV ou de lettres de motivation utilisent une IA...</li>
+    </ul>
+
+    <p data-i18n="donneesTraiteesIa"><strong>Données traitées par l'IA :</strong> Les textes que vous saisissez dans le chatbot [...] sont traités par l'IA pour vous fournir une réponse ou un service...</p>
+
+    <h2 data-i18n="confidentialiteTitre3">3. Cookies et Technologies Similaires</h2>
+    <p data-i18n="cookiesIntro">EmploiAvenir utilise `localStorage` pour sauvegarder votre progression et vos préférences. Nous n'utilisons pas de cookies de suivi tiers à des fins publicitaires...</p>
+
+    <h2 data-i18n="confidentialiteTitre4">4. Modifications de cette politique</h2>
+    <p data-i18n="modificationPolitique">Nous pouvons mettre à jour cette politique de temps à autre. Nous vous informerons de tout changement significatif.</p>
+
+    <h2 data-i18n="confidentialiteTitre5">5. Nous contacter</h2>
+    <p data-i18n="contactPolitique">Si vous avez des questions concernant cette politique ou vos données personnelles, veuillez nous contacter à : [Votre adresse email]</p>
+
+    <div class="back-link-container">
+      <a href="index.html" class="btn btn-outline" data-i18n="retourAccueil">Retour à l'accueil</a>
+    </div>
+  </div>
+</main>
+
 
     <!-- FOOTER (Identique à celui de index.html) -->
     <footer class="footer">

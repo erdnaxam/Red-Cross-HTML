@@ -41,76 +41,77 @@
 </section>
 
   <main>
-    <div class="container py-8">
-      <div class="flex justify-between items-center mb-6">
-        <h1 class="text-2xl font-bold">Mes candidatures</h1>
-        <button type="button" class="btn btn-primary" id="addApplicationButton">
-          <i class="fas fa-plus" aria-hidden="true"></i>
-          <span>Ajouter une candidature</span>
-        </button>
-      </div>
-
-      <!-- Liste des candidatures (remplie dynamiquement par JS) -->
-      <div id="applicationsList" aria-live="polite"></div>
+  <div class="container py-8">
+    <div class="flex justify-between items-center mb-6">
+      <h1 class="text-2xl font-bold" data-i18n="myApplicationsTitle">Mes candidatures</h1>
+      <button type="button" class="btn btn-primary" id="addApplicationButton">
+        <i class="fas fa-plus" aria-hidden="true"></i>
+        <span data-i18n="addApplicationButton">Ajouter une candidature</span>
+      </button>
     </div>
 
-    <!-- MODALE Ajouter/Modifier Candidature -->
-    <div class="modal" id="applicationDialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle" style="display: none;">
-      <div class="modal-content">
-        <button type="button" class="close-modal" aria-label="Fermer la fenêtre">×</button>
-        <div class="modal-header">
-          <h2 class="modal-title" id="dialogTitle">Ajouter une candidature</h2>
-          <p class="modal-description">Renseignez les informations de votre candidature</p>
+    <!-- Liste des candidatures (remplie dynamiquement par JS) -->
+    <div id="applicationsList" aria-live="polite"></div>
+  </div>
+
+  <!-- MODALE Ajouter/Modifier Candidature -->
+  <div class="modal" id="applicationDialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle" style="display: none;">
+    <div class="modal-content">
+      <button type="button" class="close-modal" aria-label="Fermer la fenêtre">×</button>
+      <div class="modal-header">
+        <h2 class="modal-title" id="dialogTitle" data-i18n="dialogTitle">Ajouter une candidature</h2>
+        <p class="modal-description" data-i18n="dialogDescription">Renseignez les informations de votre candidature</p>
+      </div>
+      <form id="applicationForm" class="modal-body">
+        <div class="form-group">
+          <label for="company" data-i18n="labelCompany">Entreprise <span aria-hidden="true">*</span></label>
+          <input type="text" id="company" name="company" placeholder="Nom de l'entreprise" required data-i18n-placeholder="placeholderCompany">
         </div>
-        <form id="applicationForm" class="modal-body">
-          <div class="form-group">
-            <label for="company">Entreprise <span aria-hidden="true">*</span></label>
-            <input type="text" id="company" name="company" placeholder="Nom de l'entreprise" required>
-          </div>
-          <div class="form-group">
-            <label for="position">Poste <span aria-hidden="true">*</span></label>
-            <input type="text" id="position" name="position" placeholder="Intitulé du poste" required>
-          </div>
-          <div class="form-group">
-            <label for="date">Date de candidature <span aria-hidden="true">*</span></label>
-            <input type="date" id="date" name="date" required>
-          </div>
-          <div class="form-group">
-            <label for="status">Statut <span aria-hidden="true">*</span></label>
-            <select id="status" name="status" required>
-              <option value="CV envoyé">CV envoyé</option>
-              <option value="CV retenu">CV retenu</option>
-              <option value="Entretien prévu">Entretien prévu</option>
-              <option value="Entretien passé">Entretien passé</option>
-              <option value="Offre reçue">Offre reçue</option>
-              <option value="Offre acceptée">Offre acceptée</option>
-              <option value="Refus">Refus</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="notes">Notes</label>
-            <input type="text" id="notes" name="notes" placeholder="Informations complémentaires">
-          </div>
-          <div class="form-group">
-            <label for="contactName">Nom du contact</label>
-            <input type="text" id="contactName" name="contactName" placeholder="Nom de la personne à contacter">
-          </div>
-          <div class="form-group">
-            <label for="contactEmail">Email du contact</label>
-            <input type="email" id="contactEmail" name="contactEmail" placeholder="Email de contact">
-          </div>
-          <div class="form-group">
-            <label for="contactPhone">Téléphone du contact</label>
-            <input type="tel" id="contactPhone" name="contactPhone" placeholder="Numéro de téléphone">
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-outline" id="cancelDialog">Annuler</button>
-            <button type="button" class="btn btn-primary" id="saveApplication">Ajouter</button>
-          </div>
-        </form>
-      </div>
+        <div class="form-group">
+          <label for="position" data-i18n="labelPosition">Poste <span aria-hidden="true">*</span></label>
+          <input type="text" id="position" name="position" placeholder="Intitulé du poste" required data-i18n-placeholder="placeholderPosition">
+        </div>
+        <div class="form-group">
+          <label for="date" data-i18n="labelDate">Date de candidature <span aria-hidden="true">*</span></label>
+          <input type="date" id="date" name="date" required>
+        </div>
+        <div class="form-group">
+          <label for="status" data-i18n="labelStatus">Statut <span aria-hidden="true">*</span></label>
+          <select id="status" name="status" required>
+            <option value="CV envoyé" data-i18n="statusCvSent">CV envoyé</option>
+            <option value="CV retenu" data-i18n="statusCvSelected">CV retenu</option>
+            <option value="Entretien prévu" data-i18n="statusInterviewPlanned">Entretien prévu</option>
+            <option value="Entretien passé" data-i18n="statusInterviewDone">Entretien passé</option>
+            <option value="Offre reçue" data-i18n="statusOfferReceived">Offre reçue</option>
+            <option value="Offre acceptée" data-i18n="statusOfferAccepted">Offre acceptée</option>
+            <option value="Refus" data-i18n="statusRefused">Refus</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="notes" data-i18n="labelNotes">Notes</label>
+          <input type="text" id="notes" name="notes" placeholder="Informations complémentaires" data-i18n-placeholder="placeholderNotes">
+        </div>
+        <div class="form-group">
+          <label for="contactName" data-i18n="labelContactName">Nom du contact</label>
+          <input type="text" id="contactName" name="contactName" placeholder="Nom de la personne à contacter" data-i18n-placeholder="placeholderContactName">
+        </div>
+        <div class="form-group">
+          <label for="contactEmail" data-i18n="labelContactEmail">Email du contact</label>
+          <input type="email" id="contactEmail" name="contactEmail" placeholder="Email de contact" data-i18n-placeholder="placeholderContactEmail">
+        </div>
+        <div class="form-group">
+          <label for="contactPhone" data-i18n="labelContactPhone">Téléphone du contact</label>
+          <input type="tel" id="contactPhone" name="contactPhone" placeholder="Numéro de téléphone" data-i18n-placeholder="placeholderContactPhone">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" id="cancelDialog" data-i18n="cancelBtn">Annuler</button>
+          <button type="button" class="btn btn-primary" id="saveApplication" data-i18n="saveBtn">Ajouter</button>
+        </div>
+      </form>
     </div>
-  </main>
+  </div>
+</main>
+
 
   <!-- FOOTER -->
   <footer class="footer">

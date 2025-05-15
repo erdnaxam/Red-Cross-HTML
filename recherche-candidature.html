@@ -36,54 +36,54 @@
   <option value="uk">UK  українська мова</option>
 </select>
   <main>
-    <section class="container mt-8 mb-8">
-      <header class="section-header text-center mb-8">
-        <h1>Recherche & Candidature</h1>
-        <p class="intro-text">
-          Vous avez préparé vos outils (CV et lettre de motivation). Il est temps de passer à l'action !
-          Choisissez une option ci-dessous pour continuer.
-        </p>
-      </header>
+  <section class="container mt-8 mb-8">
+    <header class="section-header text-center mb-8">
+      <h1 data-i18n="rechercheTitre">Recherche & Candidature</h1>
+      <p class="intro-text" data-i18n="rechercheIntro">
+        Vous avez préparé vos outils (CV et lettre de motivation). Il est temps de passer à l'action !
+        Choisissez une option ci-dessous pour continuer.
+      </p>
+    </header>
 
-      <div class="choix-options-grid"> 
-        <!-- Box 1: Mes Candidatures -->
-        <a href="MesCandidature.html" class="choix-carte card text-decoration-none"> 
-          <div class="card-icon-container">
-            <i class="fas fa-folder-open fa-2x icon-primary"></i> 
-          </div>
-          <h3 class="card-title">Gérer Mes Candidatures</h3>
-          <div class="card-content">
-            <p>
-              Suivez l'avancement de vos candidatures existantes, ajoutez-en de nouvelles
-              ou mettez à jour les informations.
-            </p>
-          </div>
-          
-        </a>
-
-        <!-- Box 2: Candidater à des offres (pour l'instant vide/placeholder) -->
-        <div class="choix-carte card is-disabled"> 
-          <div class="card-icon-container">
-            <i class="fas fa-search-dollar fa-2x icon-secondary"></i> 
-          </div>
-          <h3 class="card-title">Rechercher et Candidater à des Offres</h3>
-          <div class="card-content">
-            <p>
-              (Fonctionnalité à venir) Explorez les offres d'emploi correspondant
-              à votre profil et postulez directement.
-            </p>
-          </div>
-          <a href="JobBoard/jobboard.html" class="btn btn-primary">Aller au Jobboard</a>
+    <div class="choix-options-grid"> 
+      <!-- Box 1: Mes Candidatures -->
+      <a href="MesCandidature.html" class="choix-carte card text-decoration-none"> 
+        <div class="card-icon-container">
+          <i class="fas fa-folder-open fa-2x icon-primary"></i> 
         </div>
-      </div>
+        <h3 class="card-title" data-i18n="titreMesCandidatures">Gérer Mes Candidatures</h3>
+        <div class="card-content">
+          <p data-i18n="texteMesCandidatures">
+            Suivez l'avancement de vos candidatures existantes, ajoutez-en de nouvelles
+            ou mettez à jour les informations.
+          </p>
+        </div>
+      </a>
 
-      <div class="form-navigation mt-8 flex justify-end"> 
-        <button type="button" class="btn btn-primary" id="goToPreparationEntretienBtn">
-          Étape Suivante : Préparation Entretien <i class="fas fa-arrow-right ml-2"></i>
-        </button>
+      <!-- Box 2: Candidater à des offres (pour l'instant vide/placeholder) -->
+      <div class="choix-carte card is-disabled"> 
+        <div class="card-icon-container">
+          <i class="fas fa-search-dollar fa-2x icon-secondary"></i> 
+        </div>
+        <h3 class="card-title" data-i18n="titreCandidaterOffres">Rechercher et Candidater à des Offres</h3>
+        <div class="card-content">
+          <p data-i18n="texteCandidaterOffres">
+            (Fonctionnalité à venir) Explorez les offres d'emploi correspondant
+            à votre profil et postulez directement.
+          </p>
+        </div>
+        <a href="JobBoard/jobboard.html" class="btn btn-primary" data-i18n="btnJobboard">Aller au Jobboard</a>
       </div>
-    </section>
-  </main>
+    </div>
+
+    <div class="form-navigation mt-8 flex justify-end"> 
+      <button type="button" class="btn btn-primary" id="goToPreparationEntretienBtn" data-i18n="btnEtapeSuivanteEntretien">
+        Étape Suivante : Préparation Entretien <i class="fas fa-arrow-right ml-2"></i>
+      </button>
+    </div>
+  </section>
+</main>
+
 
   <footer class="footer">
     <div class="container text-center py-4">

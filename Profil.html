@@ -34,143 +34,144 @@
   <option value="en">🇬🇧 English</option>
   <option value="ar">🇸🇦 العربية</option>
   <option value="uk">UK  українська мова</option>
-</select>
-  <main>
-    <div class="container py-8">
-      <h1 class="text-center mb-8">Mon profil</h1>
-      <div class="profile-grid max-w-4xl mx-auto">
-        <!-- Colonne principale -->
-        <div class="profile-column-main space-y-6">
-          <!-- Informations personnelles -->
-          <section class="card" aria-labelledby="personalInfoTitle">
-            <div class="card-header">
-              <h2 class="card-title" id="personalInfoTitle">Informations personnelles</h2>
-              <p class="card-description">Mettez à jour vos informations de profil</p>
-            </div>
-            <div class="card-content space-y-4">
-              <form id="personalInfoForm" autocomplete="on">
-                <div class="form-grid-cols-2 gap-4">
-                  <div class="form-group">
-                    <label for="firstName">Prénom <span aria-hidden="true">*</span></label>
-                    <input type="text" id="firstName" name="firstName" value="Jean" required>
-                  </div>
-                  <div class="form-group">
-                    <label for="lastName">Nom <span aria-hidden="true">*</span></label>
-                    <input type="text" id="lastName" name="lastName" value="Dupont" required>
-                  </div>
+<main>
+  <div class="container py-8">
+    <h1 class="text-center mb-8" data-i18n="profilTitre">Mon profil</h1>
+    <div class="profile-grid max-w-4xl mx-auto">
+      <!-- Colonne principale -->
+      <div class="profile-column-main space-y-6">
+        <!-- Informations personnelles -->
+        <section class="card" aria-labelledby="personalInfoTitle">
+          <div class="card-header">
+            <h2 class="card-title" id="personalInfoTitle" data-i18n="titreInfosPerso">Informations personnelles</h2>
+            <p class="card-description" data-i18n="descInfosPerso">Mettez à jour vos informations de profil</p>
+          </div>
+          <div class="card-content space-y-4">
+            <form id="personalInfoForm" autocomplete="on">
+              <div class="form-grid-cols-2 gap-4">
+                <div class="form-group">
+                  <label for="firstName" data-i18n="labelPrenom">Prénom <span aria-hidden="true">*</span></label>
+                  <input type="text" id="firstName" name="firstName" value="Jean" required>
                 </div>
                 <div class="form-group">
-                  <label for="email">Email <span aria-hidden="true">*</span></label>
-                  <input type="email" id="email" name="email" value="jean.dupont@example.com" required>
-                </div>
-                <div class="form-group">
-                  <label for="phone">Téléphone</label>
-                  <input type="tel" id="phone" name="phone" value="06 12 34 56 78">
-                </div>
-                <div class="form-group">
-                  <label for="address">Adresse</label>
-                  <input type="text" id="address" name="address" value="15 rue de la Paix">
-                </div>
-                <div class="form-grid-cols-2 gap-4">
-                  <div class="form-group">
-                    <label for="city">Ville</label>
-                    <input type="text" id="city" name="city" value="Paris">
-                  </div>
-                  <div class="form-group">
-                    <label for="postalCode">Code postal</label>
-                    <input type="text" id="postalCode" name="postalCode" value="75001">
-                  </div>
-                </div>
-              </form>
-            </div>
-          </section>
-          <!-- Sécurité -->
-          <section class="card" aria-labelledby="securityTitle">
-            <div class="card-header">
-              <h2 class="card-title" id="securityTitle">Sécurité</h2>
-              <p class="card-description">Gérez vos informations de connexion</p>
-            </div>
-            <div class="card-content space-y-4">
-              <form id="changePasswordForm" autocomplete="off">
-                <div class="form-group">
-                  <label for="currentPassword">Mot de passe actuel <span aria-hidden="true">*</span></label>
-                  <input type="password" id="currentPassword" name="currentPassword" required>
-                </div>
-                <div class="form-group">
-                  <label for="newPassword">Nouveau mot de passe <span aria-hidden="true">*</span></label>
-                  <input type="password" id="newPassword" name="newPassword" required>
-                </div>
-                <div class="form-group">
-                  <label for="confirmPassword">Confirmer le mot de passe <span aria-hidden="true">*</span></label>
-                  <input type="password" id="confirmPassword" name="confirmPassword" required>
-                </div>
-              </form>
-            </div>
-            <div class="card-footer">
-              <button type="button" class="btn btn-primary" id="changePasswordButton">Changer le mot de passe</button>
-            </div>
-          </section>
-        </div>
-        <!-- Colonne latérale -->
-        <div class="profile-column-sidebar space-y-6">
-          <!-- Paramètres -->
-          <section class="card" aria-labelledby="settingsTitle">
-            <div class="card-header">
-              <h2 class="card-title" id="settingsTitle">Paramètres</h2>
-              <p class="card-description">Gérez vos préférences</p>
-            </div>
-            <div class="card-content space-y-6">
-              <div class="setting-item flex justify-between items-center">
-                <div class="setting-item-label">
-                  <label for="notifications">Notifications</label>
-                  <p class="text-sm text-muted-foreground">Recevoir des alertes par email</p>
-                </div>
-                <div class="switch-container">
-                  <input type="checkbox" id="notifications" name="notifications" role="switch" aria-checked="true" checked>
-                  <span class="switch-slider"></span>
+                  <label for="lastName" data-i18n="labelNom">Nom <span aria-hidden="true">*</span></label>
+                  <input type="text" id="lastName" name="lastName" value="Dupont" required>
                 </div>
               </div>
-              <hr class="separator" />
-              <div class="setting-item flex justify-between items-center">
-                <div class="setting-item-label">
-                  <label for="accessibility">Mode accessible</label>
-                  <p class="text-sm text-muted-foreground">Contenu adapté et simplifié</p>
+              <div class="form-group">
+                <label for="email" data-i18n="labelEmail">Email <span aria-hidden="true">*</span></label>
+                <input type="email" id="email" name="email" value="jean.dupont@example.com" required>
+              </div>
+              <div class="form-group">
+                <label for="phone" data-i18n="labelTelephone">Téléphone</label>
+                <input type="tel" id="phone" name="phone" value="06 12 34 56 78">
+              </div>
+              <div class="form-group">
+                <label for="address" data-i18n="labelAdresse">Adresse</label>
+                <input type="text" id="address" name="address" value="15 rue de la Paix">
+              </div>
+              <div class="form-grid-cols-2 gap-4">
+                <div class="form-group">
+                  <label for="city" data-i18n="labelVille">Ville</label>
+                  <input type="text" id="city" name="city" value="Paris">
                 </div>
-                <div class="switch-container">
-                  <input type="checkbox" id="accessibility" name="accessibility" role="switch" aria-checked="false">
-                  <span class="switch-slider"></span>
+                <div class="form-group">
+                  <label for="postalCode" data-i18n="labelCodePostal">Code postal</label>
+                  <input type="text" id="postalCode" name="postalCode" value="75001">
                 </div>
               </div>
-              <hr class="separator" />
-              <div class="setting-item flex justify-between items-center">
-                <div class="setting-item-label">
-                  <label for="reminders">Rappels</label>
-                  <p class="text-sm text-muted-foreground">Rappels pour continuer votre parcours</p>
-                </div>
-                <div class="switch-container">
-                  <input type="checkbox" id="reminders" name="reminders" role="switch" aria-checked="true" checked>
-                  <span class="switch-slider"></span>
-                </div>
+            </form>
+          </div>
+        </section>
+        <!-- Sécurité -->
+        <section class="card" aria-labelledby="securityTitle">
+          <div class="card-header">
+            <h2 class="card-title" id="securityTitle" data-i18n="titreSecurite">Sécurité</h2>
+            <p class="card-description" data-i18n="descSecurite">Gérez vos informations de connexion</p>
+          </div>
+          <div class="card-content space-y-4">
+            <form id="changePasswordForm" autocomplete="off">
+              <div class="form-group">
+                <label for="currentPassword" data-i18n="labelMDPActuel">Mot de passe actuel <span aria-hidden="true">*</span></label>
+                <input type="password" id="currentPassword" name="currentPassword" required>
               </div>
-            </div>
-          </section>
-          <!-- Actions du compte -->
-          <section class="card" aria-labelledby="accountActionsTitle">
-            <div class="card-header">
-              <h2 class="card-title" id="accountActionsTitle">Actions du compte</h2>
-            </div>
-            <div class="card-content space-y-2">
-              <button type="button" class="btn btn-outline w-full" id="exportDataButton">Exporter mes données</button>
-              <button type="button" class="btn btn-danger w-full" id="deleteAccountButton">Supprimer mon compte</button>
-            </div>
-          </section>
-        </div>
+              <div class="form-group">
+                <label for="newPassword" data-i18n="labelMDPNouveau">Nouveau mot de passe <span aria-hidden="true">*</span></label>
+                <input type="password" id="newPassword" name="newPassword" required>
+              </div>
+              <div class="form-group">
+                <label for="confirmPassword" data-i18n="labelMDPConfirm">Confirmer le mot de passe <span aria-hidden="true">*</span></label>
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
+              </div>
+            </form>
+          </div>
+          <div class="card-footer">
+            <button type="button" class="btn btn-primary" id="changePasswordButton" data-i18n="btnChangerMDP">Changer le mot de passe</button>
+          </div>
+        </section>
       </div>
-      <div class="mt-8 flex justify-end">
-        <button type="button" class="btn btn-primary btn-large" id="saveChangesButton">Enregistrer les modifications</button>
+      <!-- Colonne latérale -->
+      <div class="profile-column-sidebar space-y-6">
+        <!-- Paramètres -->
+        <section class="card" aria-labelledby="settingsTitle">
+          <div class="card-header">
+            <h2 class="card-title" id="settingsTitle" data-i18n="titreParametres">Paramètres</h2>
+            <p class="card-description" data-i18n="descParametres">Gérez vos préférences</p>
+          </div>
+          <div class="card-content space-y-6">
+            <div class="setting-item flex justify-between items-center">
+              <div class="setting-item-label">
+                <label for="notifications" data-i18n="labelNotifications">Notifications</label>
+                <p class="text-sm text-muted-foreground" data-i18n="descNotifications">Recevoir des alertes par email</p>
+              </div>
+              <div class="switch-container">
+                <input type="checkbox" id="notifications" name="notifications" role="switch" aria-checked="true" checked>
+                <span class="switch-slider"></span>
+              </div>
+            </div>
+            <hr class="separator" />
+            <div class="setting-item flex justify-between items-center">
+              <div class="setting-item-label">
+                <label for="accessibility" data-i18n="labelAccessibilite">Mode accessible</label>
+                <p class="text-sm text-muted-foreground" data-i18n="descAccessibilite">Contenu adapté et simplifié</p>
+              </div>
+              <div class="switch-container">
+                <input type="checkbox" id="accessibility" name="accessibility" role="switch" aria-checked="false">
+                <span class="switch-slider"></span>
+              </div>
+            </div>
+            <hr class="separator" />
+            <div class="setting-item flex justify-between items-center">
+              <div class="setting-item-label">
+                <label for="reminders" data-i18n="labelRappels">Rappels</label>
+                <p class="text-sm text-muted-foreground" data-i18n="descRappels">Rappels pour continuer votre parcours</p>
+              </div>
+              <div class="switch-container">
+                <input type="checkbox" id="reminders" name="reminders" role="switch" aria-checked="true" checked>
+                <span class="switch-slider"></span>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- Actions du compte -->
+        <section class="card" aria-labelledby="accountActionsTitle">
+          <div class="card-header">
+            <h2 class="card-title" id="accountActionsTitle" data-i18n="titreActionsCompte">Actions du compte</h2>
+          </div>
+          <div class="card-content space-y-2">
+            <button type="button" class="btn btn-outline w-full" id="exportDataButton" data-i18n="btnExporterDonnees">Exporter mes données</button>
+            <button type="button" class="btn btn-danger w-full" id="deleteAccountButton" data-i18n="btnSupprimerCompte">Supprimer mon compte</button>
+          </div>
+        </section>
       </div>
     </div>
-  </main>
+    <div class="mt-8 flex justify-end">
+      <button type="button" class="btn btn-primary btn-large" id="saveChangesButton" data-i18n="btnEnregistrer">Enregistrer les modifications</button>
+    </div>
+  </div>
+</main>
+
+
 
   <footer class="footer">
     <div class="container">

@@ -283,118 +283,113 @@
   <option value="uk">UK  українська мова</option>
 </select>
   <main>
-    <div class="container py-8">
-      <h1 class="text-center mb-6">Nos partenaires & Accompagnement</h1>
+  <div class="container py-8">
+    <h1 class="text-center mb-6" data-i18n="titrePartenaires">Nos partenaires & Accompagnement</h1>
 
-      <section class="tabs" aria-label="Sections Trouver un partenaire et Mes rendez-vous">
-        <div class="tabs-list" role="tablist">
-          <button type="button" class="tab-button active" data-tab="partners" role="tab" aria-selected="true" aria-controls="partners-tab-content" id="tab-partners">Trouver un partenaire</button>
-          <button type="button" class="tab-button" data-tab="appointments" role="tab" aria-selected="false" aria-controls="appointments-tab-content" id="tab-appointments">Mes rendez-vous</button>
-        </div>
+    <section class="tabs" aria-label="Sections Trouver un partenaire et Mes rendez-vous">
+      <div class="tabs-list" role="tablist">
+        <button type="button" class="tab-button active" data-tab="partners" role="tab" aria-selected="true" aria-controls="partners-tab-content" id="tab-partners" data-i18n="tabTrouverPartenaire">Trouver un partenaire</button>
+        <button type="button" class="tab-button" data-tab="appointments" role="tab" aria-selected="false" aria-controls="appointments-tab-content" id="tab-appointments" data-i18n="tabMesRdv">Mes rendez-vous</button>
+      </div>
 
-        <div class="tab-content active" id="partners-tab-content" role="tabpanel" aria-labelledby="tab-partners">
-          <section class="filters-section" aria-label="Filtres de partenaires">
-            <div class="filter-item search-filter form-group">
-              <label for="searchQuery" class="sr-only">Rechercher un partenaire...</label>
-              <input type="text" id="searchQuery" placeholder="Rechercher un partenaire..." class="w-full">
-            </div>
-            <div class="filter-item category-filter form-group">
-              <label for="categoryFilter" class="sr-only">Toutes les catégories</label>
-              <select id="categoryFilter" class="w-full">
-                <option value="all">Toutes les catégories</option>
-                <option value="emploi">Recherche d'emploi</option>
-                <option value="formation">Formation</option>
-                <option value="insertion">Insertion professionnelle</option>
-                <option value="accompagnement">Accompagnement social</option>
-                <option value="aide">Aide aux démarches</option>
-              </select>
-            </div>
-          </section>
-
-          <div class="partner-grid" id="partner-list" aria-live="polite">
-            <!-- Cartes partenaires injectées par JS -->
+      <div class="tab-content active" id="partners-tab-content" role="tabpanel" aria-labelledby="tab-partners">
+        <section class="filters-section" aria-label="Filtres de partenaires">
+          <div class="filter-item search-filter form-group">
+            <label for="searchQuery" class="sr-only" data-i18n="labelRecherchePartenaire">Rechercher un partenaire...</label>
+            <input type="text" id="searchQuery" placeholder="Rechercher un partenaire..." class="w-full" data-i18n-placeholder="placeholderRecherchePartenaire">
           </div>
+          <div class="filter-item category-filter form-group">
+            <label for="categoryFilter" class="sr-only" data-i18n="labelCategoriePartenaire">Toutes les catégories</label>
+            <select id="categoryFilter" class="w-full">
+              <option value="all" data-i18n="categorieAll">Toutes les catégories</option>
+              <option value="emploi" data-i18n="categorieEmploi">Recherche d'emploi</option>
+              <option value="formation" data-i18n="categorieFormation">Formation</option>
+              <option value="insertion" data-i18n="categorieInsertion">Insertion professionnelle</option>
+              <option value="accompagnement" data-i18n="categorieAccompagnement">Accompagnement social</option>
+              <option value="aide" data-i18n="categorieAide">Aide aux démarches</option>
+            </select>
+          </div>
+        </section>
 
-          <section class="soliguide-embed mt-10 card" aria-labelledby="soliguide-title">
-            <div class="card-header">
-              <h2 class="card-title" id="soliguide-title">Explorer plus de services avec Soliguide</h2>
-              <p class="card-description">Trouvez des structures d'aide, d'accompagnement et des services solidaires près de chez vous.</p>
-            </div>
-            <div class="card-content">
-              <iframe
-                  src="https://soliguide.fr/widget?source=widget"
-                  width="100%"
-                  height="450px"
-                  style="border:1px solid var(--ea-border-color); border-radius: var(--ea-border-radius);"
-                  frameborder="0"
-                  title="Widget de recherche Soliguide"
-                  allow="geolocation"
-                  loading="lazy">
-                    Votre navigateur ne supporte pas les iframes. Vous pouvez accéder à Soliguide <a href="https://soliguide.fr/widget?source=widget">directement ici</a>.
-              </iframe>
-              <p class="mt-2 text-sm text-gray-600" style="font-size: 0.875rem; color: var(--ea-text-muted); margin-top: var(--space-sm); text-align:center;">
-                Soliguide est un service externe.
-              </p>
-            </div>
-          </section>
-
-          <section class="card mt-10" id="appointment-form" aria-labelledby="appointmentFormTitle">
-             <!-- L'ID de la section globale est #appointmentFormSectionEmploiAvenir pour le scroll -->
-            <div class="card-header">
-              <h2 class="card-title" id="appointmentFormTitle">Prendre rendez-vous</h2>
-              <p class="card-description">Remplissez ce formulaire pour demander un rendez-vous avec un partenaire.</p>
-            </div>
-            <div class="card-content">
-              <form id="appointmentFormEmploiAvenir" class="space-y-4"> <!-- Nouvel ID pour le form pour éviter conflit potentiel -->
-                <div class="form-group">
-                  <label for="appFormPartnerSelect">Partenaire <span style="color:var(--ea-danger-color)">*</span></label>
-                  <select id="appFormPartnerSelect" name="partnerId" required>
-                    <option value="">Choisir un partenaire</option>
-                  </select>
-                  <small class="error-text" id="errorAppFormPartner"></small>
-                </div>
-                <div class="form-grid">
-                  <div class="form-group">
-                    <label for="appFormDateInput">Date souhaitée <span style="color:var(--ea-danger-color)">*</span></label>
-                    <input type="date" id="appFormDateInput" name="date" required>
-                    <small class="error-text" id="errorAppFormDate"></small>
-                  </div>
-                  <div class="form-group">
-                    <label for="appFormTimeInput">Heure souhaitée <span style="color:var(--ea-danger-color)">*</span></label>
-                    <input type="time" id="appFormTimeInput" name="time" required>
-                    <small class="error-text" id="errorAppFormTime"></small>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label for="appFormTypeSelect">Type de rendez-vous <span style="color:var(--ea-danger-color)">*</span></label>
-                  <select id="appFormTypeSelect" name="type" required>
-                    <option value="présentiel">Présentiel</option>
-                    <option value="téléphonique">Téléphonique</option>
-                    <option value="visioconférence">Visioconférence</option>
-                  </select>
-                  <small class="error-text" id="errorAppFormType"></small>
-                </div>
-                <div class="form-group">
-                  <label for="appFormNotesInput">Notes (optionnel)</label>
-                  <input type="text" id="appFormNotesInput" name="notes" placeholder="Précisions sur votre demande...">
-                </div>
-                <button type="submit" class="btn btn-primary w-full">Confirmer le rendez-vous</button>
-              </form>
-            </div>
-          </section>
+        <div class="partner-grid" id="partner-list" aria-live="polite">
+          <!-- Cartes partenaires injectées par JS -->
         </div>
 
-        <div class="tab-content" id="appointments-tab-content" role="tabpanel" aria-labelledby="tab-appointments">
-          <div class="space-y-6">
-            <h2 class="text-xl font-semibold">Mes rendez-vous prévus</h2>
-            <div class="appointment-grid" id="appointment-list" aria-live="polite">
-              <!-- Rendez-vous injectés par JS -->
-            </div>
+        <section class="soliguide-embed mt-10 card" aria-labelledby="soliguide-title">
+          <div class="card-header">
+            <h2 class="card-title" id="soliguide-title" data-i18n="titreSoliguide">Explorer plus de services avec Soliguide</h2>
+            <p class="card-description" data-i18n="descSoliguide">Trouvez des structures d'aide, d'accompagnement et des services solidaires près de chez vous.</p>
+          </div>
+          <div class="card-content">
+            <iframe
+              src="https://soliguide.fr/widget?source=widget"
+              width="100%"
+              height="450px"
+              style="border:1px solid var(--ea-border-color); border-radius: var(--ea-border-radius);"
+              frameborder="0"
+              title="Widget de recherche Soliguide"
+              allow="geolocation"
+              loading="lazy">
+              Votre navigateur ne supporte pas les iframes. Vous pouvez accéder à Soliguide 
+              <a href="https://soliguide.fr/widget?source=widget" data-i18n="lienSoliguideDirect">directement ici</a>.
+            </iframe>
+            <p class="mt-2 text-sm text-gray-600" style="font-size: 0.875rem; color: var(--ea-text-muted); margin-top: var(--space-sm); text-align:center;" data-i18n="mentionSoliguide">Soliguide est un service externe.</p>
+          </div>
+        </section>
+
+        <section class="card mt-10" id="appointment-form" aria-labelledby="appointmentFormTitle">
+          <div class="card-header">
+            <h2 class="card-title" id="appointmentFormTitle" data-i18n="titreFormRdv">Prendre rendez-vous</h2>
+            <p class="card-description" data-i18n="descFormRdv">Remplissez ce formulaire pour demander un rendez-vous avec un partenaire.</p>
+          </div>
+          <div class="card-content">
+            <form id="appointmentFormEmploiAvenir" class="space-y-4">
+              <div class="form-group">
+                <label for="appFormPartnerSelect" data-i18n="labelPartenaire">Partenaire <span style="color:var(--ea-danger-color)">*</span></label>
+                <select id="appFormPartnerSelect" name="partnerId" required>
+                  <option value="" data-i18n="optionChoixPartenaire">Choisir un partenaire</option>
+                </select>
+              </div>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="appFormDateInput" data-i18n="labelDateSouhaitee">Date souhaitée <span style="color:var(--ea-danger-color)">*</span></label>
+                  <input type="date" id="appFormDateInput" name="date" required>
+                </div>
+                <div class="form-group">
+                  <label for="appFormTimeInput" data-i18n="labelHeureSouhaitee">Heure souhaitée <span style="color:var(--ea-danger-color)">*</span></label>
+                  <input type="time" id="appFormTimeInput" name="time" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="appFormTypeSelect" data-i18n="labelTypeRdv">Type de rendez-vous <span style="color:var(--ea-danger-color)">*</span></label>
+                <select id="appFormTypeSelect" name="type" required>
+                  <option value="présentiel" data-i18n="rdvPresentiel">Présentiel</option>
+                  <option value="téléphonique" data-i18n="rdvTelephone">Téléphonique</option>
+                  <option value="visioconférence" data-i18n="rdvVisio">Visioconférence</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="appFormNotesInput" data-i18n="labelNotes">Notes (optionnel)</label>
+                <input type="text" id="appFormNotesInput" name="notes" placeholder="Précisions sur votre demande..." data-i18n-placeholder="placeholderNotes">
+              </div>
+              <button type="submit" class="btn btn-primary w-full" data-i18n="btnConfirmerRdv">Confirmer le rendez-vous</button>
+            </form>
+          </div>
+        </section>
+      </div>
+
+      <div class="tab-content" id="appointments-tab-content" role="tabpanel" aria-labelledby="tab-appointments">
+        <div class="space-y-6">
+          <h2 class="text-xl font-semibold" data-i18n="titreRdvPrevus">Mes rendez-vous prévus</h2>
+          <div class="appointment-grid" id="appointment-list" aria-live="polite">
+            <!-- Rendez-vous injectés par JS -->
           </div>
         </div>
-      </section>
-    </div>
-  </main>
+      </div>
+    </section>
+  </div>
+</main>
+
 
   <footer class="footer"> <!-- Footer EmploiAvenir -->
     <div class="container"> <div class="footer-grid"> <!-- ... contenu ... --> </div> <div class="footer-bottom"> <!-- ... contenu ... --> </div> </div>

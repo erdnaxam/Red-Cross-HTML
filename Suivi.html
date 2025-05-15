@@ -128,85 +128,83 @@
   <option value="ar">🇸🇦 العربية</option>
   <option value="uk">UK  українська мова</option>
 </select>
-  <main class="page-suivi-integration">
-    <div class="container pt-8 pb-12">
-      <header class="section-header text-center mb-10">
-        <h1>
-          <i class="fas fa-user-tie icon-left text-3xl md:text-4xl" aria-hidden="true"></i> Intégration, Suivi et Contribution
-        </h1>
-        <p class="intro-text text-gray-darker mt-3 text-lg">
-          Réussissez votre intégration, partagez votre expérience et aidez les autres à réussir !
+  <div class="container pt-8 pb-12">
+  <header class="section-header text-center mb-10">
+    <h1 data-i18n="integrationTitre">
+      <i class="fas fa-user-tie icon-left text-3xl md:text-4xl" aria-hidden="true"></i> Intégration, Suivi et Contribution
+    </h1>
+    <p class="intro-text text-gray-darker mt-3 text-lg" data-i18n="integrationIntro">
+      Réussissez votre intégration, partagez votre expérience et aidez les autres à réussir !
+    </p>
+  </header>
+
+  <article class="card intro-card mb-10 p-6 shadow-lg" aria-labelledby="intro-title-suivi">
+    <div class="intro-content">
+      <h2 id="intro-title-suivi" class="text-2xl font-semibold mb-4 text-primary" data-i18n="integrationTitreSection1">Bien Démarrer et Donner en Retour</h2>
+      <p class="mb-4 text-md" data-i18n="integrationTexte1">L'intégration est une phase clé. Une bonne préparation et une attitude proactive faciliteront votre adaptation. Une fois bien installé(e), votre expérience peut devenir précieuse pour d'autres.</p>
+      <div class="info-box highlight-info mt-6">
+        <i class="fas fa-users-cog icon-left text-primary fa-lg" aria-hidden="true"></i>
+        <p data-i18n="integrationEncart">
+          <strong>Partage d'expérience :</strong> Votre parcours est une source d'inspiration. En partageant vos retours, vous contribuez à améliorer nos services et pouvez aider d'autres chercheurs d'emploi.
         </p>
-      </header>
+      </div>
+    </div>
+  </article>
 
-      <article class="card intro-card mb-10 p-6 shadow-lg" aria-labelledby="intro-title-suivi">
-        <div class="intro-content">
-          <h2 id="intro-title-suivi" class="text-2xl font-semibold mb-4 text-primary">Bien Démarrer et Donner en Retour</h2>
-          <p class="mb-4 text-md">L'intégration est une phase clé. Une bonne préparation et une attitude proactive faciliteront votre adaptation. Une fois bien installé(e), votre expérience peut devenir précieuse pour d'autres.</p>
-          <div class="info-box highlight-info mt-6">
-            <i class="fas fa-users-cog icon-left text-primary fa-lg" aria-hidden="true"></i>
-            <p><strong>Partage d'expérience :</strong> Votre parcours est une source d'inspiration. En partageant vos retours, vous contribuez à améliorer nos services et pouvez aider d'autres chercheurs d'emploi.</p>
-          </div>
-        </div>
-      </article>
+  <div id="accordionContainerSuivi" class="grid grid-cols-1 md:grid-cols-1 gap-0">
+    {/* Les accordéons sur l'intégration seront insérés ici par JavaScript */}
+  </div>
 
-      <div id="accordionContainerSuivi" class="grid grid-cols-1 md:grid-cols-1 gap-0">
-        {/* Les accordéons sur l'intégration seront insérés ici par JavaScript */}
+  <section class="feedback-mentorat-section card p-6 md:p-8 mt-10 shadow-md" aria-labelledby="feedback-title">
+    <h2 id="feedback-title" class="section-subtitle text-xl font-semibold flex items-center gap-3 text-primary mb-6" data-i18n="feedbackTitre">
+      <i class="fas fa-comments fa-fw" aria-hidden="true"></i> Partagez Votre Expérience et Devenez Mentor
+    </h2>
+    <p class="mb-6 text-md text-gray-darker" data-i18n="feedbackIntro">Maintenant que vous avez trouvé un emploi, votre avis sur EmploiAvenir nous est précieux ! Aidez-nous à nous améliorer et envisagez de devenir une source d'inspiration pour d'autres.</p>
+
+    <form id="feedbackForm" class="feedback-form">
+      <div class="form-group">
+        <label for="avisSite" data-i18n="labelAvis">Votre avis sur notre site et vos suggestions d'amélioration :</label>
+        <textarea id="avisSite" name="avisSite" rows="5" class="w-full p-3 border border-gray-light rounded-md focus:border-primary focus:ring-primary-light" placeholder="Qu'avez-vous apprécié ? Que pourrions-nous améliorer ? Quelles fonctionnalités vous ont le plus aidé ?..." required></textarea>
       </div>
 
-      <!-- NOUVELLE SECTION: Feedback et Mentorat -->
-      <section class="feedback-mentorat-section card p-6 md:p-8 mt-10 shadow-md" aria-labelledby="feedback-title">
-        <h2 id="feedback-title" class="section-subtitle text-xl font-semibold flex items-center gap-3 text-primary mb-6">
-          <i class="fas fa-comments fa-fw" aria-hidden="true"></i> Partagez Votre Expérience et Devenez Mentor
-        </h2>
-        <p class="mb-6 text-md text-gray-darker">Maintenant que vous avez trouvé un emploi, votre avis sur EmploiAvenir nous est précieux ! Aidez-nous à nous améliorer et envisagez de devenir une source d'inspiration pour d'autres.</p>
+      <div class="form-group checkbox-group">
+        <input type="checkbox" id="devenirMentor" name="devenirMentor" class="h-5 w-5 text-primary focus:ring-primary-light border-gray-light rounded">
+        <label for="devenirMentor" class="mb-0 text-md" data-i18n="labelMentor">Oui, je serais intéressé(e) pour devenir mentor et partager mon expérience avec d'autres utilisateurs d'EmploiAvenir.</label>
+      </div>
+      <p class="text-sm text-gray-medium mb-6" data-i18n="texteMentor">Si vous cochez cette case, nous pourrons vous recontacter pour discuter des modalités du mentorat.</p>
 
-        <form id="feedbackForm" class="feedback-form">
-          <div class="form-group">
-            <label for="avisSite">Votre avis sur notre site et vos suggestions d'amélioration :</label>
-            <textarea id="avisSite" name="avisSite" rows="5" class="w-full p-3 border border-gray-light rounded-md focus:border-primary focus:ring-primary-light" placeholder="Qu'avez-vous apprécié ? Que pourrions-nous améliorer ? Quelles fonctionnalités vous ont le plus aidé ?..." required></textarea>
-          </div>
+      <button type="submit" class="btn btn-secondary btn-large w-full sm:w-auto" data-i18n="btnEnvoyerAvis">
+        <i class="fas fa-paper-plane mr-2"></i> Envoyer mon avis
+      </button>
+    </form>
+    <p class="mt-6 text-sm text-center text-gray-darker" data-i18n="texteConfidentiel">Vos retours sont confidentiels et nous aident à mieux vous accompagner.</p>
+  </section>
 
-          <div class="form-group checkbox-group">
-            <input type="checkbox" id="devenirMentor" name="devenirMentor" class="h-5 w-5 text-primary focus:ring-primary-light border-gray-light rounded">
-            <label for="devenirMentor" class="mb-0 text-md">Oui, je serais intéressé(e) pour devenir mentor et partager mon expérience avec d'autres utilisateurs d'EmploiAvenir.</label>
-          </div>
-          <p class="text-sm text-gray-medium mb-6">Si vous cochez cette case, nous pourrons vous recontacter pour discuter des modalités du mentorat.</p>
-
-          <button type="submit" class="btn btn-secondary btn-large w-full sm:w-auto">
-            <i class="fas fa-paper-plane mr-2"></i> Envoyer mon avis
-          </button>
-        </form>
-        <p class="mt-6 text-sm text-center text-gray-darker">Vos retours sont confidentiels et nous aident à mieux vous accompagner.</p>
-      </section>
-      <!-- FIN NOUVELLE SECTION -->
-
-
-      <aside class="contact-info card mt-10 mb-8 p-6 text-center bg-primary-light rounded-lg shadow-lg" aria-labelledby="accompagnement-title-suivi">
-        <h2 id="accompagnement-title-suivi" class="text-2xl font-semibold flex items-center gap-3 text-primary justify-center mb-4">
-            <i class="fas fa-hands-helping fa-fw" aria-hidden="true"></i> Un accompagnement pour votre intégration ?
-        </h2>
-        <p class="mb-6 text-md text-gray-darker">Même après la signature, nos conseillers peuvent vous aider à préparer votre prise de poste, à définir vos objectifs pour les premières semaines, et à gérer au mieux votre période d'essai.</p>
-        <a href="Partenaires.html?tab=appointments" class="btn btn-primary btn-large">
-            <i class="fas fa-calendar-alt mr-2" aria-hidden="true"></i> Solliciter un coaching d'intégration
-        </a>
-        <div class="social-icons mt-8 flex justify-center gap-6" aria-label="Suivez-nous sur les réseaux sociaux">
-          <a href="#" aria-label="Facebook" class="text-gray-medium hover:text-primary text-3xl transition-colors"><i class="fab fa-facebook-square"></i></a>
-          <a href="#" aria-label="LinkedIn" class="text-gray-medium hover:text-primary text-3xl transition-colors"><i class="fab fa-linkedin"></i></a>
-          <a href="#" aria-label="Twitter" class="text-gray-medium hover:text-primary text-3xl transition-colors"><i class="fab fa-twitter-square"></i></a>
-        </div>
-      </aside>
-
-      <nav class="form-navigation mt-10 flex justify-between items-center" aria-label="Navigation des étapes du parcours">
-          <button type="button" class="btn btn-outline btn-large" id="backToContratBtn">
-              <i class="fas fa-arrow-left mr-2" aria-hidden="true"></i> Retour au Contrat
-          </button>
-          <button type="button" class="btn btn-primary btn-large" id="completeParcoursBtn">
-              Terminer et Voir Mon Parcours <i class="fas fa-flag-checkered ml-2" aria-hidden="true"></i>
-          </button>
-      </nav>
+  <aside class="contact-info card mt-10 mb-8 p-6 text-center bg-primary-light rounded-lg shadow-lg" aria-labelledby="accompagnement-title-suivi">
+    <h2 id="accompagnement-title-suivi" class="text-2xl font-semibold flex items-center gap-3 text-primary justify-center mb-4" data-i18n="titreAccompagnement">
+      <i class="fas fa-hands-helping fa-fw" aria-hidden="true"></i> Un accompagnement pour votre intégration ?
+    </h2>
+    <p class="mb-6 text-md text-gray-darker" data-i18n="texteAccompagnement">Même après la signature, nos conseillers peuvent vous aider à préparer votre prise de poste, à définir vos objectifs pour les premières semaines, et à gérer au mieux votre période d'essai.</p>
+    <a href="Partenaires.html?tab=appointments" class="btn btn-primary btn-large" data-i18n="btnCoachingIntegration">
+      <i class="fas fa-calendar-alt mr-2" aria-hidden="true"></i> Solliciter un coaching d'intégration
+    </a>
+    <div class="social-icons mt-8 flex justify-center gap-6" aria-label="Suivez-nous sur les réseaux sociaux">
+      <a href="#" aria-label="Facebook" class="text-gray-medium hover:text-primary text-3xl transition-colors"><i class="fab fa-facebook-square"></i></a>
+      <a href="#" aria-label="LinkedIn" class="text-gray-medium hover:text-primary text-3xl transition-colors"><i class="fab fa-linkedin"></i></a>
+      <a href="#" aria-label="Twitter" class="text-gray-medium hover:text-primary text-3xl transition-colors"><i class="fab fa-twitter-square"></i></a>
     </div>
-  </main>
+  </aside>
+
+  <nav class="form-navigation mt-10 flex justify-between items-center" aria-label="Navigation des étapes du parcours">
+    <button type="button" class="btn btn-outline btn-large" id="backToContratBtn" data-i18n="btnRetourContrat">
+      <i class="fas fa-arrow-left mr-2" aria-hidden="true"></i> Retour au Contrat
+    </button>
+    <button type="button" class="btn btn-primary btn-large" id="completeParcoursBtn" data-i18n="btnTerminerParcours">
+      Terminer et Voir Mon Parcours <i class="fas fa-flag-checkered ml-2" aria-hidden="true"></i>
+    </button>
+  </nav>
+</div>
+
 
   <footer class="footer">
     <div class="container text-center py-6">
