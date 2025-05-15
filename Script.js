@@ -146,7 +146,8 @@ const App = (() => {
       }
     };
   })();
-// NOUVEAU SCRIPT pour la bannière RGPD //
+
+//  Bannière RGPD //
       document.addEventListener('DOMContentLoaded', () => {
           const RGPD_CONSENT_KEY = 'emploiAvenirRgpdConsentGiven'; // Clé plus descriptive
           const banner = document.getElementById('rgpdAiBanner');
@@ -517,8 +518,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- GESTION DES BOUTONS DE L'ÉTAPE "FÉLICITATIONS" ---
-
-
     const congratsStepElement = document.getElementById(CONGRATS_STEP_ID);
     if (congratsStepElement) {
         const backToParcoursBtnFinal = congratsStepElement.querySelector('#backToParcoursButton');
@@ -531,7 +530,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 parcoursData.etapes = parcoursData.etapes || Array(8).fill(null).map((_, i) => ({ id: `etape-${i}`, statut: 'locked' }));
                 parcoursData.etapeActuelleIndex = parcoursData.etapeActuelleIndex || 0;
 
-
                 // Marquer l'étape 0 (Évaluation) comme complétée
                 if (parcoursData.etapes[0]) {
                     parcoursData.etapes[0].statut = 'completed';
@@ -539,7 +537,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 } else { // Fallback si la structure est corrompue/vide
                     parcoursData.etapes[0] = { id: 'etape-0', statut: 'completed', dateCompletion: new Date().toISOString() };
                 }
-
 
                 // Marquer l'étape 1 (CV & LM) comme active
                 if (parcoursData.etapes[1]) {
