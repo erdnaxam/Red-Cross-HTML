@@ -3,18 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Politique de Confidentialité et Utilisation des Données - EmploiAvenir</title>
+    <title>Vos Données et Notre Engagement - EmploiAvenir</title> <!-- Titre plus engageant -->
     <link rel="stylesheet" href="style.css"> <!-- Réutiliser votre style principal -->
     <style>
-        /* Styles spécifiques pour cette page d'information si besoin */
-        body { padding-top: calc(var(--header-height) + 20px); /* Pour le header fixe + un peu d'espace */ }
-        .privacy-container { max-width: 800px; margin: 20px auto; padding: 20px; background-color: #fff; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .privacy-container h1 { font-size: 1.8rem; margin-bottom: 1rem; color: var(--color-primary); }
-        .privacy-container h2 { font-size: 1.4rem; margin-top: 1.5rem; margin-bottom: 0.5rem; color: var(--color-dark); }
-        .privacy-container p, .privacy-container ul { margin-bottom: 1rem; line-height: 1.7; color: var(--color-gray-darker); }
-        .privacy-container ul { padding-left: 20px; }
-        .privacy-container strong { color: var(--color-dark); }
-        .back-link-container { margin-top: 2rem; text-align: center; }
+        /* Variables CSS (assurez-vous qu'elles sont définies dans style.css ou ici) */
+        :root {
+            --color-primary: #8B5CF6; /* Ou votre couleur primaire EmploiAvenir */
+            --color-dark: #1A1F2C;
+            --color-gray-darker: #4B5563;
+            --color-gray-light: #E5E7EB;
+            --color-surface: #fff;
+            --radius: 8px;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+            --header-height: calc(4rem + 2px); /* Ajustez si besoin */
+            --font-primary: 'Inter', sans-serif;
+            --spacing-unit: 0.25rem;
+        }
+
+        body {
+            padding-top: calc(var(--header-height) + 20px);
+            font-family: var(--font-primary);
+            background-color: var(--color-light, #f9fafb);
+            color: var(--color-dark);
+        }
+        .privacy-container {
+            max-width: 800px;
+            margin: calc(var(--spacing-unit) * 8) auto; /* 32px auto */
+            padding: calc(var(--spacing-unit) * 8);    /* 32px */
+            background-color: var(--color-surface);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-sm);
+            line-height: 1.7; /* Interligne pour lisibilité */
+        }
+        .privacy-container h1 {
+            font-size: clamp(1.6rem, 4vw, 2rem); /* Titre principal adaptatif */
+            margin-bottom: calc(var(--spacing-unit) * 6); /* 24px */
+            color: var(--color-primary);
+            text-align: center;
+            font-weight: 700;
+        }
+        .privacy-container h2 {
+            font-size: clamp(1.3rem, 3vw, 1.6rem); /* Sous-titres adaptatifs */
+            margin-top: calc(var(--spacing-unit) * 10); /* 40px */
+            margin-bottom: calc(var(--spacing-unit) * 4); /* 16px */
+            color: var(--color-dark);
+            font-weight: 600; /* Plus de contraste */
+            padding-bottom: calc(var(--spacing-unit) * 2); /* 8px */
+            border-bottom: 1px solid var(--color-gray-light);
+        }
+        .privacy-container h2:first-of-type {
+            margin-top: calc(var(--spacing-unit) * 6); /* Moins d'espace pour le premier H2 */
+        }
+
+        .privacy-container p, .privacy-container ul li {
+            margin-bottom: calc(var(--spacing-unit) * 4); /* 16px */
+            color: var(--color-gray-darker);
+            font-size: 1.05rem; /* Texte légèrement plus grand */
+        }
+        .privacy-container ul {
+            padding-left: calc(var(--spacing-unit) * 8); /* 32px */
+            list-style-type: '✓  '; /* Puces personnalisées plus claires */
+        }
+        .privacy-container ul ul { /* Sous-listes si besoin */
+             list-style-type: '–  ';
+             margin-top: calc(var(--spacing-unit) * 2);
+             padding-left: calc(var(--spacing-unit) * 6);
+        }
+        .privacy-container strong {
+            color: var(--color-dark);
+            font-weight: 600; /* Moins agressif que bold pur */
+        }
+        .privacy-container .update-date {
+            font-size: 0.9rem;
+            color: var(--color-gray);
+            text-align: center;
+            margin-bottom: calc(var(--spacing-unit) * 8); /* 32px */
+            display: block;
+        }
+        .privacy-container .contact-email a {
+            color: var(--color-primary);
+            font-weight: 600;
+            text-decoration: underline;
+        }
+        .privacy-container .contact-email a:hover {
+            color: var(--color-primary-darker);
+        }
+
+        .back-link-container {
+            margin-top: calc(var(--spacing-unit) * 12); /* 48px */
+            text-align: center;
+        }
+        /* S'assurer que les styles de .btn et .btn-outline sont chargés depuis style.css */
     </style>
 </head>
 <body>
@@ -105,9 +184,48 @@
 
     <!-- FOOTER (Identique à celui de index.html) -->
     <footer class="footer">
-      <!-- ... contenu du footer ... -->
-    </footer>
+        <div class="container">
+          <div class="footer-grid">
+            <div class="footer-column">
+              <h3>EmploiAvenir</h3>
+              <p>Votre guide personnalisé pour atteindre vos objectifs professionnels.</p>
+            </div>
+            <div class="footer-column">
+              <h3>Liens rapides</h3>
+              <ul class="footer-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="MonParcours.html">Mon Parcours</a></li>
+                <li><a href="MesCandidature.html">Mes Candidatures</a></li>
+                <li><a href="Partenaires.html">Nos partenaires</a></li>
+                <li><a href="Documents.html">Mes documents</a></li>
+                <li><a href="Profil.html">Profil</a></li>
+              </ul>
+            </div>
+            <div class="footer-column">
+              <h3>Services</h3>
+              <ul class="footer-links">
+                <li><a href="#">Création de CV</a></li>
+                <li><a href="#">Lettres de motivation</a></li>
+                <li><a href="#">Coaching</a></li>
+                <li><a href="#">Préparation aux entretiens</a></li>
+                <li><a href="#">Partenaires entreprises</a></li>
+              </ul>
+            </div>
+            <div class="footer-column">
+              <h3>Contact</h3>
+              <ul class="footer-links">
+                <li><a href="tel:+33123456789">+33 1 23 45 67 89</a></li>
+                <li><a href="mailto:contact@emploiavenir.fr">contact@emploiavenir.fr</a></li>
+                <li>12 rue de l'Emploi, 75001 Paris</li>
+              </ul>
+            </div>
+          </div>
+          <div class="footer-bottom">
+            <p>© 2024 EmploiAvenir. Tous droits réservés.</p>
+          </div>
+        </div>
+      </footer>
 
-    <script src="Script.js" defer></script> <!-- Pour le menu mobile du header, si besoin -->
+    <script src="Script.js" defer></script>
 </body>
 </html>
