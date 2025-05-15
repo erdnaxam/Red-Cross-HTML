@@ -146,7 +146,70 @@ const App = (() => {
       }
     };
   })();
+// NOUVEAU SCRIPT pour la bannière RGPD //
+      document.addEventListener('DOMContentLoaded', () => {
+          const RGPD_CONSENT_KEY = 'emploiAvenirRgpdConsentGiven'; // Clé plus descriptive
+          const banner = document.getElementById('rgpdAiBanner');
+          const acceptButton = document.getElementById('acceptRgpdAi');
+          const refuseButton = document.getElementById('refuseRgpdAi'); //
 
+          // Fonction pour afficher la bannière avec une petite animation
+          function showBanner() {
+              if (banner) {
+                  banner.removeAttribute('hidden');
+                  // Forcer un reflow pour que la transition s'applique
+                  void banner.offsetWidth;
+                  banner.classList.add('show');
+              }
+          }
+          // Fonction pour cacher la bannière avec animation
+          function hideBanner() {
+              if (banner) {
+                  banner.classList.remove('show');
+                  // Attendre la fin de la transition avant de mettre 'hidden'
+                  banner.addEventListener('transitionend', () => {
+                      banner.setAttribute('hidden', '');
+                  }, { once: true });
+              }
+          }
+
+          // Vérifier si le consentement a déjà été donné
+          if (localStorage.getItem(RGPD_CONSENT_KEY)) {
+              // L'utilisateur a déjà interagi, ne rien faire (la bannière reste cachée par défaut)
+              return;
+          }
+
+          // Afficher la bannière si pas de consentement après un petit délai
+          // pour ne pas être trop intrusif au chargement immédiat de la page.
+          setTimeout(showBanner, 1500); // Délai de 1.5 secondes
+
+          if (acceptButton) {
+              acceptButton.addEventListener('click', () => {
+                  localStorage.setItem(RGPD_CONSENT_KEY, 'accepted_at_' + new Date().toISOString());
+                  hideBanner();
+                  // Optionnel : Afficher un toast via une fonction globale si disponible
+                  // if (typeof App !== 'undefined' && App.showToast) {
+                  //     App.showToast({ message: "Merci ! Vos préférences ont été enregistrées.", type: 'success' });
+                  // }
+              });
+          }
+
+          // Logique pour le bouton Refuser (si vous l'implémentez)
+          if (refuseButton) {
+              refuseButton.addEventListener('click', () => {
+                  // Gérer le refus :
+                  // - Enregistrer le refus pour ne plus afficher la bannière.
+                  // - Expliquer les conséquences (certaines fonctionnalités pourraient ne pas utiliser localStorage).
+                  // - Pour une app full frontend, il est difficile de "désactiver" localStorage sélectivement
+                  //   sans rendre le site inutilisable pour la progression.
+                  //   La meilleure approche est d'être transparent dans la politique de confidentialité.
+                  localStorage.setItem(RGPD_CONSENT_KEY, 'refused_at_' + new Date().toISOString());
+                  hideBanner();
+                  alert("Vous avez choisi de continuer. Veuillez noter que certaines fonctionnalités du site reposent sur le stockage local pour fonctionner correctement.");
+              });
+          }
+
+      });
   // ---------- Module FormValidation ----------
   const FormValidation = (() => {
     const patterns = {
@@ -454,6 +517,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // --- GESTION DES BOUTONS DE L'ÉTAPE "FÉLICITATIONS" ---
+
+
     const congratsStepElement = document.getElementById(CONGRATS_STEP_ID);
     if (congratsStepElement) {
         const backToParcoursBtnFinal = congratsStepElement.querySelector('#backToParcoursButton');

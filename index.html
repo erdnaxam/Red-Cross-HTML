@@ -183,6 +183,24 @@
     </form>
   </div>
 
+  <!-- NOUVEAU : BANNIÈRE RGPD & IA -->
+  <div id="rgpdAiBanner" class="rgpd-banner" role="dialog" aria-modal="true" aria-labelledby="rgpdBannerTitle" aria-describedby="rgpdBannerDescription" hidden>
+      <div class="rgpd-banner-content">
+          <div class="rgpd-banner-text">
+              <h2 id="rgpdBannerTitle" class="rgpd-title">Votre vie privée et l'utilisation de l'IA</h2>
+              <p id="rgpdBannerDescription" class="rgpd-description">
+                  EmploiAvenir sauvegarde certaines de vos données localement sur votre navigateur pour personnaliser votre expérience (progression, documents simulés). Notre assistant virtuel utilise l'intelligence artificielle. Vos données personnelles ne sont pas envoyées à nos serveurs.
+              </p>
+          </div>
+          <div class="rgpd-banner-actions">
+              <button type="button" id="acceptRgpdAi" class="btn btn-primary btn-rgpd">J'accepte</button>
+              <a href="politique-confidentialite.html" class="btn btn-outline btn-rgpd" id="learnMoreRgpdAi" aria-label="En savoir plus sur notre politique de confidentialité et l'utilisation de l'IA">En savoir plus</a>
+              <button type="button" id="refuseRgpdAi" class="btn btn-link btn-rgpd">Refuser</button>
+          </div>
+      </div>
+  </div>
+  <!-- FIN BANNIÈRE RGPD & IA -->
+
   <script src="Script.js" defer></script>
   <script src="langue.js"></script>
 </body>
