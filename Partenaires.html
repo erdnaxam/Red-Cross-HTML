@@ -281,7 +281,7 @@
   <option value="fr">🇫🇷 Français</option>
   <option value="en">🇬🇧 English</option>
   <option value="ar">🇸🇦 العربية</option>
-  <option value="uk">UK  українська мова</option>
+  <option value="uk">🇺🇦  українська мова</option>
 </select>
   <main>
   <div class="container py-8">
@@ -392,9 +392,16 @@
 </main>
 
 
-  <footer class="footer"> <!-- Footer EmploiAvenir -->
-    <div class="container"> <div class="footer-grid"> <!-- ... contenu ... --> </div> <div class="footer-bottom"> <!-- ... contenu ... --> </div> </div>
-  </footer>
+  <footer class="footer">
+  <div class="container text-center py-6">
+    <p class="mb-2" data-i18n="footerCopyright">© 2025 EmploiAvenir | Accompagnement à l'insertion professionnelle</p>
+    <p class="text-sm text-gray" data-i18n="footerContact">
+      <i class="fas fa-map-marker-alt" aria-hidden="true"></i> 12 rue de l'Emploi, 75000 Paris  | 
+      <i class="fas fa-envelope" aria-hidden="true"></i> contact@emploiavenir.fr  | 
+      <i class="fas fa-phone" aria-hidden="true"></i> 01 23 45 67 89
+    </p>
+  </div>
+</footer>
 
   <div id="toast-container"></div> <!-- Pour les notifications JS -->
 
@@ -403,8 +410,7 @@
   <button type="button" class="chatbot-btn" id="chatbotBtn">💬</button>
   <div class="chatbot-container" id="chatbotContainer" style="display: none;">...</div>
 
-  <script src="Script.js"></script> <!-- Script EmploiAvenir existant -->
-
+  <script src="Script.js"></script>
   <script>
     // --- JS Optimisé et Adapté ---
     const PARTNERS_DATA = [
