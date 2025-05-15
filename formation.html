@@ -6,7 +6,7 @@
     <title>Se Former - EmploiAvenir</title>
     <base href="/Red-Cross-HTML/">  <!-- AJOUTE CETTE LIGNE -->
     <meta name="description" content="Découvrez et inscrivez-vous aux formations proposées par EmploiAvenir et ses partenaires comme France Travail et la Croix Rouge : informatique, bureautique, et plus encore.">
-    <link rel="stylesheet" href="style.css"> <!-- Votre CSS principal -->
+    <link rel="stylesheet" href="style.css"> <!-- CSS principal -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         /* Styles spécifiques pour la page formations (à intégrer dans style.css ou ici) */
@@ -265,14 +265,22 @@
         </div>
     </div>
 
-    <!-- Conteneur pour les Toasts -->
+
     <div id="toast-container"></div>
 
     <!-- FOOTER (Copiez/collez votre footer EmploiAvenir ici) -->
-    <footer class="footer">
-        <!-- ... contenu du footer ... -->
-    </footer>
-
+  <footer class="footer">
+  <div class="container text-center py-6">
+    <p class="mb-2" data-i18n="footerCopyright">© 2025 EmploiAvenir | Accompagnement à l'insertion professionnelle</p>
+    <p class="text-sm text-gray" data-i18n="footerContact">
+      <i class="fas fa-map-marker-alt" aria-hidden="true"></i> 12 rue de l'Emploi, 75000 Paris  | 
+      <i class="fas fa-envelope" aria-hidden="true"></i> contact@emploiavenir.fr  | 
+      <i class="fas fa-phone" aria-hidden="true"></i> 01 23 45 67 89
+    </p>
+  </div>
+</footer>
+  <script src="Script.js"></script>
+  <script src="langue.js"></script></body>
     <script>
         // Données de formations (normalement viendraient d'un backend ou d'un fichier JSON)
         const allFormations = [
@@ -490,7 +498,5 @@
 
         displayFormations(allFormations); // Afficher toutes les formations au début
     </script>
-    <!-- Votre Script.js habituel pour le menu, etc. -->
-    <!-- <script src="Script.js" defer></script> -->
-</body>
+
 </html>
