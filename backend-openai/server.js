@@ -115,6 +115,84 @@ Ce qu'il/elle peut apporter : ${valeur_ajoutee}.`;
   }
 });
 
+/* Amélioration LM */
+app.post("/api/ameliore-lettre", async (req, res) => {
+  try {
+    const texte = req.body.texte;
+
+    if (!texte || texte.trim().length < 100) {
+      return res.status(400).json({ error: "Le texte de la lettre est trop court ou vide." });
+    }
+
+    // Prompt de demande à OpenAI (GPT-4)
+    const completion = await openai.chat.completions.create({
+      model: "gpt-3.5-turbo", // Ou gpt-3.5-turbo si tu veux réduire les coûts
+      messages: [
+        {
+          role: "system",
+          content: "Tu es un assistant RH expert en rédaction de lettres de motivation."
+        },
+        {
+          role: "user",
+          content: `Voici une lettre de motivation écrite par une personne en recherche d'emploi. Ta mission est de l'améliorer : style, grammaire, impact, clarté. Garde le fond mais améliore la forme. Voici le texte original :\n\n${texte}`
+        }
+      ],
+      temperature: 0.7,
+      max_tokens: 1000
+    });
+
+    const reponse = completion.choices[0].message.content;
+
+    res.json({ ameliore: reponse });
+
+  } catch (error) {
+    console.error("Erreur lors de l'appel à OpenAI :", error.message);
+    res.status(500).json({ error: "Une erreur est survenue lors de l'amélioration de la lettre." });
+  }
+});
+
+const { Document, Packer, Paragraph, TextRun } = require("docx");
+const fs = require("fs");
+const path = require("path");
+
+app.post("/api/export-word", async (req, res) => {
+  try {
+    const { texte } = req.body;
+
+    if (!texte) {
+      return res.status(400).json({ error: "Texte manquant" });
+    }
+
+    // Création du document Word avec chaque paragraphe
+    const doc = new Document({
+      sections: [
+        {
+          children: texte.split('\n').map(line =>
+            new Paragraph({
+              children: [new TextRun(line)],
+              spacing: { after: 200 }
+            })
+          )
+        }
+      ]
+    });
+
+    // Création du buffer Word
+    const buffer = await Packer.toBuffer(doc);
+
+    // Envoie du fichier au client
+    res.setHeader("Content-Type", "application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+    res.setHeader("Content-Disposition", "attachment; filename=lettre_ameliorée.docx");
+    res.send(buffer);
+
+  } catch (error) {
+    console.error("Erreur export Word :", error);
+    res.status(500).json({ error: "Erreur lors de la génération du document Word." });
+  }
+});
+
+
+
 // Démarrage du serveur
 app.listen(PORT, () => {
   console.log(`✅ Serveur backend démarré sur http://localhost:${PORT}`);
