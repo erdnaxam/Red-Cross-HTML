@@ -48,6 +48,10 @@
             <div class="form-group">
               <label for="nom" data-i18n="labelName">Nom Prénom</label>
               <input type="text" id="nom" name="nom" required placeholder="Ex : Marie Dupont">
+              <div class="input-with-mic">
+            <button type="button" class="mic-btn" data-target-input="nom" aria-label="Saisir par la voix pour previous-domain"><i class="fas fa-microphone"></i></button>
+          </div>
+
             </div>
             <div class="form-group">
               <label for="email" data-i18n="labelEmail">Email <span aria-hidden="true" class="text-danger">*</span></label>
@@ -57,18 +61,33 @@
         <div class="form-group">
           <label for="poste" data-i18n="labelPoste">Poste visé <span aria-hidden="true" class="text-danger">*</span></label>
           <input type="text" id="poste" name="poste" required class="form-control" placeholder="Ex : Assistant administratif">
+          <div class="input-with-mic">
+          <button type="button" class="mic-btn" data-target-input="poste" aria-label="Saisir par la voix pour previous-domain"><i class="fas fa-microphone"></i></button>
+          </div>
+
         </div>
         <div class="form-group">
           <label for="entreprise" data-i18n="labelEntreprise">Nom de l’entreprise <span aria-hidden="true" class="text-danger">*</span></label>
           <input type="text" id="entreprise" name="entreprise" required class="form-control" placeholder="Ex : Entreprise Dupuis">
+          <div class="input-with-mic">
+          <button type="button" class="mic-btn" data-target-input="entreprise" aria-label="Saisir par la voix pour previous-domain"><i class="fas fa-microphone"></i></button>
+          </div>
+
         </div>
         <div class="form-group">
           <label for="motivation_poste" data-i18n="labelMotivation">Pourquoi ce poste vous intéresse-t-il ? <span aria-hidden="true" class="text-danger">*</span></label>
-          <textarea id="motivation_poste" name="motivation_poste" required class="form-control" rows="4" placeholder="Exprimez votre motivation..."></textarea> 
+          <textarea id="motivation_poste" name="motivation_poste" required class="form-control" rows="4" placeholder="Exprimez votre motivation..."></textarea>
+          <div class="input-with-mic">
+          <button type="button" class="mic-btn" data-target-input="motivation_poste" aria-label="Saisir par la voix pour previous-domain"><i class="fas fa-microphone"></i></button>
+          </div>
+
         </div>
         <div class="form-group">
           <label for="valeur_ajoutee" data-i18n="labelValue"> Ce que vous pouvez apporter à l’entreprise <span aria-hidden="true" class="text-danger">*</span></label>
           <textarea id="valeur_ajoutee" name="valeur_ajoutee" required class="form-control" rows="4" placeholder="Parlez de vos atouts, qualités, expériences..."></textarea> 
+          <div class="input-with-mic">
+          <button type="button" class="mic-btn" data-target-input="valeur_ajoutee" aria-label="Saisir par la voix pour previous-domain"><i class="fas fa-microphone"></i></button>
+          </div>
         </div>
         <button type="submit" class="btn btn-primary btn-large button-full mt-2" id="generateLetterBtn" data-i18n="generateBtn"> 
           <i class="fas fa-magic mr-2"></i> Générer ma Lettre
@@ -118,6 +137,62 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+  // Vérifie la compatibilité navigateur
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  if (!SpeechRecognition) {
+    console.warn("SpeechRecognition API non supportée dans ce navigateur.");
+    return;
+  }
+
+  // Initialiser une instance globale
+  const recognition = new SpeechRecognition();
+  recognition.lang = 'fr-FR'; // Français
+  recognition.interimResults = false; // On ne veut que les résultats finaux
+  recognition.maxAlternatives = 1;
+
+  let currentTargetInput = null;
+
+  // Gère le clic sur chaque bouton micro
+  document.querySelectorAll('.mic-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const inputId = btn.dataset.targetInput;
+      const input = document.getElementById(inputId);
+
+      if (!input) {
+        console.error(`Champ introuvable pour l'ID: ${inputId}`);
+        return;
+      }
+
+      currentTargetInput = input;
+      input.focus(); // Fait le focus sur l'input
+      recognition.start(); // Lance la reconnaissance vocale
+    });
+  });
+
+  // Quand la reconnaissance retourne un résultat
+  recognition.addEventListener('result', (event) => {
+    const transcript = event.results[0][0].transcript;
+    if (currentTargetInput) {
+      currentTargetInput.value = transcript;
+      currentTargetInput.dispatchEvent(new Event('input')); // Pour déclencher la mise à jour de l'aperçu
+    }
+  });
+
+  recognition.addEventListener('speechend', () => {
+    recognition.stop();
+  });
+
+  recognition.addEventListener('error', (event) => {
+    console.error('Erreur de reconnaissance vocale:', event.error);
+    if (typeof App?.showToast === 'function') {
+      App.showToast(`Erreur vocale : ${event.error}`, 'error');
+    }
+  });
+});
+  </script>
+   <script>
+     document.addEventListener('DOMContentLoaded', () => {
         const motivationForm = document.getElementById('motivationForm');
         const generateLetterBtn = document.getElementById('generateLetterBtn');
         const letterResultOutput = document.getElementById('resultat');
@@ -269,6 +344,7 @@
             });
         }
     });
+
 </script> 
 <script src="backend-openai/chatbot.js"> </script>
   <script src="langue.js"></script>

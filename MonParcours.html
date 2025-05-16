@@ -42,6 +42,8 @@
   <section class="parcours-progress-container" aria-label="Indicateur de progression dans le parcours">
     <ul class="parcours-progress-bar mb-4" role="list">
       <div class="progress-line-active" style="width: 00%;"></div>
+
+        <!-- Etape 0 -->
       <li class="progress-step" data-etape-index="0" id="progress-step-O">
         <a href="questionnaire.html" class="step-link" aria-label="Aller à l'étape Évaluation" data-i18n-aria-label="stepEvaluationAria">
           <span class="step-indicator" aria-hidden="true"><i class="fas fa-clipboard-question"></i></span>
@@ -85,7 +87,7 @@
         </a>
       </li>
       <li class="progress-step" data-etape-index="7" id="progress-step-7">
-        <a href="felicitations.html" class="step-link" aria-label="Aller à l'étape Félicitations" data-i18n-aria-label="stepFelicitationsAria">
+        <a href="felicitation.html" class="step-link" aria-label="Aller à l'étape Félicitations" data-i18n-aria-label="stepFelicitationsAria">
           <span class="step-indicator" aria-hidden="true"><i class="fas fa-champagne-glasses"></i></span>
           <span class="step-label" data-i18n="stepFelicitations">Félicitations!</span>
         </a>
@@ -96,10 +98,10 @@
 
     <!-- Bouton d'aide -->
 <div class="text-center mb-8">
-  <button type="button" class="aide-button" aria-label="Obtenir de l'aide disponible à chaque étape" onclick="alert('Fonctionnalité d\'aide à implémenter !');">
-    <i class="fas fa-question-circle" aria-hidden="true"></i>
-    <span data-i18n="aideDispo">Aide disponible à chaque étape</span>
-  </button>
+<a href="partenaires.html" class="aide-button" aria-label="Obtenir de l'aide disponible à chaque étape">
+  <i class="fas fa-question-circle" aria-hidden="true"></i>
+  <span data-i18n="aideDispo">Aide disponible à chaque étape</span>
+</a>
 </div>
 
 <!-- Tableau de bord utilisateur -->
@@ -144,79 +146,83 @@
 <section aria-labelledby="detail-etapes-titre">
   <h2 id="detail-etapes-titre" class="text-center mb-4" data-i18n="titreDetailEtapes">Détail des étapes du parcours</h2>
   <div class="etapes-grid">
-
-    <article class="etape-carte is-active" id="etape-0">
-      <div class="etape-icon" aria-hidden="true"><i class="fas fa-clipboard-question"></i></div>
-      <h3 data-i18n="etape0Titre">0. Évaluation Express</h3>
-      <p data-i18n="etape0Texte">Commencez ici pour évaluer votre situation et démarrer votre profil facilement.</p>
-      <a href="questionnaire.html" class="etape-action" aria-label="Démarrer l'étape 0 : Évaluation Express">
-        <i class="fas fa-arrow-right" aria-hidden="true"></i>
+ <!-- Etape 1 -->
+   <a href="questionnaire.html" class="etape-carte is-active" id="etape-1" aria-label="Démarrer l'étape 1 : Évaluation Express">
+  <div class="etape-icon" aria-hidden="true"><i class="fas fa-clipboard-question"></i></div>
+  <h3 data-i18n="etape1Titre">1. Évaluation Express</h3>
+  <p data-i18n="etape1Texte">Commencez ici pour évaluer votre situation et démarrer votre profil facilement.</p>
+  <span class="etape-action-visual" aria-hidden="true"> <!-- La flèche devient un span pour le style -->
+    <i class="fas fa-arrow-right"></i>
+  </span>
       </a>
-    </article>
 
-    <article class="etape-carte is-locked" id="etape-1">
+    <!-- Etape 2 -->
+    <a href="choix-cv.html" class="etape-carte is-active" id="etape-2" aria-label="Démarrer l'étape 2 : Mon CV & LM">
       <div class="etape-icon" aria-hidden="true"><i class="fas fa-file-alt"></i></div>
-      <h3 data-i18n="etape1Titre">1. Mon CV & LM</h3>
-      <p data-i18n="etape1Texte">Créez ou améliorez votre CV et une lettre de motivation percutante.</p>
-      <a href="choix-cv.html" class="etape-action" aria-label="Continuer à l'étape 1 : Création de CV et Lettre de Motivation">
+      <h3 data-i18n="etape2Titre">2. Mon CV & LM</h3>
+      <p data-i18n="etape2Texte">Créez ou améliorez votre CV et une lettre de motivation percutante.</p>
+      <span class="etape-action-visual" aria-hidden="true"> <!-- La flèche devient un span pour le style -->
         <i class="fas fa-arrow-right" aria-hidden="true"></i>
-      </a>
-    </article>
+      </span>
+    </a>
 
-    <article class="etape-carte is-locked" id="etape-2">
+ <!-- Etape 3 -->
+    <a href="recherche-candidature.html" class="etape-carte is-active" id="etape-3" aria-label="Démarrer l'étape 3 : Recherche & Candidature">
       <div class="etape-icon" aria-hidden="true"><i class="fas fa-search"></i></div>
-      <h3 data-i18n="etape2Titre">2. Recherche & Candidature</h3>
-      <p data-i18n="etape2Texte">Trouvez des offres d'emploi et postulez simplement.</p>
-      <a href="recherche-candidature.html" class="etape-action" aria-label="Continuer à l'étape 2 : Recherche et Candidature aux offres">
+      <h3 data-i18n="etape3Titre">3. Recherche & Candidature</h3>
+      <p data-i18n="etape3Texte">Trouvez des offres d'emploi et postulez simplement.</p>
+      <span class="etape-action-visual" aria-hidden="true"> <!-- La flèche devient un span pour le style -->
         <i class="fas fa-arrow-right" aria-hidden="true"></i>
+          </span>
       </a>
-    </article>
-
-    <article class="etape-carte is-locked" id="etape-3">
+     <!-- Etape 4 -->
+    <a href="preparation-entretien.html" class="etape-carte is-active" id="etape-4" aria-label="Démarrer l'étape 4 : Préparation Entretien">
       <div class="etape-icon" aria-hidden="true"><i class="fas fa-chalkboard-user"></i></div>
-      <h3 data-i18n="etape3Titre">3. Préparation Entretien</h3>
-      <p data-i18n="etape3Texte">Préparez vos entretiens pour être confiant le jour J.</p>
-      <a href="preparation-entretien.html" class="etape-action" aria-label="Continuer à l'étape 3 : Préparation à l'entretien">
+      <h3 data-i18n="etape4Titre">4. Préparation Entretien</h3>
+      <p data-i18n="etape4Texte">Préparez vos entretiens pour être confiant le jour J.</p>
+      <span class="etape-action-visual" aria-hidden="true"> <!-- La flèche devient un span pour le style -->
         <i class="fas fa-arrow-right" aria-hidden="true"></i>
+      </span>
       </a>
-    </article>
 
-    <article class="etape-carte is-locked" id="etape-4">
+     <!-- Etape 5 -->
+    <a href="apres-entretien.html" class="etape-carte is-active" id="etape-5" aria-label="Démarrer l'étape 5 : L'Après Entretien">
       <div class="etape-icon" aria-hidden="true"><i class="fas fa-comments"></i></div>
-      <h3 data-i18n="etape4Titre">4. L'Après Entretien</h3>
-      <p data-i18n="etape4Texte">Analysez vos entretiens et gardez votre motivation.</p>
-      <a href="apres-entretien.html" class="etape-action" aria-label="Continuer à l'étape 4 : Le suivi après l'entretien">
+      <h3 data-i18n="etape5Titre">5. L'Après Entretien</h3>
+      <p data-i18n="etape5Texte">Analysez vos entretiens et gardez votre motivation.</p>
+      <span class="etape-action-visual" aria-hidden="true"> <!-- La flèche devient un span pour le style -->
         <i class="fas fa-arrow-right" aria-hidden="true"></i>
-      </a>
-    </article>
+      </span>
+     </a>
 
-    <article class="etape-carte is-locked" id="etape-5">
+     <!-- Etape 6 -->
+    <a href="Contrat.html" class="etape-carte is-active" id="etape-6" aria-label="Démarrer l'étape 6 : Le Contrat">
       <div class="etape-icon" aria-hidden="true"><i class="fas fa-file-signature"></i></div>
-      <h3 data-i18n="etape5Titre">5. Le Contrat</h3>
-      <p data-i18n="etape5Texte">Comprenez et signez votre contrat de travail en toute sérénité.</p>
-      <a href="Contrat.html" class="etape-action" aria-label="Continuer à l'étape 5 : Comprendre et signer le contrat">
+      <h3 data-i18n="etape6Titre">6. Le Contrat</h3>
+      <p data-i18n="etape6Texte">Comprenez et signez votre contrat de travail en toute sérénité.</p>
+      <span class="etape-action-visual" aria-hidden="true"> <!-- La flèche devient un span pour le style -->
         <i class="fas fa-arrow-right" aria-hidden="true"></i>
-      </a>
-    </article>
+      </span>
+    </a>
 
-    <article class="etape-carte is-locked" id="etape-6">
+     <!-- Etape 7 -->
+    <a href="Suivi.html" class="etape-carte is-active" id="etape-7" aria-label="Démarrer l'étape 7 : Le Suivi">
       <div class="etape-icon" aria-hidden="true"><i class="fas fa-handshake"></i></div>
-      <h3 data-i18n="etape6Titre">6. Le Suivi</h3>
-      <p data-i18n="etape6Texte">Bénéficiez d'un accompagnement pour réussir votre intégration.</p>
-      <a href="Suivi.html" class="etape-action" aria-label="Continuer à l'étape 6 : Le suivi après l'embauche">
+      <h3 data-i18n="etape7Titre">7. Le Suivi</h3>
+      <p data-i18n="etape7Texte">Bénéficiez d'un accompagnement pour réussir votre intégration.</p>
+      <span class="etape-action-visual" aria-hidden="true"> <!-- La flèche devient un span pour le style -->
         <i class="fas fa-arrow-right" aria-hidden="true"></i>
-      </a>
-    </article>
-
-    <article class="etape-carte is-locked" id="etape-7">
+      </span>
+    </a>
+ <!-- Etape 8 -->
+    <a href="felicitation.html" class="etape-carte is-active" id="etape-8" aria-label="Démarrer l'étape 8 : Le Suivi">
       <div class="etape-icon" aria-hidden="true"><i class="fas fa-champagne-glasses"></i></div>
-      <h3 data-i18n="etape7Titre">7. Objectif atteint !</h3>
-      <p data-i18n="etape7Texte">Vous avez réussi votre insertion professionnelle. Bravo !</p>
-      <a href="felicitations.html" class="etape-action" aria-label="Découvrir l'étape 7 : Objectif atteint !">
+      <h3 data-i18n="etape8Titre">8. Objectif atteint !</h3>
+      <p data-i18n="etape8Texte">Vous avez réussi votre insertion professionnelle. Bravo !</p>
+      <span class="etape-action-visual" aria-hidden="true"> <!-- La flèche devient un span pour le style -->
         <i class="fas fa-arrow-right" aria-hidden="true"></i>
-      </a>
-    </article>
-
+       </span>
+    </a>
   </div>
 </section>
 

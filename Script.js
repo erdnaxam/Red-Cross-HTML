@@ -527,24 +527,28 @@ document.addEventListener('DOMContentLoaded', () => {
             try {
                 let parcoursData = JSON.parse(localStorage.getItem('parcoursEmploiAvenir')) || {};
                 // S'assurer que la structure existe
-                parcoursData.etapes = parcoursData.etapes || Array(8).fill(null).map((_, i) => ({ id: `etape-${i}`, statut: 'locked' }));
-                parcoursData.etapeActuelleIndex = parcoursData.etapeActuelleIndex || 0;
+                if (!parcoursData.etapes || parcoursData.etapes.length !== 8) { // Vérifier qu'on a bien 8 étapes
+                parcoursData.etapes = Array(8).fill(null).map((_, i) => ({
+                    id: `etape-${i + 1}`, // Pour que les ID correspondent à l'affichage (etape-1, etape-2...)
+                    statut: i === 0 ? 'active' : 'locked' // Le questionnaire (index 0) est actif au début
+                }));
+            }
+                parcoursData.etapeActuelleIndex = parcoursData.etapeActuelleIndex === undefined ? 0 : parcoursData.etapeActuelleIndex;
 
-                // Marquer l'étape 0 (Évaluation) comme complétée
+                // Marquer l'étape 1 (Évaluation) comme complétée
                 if (parcoursData.etapes[0]) {
                     parcoursData.etapes[0].statut = 'completed';
                     parcoursData.etapes[0].dateCompletion = new Date().toISOString();
                 } else { // Fallback si la structure est corrompue/vide
-                    parcoursData.etapes[0] = { id: 'etape-0', statut: 'completed', dateCompletion: new Date().toISOString() };
+                    parcoursData.etapes[0] = { id: 'etape-1', statut: 'completed', dateCompletion: new Date().toISOString() };
                 }
 
-                // Marquer l'étape 1 (CV & LM) comme active
+                // Marquer l'étape 2 (CV & LM) comme active
                 if (parcoursData.etapes[1]) {
                     parcoursData.etapes[1].statut = 'active';
                 } else {
-                    parcoursData.etapes[1] = { id: 'etape-1', statut: 'active' };
+                    parcoursData.etapes[1] = { id: 'etape-2', statut: 'active' };
                 }
-
                 parcoursData.etapeActuelleIndex = 1; // L'étape CV & LM devient l'étape active
                 parcoursData.derniereActivite = new Date().toISOString();
 

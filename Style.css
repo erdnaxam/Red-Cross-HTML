@@ -1562,13 +1562,210 @@ progress#progression-bar::-moz-progress-bar { background-color: var(--color-prim
   .application-card-actions .action-buttons { flex-direction: row; }
 
   /* Barre Progression Mon Parcours (Alternative Mobile) */
-  /* Si l'ancienne version empilée est souhaitée : */
-  /* .parcours-progress-bar { flex-direction: column; gap: 1rem; max-width: 100%; margin-bottom: 1rem; }
-  .parcours-progress-bar::before, .parcours-progress-bar .progress-line-active { display: none; } // Cache les lignes
-  .progress-step { flex-direction: row; align-items: center; text-align: left; max-width: 100%; padding: 1rem; border: 1px solid var(--color-gray-light); border-radius: var(--radius); gap: 1rem; }
-  .step-indicator { margin-bottom: 0; }
-  .step-label { flex-grow: 1; text-align: left; } */
-  /* Sinon, laisser la barre horizontale par défaut, elle devrait s'adapter raisonnablement */
+/* ============================================= */
+/* Styles par défaut (Desktop et tablettes larges) */
+.parcours-progress-bar {
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  padding: 0;
+  margin: 1rem auto 2rem auto; /* Centrée, avec marges */
+  position: relative;
+  width: 100%;
+  max-width: 900px; /* Ajustez si besoin */
+}
+
+.parcours-progress-bar::before { /* Ligne grise de fond */
+  content: '';
+  position: absolute;
+  top: 19px; /* Centre vertical de la bulle de 40px - 2px (bordure) / 2 */
+  left: 0px;  /* Pour ne pas commencer sous la première bulle */
+  right: 20px; /* Pour ne pas finir sous la dernière bulle */
+  height: 4px;
+  background-color: var(--color-gray-light);
+  z-index: 1;
+  border-radius: 2px;
+}
+
+.parcours-progress-bar .progress-line-active { /* Ligne colorée active */
+  position: absolute;
+  top: 19px;
+  left: 0; /* Part de la gauche */
+  height: 4px;
+  background-color: var(--color-primary);
+  z-index: 2;
+  border-radius: 2px;
+  width: 0%; /* Ajusté par JS */
+  transition: width 0.5s ease-in-out;
+}
+
+.progress-step { /* Chaque étape dans la barre */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  z-index: 3;
+  flex: 1; /* Pour espacer également */
+  max-width: 120px; /* Limite la largeur pour éviter le chevauchement du texte */
+  padding: 0 5px; /* Petit padding horizontal */
+}
+
+.step-link { /* Le lien <a> qui englobe l'indicateur et le label */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: inherit; /* Hérite la couleur pour le label */
+  position: relative; /* Pour le focus */
+}
+.step-link:focus {
+  outline: none; /* On gère le focus sur step-indicator */
+}
+.step-link:focus-visible .step-indicator { /* Style de focus visible pour l'accessibilité */
+   box-shadow: 0 0 0 3px var(--color-primary-light), 0 0 0 5px var(--color-primary);
+}
+
+
+.step-indicator { /* La bulle */
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--color-surface);
+  border: 2px solid var(--color-gray-medium);
+  color: var(--color-gray-medium);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold; /* Si vous mettez des numéros dedans */
+  margin-bottom: 0.5rem;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  flex-shrink: 0; /* Empêche de rétrécir */
+}
+
+.progress-step.is-active .step-indicator {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.progress-step.is-completed .step-indicator {
+  background-color: var(--color-secondary);
+  border-color: var(--color-secondary);
+  color: var(--color-white);
+}
+.progress-step.is-locked .step-indicator {
+  /* Optionnel: style spécifique si vous voulez différencier de 'default' */
+  background-color: var(--color-gray-light);
+  border-color: var(--color-gray-medium);
+  color: var(--color-gray-medium);
+  opacity: 0.7;
+}
+
+
+.step-label {
+  font-size: 0.8rem; /* Plus petit pour mobile */
+  color: var(--color-gray);
+  font-weight: 500;
+  line-height: 1.2;
+  max-width: 100px; /* Évite que le texte ne devienne trop large */
+  word-break: break-word; /* Coupe les mots longs si nécessaire */
+}
+
+.progress-step.is-active .step-label,
+.progress-step.is-completed .step-label {
+  color: var(--color-dark);
+  font-weight: 600; /* Un peu plus d'emphase */
+}
+.progress-step.is-locked .step-label {
+  color: var(--color-gray-medium);
+  opacity: 0.7;
+}
+
+
+/* --- Version Mobile pour la Barre de Progression --- */
+@media (max-width: 767px) {
+  .parcours-progress-bar {
+    flex-direction: column; /* Empile les étapes verticalement */
+    gap: 0.75rem;           /* Espace entre chaque étape verticale */
+    max-width: 100%;        /* Prend toute la largeur disponible */
+    margin-bottom: 1.5rem;
+    border-left: 4px solid var(--color-gray-light); /* Ligne verticale principale */
+    padding-left: 1.5rem; /* Espace pour que les bulles se décalent de la ligne */
+    margin-left: 20px; /* Décaler toute la barre pour centrer la ligne sur la bulle */
+  }
+
+  .parcours-progress-bar::before,
+  .parcours-progress-bar .progress-line-active {
+    display: none; /* Cache les lignes horizontales */
+  }
+
+  .progress-step {
+    flex-direction: row; /* Aligne bulle et texte horizontalement */
+    align-items: center;   /* Centre verticalement bulle et texte */
+    text-align: left;      /* Aligne le texte à gauche */
+    max-width: 100%;       /* L'étape prend toute la largeur */
+    padding: 0.5rem 0;     /* Un peu de padding vertical pour chaque item */
+    position: relative; /* Pour le positionnement de la bulle par rapport à la ligne */
+  }
+
+  .step-link { /* Le lien <a> pour la version mobile */
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem; /* Espace entre la bulle et le texte */
+    width: 100%; /* Le lien prend toute la largeur de l'étape */
+    padding: 0.25rem 0; /* Pour augmenter la zone cliquable */
+  }
+
+  .step-indicator {
+    margin-bottom: 0; /* Plus de marge en bas, car aligné horizontalement */
+    margin-left: -22px; /* (- largeur bulle / 2) - (bordure bulle) - (largeur ligne / 2) => (-40/2) - 2 - (4/2) = -20 - 2 - 2 = -24px. Ajustez pour un alignement parfait de la bulle SUR la ligne. Ici, (40px/2) + 2px de bordure */
+    position: relative; /* S'assurer qu'il est au-dessus de la ligne */
+    background-color: var(--color-surface); /* Assurer que la bulle cache la ligne derrière elle */
+  }
+
+  .step-label {
+    flex-grow: 1;        /* Le label prend l'espace restant */
+    text-align: left;
+    font-size: 0.9rem;   /* Texte un peu plus grand car plus de place */
+    max-width: none;     /* Pas de limite de largeur pour le texte */
+    word-break: normal;  /* Comportement normal pour la césure */
+  }
+
+  /* Colorer la section de la ligne verticale pour les étapes complétées/actives */
+  .progress-step.is-completed,
+  .progress-step.is-active {
+    border-left-color: transparent; /* On va gérer la couleur via un pseudo-élément pour un meilleur contrôle */
+  }
+
+  .progress-step.is-completed::before,
+  .progress-step.is-active::before {
+    content: "";
+    position: absolute;
+    left: -22px; /* Doit correspondre au décalage de la ligne et de la bulle (padding-left + moitié largeur bulle + moitié largeur ligne) */
+    top: -0.75rem; /* Ajuster pour démarrer un peu avant la bulle */
+    bottom: -0.75rem; /* Ajuster pour finir un peu après la bulle */
+    width: 4px;    /* Même largeur que la ligne principale */
+    z-index: -1; /* Derrière la bulle */
+  }
+
+  .progress-step.is-completed::before {
+    background-color: var(--color-secondary);
+  }
+  .progress-step.is-active::before {
+     background-color: var(--color-primary);
+  }
+
+  /* Assurer que la ligne pour la première étape active commence bien en haut */
+  .parcours-progress-bar > .progress-step.is-active:first-child::before {
+      top: 0; /* Ou ajustez pour aligner avec le haut de la bulle */
+  }
+  /* Et pour la dernière étape, qu'elle ne dépasse pas en bas */
+   .parcours-progress-bar > .progress-step:last-child.is-active::before,
+   .parcours-progress-bar > .progress-step:last-child.is-completed::before {
+       bottom: 0; /* Ou ajustez pour aligner avec le bas de la bulle */
+   }
+}  /* Sinon, laisser la barre horizontale par défaut, elle devrait s'adapter raisonnablement */
 
   /* Filtres Partenaires */
   .filters { flex-direction: column; }

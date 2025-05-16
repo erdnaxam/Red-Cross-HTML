@@ -98,13 +98,18 @@
 
           <div class="form-group">
             <label for="previous-domain" data-i18n="labelDomaine">Dans quel domaine avez-vous travaillé ?</label>
-            <input type="text" id="previous-domain" name="previousDomain" placeholder="Ex: Bâtiment, services à la personne, restauration...">
-          </div>
+            <input type="text" id="previous-domain" name="previous-domain" placeholder="Ex: Btp, agent d'entretien etc." data-i18n-placeholder="placeholder">
+            <div class="input-with-mic">
+            <button type="button" class="mic-btn" data-target-input="previous-domain" aria-label="Saisir par la voix pour previous-domain"><i class="fas fa-microphone"></i></button>
+            </div></div>
 
           <div class="form-group">
             <label for="skills" data-i18n="labelSkills">Qu'est-ce que vous aimez ou savez bien faire ?</label>
             <input type="text" id="skills" name="skills" placeholder="Ex: travailler en équipe, organiser, cuisiner...">
-          </div>
+            <div class="input-with-mic">
+            <button type="button" class="mic-btn" data-target-input="skills" aria-label="Saisir par la voix pour domain de travail"><i class="fas fa-microphone"></i></button>
+            </div></div>
+
         </fieldset>
 
         <fieldset class="quiz-step" id="step-3" style="display: none;">
@@ -115,6 +120,8 @@
           <div class="form-group">
             <label for="job-type" data-i18n="labelJob">Quel type d'emploi vous intéresse ?</label>
             <input type="text" id="job-type" name="jobType" placeholder="Ex: CDI, CDD, formation, stage...">
+            <div class="input-with-mic">
+            <button type="button" class="mic-btn" data-target-input="job-type" aria-label="Saisir par la voix pour previous-domain"><i class="fas fa-microphone"></i></button>
           </div>
 
           <div class="form-group">
@@ -275,8 +282,63 @@
       <button id="sendMessage" type="button">Envoyer</button>
     </div>
   </div>
+<script> document.addEventListener('DOMContentLoaded', () => {
+  // Vérifie la compatibilité navigateur
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
+  if (!SpeechRecognition) {
+    console.warn("SpeechRecognition API non supportée dans ce navigateur.");
+    return;
+  }
+
+  // Initialiser une instance globale
+  const recognition = new SpeechRecognition();
+  recognition.lang = 'fr-FR'; // Français
+  recognition.interimResults = false; // On ne veut que les résultats finaux
+  recognition.maxAlternatives = 1;
+
+  let currentTargetInput = null;
+
+  // Gère le clic sur chaque bouton micro
+  document.querySelectorAll('.mic-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const inputId = btn.dataset.targetInput;
+      const input = document.getElementById(inputId);
+
+      if (!input) {
+        console.error(`Champ introuvable pour l'ID: ${inputId}`);
+        return;
+      }
+
+      currentTargetInput = input;
+      input.focus(); // Fait le focus sur l'input
+      recognition.start(); // Lance la reconnaissance vocale
+    });
+  });
+
+  // Quand la reconnaissance retourne un résultat
+  recognition.addEventListener('result', (event) => {
+    const transcript = event.results[0][0].transcript;
+    if (currentTargetInput) {
+      currentTargetInput.value = transcript;
+      currentTargetInput.dispatchEvent(new Event('input')); // Pour déclencher la mise à jour de l'aperçu
+    }
+  });
+
+  recognition.addEventListener('speechend', () => {
+    recognition.stop();
+  });
+
+  recognition.addEventListener('error', (event) => {
+    console.error('Erreur de reconnaissance vocale:', event.error);
+    if (typeof App?.showToast === 'function') {
+      App.showToast(`Erreur vocale : ${event.error}`, 'error');
+    }
+  });
+});
+  </script>
   <script src="script.js"></script>
   <script src="langue.js"></script>
+
 </body>
 </html>
