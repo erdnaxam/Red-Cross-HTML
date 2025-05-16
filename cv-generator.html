@@ -4,277 +4,448 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mon CV Facile - EmploiAvenir</title>
+    <link rel="stylesheet" href="style.css">
   <!-- <base href="/Red-Cross-HTML/">   Maybe to delet -->
   <meta name="description" content="Créez facilement votre CV étape par étape avec l'outil d'aide d'EmploiAvenir. Idéal pour commencer ou reprendre votre parcours professionnel.">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <style>
+        /* --- STYLES CSS --- */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap; /* Pour la responsivité */
+        }
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel="stylesheet" href="style.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        .container {
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-container {
+            flex: 1; /* Prend l'espace disponible */
+            min-width: 300px; /* Largeur minimale avant de passer en dessous */
+        }
+
+        .preview-container {
+            flex: 1.5; /* L'aperçu prend un peu plus de place */
+            min-width: 400px;
+        }
+
+        h1, h2 {
+            color: #007bff;
+            margin-top: 0;
+        }
+        h1 { text-align: center; margin-bottom: 25px;}
+        h2 { border-bottom: 2px solid #007bff; padding-bottom: 8px; margin-bottom: 15px; font-size: 1.4em; }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="tel"],
+        .form-group textarea {
+            width: calc(100% - 22px); /* Ajustement pour padding et bordure */
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        button#downloadPdfBtn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+        button#downloadPdfBtn:hover {
+            background-color: #218838;
+        }
+
+        /* Styles pour l'aperçu du CV (ressemblant à un vrai CV) */
+        #cvPreview {
+            border: 1px solid #ccc;
+            padding: 30px;
+            background-color: #fff;
+            min-height: 500px; /* Hauteur minimale pour voir quelque chose */
+            font-size: 11pt; /* Taille de police typique pour un CV */
+            line-height: 1.5;
+            color: #000; /* Texte noir pour le CV */
+        }
+        #cvPreview h3 { /* Nom en grand */
+            font-size: 2em;
+            color: #333;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+        #cvPreview .contact-info-preview {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+            color: #555;
+        }
+        #cvPreview .contact-info-preview span {
+            margin: 0 10px;
+        }
+        #cvPreview h4 { /* Titres de section CV */
+            font-size: 1.2em;
+            color: #0056b3; /* Bleu plus foncé pour les sections */
+            border-bottom: 1px solid #0056b3;
+            padding-bottom: 5px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        #cvPreview p, #cvPreview li {
+            margin-bottom: 8px;
+        }
+        #cvPreview ul {
+            list-style-position: inside;
+            padding-left: 0; /* Ajuster si besoin */
+        }
+        .experience-item, .education-item {
+            margin-bottom: 15px;
+        }
+        .experience-item strong, .education-item strong {
+            font-weight: bold;
+            display: block; /* Pour que les dates aillent en dessous */
+        }
+        .experience-item .dates, .education-item .dates {
+            font-style: italic;
+            font-size: 0.9em;
+            color: #666;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* Responsivité simple */
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+            .form-container, .preview-container {
+                flex-basis: 100%; /* Prend toute la largeur disponible */
+            }
+        }
+
+    </style>
 </head>
-
 <body>
-  <!-- HEADER -->
-  <header class="header" id="header">
+<header class="header" id="header">
     <div class="container flex justify-between items-center">
       <a href="index.html" class="logo" aria-label="Accueil EmploiAvenir"><span>Emploi</span>Avenir</a>
       <nav aria-label="Navigation principale">
         <ul class="nav-links" id="mainNavLinks">
           <li><a href="index.html"data-i18n="Home">Accueil</a></li>
-          <li><a href="MonParcours.html" aria-current="page"data-i18n="Parcours">Mon Parcours</a></li>
+          <li><a href="MonParcours.html" data-i18n="Parcours">Mon Parcours</a></li>
           <li><a href="MesCandidature.html" data-i18n="Candidatures">Mes Candidatures</a></li>
           <li><a href="Partenaires.html" data-i18n="Partenaires">Nos partenaires</a></li>
-          <li><a href="Documents.html" data-i18n="Documents">Mes documents</a></li>
+          <li><a href="Documents.html" aria-current="page" class="active" data-i18n="Documents">Mes documents</a></li>
+          <li><a href="formation.html" data-i18n="Se former">Se former</a></li>
           <li><a href="Profil.html" data-i18n="Profil">Profil</a></li>
         </ul>
       </nav>
       <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Ouvrir le menu de navigation" aria-expanded="false" aria-controls="mainNavLinks">☰</button>
     </div>
   </header>
-<select id="langSwitcher" aria-label="Choisir la langue">
-  <option value="fr">🇫🇷 Français</option>
-  <option value="en">🇬🇧 English</option>
-  <option value="ar">🇸🇦 العربية</option>
-  <option value="uk">🇺🇦  українська мова</option>
-</select>
-<main class="cv-assistant-container">
-  <section class="cv-assistant-header text-center" aria-labelledby="cvTitle">
-    <h1 id="cvTitle" data-i18n="cvAssistantTitle">Créez Votre CV Facilement</h1>
-    <p class="intro-text" data-i18n="cvAssistantIntro">Nous allons vous guider pas à pas pour créer un CV qui vous ressemble. Répondez simplement aux questions.</p>
-    <nav class="cv-progress-bar" role="progressbar" aria-valuenow="1" aria-valuemin="1" aria-valuemax="5" aria-label="Progression de la création du CV">
-      <div class="cv-progress-step active" data-step="1" data-i18n="cvStep1">1 Infos Perso</div>
-      <div class="cv-progress-step" data-step="2" data-i18n="cvStep2">2 Expériences</div>
-      <div class="cv-progress-step" data-step="3" data-i18n="cvStep3">3 Formations</div>
-      <div class="cv-progress-step" data-step="4" data-i18n="cvStep4">4 Atouts</div>
-      <div class="cv-progress-step" data-step="5" data-i18n="cvStep5">5 Finalisation</div>
-    </nav>
-  </section>
 
-  <form id="cvAssistantForm" novalidate>
-    <fieldset class="cv-step active-step" id="step-1-perso" aria-labelledby="step1Title">
-      <legend class="sr-only" data-i18n="legendStep1">Étape 1 : Vos informations personnelles</legend>
-      <h2 id="step1Title" data-i18n="step1Title">Commençons par vous !</h2>
-      <p class="step-description" data-i18n="step1Desc">Ces informations de base nous aident à démarrer.</p>
+    <!-- CONTENEUR DU FORMULAIRE -->
+    <div class="container form-container">
+        <h1>Générateur de CV</h1>
+        <form id="cvForm">
+            <h2>Informations Personnelles</h2>
+            <div class="form-group">
+                <label for="fullName">Nom complet :</label>
+                <input type="text" id="fullName" name="fullName" placeholder="Ex: Jean Dupont">
+            </div>
+            <div class="form-group">
+                <label for="email">Email :</label>
+                <input type="email" id="email" name="email" placeholder="Ex: jean.dupont@email.com">
+            </div>
+            <div class="form-group">
+                <label for="phone">Téléphone :</label>
+                <input type="tel" id="phone" name="phone" placeholder="Ex: 06 12 34 56 78">
+            </div>
+            <div class="form-group">
+                <label for="address">Adresse :</label>
+                <input type="text" id="address" name="address" placeholder="Ex: 1 rue de la Paix, 75000 Paris">
+            </div>
+            <div class="form-group">
+                <label for="jobTitle">Titre du poste souhaité / Profil :</label>
+                <input type="text" id="jobTitle" name="jobTitle" placeholder="Ex: Développeur Web Junior">
+            </div>
 
-      <div class="form-group">
-        <label for="name" data-i18n="labelName">Votre Prénom et Nom*</label>
-        <div class="input-with-mic">
-          <input type="text" id="name" name="name" class="form-control" placeholder="Ex: Marie Dupont" data-i18n-placeholder="placeholderName" required>
-          <button type="button" class="mic-btn" data-target-input="name" aria-label="Saisir par la voix pour Prénom et Nom"><i class="fas fa-microphone"></i></button>
+            <h2>Résumé / À Propos de Moi</h2>
+            <div class="form-group">
+                <label for="summary">Un court paragraphe vous décrivant :</label>
+                <textarea id="summary" name="summary" placeholder="Ex: Passionné par le développement web, avec une solide expérience en..."></textarea>
+            </div>
+
+            <h2>Expériences Professionnelles</h2>
+            <div id="experiencesContainer">
+                <!-- Les expériences seront ajoutées ici par JS -->
+            </div>
+            <button type="button" id="addExperienceBtn" style="margin-bottom:15px; background-color: #007bff; color:white; padding:8px 12px; border:none; border-radius:4px; cursor:pointer;">+ Ajouter une expérience</button>
+
+            <h2>Formations</h2>
+            <div id="educationContainer">
+                <!-- Les formations seront ajoutées ici par JS -->
+            </div>
+            <button type="button" id="addEducationBtn" style="margin-bottom:15px; background-color: #007bff; color:white; padding:8px 12px; border:none; border-radius:4px; cursor:pointer;">+ Ajouter une formation</button>
+
+            <h2>Compétences</h2>
+            <div class="form-group">
+                <label for="skills">Listez vos compétences (séparées par des virgules) :</label>
+                <input type="text" id="skills" name="skills" placeholder="Ex: HTML, CSS, JavaScript, React, Gestion de projet">
+            </div>
+        </form>
+    </div>
+
+    <!-- CONTENEUR DE L'APERÇU DU CV -->
+    <div class="container preview-container">
+        <h2>Aperçu du CV</h2>
+        <div id="cvPreview">
+            <!-- L'aperçu sera généré ici par JS -->
+            <h3>Votre Nom</h3>
+            <div class="contact-info-preview">
+                <span>votre.email@example.com</span> |
+                <span>01 23 45 67 89</span> |
+                <span>Votre Adresse</span>
+            </div>
+            <p style="text-align: center; font-weight: bold; font-size: 1.1em; margin-bottom: 20px;">Titre du Poste Souhaité</p>
+
+            <h4>Résumé</h4>
+            <p>Un bref résumé de votre profil...</p>
+
+            <h4>Expériences Professionnelles</h4>
+            <div class="experience-item">
+                <strong>Titre du Poste</strong>
+                <span class="dates">Entreprise - Ville (Mois Année - Mois Année)</span>
+                <ul>
+                    <li>Description de la tâche 1...</li>
+                    <li>Description de la tâche 2...</li>
+                </ul>
+            </div>
+
+            <h4>Formations</h4>
+            <div class="education-item">
+                <strong>Nom du Diplôme</strong>
+                <span class="dates">Nom de l'École - Ville (Année d'obtention)</span>
+            </div>
+
+            <h4>Compétences</h4>
+            <p>Compétence 1, Compétence 2, Compétence 3...</p>
         </div>
-        <small class="help-text" data-i18n="nameHelp">C'est le nom qui apparaîtra en haut de votre CV.</small>
-        <div class="invalid-feedback" data-i18n="nameError">Veuillez indiquer votre prénom et nom.</div>
-      </div>
-
-      <div class="form-group">
-        <label for="cvTitleInput" data-i18n="labelCvTitle">Quel type de poste recherchez-vous ? (Ou laissez vide)</label>
-        <div class="input-with-mic">
-          <input type="text" id="cvTitleInput" name="cvTitle" class="form-control" placeholder="Ex: Employé(e) polyvalent(e), Aide à domicile" data-i18n-placeholder="placeholderCvTitle">
-          <button type="button" class="mic-btn" data-target-input="cvTitleInput" aria-label="Saisir par la voix pour le type de poste"><i class="fas fa-microphone"></i></button>
-        </div>
-        <small class="help-text" data-i18n="cvTitleHelp">Cela peut être le titre de votre CV. Si vous ne savez pas, ce n'est pas grave !</small>
-      </div>
-
-      <div class="form-group">
-        <label for="email" data-i18n="labelEmail">Votre adresse e-mail*</label>
-        <input type="email" id="email" name="email" class="form-control" placeholder="Ex: marie.dupont@email.com" data-i18n-placeholder="placeholderEmail" required>
-        <small class="help-text" data-i18n="emailHelp">Important pour que les recruteurs puissent vous contacter.</small>
-        <div class="invalid-feedback" data-i18n="emailError">Veuillez indiquer une adresse e-mail valide.</div>
-      </div>
-
-      <div class="form-group">
-        <label for="phone" data-i18n="labelPhone">Votre numéro de téléphone</label>
-        <input type="tel" id="phone" name="phone" class="form-control" placeholder="Ex: 06 01 02 03 04" data-i18n-placeholder="placeholderPhone">
-        <small class="help-text" data-i18n="phoneHelp">Utile si un employeur souhaite vous appeler.</small>
-      </div>
-
-      <div class="form-group">
-        <label for="address" data-i18n="labelAddress">Ville (et pays si besoin)</label>
-        <div class="input-with-mic">
-          <input type="text" id="address" name="address" class="form-control" placeholder="Ex: Lyon, France" data-i18n-placeholder="placeholderAddress">
-          <button type="button" class="mic-btn" data-target-input="address" aria-label="Saisir par la voix pour la ville"><i class="fas fa-microphone"></i></button>
-        </div>
-        <small class="help-text" data-i18n="addressHelp">Juste la ville suffit généralement.</small>
-      </div>
-    </fieldset>
-
-     <!-- ÉTAPE 2: EXPÉRIENCES -->
-<fieldset class="cv-step" id="step-2-experiences" aria-labelledby="step2Title">
-  <legend class="sr-only" data-i18n="legendStep2">Étape 2 : Vos expériences</legend>
-  <h2 id="step2Title" data-i18n="step2Title">Vos expériences (même non payées)</h2>
-  <p class="step-description" data-i18n="step2Desc">Toute expérience est bonne à partager ! Avez-vous déjà travaillé, fait du bénévolat, aidé votre famille ou des amis, ou participé à des projets ?</p>
-  <div class="info-box">
-    <i class="fas fa-lightbulb"></i>
-    <div>
-      <p data-i18n="step2NoExpIntro"><strong>Pas d'expérience professionnelle ? Pas de souci !</strong> Pensez à :</p>
-      <ul>
-        <li data-i18n="step2Exp1">Bénévolat (aide aux devoirs, distribution de repas...)</li>
-        <li data-i18n="step2Exp2">Projets personnels (organisation d'un événement, création d'un blog...)</li>
-        <li data-i18n="step2Exp3">Aide à votre entourage (garde d'enfants, aide à une personne âgée...)</li>
-        <li data-i18n="step2Exp4">Stages, même courts.</li>
-      </ul>
-      <p data-i18n="step2ExpAdvice">Indiquez ce que vous avez fait et ce que cela vous a appris.</p>
+        <button id="downloadPdfBtn">Télécharger en PDF</button>
     </div>
-  </div>
-  <div id="experiences-list-form"></div>
-  <button type="button" class="btn btn-outline-secondary add-item-btn" id="addExperienceFormBtn" data-i18n="addExperienceBtn">
-    <i class="fas fa-plus-circle"></i> Ajouter une expérience
-  </button>
-</fieldset>
 
-<!-- ÉTAPE 3: FORMATIONS -->
-<fieldset class="cv-step" id="step-3-formations" aria-labelledby="step3Title">
-  <legend class="sr-only" data-i18n="legendStep3">Étape 3 : Vos formations et diplômes</legend>
-  <h2 id="step3Title" data-i18n="step3Title">Vos formations et diplômes</h2>
-  <p class="step-description" data-i18n="step3Desc">Avez-vous suivi des formations, même courtes, ou obtenu des diplômes ?</p>
-  <div class="info-box">
-    <i class="fas fa-graduation-cap"></i>
-    <p data-i18n="step3Info">Indiquez ici vos diplômes (brevet, CAP, Bac, etc.) ou les formations suivies (permis cariste, premiers secours, cours en ligne...). Même si ce n'est pas terminé, c'est intéressant !</p>
-  </div>
-  <div id="formations-list-form"></div>
-  <button type="button" class="btn btn-outline-secondary add-item-btn" id="addFormationFormBtn" data-i18n="addFormationBtn">
-    <i class="fas fa-plus-circle"></i> Ajouter une formation
-  </button>
-</fieldset>
+    <script>
+        // --- SCRIPT JAVASCRIPT ---
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('cvForm');
+            const cvPreview = document.getElementById('cvPreview');
+            const downloadPdfBtn = document.getElementById('downloadPdfBtn');
 
-<!-- ÉTAPE 4: ATOUTS -->
-<fieldset class="cv-step" id="step-4-atouts" aria-labelledby="step4Title">
-  <legend class="sr-only" data-i18n="legendStep4">Étape 4 : Vos qualités et ce que vous savez faire</legend>
-  <h2 id="step4Title" data-i18n="step4Title">Vos qualités et ce que vous savez faire</h2>
-  <p class="step-description" data-i18n="step4Desc">Quelles sont vos forces ? Que savez-vous bien faire ? Quelles langues parlez-vous ?</p>
+            // --- Éléments pour expériences et formations dynamiques ---
+            const experiencesContainer = document.getElementById('experiencesContainer');
+            const addExperienceBtn = document.getElementById('addExperienceBtn');
+            let experienceCount = 0;
 
-  <div class="form-section">
-    <h3 data-i18n="skillsTitle">Ce que vous savez faire (Compétences)</h3>
-    <p class="help-text" data-i18n="skillsHelp">Exemples : "utiliser un ordinateur", "cuisiner", "être à l'écoute", "travailler en équipe", "conduire (permis B)".</p>
-    <div id="competences-list-form" class="form-list-items"></div>
-    <div class="input-group-add">
-      <input type="text" id="newCompetenceInput" class="form-control" placeholder="Ajouter une compétence" data-i18n-placeholder="placeholderSkill">
-      <button type="button" class="btn btn-primary" id="addCompetenceToListBtn" data-i18n="addSkillBtn"><i class="fas fa-plus"></i> Ajouter</button>
-    </div>
-    <div id="newCompetenceInput-feedback" class="invalid-feedback" style="display: none;" data-i18n="skillError">Veuillez saisir une compétence.</div>
-  </div>
+            const educationContainer = document.getElementById('educationContainer');
+            const addEducationBtn = document.getElementById('addEducationBtn');
+            let educationCount = 0;
 
-  <div class="form-section">
-    <h3 data-i18n="languagesTitle">Langues que vous parlez</h3>
-    <p class="help-text" data-i18n="languagesHelp">Même si c'est juste quelques mots, indiquez-le ! Exemple : "Anglais : bases scolaires".</p>
-    <div id="langues-list-form" class="form-list-items"></div>
-    <div class="input-group-add">
-      <input type="text" id="newLangueInput" class="form-control" placeholder="Ajouter une langue" data-i18n-placeholder="placeholderLangue">
-      <select id="newLangueLevelSelect" class="form-control" data-i18n="selectLangueLevel">
-        <option value="">Niveau ?</option>
-        <option value="Notions" data-i18n="levelNotions">Notions</option>
-        <option value="Intermédiaire" data-i18n="levelIntermediate">Sait se débrouiller</option>
-        <option value="Courant" data-i18n="levelFluent">Parle bien</option>
-        <option value="Natif" data-i18n="levelNative">Langue maternelle</option>
-      </select>
-      <button type="button" class="btn btn-primary" id="addLangueToListBtn" data-i18n="addLangueBtn"><i class="fas fa-plus"></i> Ajouter</button>
-    </div>
-    <div id="newLangueInput-feedback" class="invalid-feedback" style="display: none;" data-i18n="langueError">Veuillez saisir une langue et un niveau.</div>
-  </div>
-</fieldset>
+            // --- Fonction pour échapper les caractères HTML ---
+            function escapeHTML(str) {
+                if (typeof str !== 'string') return '';
+                const div = document.createElement('div');
+                div.appendChild(document.createTextNode(str));
+                return div.innerHTML.replace(/\n/g, '<br>'); // Remplace les sauts de ligne par <br>
+            }
 
-<!-- ÉTAPE 5: FINALISATION -->
-<fieldset class="cv-step" id="step-5-finalisation" aria-labelledby="step5Title">
-  <legend class="sr-only" data-i18n="legendStep5">Étape 5 : Vérification et téléchargement</legend>
-  <h2 id="step5Title" data-i18n="step5Title">Bravo, votre CV est presque prêt !</h2>
-  <p class="step-description" data-i18n="step5Desc">Vérifiez les informations ci-dessous. Vous pourrez toujours revenir en arrière pour modifier.</p>
-  <div class="cv-preview-final">
-    <h3 data-i18n="previewTitle">Aperçu de votre CV</h3>
-    <div id="final-preview-content" class="cv-preview-area">
-      <p style="text-align:center; padding: 2rem; color: var(--color-gray);" data-i18n="previewEmpty">Commencez à remplir les étapes pour voir votre CV prendre forme ici !</p>
-    </div>
-  </div>
-  <div class="form-actions">
-    <button type="button" class="btn btn-primary btn-large" id="downloadPdfBtn" data-i18n="downloadBtn">
-      <i class="fas fa-download"></i> Télécharger mon CV en PDF
-    </button>
-    <a href="choix-lm.html" class="btn btn-success btn-large" id="goToLettreMotivationBtn" style="display: none; margin-top: 1rem;" data-i18n="goToLmBtn">
-      <i class="fas fa-envelope-open-text"></i> Passer à la Lettre de Motivation
-    </a>
-  </div>
-</fieldset>
+            // --- Fonction pour mettre à jour l'aperçu ---
+            function updatePreview() {
+                const formData = new FormData(form);
+                let previewHTML = `
+                    <h3>${escapeHTML(formData.get('fullName')) || 'Votre Nom'}</h3>
+                    <div class="contact-info-preview">
+                        ${formData.get('email') ? `<span>${escapeHTML(formData.get('email'))}</span>` : ''}
+                        ${formData.get('phone') ? `${formData.get('email') ? ' | ' : ''}<span>${escapeHTML(formData.get('phone'))}</span>` : ''}
+                        ${formData.get('address') ? `${(formData.get('email') || formData.get('phone')) ? ' | ' : ''}<span>${escapeHTML(formData.get('address'))}</span>` : ''}
+                    </div>
+                    ${formData.get('jobTitle') ? `<p style="text-align: center; font-weight: bold; font-size: 1.1em; margin-bottom: 20px;">${escapeHTML(formData.get('jobTitle'))}</p>` : ''}
+                `;
 
-<!-- Navigation -->
-<nav class="cv-step-navigation" aria-label="Navigation entre les étapes du CV">
-  <button type="button" class="btn btn-outline-secondary" id="CvPrevStepBtn" disabled data-i18n="prevStepBtn">
-    <i class="fas fa-arrow-left"></i> Étape précédente
-  </button>
-  <button type="button" class="btn btn-primary" id="CvNextStepBtn" data-i18n="nextStepBtn">
-    Étape suivante <i class="fas fa-arrow-right"></i>
-  </button>
-  <a href="lettre_motivation.html" class="btn btn-success" id="finishCVAssistantBtn" style="display: none;" data-i18n="finishCvBtn">
-    <i class="fas fa-check-circle"></i> Passer à la lettre de motivation
-  </a>
-</nav>
+                if (formData.get('summary')) {
+                    previewHTML += `<h4>Résumé</h4><p>${escapeHTML(formData.get('summary'))}</p>`;
+                }
 
-    </form>
-  </main>
+                // Expériences
+                let experiencesHTML = '';
+                for (let i = 0; i < experienceCount; i++) {
+                    if (formData.get(`expTitle_${i}`)) {
+                        experiencesHTML += `
+                            <div class="experience-item">
+                                <strong>${escapeHTML(formData.get(`expTitle_${i}`))}</strong>
+                                <span class="dates">
+                                    ${escapeHTML(formData.get(`expCompany_${i}`))}
+                                    ${formData.get(`expLocation_${i}`) ? ` - ${escapeHTML(formData.get(`expLocation_${i}`))}` : ''}
+                                    (${escapeHTML(formData.get(`expStartDate_${i}`))} - ${escapeHTML(formData.get(`expEndDate_${i}`) || 'Présent')})
+                                </span>
+                                ${formData.get(`expDesc_${i}`) ? `<ul>${formData.get(`expDesc_${i}`).split('\n').map(line => `<li>${escapeHTML(line.trim())}</li>`).join('')}</ul>` : ''}
+                            </div>`;
+                    }
+                }
+                if (experiencesHTML) {
+                    previewHTML += `<h4>Expériences Professionnelles</h4>${experiencesHTML}`;
+                }
 
-  <footer class="footer">
-    <div class="container">
-      <p>© 2025 EmploiAvenir. Tous droits réservés.</p>
-    </div>
-  </footer>
-  <div id="toast-container"></div>
-  <script src="Script.js"></script>
+                // Formations
+                let educationHTML = '';
+                for (let i = 0; i < educationCount; i++) {
+                     if (formData.get(`eduDegree_${i}`)) {
+                        educationHTML += `
+                            <div class="education-item">
+                                <strong>${escapeHTML(formData.get(`eduDegree_${i}`))}</strong>
+                                <span class="dates">
+                                    ${escapeHTML(formData.get(`eduSchool_${i}`))}
+                                    ${formData.get(`eduSchoolLocation_${i}`) ? ` - ${escapeHTML(formData.get(`eduSchoolLocation_${i}`))}` : ''}
+                                    (${escapeHTML(formData.get(`eduGradYear_${i}`) || 'En cours')})
+                                </span>
+                                ${formData.get(`eduDesc_${i}`) ? `<p>${escapeHTML(formData.get(`eduDesc_${i}`))}</p>` : ''}
+                            </div>`;
+                    }
+                }
+                if (educationHTML) {
+                    previewHTML += `<h4>Formations</h4>${educationHTML}`;
+                }
 
-<script> document.addEventListener('DOMContentLoaded', () => {
-  // Vérifie la compatibilité navigateur
-  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                if (formData.get('skills')) {
+                    previewHTML += `<h4>Compétences</h4><p>${escapeHTML(formData.get('skills'))}</p>`;
+                }
 
-  if (!SpeechRecognition) {
-    console.warn("SpeechRecognition API non supportée dans ce navigateur.");
-    return;
-  }
+                cvPreview.innerHTML = previewHTML;
+            }
 
-  // Initialiser une instance globale
-  const recognition = new SpeechRecognition();
-  recognition.lang = 'fr-FR'; // Français
-  recognition.interimResults = false; // On ne veut que les résultats finaux
-  recognition.maxAlternatives = 1;
+            // --- Ajouter une nouvelle section d'expérience ---
+            addExperienceBtn.addEventListener('click', function() {
+                const expDiv = document.createElement('div');
+                expDiv.className = 'form-group dynamic-section';
+                expDiv.style.border = '1px dashed #ccc';
+                expDiv.style.padding = '10px';
+                expDiv.style.marginBottom = '10px';
+                expDiv.innerHTML = `
+                    <h3 style="font-size:1.1em; margin-top:0; color:#555;">Expérience ${experienceCount + 1}</h3>
+                    <label>Titre du poste:</label>
+                    <input type="text" name="expTitle_${experienceCount}" placeholder="Ex: Développeur Web">
+                    <label>Entreprise:</label>
+                    <input type="text" name="expCompany_${experienceCount}" placeholder="Ex: Google">
+                    <label>Lieu:</label>
+                    <input type="text" name="expLocation_${experienceCount}" placeholder="Ex: Paris">
+                    <label>Date de début:</label>
+                    <input type="text" name="expStartDate_${experienceCount}" placeholder="Ex: Janvier 2020">
+                    <label>Date de fin (laisser vide si actuel):</label>
+                    <input type="text" name="expEndDate_${experienceCount}" placeholder="Ex: Décembre 2022">
+                    <label>Description (une tâche par ligne):</label>
+                    <textarea name="expDesc_${experienceCount}" placeholder="Ex: Développement de fonctionnalités...\n- Maintenance corrective..."></textarea>
+                `;
+                experiencesContainer.appendChild(expDiv);
+                experienceCount++;
+                // Ajouter l'écouteur d'input aux nouveaux champs
+                expDiv.querySelectorAll('input, textarea').forEach(input => input.addEventListener('input', updatePreview));
+            });
 
-  let currentTargetInput = null;
+            // --- Ajouter une nouvelle section de formation ---
+            addEducationBtn.addEventListener('click', function() {
+                const eduDiv = document.createElement('div');
+                eduDiv.className = 'form-group dynamic-section';
+                eduDiv.style.border = '1px dashed #ccc';
+                eduDiv.style.padding = '10px';
+                eduDiv.style.marginBottom = '10px';
+                eduDiv.innerHTML = `
+                    <h3 style="font-size:1.1em; margin-top:0; color:#555;">Formation ${educationCount + 1}</h3>
+                    <label>Diplôme / Titre:</label>
+                    <input type="text" name="eduDegree_${educationCount}" placeholder="Ex: Licence Informatique">
+                    <label>École / Organisme:</label>
+                    <input type="text" name="eduSchool_${educationCount}" placeholder="Ex: Université de Paris">
+                    <label>Lieu:</label>
+                    <input type="text" name="eduSchoolLocation_${educationCount}" placeholder="Ex: Paris">
+                    <label>Année d'obtention / Fin prévue:</label>
+                    <input type="text" name="eduGradYear_${educationCount}" placeholder="Ex: 2020">
+                    <label>Description (optionnel):</label>
+                    <textarea name="eduDesc_${educationCount}" placeholder="Ex: Mention Très Bien, Projet de fin d'études sur..."></textarea>
+                `;
+                educationContainer.appendChild(eduDiv);
+                educationCount++;
+                // Ajouter l'écouteur d'input aux nouveaux champs
+                eduDiv.querySelectorAll('input, textarea').forEach(input => input.addEventListener('input', updatePreview));
+            });
 
-  // Gère le clic sur chaque bouton micro
-  document.querySelectorAll('.mic-btn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const inputId = btn.dataset.targetInput;
-      const input = document.getElementById(inputId);
 
-      if (!input) {
-        console.error(`Champ introuvable pour l'ID: ${inputId}`);
-        return;
-      }
+            // --- Mettre à jour l'aperçu à chaque saisie dans le formulaire ---
+            form.addEventListener('input', updatePreview);
 
-      currentTargetInput = input;
-      input.focus(); // Fait le focus sur l'input
-      recognition.start(); // Lance la reconnaissance vocale
-    });
-  });
+            // --- Générer et télécharger le PDF ---
+            downloadPdfBtn.addEventListener('click', function () {
+                const element = document.getElementById('cvPreview'); // C'est la div avec l'aperçu
+                const opt = {
+                    margin:       [10, 10, 10, 10], // marges en mm [haut, gauche, bas, droite] ou juste 10 pour toutes
+                    filename:     `${form.elements.fullName.value || 'Mon-CV'}.pdf`.replace(/[^a-zA-Z0-9\.\-\_]/g, '_'), // Nom de fichier basé sur le nom
+                    image:        { type: 'jpeg', quality: 0.98 },
+                    html2canvas:  { scale: 2, logging: true, useCORS: true }, // scale améliore la qualité
+                    jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                };
 
-  // Quand la reconnaissance retourne un résultat
-  recognition.addEventListener('result', (event) => {
-    const transcript = event.results[0][0].transcript;
-    if (currentTargetInput) {
-      currentTargetInput.value = transcript;
-      currentTargetInput.dispatchEvent(new Event('input')); // Pour déclencher la mise à jour de l'aperçu
-    }
-  });
+                // Afficher un message pendant la génération
+                downloadPdfBtn.textContent = 'Génération du PDF...';
+                downloadPdfBtn.disabled = true;
 
-  recognition.addEventListener('speechend', () => {
-    recognition.stop();
-  });
+                html2pdf().from(element).set(opt).save().then(function() {
+                    // Rétablir le bouton une fois le PDF sauvegardé (ou l'erreur gérée)
+                    downloadPdfBtn.textContent = 'Télécharger en PDF';
+                    downloadPdfBtn.disabled = false;
+                }).catch(function(error) {
+                    console.error("Erreur lors de la génération PDF:", error);
+                    downloadPdfBtn.textContent = 'Erreur PDF - Réessayer';
+                    downloadPdfBtn.disabled = false;
+                    alert("Une erreur est survenue lors de la génération du PDF. Veuillez vérifier la console pour plus de détails.");
+                });
+            });
 
-  recognition.addEventListener('error', (event) => {
-    console.error('Erreur de reconnaissance vocale:', event.error);
-    if (typeof App?.showToast === 'function') {
-      App.showToast(`Erreur vocale : ${event.error}`, 'error');
-    }
-  });
-});
-</script>
-<script src="langue.js"></script>
+            // Initialiser l'aperçu au chargement
+            updatePreview();
+        });
+    </script>
 </body>
 </html>
