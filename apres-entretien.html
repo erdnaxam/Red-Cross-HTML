@@ -138,7 +138,19 @@
 </nav>
 </div>
 </main>
+<!-- === Début du Chatbot === -->
+  <div id="chatbot-box" style="position: fixed; bottom: 20px; right: 20px; width: 300px; font-family: sans-serif;">
+    <div id="chat-container" style="background: white; border: 1px solid #ccc; border-radius: 10px; padding: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); display: none;">
+        <div id="chat-messages" style="height: 200px; overflow-y: auto; font-size: 0.9rem; margin-bottom: 10px;"></div>
+        <input type="text" id="chat-input" placeholder="Posez votre question..." style="width: 75%;" />
+        <button id="send-button" style="width: 23%;">Envoyer</button>
+        <button id="reset-chat" style="margin-top: 5px; width: 100%; background-color: #F87171; color: white; border: none; border-radius: 5px; padding: 5px;">🗑️ Réinitialiser le chat</button>
 
+    </div>
+    <button id="toggle-chat" style="background: #8B5CF6; color: white; padding: 10px 20px; border: none; border-radius: 50px;">💬</button>
+    
+  </div>
+  <!-- === Fin du Chatbot === -->
 <footer class="footer">
   <div class="container text-center py-6">
     <p class="mb-2" data-i18n="footerCopyright">© 2024 EmploiAvenir | Accompagnement à l'insertion professionnelle</p>
@@ -348,6 +360,8 @@
         }
     });
   </script>
+  <script src="./backend-openai/chatbot.js"></script>
+
   <script src="langue.js"></script>
 </body>
 </html>

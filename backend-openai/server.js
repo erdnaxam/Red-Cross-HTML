@@ -33,7 +33,24 @@ app.post('/api/chat', async (req, res) => {
   console.log("✅ Route POST /api/chat appelée");
 
   const userMessage = req.body.message;
+  const currentPage = req.body.page || '';
 
+  let pageContext = '';
+  if (currentPage.includes('choix-lm')) {
+    pageContext = "Tu es actuellement sur la page pour rédiger ou modifier une lettre de motivation. Soit l'utilisateur profite de notre IA pour la générer automatiquement, soit il peut importer une lettre existante pour la modifier avec l'IA.";
+  } else if (currentPage.includes('choix-cv')) {
+    pageContext = "Tu es actuellement sur la page pour créer ou modifier un CV.";
+  } else if (currentPage.includes('MesCandidature')) {
+    pageContext = "Tu es sur la page qui permet de voir les candidatures en cours.";
+  } else if (currentPage.includes('MonParcours')) {
+    pageContext = "Tu es sur la page principale du parcours d'accompagnement. Tu retrouves les différentes étapes que l'on propose.";
+  }
+  else if (currentPage.includes('lettre_motivation')) {
+    pageContext = "Tu es sur la page qui permet de générer automatiquement une lettre de motivation grâce à l'IA.";
+  }
+  else if (currentPage.includes('Partenaires')) {
+    pageContext = "Tu es sur la page de nos partenaires. Tu peux retrouver nos principaux partenaires à savoir la Croix Rouge, l'AFPA, mission locale et France TRavail. On donne l'occasion à l'utilisateur de prendre des rendez vous depuis notre plateforme.";
+  }
   try {
     const completion = await openai.chat.completions.create({
       model: 'gpt-3.5-turbo',
@@ -41,7 +58,7 @@ app.post('/api/chat', async (req, res) => {
         { role: 'system', content: `
           Tu es le chatbot officiel d'EmploiAvenir, une plateforme qui utilise l'intelligence artificielle pour accompagner les personnes vulnérables dans leur insertion professionnelle. Ton rôle est de guider l'utilisateur pas à pas, dans un langage simple, bienveillant et accessible, même si la personne est perdue ou n'a aucune expérience.
 
-Commence toujours tes réponses par : [Assistant RH]
+Commence toujours tes réponses par : [Assistant EMPLOI AVENIR]
 
 Tu peux proposer :
 - Des conseils pour démarrer une recherche d'emploi
@@ -77,6 +94,8 @@ Si jamais quelqu'un te demande c'est quoi les étapes du parcours pour s'insére
 5- Entretien et après entretien 
 6- Contrat 
 7- Félicitations !
+${pageContext}
+
           ` },
         { role: 'user', content: userMessage }
       ],
@@ -85,8 +104,9 @@ Si jamais quelqu'un te demande c'est quoi les étapes du parcours pour s'insére
     const botReply = completion.choices[0].message.content;
     res.json({ reply: botReply });
   } catch (error) {
-    console.error('❌ Erreur OpenAI (chat):', error.message);
-    res.status(500).json({ reply: 'Erreur serveur chatbot.' });
+  console.error('❌ Erreur OpenAI (chat):', error.message);
+  console.error(error.stack);
+  res.status(500).json({ reply: 'Une erreur est survenue. Merci de réessayer plus tard.' });
   }
 });
 

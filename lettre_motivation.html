@@ -12,6 +12,19 @@
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
+<style>
+@media (max-width: 600px) {
+  #chatbot-box {
+    width: 90%;
+    right: 5%;
+    bottom: 10px;
+  }
+  #chat-container {
+    max-height: 60vh;
+  }
+}
+</style>
+
 <body>
   <!-- HEADER (inchangé) -->
   <header class="header" id="header">
@@ -124,8 +137,11 @@
         <div id="chat-messages" style="height: 200px; overflow-y: auto; font-size: 0.9rem; margin-bottom: 10px;"></div>
         <input type="text" id="chat-input" placeholder="Posez votre question..." style="width: 75%;" />
         <button id="send-button" style="width: 23%;">Envoyer</button>
+        <button id="reset-chat" style="margin-top: 5px; width: 100%; background-color: #F87171; color: white; border: none; border-radius: 5px; padding: 5px;">🗑️ Réinitialiser le chat</button>
+
     </div>
     <button id="toggle-chat" style="background: #8B5CF6; color: white; padding: 10px 20px; border: none; border-radius: 50px;">💬</button>
+    
   </div>
   <!-- === Fin du Chatbot === -->
 
