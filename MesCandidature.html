@@ -4,22 +4,149 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mes candidatures - EmploiAvenir</title>
- <!-- <base href="/Red-Cross-HTML/">    Maybe to delet -->
+  <!-- <base href="/Red-Cross-HTML/"> Décommentez si vous déployez sur GitHub Pages dans un sous-dossier -->
   <meta name="description" content="Suivez toutes vos candidatures d'emploi en cours, modifiez leur statut et gérez vos démarches dans votre espace personnel EmploiAvenir.">
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* Styles spécifiques à cette page (vous pouvez les déplacer dans style.css) */
+    /* Assurez-vous que vos classes de badges de statut sont définies dans style.css */
+    /* Ex: .badge.status-cv-envoye { background-color: #DBEAFE; color: #1E40AF; } etc. */
+
+    .application-card {
+        background-color: var(--color-surface, #fff);
+        border: 1px solid var(--color-gray-light, #e5e7eb);
+        border-radius: var(--radius, 8px);
+        box-shadow: var(--shadow-sm, 0 1px 3px rgba(0,0,0,0.05));
+        margin-bottom: 1.5rem;
+        display: flex;
+        flex-direction: column;
+    }
+    .application-card-main {
+        padding: 1rem 1.5rem; /* Ajusté */
+        flex-grow: 1;
+    }
+    .application-card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start; /* Pour que le badge ne s'étire pas */
+        margin-bottom: 0.75rem;
+        gap: 0.5rem; /* Espace si le titre est long et le badge passe dessous */
+        flex-wrap: wrap; /* Permet au badge de passer à la ligne sur mobile */
+    }
+    .application-card-title {
+        font-size: 1.2em;
+        font-weight: 600;
+        margin: 0 0 0.25rem 0;
+        color: var(--color-dark, #1A1F2C);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .application-card-company {
+        font-size: 1em;
+        margin: 0;
+        color: var(--label-color, #555);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .application-card-header .badge { /* Style pour le badge DANS le header de la carte */
+        padding: 0.3em 0.7em;
+        font-size: 0.8rem;
+        flex-shrink: 0; /* Empêche le badge de rétrécir */
+    }
+    .application-card-date {
+        font-size: 0.9em;
+        margin-bottom: 0.5rem;
+        color: var(--color-gray, #6B7280);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+    .application-card-notes {
+        font-size: 0.9em;
+        margin-bottom: 0.75rem;
+        font-style: italic;
+        color: var(--color-gray-darker, #4B5563);
+        border-left: 3px solid var(--color-gray-light, #e5e7eb);
+        padding-left: 0.75rem;
+        background-color: #f9fafb; /* Léger fond pour les notes */
+    }
+     .application-card-contact {
+        margin-top: 0.75rem;
+        padding-top: 0.75rem;
+        border-top: 1px solid var(--color-gray-light, #e5e7eb);
+        font-size: 0.85em;
+        color: var(--color-gray-darker, #4B5563);
+    }
+    .application-card-contact p { margin: 0.2rem 0; }
+    .application-card-contact strong { color: var(--color-dark, #1A1F2C); }
+    .application-card-contact a { color: var(--color-primary, #8B5CF6); }
+
+
+    .application-card-actions {
+        padding: 0.75rem 1.5rem; /* Ajusté */
+        background-color: var(--color-light, #f9fafb);
+        border-top: 1px solid var(--color-gray-light, #e5e7eb);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap; /* Pour les petits écrans */
+    }
+    .application-card-actions .status-select {
+        flex: 1 1 200px; /* Permet de grandir, base de 200px, peut rétrécir */
+        padding: 0.5rem 0.75rem;
+        font-size: 0.9em;
+        border-radius: var(--radius-sm, 4px);
+        border: 1px solid var(--color-gray-medium, #9CA3AF);
+        background-color: #fff;
+        min-width: 180px; /* Pour une meilleure lisibilité des options */
+    }
+    .application-card-actions .action-buttons {
+        display: flex;
+        gap: 0.5rem;
+        flex-shrink: 0; /* Empêche les boutons de rétrécir excessivement */
+    }
+    /* Style pour .btn-icon (si défini dans style.css, sinon adaptez) */
+    .btn-icon {
+        padding: 0.5rem; /* Ajuster pour la taille de l'icône */
+        line-height: 1; /* Pour un meilleur alignement vertical de l'icône */
+    }
+
+    /* Message si la liste est vide */
+    #applicationsList:empty::before {
+        content: "Vous n'avez pas encore ajouté de candidature. Cliquez sur 'Ajouter une candidature' pour commencer !";
+        display: block;
+        text-align: center;
+        padding: 2rem 1rem;
+        color: var(--label-color, #555);
+        font-style: italic;
+        border: 2px dashed var(--border-color, #ddd);
+        border-radius: var(--border-radius, 8px);
+        background-color: #fdfdfd;
+        margin-top: 1rem;
+    }
+
+    /* Style pour les champs requis en erreur dans la modale */
+    .form-group input.input-error,
+    .form-group select.input-error {
+        border-color: var(--color-destructive, #EF4444) !important;
+        box-shadow: 0 0 0 2px var(--color-destructive-light, #FEE2E2) !important;
+    }
+  </style>
 </head>
-<body>
-  <!-- HEADER -->
+<body data-page="mes-candidatures">
   <header class="header" id="header">
     <div class="container flex justify-between items-center">
       <a href="index.html" class="logo" aria-label="Accueil EmploiAvenir"><span>Emploi</span>Avenir</a>
       <nav aria-label="Navigation principale">
         <ul class="nav-links" id="mainNavLinks">
-          <li><a href="index.html"data-i18n="Home">Accueil</a></li>
+          <li><a href="index.html" data-i18n="Home">Accueil</a></li>
           <li><a href="MonParcours.html" data-i18n="Parcours">Mon Parcours</a></li>
           <li><a href="MesCandidature.html" aria-current="page" class="active" data-i18n="Candidatures">Mes Candidatures</a></li>
           <li><a href="Partenaires.html" data-i18n="Partenaires">Nos partenaires</a></li>
@@ -31,203 +158,420 @@
       <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Ouvrir le menu de navigation" aria-expanded="false" aria-controls="mainNavLinks">☰</button>
     </div>
   </header>
+
 <select id="langSwitcher" aria-label="Choisir la langue">
   <option value="fr">🇫🇷 Français</option>
   <option value="en">🇬🇧 English</option>
   <option value="ar">🇸🇦 العربية</option>
   <option value="uk">🇺🇦  українська мова</option>
 </select>
-<section class="mt-10">
-  <h2 class="text-xl font-semibold mb-4">Offres favorites enregistrées</h2>
-  <div id="favoriteJobsList" class="grid gap-4"></div>
-</section>
+
+  <section class="container mt-4 mb-4">
+    <h2 class="text-xl font-semibold mb-4" data-i18n="favoriteJobsTitle">Offres favorites enregistrées</h2>
+    <div id="favoriteJobsList" class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+    </div>
+  </section>
 
   <main>
   <div class="container py-8">
-    <div class="flex justify-between items-center mb-6">
-      <h1 class="text-2xl font-bold" data-i18n="myApplicationsTitle">Mes candidatures</h1>
-      <button type="button" class="btn btn-primary" id="addApplicationButton">
-        <i class="fas fa-plus" aria-hidden="true"></i>
+    <div class="flex flex-col sm:flex-row justify-between items-center mb-6 gap-4">
+      <h1 class="text-2xl font-bold text-center sm:text-left" data-i18n="myApplicationsTitle">Mes candidatures</h1>
+      <button type="button" class="btn btn-primary w-full sm:w-auto" id="addApplicationButton">
+        <i class="fas fa-plus mr-2" aria-hidden="true"></i>
         <span data-i18n="addApplicationButton">Ajouter une candidature</span>
       </button>
     </div>
 
-    <!-- Liste des candidatures (remplie dynamiquement par JS) -->
-    <div id="applicationsList" aria-live="polite"></div>
+    <div id="applicationsList" class="application-grid" aria-live="polite">
+    </div>
   </div>
 
-  <!-- MODALE Ajouter/Modifier Candidature -->
-  <div class="modal" id="applicationDialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle" style="display: none;">
+  <div class="modal" id="applicationDialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle" hidden>
     <div class="modal-content">
       <button type="button" class="close-modal" aria-label="Fermer la fenêtre">×</button>
       <div class="modal-header">
-        <h2 class="modal-title" id="dialogTitle" data-i18n="dialogTitle">Ajouter une candidature</h2>
-        <p class="modal-description" data-i18n="dialogDescription">Renseignez les informations de votre candidature</p>
+        <h2 class="modal-title" id="dialogTitle" data-i18n="dialogTitleModal">Ajouter une candidature</h2>
+        <p class="modal-description" data-i18n="dialogDescriptionModal">Renseignez les informations de votre candidature.</p>
       </div>
       <form id="applicationForm" class="modal-body">
         <div class="form-group">
-          <label for="company" data-i18n="labelCompany">Entreprise <span aria-hidden="true">*</span></label>
+          <label for="company" data-i18n="labelCompany">Entreprise <span aria-hidden="true" style="color:red;">*</span></label>
           <input type="text" id="company" name="company" placeholder="Nom de l'entreprise" required data-i18n-placeholder="placeholderCompany">
         </div>
         <div class="form-group">
-          <label for="position" data-i18n="labelPosition">Poste <span aria-hidden="true">*</span></label>
+          <label for="position" data-i18n="labelPosition">Poste <span aria-hidden="true" style="color:red;">*</span></label>
           <input type="text" id="position" name="position" placeholder="Intitulé du poste" required data-i18n-placeholder="placeholderPosition">
         </div>
-        <div class="form-group">
-          <label for="date" data-i18n="labelDate">Date de candidature <span aria-hidden="true">*</span></label>
-          <input type="date" id="date" name="date" required>
+        <div class="form-grid md:grid-cols-2 gap-4">
+            <div class="form-group">
+              <label for="date" data-i18n="labelDate">Date de candidature <span aria-hidden="true" style="color:red;">*</span></label>
+              <input type="date" id="date" name="date" required>
+            </div>
+            <div class="form-group">
+              <label for="status" data-i18n="labelStatus">Statut <span aria-hidden="true" style="color:red;">*</span></label>
+              <select id="status" name="status" required>
+                <option value="CV envoyé" data-i18n="statusCvSent">CV envoyé</option>
+                <option value="CV retenu" data-i18n="statusCvSelected">CV retenu</option>
+                <option value="Entretien prévu" data-i18n="statusInterviewPlanned">Entretien prévu</option>
+                <option value="Entretien passé" data-i18n="statusInterviewDone">Entretien passé</option>
+                <option value="Offre reçue" data-i18n="statusOfferReceived">Offre reçue</option>
+                <option value="Offre acceptée" data-i18n="statusOfferAccepted">Offre acceptée</option>
+                <option value="Refus" data-i18n="statusRefused">Refus</option>
+              </select>
+            </div>
         </div>
         <div class="form-group">
-          <label for="status" data-i18n="labelStatus">Statut <span aria-hidden="true">*</span></label>
-          <select id="status" name="status" required>
-            <option value="CV envoyé" data-i18n="statusCvSent">CV envoyé</option>
-            <option value="CV retenu" data-i18n="statusCvSelected">CV retenu</option>
-            <option value="Entretien prévu" data-i18n="statusInterviewPlanned">Entretien prévu</option>
-            <option value="Entretien passé" data-i18n="statusInterviewDone">Entretien passé</option>
-            <option value="Offre reçue" data-i18n="statusOfferReceived">Offre reçue</option>
-            <option value="Offre acceptée" data-i18n="statusOfferAccepted">Offre acceptée</option>
-            <option value="Refus" data-i18n="statusRefused">Refus</option>
-          </select>
+          <label for="notes" data-i18n="labelNotes">Notes (optionnel)</label>
+          <input type="text" id="notes" name="notes" placeholder="Ex: Relancer le 15/03, contact M. Dupont" data-i18n-placeholder="placeholderNotesModal">
         </div>
-        <div class="form-group">
-          <label for="notes" data-i18n="labelNotes">Notes</label>
-          <input type="text" id="notes" name="notes" placeholder="Informations complémentaires" data-i18n-placeholder="placeholderNotes">
-        </div>
-        <div class="form-group">
-          <label for="contactName" data-i18n="labelContactName">Nom du contact</label>
-          <input type="text" id="contactName" name="contactName" placeholder="Nom de la personne à contacter" data-i18n-placeholder="placeholderContactName">
-        </div>
-        <div class="form-group">
-          <label for="contactEmail" data-i18n="labelContactEmail">Email du contact</label>
-          <input type="email" id="contactEmail" name="contactEmail" placeholder="Email de contact" data-i18n-placeholder="placeholderContactEmail">
-        </div>
-        <div class="form-group">
-          <label for="contactPhone" data-i18n="labelContactPhone">Téléphone du contact</label>
-          <input type="tel" id="contactPhone" name="contactPhone" placeholder="Numéro de téléphone" data-i18n-placeholder="placeholderContactPhone">
-        </div>
+        <details class="mb-4">
+            <summary class="font-semibold cursor-pointer text-sm text-[var(--primary-color)] hover:underline" data-i18n="contactDetailsToggle">Détails du contact (optionnel)</summary>
+            <div class="mt-2 space-y-4">
+                <div class="form-group">
+                  <label for="contactName" data-i18n="labelContactName">Nom du contact</label>
+                  <input type="text" id="contactName" name="contactName" placeholder="Nom de la personne à contacter" data-i18n-placeholder="placeholderContactName">
+                </div>
+                <div class="form-group">
+                  <label for="contactEmail" data-i18n="labelContactEmail">Email du contact</label>
+                  <input type="email" id="contactEmail" name="contactEmail" placeholder="Email de contact" data-i18n-placeholder="placeholderContactEmail">
+                </div>
+                <div class="form-group">
+                  <label for="contactPhone" data-i18n="labelContactPhone">Téléphone du contact</label>
+                  <input type="tel" id="contactPhone" name="contactPhone" placeholder="Numéro de téléphone" data-i18n-placeholder="placeholderContactPhone">
+                </div>
+            </div>
+        </details>
         <div class="modal-footer">
           <button type="button" class="btn btn-outline" id="cancelDialog" data-i18n="cancelBtn">Annuler</button>
-          <button type="button" class="btn btn-primary" id="saveApplication" data-i18n="saveBtn">Ajouter</button>
+          <button type="submit" class="btn btn-primary" id="saveApplication" data-i18n="saveBtnModal">Ajouter</button>
         </div>
       </form>
     </div>
   </div>
 </main>
 
-
-  <!-- FOOTER -->
   <footer class="footer">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-column">
-          <h3>EmploiAvenir</h3>
-          <p>Votre partenaire pour trouver l'emploi de vos rêves et développer votre carrière professionnelle.</p>
-        </div>
-        <div class="footer-column">
-          <h3>Liens rapides</h3>
-          <ul class="footer-links">
-            <li><a href="index.html">Accueil</a></li>
-            <li><a href="MonParcours.html">Mon Parcours</a></li>
-            <li><a href="MesCandidature.html">Mes Candidatures</a></li>
-            <li><a href="Partenaires.html">Nos partenaires</a></li>
-            <li><a href="Documents.html">Mes documents</a></li>
-            <li><a href="Profil.html">Profil</a></li>
-          </ul>
-        </div>
-        <div class="footer-column">
-          <h3>Services</h3>
-          <ul class="footer-links">
-            <li><a href="#">Création de CV</a></li>
-            <li><a href="#">Lettres de motivation</a></li>
-            <li><a href="#">Coaching</a></li>
-            <li><a href="#">Préparation aux entretiens</a></li>
-            <li><a href="#">Partenaires entreprises</a></li>
-          </ul>
-        </div>
-        <div class="footer-column">
-          <h3>Contact</h3>
-          <ul class="footer-links">
-            <li><a href="tel:+33123456789">+33 1 23 45 67 89</a></li>
-            <li><a href="mailto:contact@emploiavenir.fr">contact@emploiavenir.fr</a></li>
-            <li>12 rue de l'Emploi, 75001 Paris</li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>© 2025 EmploiAvenir. Tous droits réservés.</p>
-      </div>
+    <div class="container text-center py-4">
+      <p data-i18n="Credits">© 2025 EmploiAvenir. Tous droits réservés.</p>
     </div>
   </footer>
-
-  <!-- TOASTS -->
   <div id="toast-container"></div>
-
-  <!-- MODALE CONNEXION -->
-  <div id="loginModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="loginModalTitle" style="display: none;">
-    <div class="modal-content">
-      <button type="button" class="close-modal" aria-label="Fermer la fenêtre de connexion">×</button>
-      <h2 id="loginModalTitle">Connexion</h2>
-      <form id="loginForm">
-        <div class="form-group">
-          <label for="loginEmail">Email</label>
-          <input type="email" id="loginEmail" name="email" required>
-        </div>
-        <div class="form-group">
-          <label for="loginPassword">Mot de passe</label>
-          <input type="password" id="loginPassword" name="password" required>
-        </div>
-        <button type="submit" class="btn" style="width: 100%;">Se connecter</button>
-        <div class="text-center mt-2">
-          <a href="#" class="modal-link">Mot de passe oublié ?</a>
-        </div>
-        <div class="text-center mt-2">
-          <p>Pas encore de compte ? <a href="#" class="modal-link" id="openRegisterModal">S'inscrire</a></p>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- CHATBOT -->
-  <button type="button" class="chatbot-btn" id="chatbotBtn" aria-label="Ouvrir l'assistant virtuel EmploiAvenir" aria-expanded="false" aria-controls="chatbotContainer">💬</button>
-  <div class="chatbot-container" id="chatbotContainer" role="log" aria-labelledby="chatbotHeaderTitle" style="display: none;">
-    <div class="chatbot-header">
-      <h3 id="chatbotHeaderTitle">Assistant EmploiAvenir</h3>
-      <button type="button" id="closeChatbot" aria-label="Fermer l'assistant virtuel">✖</button>
-    </div>
-    <div class="chatbot-messages" id="chatbotMessages" aria-live="polite">
-      <div class="message bot-message">
-        Bonjour ! Comment puis-je vous aider aujourd'hui ?
-      </div>
-    </div>
-    <div class="chatbot-input">
-      <input type="text" id="chatbotInput" name="chatbot_message" placeholder="Écrivez votre message..." aria-label="Votre message à l'assistant EmploiAvenir">
-      <button id="sendMessage" type="button">Envoyer</button>
-    </div>
-  </div>
-
+  </footer>
+  <div id="toast-container"></div>
   <script src="Script.js"></script>
   <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const favorites = JSON.parse(localStorage.getItem('favoriteJobs')) || [];
-    const listContainer = document.getElementById('favoriteJobsList');
+  // Ce script est spécifique à la page MesCandidature.html
+  // Il peut aussi être fusionné dans Script.js et conditionné par la présence de certains éléments (ex: if(document.getElementById('applicationsList')) { ... })
 
-    if (favorites.length === 0) {
-      listContainer.innerHTML = "<p>Vous n'avez pas encore de favoris.</p>";
-      return;
+  document.addEventListener('DOMContentLoaded', () => {
+    const addApplicationButton = document.getElementById('addApplicationButton');
+    const applicationsListDiv = document.getElementById('applicationsList');
+    const applicationDialog = document.getElementById('applicationDialog');
+    const applicationForm = document.getElementById('applicationForm');
+    const dialogTitleElement = applicationDialog.querySelector('#dialogTitle'); // Renommé pour éviter conflit avec variable
+    const saveApplicationButton = document.getElementById('saveApplication');
+    const cancelDialogButton = document.getElementById('cancelDialog');
+    const closeModalButton = applicationDialog.querySelector('.close-modal');
+
+    const companyInput = document.getElementById('company');
+    const positionInput = document.getElementById('position');
+    const dateInput = document.getElementById('date');
+    const statusInput = document.getElementById('status');
+    const notesInput = document.getElementById('notes');
+    const contactNameInput = document.getElementById('contactName');
+    const contactEmailInput = document.getElementById('contactEmail');
+    const contactPhoneInput = document.getElementById('contactPhone');
+
+    const APPLICATIONS_STORAGE_KEY = 'emploiAvenirApplications';
+    let applications = [];
+    let currentEditingId = null;
+
+    // Utilisation de la fonction showToast de App si elle existe, sinon fallback
+    const notify = (message, type = 'info') => {
+        if (typeof App !== 'undefined' && App.showToast) {
+            App.showToast(message, type);
+        } else {
+            // Fallback simple si App.showToast n'est pas disponible
+            const toastContainer = document.getElementById('toast-container');
+            if (!toastContainer) { alert(message); return; }
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type} show`;
+            toast.textContent = message;
+            toastContainer.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+    };
+
+    function openModal(modalElement) {
+        if (modalElement) {
+            modalElement.style.display = 'flex';
+            modalElement.removeAttribute('hidden');
+            const firstInput = modalElement.querySelector('input:not([type="hidden"]), select, textarea');
+            if (firstInput) firstInput.focus();
+        }
     }
 
-    favorites.forEach(job => {
-      const jobCard = document.createElement('div');
-      jobCard.className = 'p-4 border rounded shadow';
-      jobCard.innerHTML = `
-        <h3 class="text-lg font-bold">${job.title}</h3>
-        <p class="text-sm text-gray-600">${job.company}</p>
-        <p class="text-sm">${job.location || ''}</p>
-      `;
-      listContainer.appendChild(jobCard);
+    function closeModal(modalElement) {
+        if (modalElement) {
+            modalElement.style.display = 'none';
+            modalElement.setAttribute('hidden', '');
+        }
+    }
+
+    function escapeHTML(str) {
+        if (typeof str !== 'string') return '';
+        const p = document.createElement('p');
+        p.appendChild(document.createTextNode(str));
+        return p.innerHTML;
+    }
+
+    function loadApplications() {
+        const storedApplications = localStorage.getItem(APPLICATIONS_STORAGE_KEY);
+        applications = storedApplications ? JSON.parse(storedApplications) : [];
+    }
+
+    function saveApplications() {
+        localStorage.setItem(APPLICATIONS_STORAGE_KEY, JSON.stringify(applications));
+    }
+
+    function renderApplications() {
+        loadApplications();
+        if (!applicationsListDiv) return;
+
+        if (applications.length === 0) {
+            applicationsListDiv.innerHTML = ''; // Laisse le CSS :empty gérer le message
+            return;
+        }
+        applicationsListDiv.innerHTML = applications.map(app => createApplicationCardHTML(app)).join('');
+        attachCardEventListeners();
+    }
+
+    function createApplicationCardHTML(app) {
+        const statusClass = app.status.toLowerCase().replace(/\s+/g, '-').replace(/[éèêë]/g, 'e');
+        const formattedDate = app.date ? new Date(app.date).toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit', year: 'numeric' }) : 'Date non spécifiée';
+
+        let contactInfoHTML = '';
+        if (app.contactName || app.contactEmail || app.contactPhone) {
+            contactInfoHTML += `<div class="application-card-contact">`;
+            if (app.contactName) contactInfoHTML += `<p><strong>Contact:</strong> ${escapeHTML(app.contactName)}</p>`;
+            if (app.contactEmail) contactInfoHTML += `<p><strong>Email:</strong> <a href="mailto:${escapeHTML(app.contactEmail)}">${escapeHTML(app.contactEmail)}</a></p>`;
+            if (app.contactPhone) contactInfoHTML += `<p><strong>Tél:</strong> <a href="tel:${escapeHTML(app.contactPhone)}">${escapeHTML(app.contactPhone)}</a></p>`;
+            contactInfoHTML += `</div>`;
+        }
+
+        const statusOptions = ['CV envoyé', 'CV retenu', 'Entretien prévu', 'Entretien passé', 'Offre reçue', 'Offre acceptée', 'Refus'];
+        const selectOptionsHTML = statusOptions.map(s =>
+            `<option value="${s}" ${app.status === s ? 'selected' : ''} data-i18n="status${s.replace(/\s+/g, '').replace(/[éèêë]/g, 'e')}">${s}</option>`
+        ).join('');
+
+        return `
+            <article class="application-card" data-id="${app.id}">
+                <div class="application-card-main">
+                    <div class="application-card-header">
+                        <div>
+                            <h3 class="application-card-title">
+                                <i class="fas fa-briefcase"></i> ${escapeHTML(app.position)}
+                            </h3>
+                            <p class="application-card-company">
+                                <i class="fas fa-building"></i> ${escapeHTML(app.company)}
+                            </p>
+                        </div>
+                        <span class="badge status-${statusClass}" data-i18n="status${app.status.replace(/\s+/g, '').replace(/[éèêë]/g, 'e')}">${escapeHTML(app.status)}</span>
+                    </div>
+                    <p class="application-card-date">
+                        <i class="fas fa-calendar-alt"></i> Candidature du ${formattedDate}
+                    </p>
+                    ${app.notes ? `<p class="application-card-notes">Notes : ${escapeHTML(app.notes)}</p>` : ''}
+                    ${contactInfoHTML}
+                </div>
+                <div class="application-card-actions">
+                    <label for="status-select-${app.id}" class="sr-only">Changer le statut pour ${escapeHTML(app.position)}</label>
+                    <select class="status-select" id="status-select-${app.id}" data-appid="${app.id}">
+                        ${selectOptionsHTML}
+                    </select>
+                    <div class="action-buttons">
+                        <button type="button" class="btn btn-icon edit-app-btn" data-appid="${app.id}" aria-label="Modifier ${escapeHTML(app.position)}"><i class="fas fa-edit"></i></button>
+                        <button type="button" class="btn btn-icon btn-destructive delete-app-btn" data-appid="${app.id}" aria-label="Supprimer ${escapeHTML(app.position)}"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+            </article>
+        `;
+    }
+
+    function resetFormErrors() {
+        applicationForm.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
+        // Vous pouvez aussi effacer les messages d'erreur spécifiques ici si vous en avez
+    }
+
+    applicationForm.addEventListener('submit', (e) => { // Gérer la soumission du formulaire
+        e.preventDefault();
+        resetFormErrors(); // Nettoyer les erreurs précédentes
+
+        let isValid = true;
+        if (!companyInput.value.trim()) { companyInput.classList.add('input-error'); isValid = false; }
+        if (!positionInput.value.trim()) { positionInput.classList.add('input-error'); isValid = false; }
+        if (!dateInput.value) { dateInput.classList.add('input-error'); isValid = false; }
+        // statusInput a toujours une valeur sélectionnée
+
+        if (!isValid) {
+            notify("Veuillez remplir tous les champs obligatoires (*).", "error");
+            return;
+        }
+
+        const applicationData = {
+            id: currentEditingId || `app_${Date.now()}`, // ID simplifié
+            company: companyInput.value.trim(),
+            position: positionInput.value.trim(),
+            date: dateInput.value,
+            status: statusInput.value,
+            notes: notesInput.value.trim(),
+            contactName: contactNameInput.value.trim(),
+            contactEmail: contactEmailInput.value.trim(),
+            contactPhone: contactPhoneInput.value.trim()
+        };
+
+        if (currentEditingId) {
+            const index = applications.findIndex(app => app.id === currentEditingId);
+            if (index > -1) applications[index] = applicationData;
+        } else {
+            applications.unshift(applicationData);
+        }
+
+        saveApplications();
+        renderApplications();
+        closeModal(applicationDialog);
+        notify(currentEditingId ? "Candidature modifiée !" : "Candidature ajoutée !", "success");
     });
+
+    function openEditModal(appId) {
+        const app = applications.find(a => a.id === appId);
+        if (!app) return;
+
+        currentEditingId = appId;
+        applicationForm.reset(); // Réinitialiser d'abord
+        resetFormErrors();
+
+        dialogTitleElement.textContent = "Modifier la candidature"; // Gérer i18n
+        saveApplicationButton.textContent = "Sauvegarder"; // Gérer i18n
+
+        companyInput.value = app.company;
+        positionInput.value = app.position;
+        dateInput.value = app.date;
+        statusInput.value = app.status;
+        notesInput.value = app.notes || '';
+        contactNameInput.value = app.contactName || '';
+        contactEmailInput.value = app.contactEmail || '';
+        contactPhoneInput.value = app.contactPhone || '';
+
+        openModal(applicationDialog);
+    }
+
+    function deleteApplication(appId) {
+        if (confirm("Êtes-vous sûr de vouloir supprimer cette candidature ?")) {
+            applications = applications.filter(app => app.id !== appId);
+            saveApplications();
+            renderApplications();
+            notify("Candidature supprimée.", "info");
+        }
+    }
+
+    function handleStatusChange(appId, newStatus) {
+        const index = applications.findIndex(app => app.id === appId);
+        if (index > -1) {
+            applications[index].status = newStatus;
+            saveApplications();
+            // Mettre à jour uniquement le badge de la carte concernée au lieu de tout re-render
+            const cardElement = document.getElementById(`app-${appId}`);
+            if (cardElement) {
+                const badge = cardElement.querySelector('.application-card-header .badge');
+                const statusClass = newStatus.toLowerCase().replace(/\s+/g, '-').replace(/[éèêë]/g, 'e');
+                if (badge) {
+                    badge.className = `badge status-${statusClass}`; // Mettre à jour toutes les classes
+                    badge.textContent = escapeHTML(newStatus);
+                    // Mettre à jour l'attribut data-i18n du badge si vous l'utilisez
+                    badge.dataset.i18n = `status${newStatus.replace(/\s+/g, '').replace(/[éèêë]/g, 'e')}`;
+                }
+            }
+            notify(`Statut mis à jour pour "${escapeHTML(applications[index].position)}" !`, "success");
+        }
+    }
+
+    // Utilisation de la délégation d'événements pour les actions sur les cartes
+    if (applicationsListDiv) {
+        applicationsListDiv.addEventListener('click', (e) => {
+            const editButton = e.target.closest('.edit-app-btn');
+            const deleteButton = e.target.closest('.delete-app-btn');
+
+            if (editButton) {
+                openEditModal(editButton.dataset.appid);
+            } else if (deleteButton) {
+                deleteApplication(deleteButton.dataset.appid);
+            }
+        });
+
+        applicationsListDiv.addEventListener('change', (e) => {
+            if (e.target.classList.contains('status-select')) {
+                handleStatusChange(e.target.dataset.appid, e.target.value);
+            }
+        });
+    }
+
+
+    if (addApplicationButton) {
+        addApplicationButton.addEventListener('click', () => {
+            currentEditingId = null;
+            applicationForm.reset();
+            resetFormErrors();
+            dialogTitleElement.textContent = "Ajouter une candidature"; // Gérer i18n
+            saveApplicationButton.textContent = "Ajouter"; // Gérer i18n
+
+            const today = new Date().toISOString().split('T')[0];
+            dateInput.value = today;
+            statusInput.value = "CV envoyé";
+            openModal(applicationDialog);
+        });
+    }
+
+    if (cancelDialogButton) cancelDialogButton.addEventListener('click', () => closeModal(applicationDialog));
+    if (closeModalButton) closeModalButton.addEventListener('click', () => closeModal(applicationDialog));
+    if (applicationDialog) {
+        applicationDialog.addEventListener('click', (e) => {
+            if (e.target === applicationDialog) closeModal(applicationDialog);
+        });
+    }
+
+    // Init
+    renderApplications();
+
+    // Logique pour les offres favorites (reprise de votre code)
+    const favorites = JSON.parse(localStorage.getItem('favoriteJobs')) || [];
+    const favListContainer = document.getElementById('favoriteJobsList'); // Renommé pour éviter confusion
+    if (favListContainer) {
+        if (favorites.length === 0) {
+            favListContainer.innerHTML = "<p class='text-center text-gray-600 italic' data-i18n='noFavorites'>Vous n'avez pas encore d'offres favorites.</p>";
+        } else {
+            favorites.forEach(job => {
+                const jobCard = document.createElement('div');
+                // Appliquer des classes de votre style.css si possible
+                jobCard.className = 'card p-3 shadow-sm'; // Exemple
+                jobCard.innerHTML = `
+                    <h3 class="text-md font-semibold mb-1">${escapeHTML(job.title)}</h3>
+                    <p class="text-sm text-gray-700 mb-1">${escapeHTML(job.company)}</p>
+                    ${job.location ? `<p class="text-xs text-gray-500">${escapeHTML(job.location)}</p>` : ''}
+                `;
+                favListContainer.appendChild(jobCard);
+            });
+        }
+    }
+    // Assurer la traduction au chargement
+    if (typeof updateUIWithTranslations === 'function' && typeof currentLanguage !== 'undefined') {
+        updateUIWithTranslations(currentLanguage);
+    }
   });
-</script>
-<script src="langue.js"></script>
+  </script>
+  <script src="langue.js"></script>
 </body>
 </html>
