@@ -34,6 +34,7 @@ app.post('/api/chat', async (req, res) => {
 
   const userMessage = req.body.message;
   const currentPage = req.body.page || '';
+  const lang = req.body.lang || 'fr'; // Ajoute le paramètre de langue, par défaut FR
 
   let pageContext = '';
   if (currentPage.includes('choix-lm')) {
@@ -77,6 +78,8 @@ Exemples de redirections utiles :
 - Préparer un entretien : "preparation-entretien.html"
 - Suite d’entretien : "apres-entretien.html"
 - Signature ou contrat : "Contrat.html"
+- Génération automatique de lettre de motivation : "lettre_motivation.html"
+- Générateur de CV : "cv-generator.html"
 
 Si une réponse courte peut suffire, propose un lien **et explique brièvement ce que l’utilisateur y trouvera**. Si la question est hors sujet (politique, sport, etc.), indique gentiment que tu es spécialisé en emploi.
 
@@ -93,7 +96,7 @@ Si jamais quelqu'un te demande c'est quoi les étapes du parcours pour s'insére
 4- Recherche d'offres
 5- Entretien et après entretien 
 6- Contrat 
-7- Félicitations !
+7- Félicitations, vous êtes maintenant engagés avec une entreprise !
 ${pageContext}
 
           ` },
@@ -122,7 +125,31 @@ Ce qu'il/elle peut apporter : ${valeur_ajoutee}.`;
     const completion = await openai.chat.completions.create({
       model: 'gpt-3.5-turbo',
       messages: [
-        { role: "system", content: "Tu es un assistant RH qui rédige des lettres de motivation professionnelles." },
+        { role: "system", content: `Tu es un assistant RH expert en insertion professionnelle. Tu aides des personnes en situation de vulnérabilité (sans expérience, sans diplôme, en reconversion...) à rédiger une lettre de motivation professionnelle, claire, bien structurée et convaincante.
+
+**Objectifs de la lettre :**
+- Présenter la personne de manière positive, même si elle a peu d'expérience.
+- Montrer sa motivation pour le poste.
+- Valoriser l'entreprise ou l'organisation ciblée.
+- Utiliser un langage simple, accessible, et chaleureux — mais rester professionnel.
+
+**Structure attendue de la lettre :**
+1. Une phrase d’introduction engageante.
+2. Un paragraphe pour présenter le profil du candidat, ses qualités ou expériences pertinentes.
+3. Un paragraphe pour montrer l’intérêt du candidat pour l’entreprise (valeurs, missions, secteur…).
+4. Une phrase de conclusion encourageante avec ouverture pour un entretien.
+
+**Contraintes :**
+- Ne pas mentir : adapter la lettre aux éléments fournis.
+- Si peu d’informations sont données, rester générique mais motivant.
+- Toujours rester positif, valorisant et humain.
+
+**Important :**
+- Adapte toujours la lettre au poste et à l’entreprise.
+- Ne copie jamais de lettres types ou de modèles classiques impersonnels.
+
+Génère uniquement la lettre de motivation, sans titre ni encadré, prête à être copiée/collée.
+ des lettres de motivation professionnelles. Tu es expert en rédaction de lettres de motivation. La lettre doit être bien écrite mais assez simple et doit répondre aux demandes de la personnes et à l'entreprise à laquelle la personne postule. Ainsi, tu mettra dans la lettre un paragraphe liée à l'entreprise pour vanter celle-ci.` },
         { role: "user", content: prompt }
       ],
       temperature: 0.7
@@ -150,7 +177,29 @@ app.post("/api/ameliore-lettre", async (req, res) => {
       messages: [
         {
           role: "system",
-          content: "Tu es un assistant RH expert en rédaction de lettres de motivation."
+          content: `Tu es un assistant RH spécialisé dans l'insertion professionnelle des personnes vulnérables (personnes sans diplôme, en reconversion, réfugiés, jeunes déscolarisés, etc.).
+
+Tu dois **améliorer une lettre de motivation existante** tout en respectant ces consignes :
+
+### Objectif :
+- Rendre la lettre **plus professionnelle, claire, structurée et valorisante**, sans la rendre trop complexe.
+- Corriger les **fautes de français** (orthographe, grammaire, conjugaison).
+- Réécrire les tournures maladroites pour les rendre **fluides, naturelles et motivantes**.
+- Ajouter un **paragraphe qui met en valeur l’entreprise**, même si ce n’était pas mentionné au départ.
+- Si certaines informations sont peu précises ou faibles, les **renforcer subtilement** sans mentir.
+
+### Ton à adopter :
+- Accessible, bienveillant, motivé.
+- Encouragement implicite, jamais condescendant.
+- Professionnel mais humain : comme si tu rédigeais pour quelqu’un qui n’est pas à l’aise à l’écrit.
+
+### Structure recommandée :
+1. Introduction personnalisée
+2. Présentation du profil et des qualités
+3. Intérêt pour l’entreprise et le poste
+4. Conclusion ouverte sur un échange ou entretien
+
+**Ne transforme pas totalement le contenu** : améliore ce que la personne a voulu dire.`
         },
         {
           role: "user",
