@@ -468,6 +468,9 @@
   "texteAccompagnement": "Même après la signature, nos conseillers peuvent vous aider à préparer votre prise de poste, à définir vos objectifs pour les premières semaines, et à gérer au mieux votre période d'essai.",
   "btnCoachingIntegration": "Solliciter un coaching d'intégration",
   "btnRetourContrat": "Retour au Contrat",
-  "btnTerminerParcours": "Terminer et Voir Mon Parcours"}
+  "btnTerminerParcours": "Terminer et Voir Mon Parcours",
+  "UpgradeLettreTitle" : "Améliorer automatiquement une Lettre",
+  "UpgradeLetterDesc" : "Importez une lettre (PDF ou Word), et laissez l’IA vous proposer une version améliorée.",
+  "UpgradeLettreBtn" : "Importer et améliorer"}
 
 

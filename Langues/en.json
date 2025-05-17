@@ -470,7 +470,10 @@
   "texteAccompagnement": "Even after signing your contract, our advisors can help you prepare for your new position, set goals for the first weeks, and navigate your trial period effectively.",
   "btnCoachingIntegration": "Request Integration Coaching",
   "btnRetourContrat": "Back to the Contract",
-  "btnTerminerParcours": "Finish and View My Journey"
+  "btnTerminerParcours": "Finish and View My Journey",
+  "UpgradeLettreTitle": "Automatically upgrade a letter",
+  "UpgradeLetterDesc": "Import a letter (PDF or Word), and let the AI suggest an improved version",
+  "UpgradeLettreBtn": "Import and upgrade"
 }
 
 
