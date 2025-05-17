@@ -2,8 +2,9 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <title>Offre d'emploi</title>
-  <link rel="stylesheet" href="styleJOBBOARD.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Job Board France Travail</title>
+  <link rel="stylesheet" href="JobBoard/styleJOBBOARD.css" />
 </head>
 <body>
 <header class="header" id="header">
@@ -28,8 +29,13 @@
   <option value="ar">🇸🇦 العربية</option>
   <option value="uk">UK  українська мова</option>
 </select>
-  <div id="offre-details"></div>
-  <!-- === Début du Chatbot === -->
+  <h1 data-i18n="Offre d'emploi">Offres d'emploi - France Travail</h1>
+  <input type="text" id="keyword" placeholder="Ex: data analyst" />
+  <button onclick="searchJobs()" data-i18n="Rechercher">Rechercher</button>
+
+  <div id="results"></div>
+<button onclick="loadFavorites()" data-i18n="Voirfavoris">Voir mes favoris</button>
+<!-- === Début du Chatbot === -->
   <div id="chatbot-box" style="position: fixed; bottom: 20px; right: 20px; width: 300px; font-family: sans-serif;">
     <div id="chat-container" style="background: white; border: 1px solid #ccc; border-radius: 10px; padding: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); display: none;">
         <div id="chat-messages" style="height: 200px; overflow-y: auto; font-size: 0.9rem; margin-bottom: 10px;"></div>
@@ -42,10 +48,10 @@
     
   </div>
   <!-- === Fin du Chatbot === -->
-  <script src="offre.js"></script>
-  <script src="langue.js"></script>
-
   <script src="./backend-openai/chatbot.js"></script>
+
+  <script src="JobBoard/scriptJOBBOARD.js"></script>
+  <script src="langue.js"></script>
 
 </body>
 </html>
