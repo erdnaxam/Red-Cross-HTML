@@ -1,5 +1,6 @@
 require('dotenv').config(); // adapter le chemin si nécessaire
-
+const multer = require('multer');
+const pdfParse = require('pdf-parse');
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -34,7 +35,7 @@ app.post('/api/chat', async (req, res) => {
 
   const userMessage = req.body.message;
   const currentPage = req.body.page || '';
-  const lang = req.body.lang || 'fr'; // Ajoute le paramètre de langue, par défaut FR
+  const lang = req.body.lang || 'fr'; 
 
   let pageContext = '';
   if (currentPage.includes('choix-lm')) {
@@ -259,6 +260,51 @@ app.post("/api/export-word", async (req, res) => {
     res.status(500).json({ error: "Erreur lors de la génération du document Word." });
   }
 });
+
+
+// Amélioration CV PDF 
+
+const upload = multer({ storage: multer.memoryStorage() });
+
+app.post('/api/upload-cv', upload.single('cv'), async (req, res) => {
+  try {
+    const pdfBuffer = req.file.buffer;
+
+    // Extraire le texte brut du PDF
+    const pdfData = await pdfParse(pdfBuffer);
+    const cvText = pdfData.text;
+
+    console.log("📄 Texte extrait du CV :", cvText.slice(0, 500)); // preview
+
+    // Appel à l'API OpenAI pour améliorer le CV
+    const completion = await openai.chat.completions.create({
+      model: 'gpt-3.5-turbo',
+      messages: [
+        {
+          role: 'system',
+          content: `Tu es un expert RH. Ta mission est d’améliorer le contenu d’un CV existant pour le rendre plus clair, professionnel et impactant, sans ajouter d’expérience inventée. Le ton doit rester accessible. Reformule et restructure si nécessaire. Garde les sections clés comme l’expérience, la formation, les compétences.`
+        },
+        {
+          role: 'user',
+          content: cvText
+        }
+      ]
+    });
+
+    const improvedCV = completion.choices[0].message.content;
+
+    res.json({ improvedCV });
+  } catch (error) {
+    console.error("❌ Erreur lors du traitement du CV :", error.message);
+    res.status(500).json({ error: 'Erreur lors de l’analyse ou de l’amélioration du CV.' });
+  }
+});
+
+
+
+
+
+
 
 
 
