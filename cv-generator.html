@@ -1,566 +1,718 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon CV Facile - EmploiAvenir</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- Décommentez si vous avez un style.css global et que le header ci-dessous ne vous convient pas -->
-    <!-- <link rel="stylesheet" href="style.css"> -->
-    <style>
-        :root {
-            --primary-color: #007bff; --secondary-color: #0056b3; --success-color: #28a745;
-            --success-hover-color: #218838; --danger-color: #dc3545; --danger-hover-color: #c82333;
-            --light-bg-color: #f4f7f6; --container-bg-color: #fff; --text-color: #333;
-            --label-color: #555; --border-color: #ddd; --border-radius: 5px;
-            --box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            --font-main: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        }
-        body { font-family: var(--font-main); margin:0; padding:15px; background-color:var(--light-bg-color); color:var(--text-color); line-height:1.6; }
-        .page-container { max-width:1200px; margin:0 auto; }
-        .cv-builder-layout { display:flex; flex-direction:column; gap:20px; }
-        .container { background-color:var(--container-bg-color); padding:20px; border-radius:var(--border-radius); box-shadow:var(--box-shadow); margin-bottom:20px; }
-        .form-container, .preview-container { width:100%; box-sizing:border-box; }
-        h1,h2 { color:var(--primary-color); margin-top:0; }
-        h1 { text-align:center; margin-bottom:20px; font-size:1.8em; }
-        h2 { border-bottom:2px solid var(--primary-color); padding-bottom:8px; margin-bottom:15px; font-size:1.3em; }
-        .form-group { margin-bottom:15px; }
-        .form-group label { display:block; margin-bottom:6px; font-weight:600; color:var(--label-color); font-size:0.95em; }
-        .form-group input[type="text"], .form-group input[type="email"], .form-group input[type="tel"], .form-group textarea {
-            width:100%; padding:10px; border:1px solid var(--border-color); border-radius:var(--border-radius);
-            font-size:1em; box-sizing:border-box; transition:border-color .3s; font-family:inherit;
-        }
-        .form-group input:focus, .form-group textarea:focus { border-color:var(--primary-color); outline:none; }
-        textarea { resize:vertical; min-height:100px; }
-        .input-with-mic { display:flex; align-items:center; gap:5px; }
-        .input-with-mic input { flex-grow:1; }
-        .mic-btn { padding:8px; background-color:var(--primary-color); color:white; border:none; border-radius:var(--border-radius); cursor:pointer; flex-shrink:0; height:40px; width:40px; }
-        .mic-btn:hover { background-color:var(--secondary-color); }
-        .mic-btn:disabled i.fa-microphone-slash { animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+  <meta charset="UTF-8">
+  <title>Mon CV Facile - EmploiAvenir</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    :root {
+      --primary-color: #1877f2;
+      --secondary-color: #145fc0;
+      --success-color: #22b573;
+      --success-hover-color: #189e5b;
+      --danger-color: #dc3545;
+      --danger-hover-color: #c82333;
+      --light-bg-color: #f6f8fa;
+      --container-bg-color: #fff;
+      --text-color: #333;
+      --label-color: #444;
+      --border-color: #d1d5db;
+      --border-radius: 6px;
+      --box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      --font-main: 'Inter', Arial, sans-serif;
+    }
 
-        .dynamic-section { border:1px dashed #ccc; padding:15px; padding-top:45px; margin-top:10px; margin-bottom:15px; border-radius:var(--border-radius); position:relative; }
-        .dynamic-section h3 { font-size:1.1em; margin-top:0; color:var(--label-color); margin-bottom:10px; }
-        button.add-btn, button.remove-btn {
-            margin-bottom:15px; background-color:var(--primary-color); color:white; padding:8px 12px;
-            border:none; border-radius:var(--border-radius); cursor:pointer; font-size:.9em;
-            transition:background-color .3s; display:inline-flex; align-items:center; gap:5px;
-        }
-        button.add-btn:hover { background-color:var(--secondary-color); }
-        button.remove-btn { background-color:var(--danger-color); padding:6px 10px; font-size:.8em; position:absolute; top:10px; right:10px; }
-        button.remove-btn:hover { background-color:var(--danger-hover-color); }
-        button#downloadPdfBtn {
-            width:100%; padding:12px; background-color:var(--success-color); color:white; border:none;
-            border-radius:var(--border-radius); font-size:1.1em; cursor:pointer; transition:background-color .3s;
-            margin-top:20px; display:inline-flex; align-items:center; justify-content:center; gap:8px;
-        }
-        button#downloadPdfBtn:hover { background-color:var(--success-hover-color); }
-        button#downloadPdfBtn:disabled { background-color:#aaa; cursor:not-allowed; }
-        .suggested-skills-container { margin-bottom:20px; }
-        .suggested-skills-container label.main-label { font-weight:600; color:var(--label-color); margin-bottom:8px; display:block; }
-        .skills-checkbox-group { display:flex; flex-wrap:wrap; gap:10px; }
-        .skills-checkbox-group label {
-            display:inline-flex; align-items:center; gap:5px; font-weight:normal; background-color:#e9ecef;
-            padding:5px 10px; border-radius:var(--border-radius); cursor:pointer; font-size:.9em; transition:background-color .2s;
-        }
-        .skills-checkbox-group label:has(input:checked) { background-color:var(--primary-color); color:white; }
-        .skills-checkbox-group label:hover { background-color:#ced4da; }
-        .skills-checkbox-group label:has(input:checked):hover { background-color:var(--secondary-color); }
-        .skills-checkbox-group input[type="checkbox"] { margin-right:5px; accent-color: var(--secondary-color);}
+    body {
+      font-family: var(--font-main);
+      background: var(--light-bg-color);
+      margin: 0;
+      padding: 20px 15px; /* Plus d'espace */
+      color: var(--text-color);
+      font-size: 16px; /* Taille de base augmentée */
+      line-height: 1.7; /* Interligne augmenté */
+    }
 
-        #cvPreview { border:1px solid #ccc; padding:20px; background-color:var(--container-bg-color); font-size:10pt; line-height:1.5; color:#000; overflow-wrap:break-word; font-family:var(--font-main); }
-        #cvPreview * { font-family:var(--font-main) !important; } /* Force la police pour le PDF */
-        #cvPreview h3 { font-size:1.8em; color:#333; margin-bottom:5px; text-align:center; }
-        #cvPreview .contact-info-preview { text-align:center; margin-bottom:15px; font-size:.85em; color:#555; word-break:break-all; }
-        #cvPreview .contact-info-preview span { display:block; margin:3px 0; }
-        #cvPreview .contact-info-preview span:not(:last-child)::after { content:""; }
-        #cvPreview p.job-title-preview { text-align:center; font-weight:bold; font-size:1em; margin-bottom:15px; }
-        #cvPreview h4 { font-size:1.1em; color:var(--secondary-color); border-bottom:1px solid var(--secondary-color); padding-bottom:5px; margin-top:15px; margin-bottom:10px; }
-        #cvPreview p, #cvPreview li { margin-bottom:6px; }
-        #cvPreview ul { list-style-position:outside; padding-left:20px; }
-        .experience-item, .education-item { margin-bottom:12px; }
-        .experience-item strong, .education-item strong { font-weight:bold; display:block; }
-        .experience-item .dates, .education-item .dates { font-style:italic; font-size:.85em; color:#666; display:block; margin-bottom:4px; }
+    .header {
+      background: var(--container-bg-color);
+      border-bottom: 1px solid var(--border-color);
+      padding: 20px 0;
+      text-align: center;
+      font-size: 2em; /* Plus grand */
+      font-weight: 700;
+      color: var(--primary-color);
+      letter-spacing: 0.5px;
+      margin-bottom: 30px;
+      box-shadow: var(--box-shadow);
+      border-radius: var(--border-radius);
+    }
 
-        /* Styles pour le header de cette page spécifique. Adaptez avec votre style.css global si besoin */
-        .header-placeholder { background-color:var(--container-bg-color); padding:10px 0; box-shadow:var(--box-shadow); margin-bottom:20px; }
-        .header-placeholder .container-header { max-width:1200px; margin:0 auto; padding:0 15px; display:flex; justify-content:space-between; align-items:center; }
-        .header-placeholder .logo { font-size:1.5em; text-decoration:none; color:var(--text-color); font-weight:bold; }
-        .header-placeholder .logo span { color:var(--primary-color); }
-        .header-placeholder .nav-links { list-style:none; display:flex; gap:15px; margin:0; padding:0; }
-        .header-placeholder .nav-links a { text-decoration:none; color:var(--primary-color); font-weight:500; }
-        .header-placeholder .mobile-menu-btn { display:none; background:none; border:none; font-size:1.8rem; cursor:pointer; }
+    .main-container { /* Nouveau conteneur pour centrer sur les grands écrans */
+        max-width: 1200px;
+        margin: 0 auto;
+    }
 
-        @media (max-width:767px) { /* Pour afficher le bouton menu burger si le header complet n'est pas là */
-            .header-placeholder .nav-links { display:none; }
-            .header-placeholder .mobile-menu-btn { display:block; }
-        }
-        @media (min-width:768px) {
-            .cv-builder-layout { flex-direction:row; align-items:flex-start; }
-            .form-container { flex:1; margin-bottom:0; }
-            .preview-container { flex:1.5; position:sticky; top:20px; max-height:calc(100vh - 40px); overflow-y:auto; margin-bottom:0; }
-            #cvPreview { font-size:11pt; padding:30px; }
-            #cvPreview .contact-info-preview span { display:inline; margin:0 10px; }
-            #cvPreview .contact-info-preview span:not(:last-child)::after { content:"|"; margin-left:10px; color:#ccc; }
-            #cvPreview p.job-title-preview { font-size:1.1em; }
-            #cvPreview h3 { font-size:2em; }
-            #cvPreview h4 { font-size:1.2em; }
-        }
-        @media (min-width:1024px) {
-             .form-container { flex:0 0 40%; }
-             .preview-container { flex:1; }
-        }
-    </style>
+    .cv-layout {
+      display: flex;
+      flex-direction: column; /* Par défaut en colonne pour mobile */
+      gap: 30px;
+      align-items: stretch; /* S'assurer que les colonnes prennent toute la largeur */
+    }
+
+    .form-column, .preview-column {
+      background: var(--container-bg-color);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      padding: 25px; /* Padding augmenté */
+      width: 100%; /* Prend toute la largeur en mobile */
+      box-sizing: border-box;
+    }
+
+    .form-column h2, .preview-column .preview-title-text {
+      color: var(--primary-color);
+      font-size: 1.5em; /* Titres plus grands */
+      border-bottom: 2px solid #e0e4e8;
+      padding-bottom: 10px;
+      margin-top: 0;
+      margin-bottom: 25px;
+    }
+
+    .form-group { margin-bottom: 20px; } /* Plus d'espace */
+
+    .form-group label {
+      font-weight: 600;
+      display: flex; /* Pour aligner icône et texte */
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px; /* Plus d'espace */
+      font-size: 1.1em; /* Labels plus grands */
+      color: var(--label-color);
+    }
+    .form-group label i {
+      color: var(--primary-color);
+      font-size: 1.1em;
+    }
+
+    input[type="text"], input[type="email"], input[type="tel"], textarea {
+      width: 100%;
+      padding: 12px 10px; /* Champs plus grands */
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius);
+      font-size: 1em; /* Taille relative au body */
+      background: #fdfdfd;
+      box-sizing: border-box;
+      font-family: var(--font-main);
+    }
+    input:focus, textarea:focus {
+        border-color: var(--primary-color);
+        outline: 2px solid var(--primary-color);
+        outline-offset: 2px;
+    }
+
+    textarea {
+        min-height: 100px;
+    }
+
+    .section-title { /* Utilisé pour les titres secondaires dans le formulaire */
+      color: var(--primary-color);
+      font-size: 1.3em; /* Plus grand */
+      font-weight: 600;
+      border-bottom: 1px solid #e0e4e8;
+      margin-top: 30px;
+      margin-bottom: 20px;
+      padding-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-title i { font-size: 1em; }
+
+
+    .action-button { /* Style commun pour les boutons principaux */
+      width: 100%;
+      color: #fff;
+      border: none;
+      font-size: 1.15em; /* Plus grand */
+      font-weight: 600;
+      padding: 15px 10px; /* Plus hauts */
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      text-decoration: none; /* Pour les liens stylés en bouton */
+      box-sizing: border-box;
+    }
+    .action-button:hover { transform: translateY(-1px); }
+    .action-button:active { transform: translateY(0px); }
+
+
+    .btn-pdf {
+      background: var(--success-color);
+      margin-bottom: 15px;
+    }
+    .btn-pdf:hover { background: var(--success-hover-color); }
+    .btn-pdf:disabled { background: #aaa; cursor: not-allowed; }
+
+
+    .btn-lm {
+      background: var(--primary-color);
+    }
+    .btn-lm:hover { background: var(--secondary-color); }
+
+
+    .add-item-btn {
+      background: var(--primary-color);
+      color: #fff;
+      border: none;
+      padding: 10px 18px; /* Plus grand */
+      border-radius: var(--border-radius);
+      font-size: 1em;
+      cursor: pointer;
+      margin-top: 10px;
+      margin-bottom: 15px;
+      transition: background 0.2s;
+      display: inline-flex; /* Pour aligner icône et texte */
+      align-items: center;
+      gap: 8px;
+    }
+    .add-item-btn:hover { background: var(--secondary-color); }
+
+    .dynamic-item-container { /* Conteneur pour un bloc d'expérience/formation */
+        border: 1px dashed var(--border-color);
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: var(--border-radius);
+        position: relative;
+        background-color: #fbfcfd;
+    }
+    .remove-item-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: var(--danger-color);
+        color: white;
+        border: none;
+        border-radius: var(--border-radius);
+        padding: 6px 10px;
+        font-size: 0.9em;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+    }
+    .remove-item-btn:hover { background: var(--danger-hover-color); }
+    .remove-item-btn i { margin-right: 3px;}
+
+
+    /* Aperçu CV */
+    .cv-preview-box {
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius);
+      padding: 30px 25px; /* Plus d'espace */
+      margin-bottom: 25px;
+      text-align: center;
+      background: #fdfdfd;
+      font-size: 0.9rem; /* Ajuster pour que ça tienne bien */
+    }
+    .cv-name-preview {
+      font-size: 1.8em; /* Plus grand */
+      font-weight: 700;
+      margin: 0 0 8px 0;
+      color: var(--text-color);
+    }
+    .cv-contact-preview {
+      font-size: 0.95em;
+      color: #555;
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+    .cv-job-title-preview {
+      font-size: 1.2em; /* Plus grand */
+      font-weight: 600;
+      margin-top: 15px;
+      margin-bottom: 15px;
+      color: var(--primary-color);
+    }
+    .cv-section-preview {
+      text-align: left;
+      margin: 20px 0 0 0;
+      font-size: 1em;
+      color: var(--text-color);
+    }
+    .cv-section-preview h4 { /* Titres de section dans l'aperçu */
+        font-size: 1.1em;
+        color: var(--secondary-color);
+        margin-bottom: 8px;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 4px;
+    }
+    .cv-section-preview ul {
+      margin: 6px 0 0 0; /* Pas de marge à gauche pour la liste */
+      padding-left: 20px; /* Indentation des puces */
+      list-style: disc; /* Puces standard */
+    }
+    .cv-section-preview ul li {
+        margin-bottom: 5px;
+    }
+
+    /* Responsive pour Desktop */
+    @media (min-width: 900px) {
+      .cv-layout {
+        flex-direction: row;
+        align-items: flex-start; /* Aligner en haut */
+      }
+      .form-column {
+        flex: 2; /* Le formulaire prend plus de place */
+      }
+      .preview-column {
+        flex: 3; /* L'aperçu prend un peu plus de place pour être bien visible */
+        position: sticky; /* Pour que l'aperçu suive le scroll */
+        top: 20px;
+        max-height: calc(100vh - 40px); /* Limiter la hauteur */
+        overflow-y: auto; /* Permettre le scroll interne si besoin */
+      }
+      .cv-preview-box { font-size: 1rem; }
+    }
+  </style>
 </head>
 <body>
-  <header class="header-placeholder" id="header">
-    <div class="container-header">
+  <header class="header-navigation" id="header">
+    <div class="header-container flex justify-between items-center">
       <a href="index.html" class="logo" aria-label="Accueil EmploiAvenir"><span>Emploi</span>Avenir</a>
       <nav aria-label="Navigation principale">
         <ul class="nav-links" id="mainNavLinks">
-          <li><a href="index.html"data-i18n="Home">Accueil</a></li>
+          <li><a href="index.html" class="active" data-i18n="Home">Accueil</a></li>
           <li><a href="MonParcours.html" data-i18n="Parcours">Mon Parcours</a></li>
           <li><a href="MesCandidature.html" data-i18n="Candidatures">Mes Candidatures</a></li>
           <li><a href="Partenaires.html" data-i18n="Partenaires">Nos partenaires</a></li>
-          <li><a href="Documents.html"  data-i18n="Documents">Mes documents</a></li>
+          <li><a href="Documents.html" data-i18n="Documents">Mes documents</a></li>
           <li><a href="formation.html" data-i18n="Se former">Se former</a></li>
           <li><a href="Profil.html" data-i18n="Profil">Profil</a></li>
-        </ul>
         </ul>
       </nav>
       <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Ouvrir le menu de navigation" aria-expanded="false" aria-controls="mainNavLinks">☰</button>
     </div>
   </header>
+  <div class="main-container">
+    <div class="cv-layout">
+      <div class="form-column">
+        <h2><i class="fas fa-pencil-alt"></i> Remplissez votre CV</h2>
 
-<div class="page-container">
-    <div class="cv-builder-layout">
-        <div class="container form-container">
-            <h1>Mon CV Facile</h1>
-            <form id="cvForm">
-                <h2>Informations Personnelles</h2>
-                <div class="form-group">
-                    <label for="fullName">Nom complet :</label>
-                    <div class="input-with-mic">
-                        <input type="text" id="fullName" name="fullName" placeholder="Ex: Jean Dupont">
-                        <button type="button" class="mic-btn" data-target-input="fullName" aria-label="Saisir Nom complet par la voix"><i class="fas fa-microphone"></i></button>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="email">Email :</label>
-                     <div class="input-with-mic">
-                        <input type="email" id="email" name="email" placeholder="Ex: jean.dupont@email.com">
-                        <button type="button" class="mic-btn" data-target-input="email" aria-label="Saisir Email par la voix"><i class="fas fa-microphone"></i></button>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="phone">Téléphone :</label>
-                    <div class="input-with-mic">
-                        <input type="tel" id="phone" name="phone" placeholder="Ex: 06 12 34 56 78">
-                        <button type="button" class="mic-btn" data-target-input="phone" aria-label="Saisir Téléphone par la voix"><i class="fas fa-microphone"></i></button>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="address">Adresse (Ville suffit) :</label>
-                    <div class="input-with-mic">
-                        <input type="text" id="address" name="address" placeholder="Ex: Paris">
-                        <button type="button" class="mic-btn" data-target-input="address" aria-label="Saisir Adresse par la voix"><i class="fas fa-microphone"></i></button>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="jobTitle">Titre du poste souhaité / Profil :</label>
-                     <div class="input-with-mic">
-                        <input type="text" id="jobTitle" name="jobTitle" placeholder="Ex: Agent d'accueil">
-                        <button type="button" class="mic-btn" data-target-input="jobTitle" aria-label="Saisir Titre du poste par la voix"><i class="fas fa-microphone"></i></button>
-                    </div>
-                </div>
-
-                <h2>Résumé / À Propos de Moi</h2>
-                <div class="form-group">
-                    <label for="summary">Un court paragraphe vous décrivant (optionnel) :</label>
-                    <div class="input-with-mic">
-                        <textarea id="summary" name="summary" placeholder="Ex: Motivé et sérieux, je cherche à mettre mes compétences au service de..."></textarea>
-                        <button type="button" class="mic-btn" data-target-input="summary" aria-label="Saisir Résumé par la voix"><i class="fas fa-microphone"></i></button>
-                    </div>
-                </div>
-
-                <h2>Expériences Professionnelles</h2>
-                <div id="experiencesContainer"></div>
-                <button type="button" id="addExperienceBtn" class="add-btn"><i class="fas fa-plus-circle"></i> Ajouter une expérience</button>
-
-                <h2>Formations</h2>
-                <div id="educationContainer"></div>
-                <button type="button" id="addEducationBtn" class="add-btn"><i class="fas fa-plus-circle"></i> Ajouter une formation</button>
-
-                <h2>Compétences</h2>
-                <div class="suggested-skills-container">
-                    <label class="main-label">Suggestions de compétences (cochez pour ajouter) :</label>
-                    <div id="suggestedSkills" class="skills-checkbox-group"></div>
-                </div>
-                <div class="form-group">
-                    <label for="skills">Vos compétences (séparées par des virgules) :</label>
-                    <div class="input-with-mic">
-                        <input type="text" id="skills" name="skills" placeholder="Ex: Ponctualité, Travail d'équipe...">
-                        <button type="button" class="mic-btn" data-target-input="skills" aria-label="Saisir Compétences par la voix"><i class="fas fa-microphone"></i></button>
-                    </div>
-                </div>
-            </form>
+        <div class="form-group">
+          <label for="fullname"><i class="fas fa-user"></i> Nom complet :</label>
+          <input type="text" id="fullname" placeholder="Ex: Jean Dupont" oninput="updatePreview()">
+        </div>
+        <div class="form-group">
+          <label for="email"><i class="fas fa-envelope"></i> Email :</label>
+          <input type="email" id="email" placeholder="Ex: jean.dupont@email.com" oninput="updatePreview()">
+        </div>
+        <div class="form-group">
+          <label for="phone"><i class="fas fa-phone"></i> Téléphone :</label>
+          <input type="tel" id="phone" placeholder="Ex: 06 12 34 56 78" oninput="updatePreview()">
+        </div>
+        <div class="form-group">
+          <label for="address"><i class="fas fa-map-marker-alt"></i> Votre ville :</label>
+          <input type="text" id="address" placeholder="Ex: Paris (ou 75000 Paris)" oninput="updatePreview()">
+        </div>
+        <div class="form-group">
+          <label for="jobtitle"><i class="fas fa-briefcase"></i> Titre du CV (ex: votre métier) :</label>
+          <input type="text" id="jobtitle" placeholder="Ex: Agent d'accueil polyvalent" oninput="updatePreview()">
         </div>
 
-        <div class="container preview-container">
-            <h2>Aperçu du CV</h2>
-            <div id="cvPreview">
-                <h3>Prénom NOM</h3>
-                <div class="contact-info-preview">
-                    <span>email@example.com</span>
-                    <span>0102030405</span>
-                    <span>1 rue Exemple, Ville</span>
-                </div>
-                <p class="job-title-preview">Titre du Poste Visé</p>
-            </div>
-            <button id="downloadPdfBtn"><i class="fas fa-file-pdf"></i> Télécharger en PDF</button>
-            <a href="choix-lm.html" class="btn-link-styled" id="goToLettreMotivationBtn">
-            <i class="fas fa-envelope-open-text"></i> Passer à la Lettre de Motivation
-
+        <h3 class="section-title"><i class="fas fa-user-tie"></i> Quelques mots sur vous (optionnel)</h3>
+        <div class="form-group">
+          <label for="summary">Décrivez brièvement votre recherche ou vos qualités :</label>
+          <textarea id="summary" rows="4" placeholder="Ex: Motivé et dynamique, je recherche un poste où je pourrai mettre à profit mon sens du contact." oninput="updatePreview()"></textarea>
         </div>
-    </div>
-</div>
-<!-- === Début du Chatbot === -->
-  <div id="chatbot-box" style="position: fixed; bottom: 20px; right: 20px; width: 300px; font-family: sans-serif;">
-    <div id="chat-container" style="background: white; border: 1px solid #ccc; border-radius: 10px; padding: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); display: none;">
-        <div id="chat-messages" style="height: 200px; overflow-y: auto; font-size: 0.9rem; margin-bottom: 10px;"></div>
-        <input type="text" id="chat-input" placeholder="Posez votre question..." style="width: 75%;" />
-        <button id="send-button" style="width: 23%;">Envoyer</button>
-        <button id="reset-chat" style="margin-top: 5px; width: 100%; background-color: #F87171; color: white; border: none; border-radius: 5px; padding: 5px;">🗑️ Réinitialiser le chat</button>
 
+        <h3 class="section-title"><i class="fas fa-history"></i> Vos Expériences</h3>
+        <div id="experiencesContainer">
+          {/* Les expériences seront ajoutées ici par JavaScript */}
+        </div>
+        <button type="button" class="add-item-btn" onclick="addExperience()">
+          <i class="fas fa-plus-circle"></i> Ajouter une expérience
+        </button>
+
+        <h3 class="section-title"><i class="fas fa-graduation-cap"></i> Vos Formations / Diplômes</h3>
+        <div id="educationsContainer">
+        </div>
+        <button type="button" class="add-item-btn" onclick="addEducation()">
+          <i class="fas fa-plus-circle"></i> Ajouter une formation
+        </button>
+
+        <h3 class="section-title"><i class="fas fa-star"></i> Vos Compétences</h3>
+        <div class="form-group">
+          <label for="skills">Listez vos compétences (séparées par des virgules) :</label>
+          <input type="text" id="skills" placeholder="Ex: Ponctualité, Travail d'équipe, Esprit d'initiative" oninput="updatePreview()">
+          <small style="display:block; margin-top:5px; font-size:0.9em; color:#666;">Exemple : Accueil, Sourire, Caisse, Anglais de base</small>
+        </div>
+      </div>
+
+      <div class="preview-column">
+        <h2 class="preview-title-text"><i class="far fa-eye"></i> Aperçu de votre CV</h2>
+        <div class="cv-preview-box" id="cvPreviewRender">
+          <div class="cv-name-preview" id="cvNamePreview">Prénom NOM</div>
+          <div class="cv-contact-preview" id="cvContactPreview">email@example.com  |  0102030405  |  Ville</div>
+          <div class="cv-job-title-preview" id="cvJobTitlePreview">Titre du Poste Visé</div>
+
+          <div class="cv-section-preview" id="cvSummarySectionPreview" style="display:none;">
+            <h4>À propos de moi</h4>
+            <p id="cvSummaryPreview"></p>
+          </div>
+
+          <div class="cv-section-preview" id="cvExperiencesSectionPreview" style="display:none;">
+            <h4>Expériences Professionnelles</h4>
+            <ul id="cvExperiencesPreview"></ul>
+          </div>
+
+          <div class="cv-section-preview" id="cvEducationsSectionPreview" style="display:none;">
+            <h4>Formations</h4>
+            <ul id="cvEducationsPreview"></ul>
+          </div>
+
+          <div class="cv-section-preview" id="cvSkillsSectionPreview" style="display:none;">
+            <h4>Compétences</h4>
+            <ul id="cvSkillsPreview"></ul>
+          </div>
+        </div>
+        <button id="downloadPdfBtn" class="action-button btn-pdf" onclick="downloadPDF()">
+          <i class="fas fa-file-pdf"></i> Télécharger mon CV en PDF
+        </button>
+        <a href="choix-lm.html" class="action-button btn-lm">
+          <i class="fas fa-envelope-open-text"></i> Créer ma Lettre de Motivation
+        </a>
+      </div>
     </div>
-    <button id="toggle-chat" style="background: #8B5CF6; color: white; padding: 10px 20px; border: none; border-radius: 50px;">💬</button>
-    
   </div>
-  <!-- === Fin du Chatbot === -->
-    <script>
-        // --- SCRIPT POUR LA RECONNAISSANCE VOCALE (SpeechRecognition) ---
-        document.addEventListener('DOMContentLoaded', () => {
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            if (!SpeechRecognition) {
-                console.warn("SpeechRecognition API non supportée par ce navigateur.");
-                document.querySelectorAll('.mic-btn').forEach(btn => btn.style.display = 'none');
-                return;
-            }
 
-            const recognition = new SpeechRecognition();
-            recognition.lang = 'fr-FR';
-            recognition.interimResults = false;
-            recognition.maxAlternatives = 1;
-            let currentTargetInput = null;
-            let isRecognizing = false; // Pour éviter les démarrages multiples
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    // Fonction pour générer un ID unique pour les éléments
+    function generateId() {
+        return '_' + Math.random().toString(36).substr(2, 9);
+    }
 
-            document.querySelectorAll('.mic-btn').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    if (isRecognizing) {
-                        recognition.stop(); // Si on reclique, on arrête
-                        return;
-                    }
-                    const inputId = btn.dataset.targetInput;
-                    const inputElement = document.getElementById(inputId);
-                    if (!inputElement) { console.error(`Élément input non trouvé: ${inputId}`); return; }
+    // Fonctions pour ajouter des sections dynamiques (Expériences / Formations)
+    function createExperienceHTML(id) {
+        return `
+            <div class="dynamic-item-container" id="exp-${id}">
+                <button type="button" class="remove-item-btn" onclick="removeItem('exp-${id}')">
+                    <i class="fas fa-trash-alt"></i> Supprimer
+                </button>
+                <div class="form-group">
+                    <label for="exp-job-${id}">Poste occupé :</label>
+                    <input type="text" id="exp-job-${id}" class="exp-job" placeholder="Ex: Vendeur, Agent d'entretien" oninput="updatePreview()">
+                </div>
+                <div class="form-group">
+                    <label for="exp-company-${id}">Entreprise :</label>
+                    <input type="text" id="exp-company-${id}" class="exp-company" placeholder="Ex: Carrefour, Mairie de Lille" oninput="updatePreview()">
+                </div>
+                <div class="form-group">
+                    <label for="exp-dates-${id}">Dates (ex: Mars 2022 - Juin 2023) :</label>
+                    <input type="text" id="exp-dates-${id}" class="exp-dates" placeholder="Ex: 2022 - 2023" oninput="updatePreview()">
+                </div>
+                <div class="form-group">
+                    <label for="exp-desc-${id}">Ce que vous avez fait (optionnel) :</label>
+                    <textarea id="exp-desc-${id}" class="exp-desc" rows="3" placeholder="Ex: Accueil des clients, mise en rayon, encaissement" oninput="updatePreview()"></textarea>
+                </div>
+            </div>`;
+    }
 
-                    currentTargetInput = inputElement;
-                    try {
-                        recognition.start();
-                    } catch(e) {
-                        console.error("Erreur au démarrage de la reconnaissance (peut-être déjà active ou permission non accordée): ", e);
-                        // Réinitialiser l'état du bouton si start échoue
-                        btn.innerHTML = '<i class="fas fa-microphone"></i>';
-                        btn.disabled = false;
-                        isRecognizing = false;
-                    }
+    function createEducationHTML(id) {
+        return `
+            <div class="dynamic-item-container" id="edu-${id}">
+                <button type="button" class="remove-item-btn" onclick="removeItem('edu-${id}')">
+                    <i class="fas fa-trash-alt"></i> Supprimer
+                </button>
+                <div class="form-group">
+                    <label for="edu-degree-${id}">Diplôme / Formation :</label>
+                    <input type="text" id="edu-degree-${id}" class="edu-degree" placeholder="Ex: CAP Vente, Titre Professionnel Agent d'accueil" oninput="updatePreview()">
+                </div>
+                <div class="form-group">
+                    <label for="edu-school-${id}">École / Organisme :</label>
+                    <input type="text" id="edu-school-${id}" class="edu-school" placeholder="Ex: Lycée Jean Moulin, AFPA" oninput="updatePreview()">
+                </div>
+                <div class="form-group">
+                    <label for="edu-dates-${id}">Dates d'obtention (ex: 2020 - 2022) :</label>
+                    <input type="text" id="edu-dates-${id}" class="edu-dates" placeholder="Ex: 2022" oninput="updatePreview()">
+                </div>
+            </div>`;
+    }
+
+    function addExperience() {
+      const id = generateId();
+      const experiencesContainer = document.getElementById('experiencesContainer');
+      experiencesContainer.insertAdjacentHTML('beforeend', createExperienceHTML(id));
+      updatePreview();
+    }
+
+    function addEducation() {
+      const id = generateId();
+      const educationsContainer = document.getElementById('educationsContainer');
+      educationsContainer.insertAdjacentHTML('beforeend', createEducationHTML(id));
+      updatePreview();
+    }
+
+    function removeItem(elementId) {
+        const item = document.getElementById(elementId);
+        if (item) {
+            item.remove();
+            updatePreview();
+        }
+    }
+
+    function updatePreview() {
+      // Informations personnelles
+      document.getElementById('cvNamePreview').textContent = document.getElementById('fullname').value.trim() || "Prénom NOM";
+
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const address = document.getElementById('address').value.trim();
+      let contactInfo = [];
+      if (email) contactInfo.push(email);
+      if (phone) contactInfo.push(phone);
+      if (address) contactInfo.push(address);
+      document.getElementById('cvContactPreview').textContent = contactInfo.join('  •  ') || "infos@contact.fr  •  0102030405  •  Ville";
+
+      document.getElementById('cvJobTitlePreview').textContent = document.getElementById('jobtitle').value.trim() || "Titre du Poste Visé";
+
+      // Résumé
+      const summary = document.getElementById('summary').value.trim();
+      const summarySection = document.getElementById('cvSummarySectionPreview');
+      const summaryPreview = document.getElementById('cvSummaryPreview');
+      if (summary) {
+        summaryPreview.textContent = summary;
+        summarySection.style.display = 'block';
+      } else {
+        summarySection.style.display = 'none';
+      }
+
+      // Expériences
+      const experiencesPreview = document.getElementById('cvExperiencesPreview');
+      const experiencesSection = document.getElementById('cvExperiencesSectionPreview');
+      experiencesPreview.innerHTML = '';
+      let hasExperiences = false;
+      document.querySelectorAll('#experiencesContainer .dynamic-item-container').forEach(expDiv => {
+        const job = expDiv.querySelector('.exp-job').value.trim();
+        const company = expDiv.querySelector('.exp-company').value.trim();
+        const dates = expDiv.querySelector('.exp-dates').value.trim();
+        const desc = expDiv.querySelector('.exp-desc').value.trim();
+        if (job || company || dates) {
+          hasExperiences = true;
+          let itemHTML = `<li><strong>${job || 'Poste non précisé'}</strong>`;
+          if (company) itemHTML += ` chez ${company}`;
+          if (dates) itemHTML += ` (${dates})`;
+          itemHTML += `</li>`;
+          if (desc) {
+            itemHTML += `<ul style="list-style-type:circle; margin-left:20px; margin-bottom: 8px;">${desc.split('\n').map(d => `<li>${d}</li>`).join('')}</ul>`;
+          }
+          experiencesPreview.innerHTML += itemHTML;
+        }
+      });
+      experiencesSection.style.display = hasExperiences ? 'block' : 'none';
+
+
+      // Formations
+      const educationsPreview = document.getElementById('cvEducationsPreview');
+      const educationsSection = document.getElementById('cvEducationsSectionPreview');
+      educationsPreview.innerHTML = '';
+      let hasEducations = false;
+      document.querySelectorAll('#educationsContainer .dynamic-item-container').forEach(eduDiv => {
+        const degree = eduDiv.querySelector('.edu-degree').value.trim();
+        const school = eduDiv.querySelector('.edu-school').value.trim();
+        const dates = eduDiv.querySelector('.edu-dates').value.trim();
+        if (degree || school || dates) {
+          hasEducations = true;
+          educationsPreview.innerHTML += `<li><strong>${degree || 'Formation non précisée'}</strong> ${school ? ' - ' + school : ''} ${dates ? '(' + dates + ')' : ''}</li>`;
+        }
+      });
+      educationsSection.style.display = hasEducations ? 'block' : 'none';
+
+      // Compétences
+      const skills = document.getElementById('skills').value.trim();
+      const skillsPreview = document.getElementById('cvSkillsPreview');
+      const skillsSection = document.getElementById('cvSkillsSectionPreview');
+      if (skills) {
+        const skillList = skills.split(',').map(s => s.trim()).filter(Boolean);
+        skillsPreview.innerHTML = skillList.map(s => `<li>${s}</li>`).join('');
+        skillsSection.style.display = 'block';
+      } else {
+        skillsPreview.innerHTML = '';
+        skillsSection.style.display = 'none';
+      }
+    }
+
+    // Initialiser avec un champ vide pour expérience et formation pour guider
+    addExperience();
+    addEducation();
+    updatePreview(); // Premier affichage
+
+    async function downloadPDF() {
+      const downloadBtn = document.getElementById('downloadPdfBtn');
+      const originalBtnText = downloadBtn.innerHTML;
+      downloadBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Création du PDF...';
+      downloadBtn.disabled = true;
+
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({
+        orientation: "portrait",
+        unit: "mm",
+        format: "a4",
+        putOnlyUsedFonts:true
+      });
+
+      let y = 20; // Marge haute
+      const pageHeight = doc.internal.pageSize.height;
+      const margin = 20;
+      const usableWidth = doc.internal.pageSize.width - 2 * margin;
+
+      function checkPageBreak(neededHeight) {
+          if (y + neededHeight > pageHeight - margin) {
+              doc.addPage();
+              y = margin;
+          }
+      }
+
+      // Nom
+      checkPageBreak(15);
+      doc.setFont("Helvetica", "bold");
+      doc.setFontSize(22);
+      const name = document.getElementById('fullname').value.trim() || "Prénom NOM";
+      doc.text(name, doc.internal.pageSize.width / 2, y, { align: "center" });
+      y += 10;
+
+      // Contact
+      checkPageBreak(10);
+      doc.setFont("Helvetica", "normal");
+      doc.setFontSize(10);
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const address = document.getElementById('address').value.trim();
+      let contactParts = [];
+      if (email) contactParts.push(email);
+      if (phone) contactParts.push(phone);
+      if (address) contactParts.push(address);
+      doc.text(contactParts.join('  |  '), doc.internal.pageSize.width / 2, y, { align: "center" });
+      y += 8;
+
+      // Titre du poste
+      checkPageBreak(10);
+      doc.setFont("Helvetica", "bold");
+      doc.setFontSize(14);
+      const jobTitle = document.getElementById('jobtitle').value.trim() || "Titre du Poste Visé";
+      doc.text(jobTitle, doc.internal.pageSize.width / 2, y, { align: "center" });
+      y += 12;
+
+      // Résumé
+      const summary = document.getElementById('summary').value.trim();
+      if (summary) {
+        checkPageBreak(15);
+        doc.setFont("Helvetica", "bold");
+        doc.setFontSize(12);
+        doc.text("À propos de moi", margin, y);
+        y += 6;
+        doc.setFont("Helvetica", "normal");
+        doc.setFontSize(10);
+        const summaryLines = doc.splitTextToSize(summary, usableWidth);
+        checkPageBreak(summaryLines.length * 5);
+        doc.text(summaryLines, margin, y);
+        y += summaryLines.length * 5 + 5;
+      }
+
+      // Expériences
+      const experiences = Array.from(document.querySelectorAll('#experiencesContainer .dynamic-item-container'));
+      if (experiences.some(expDiv => expDiv.querySelector('.exp-job').value.trim() || expDiv.querySelector('.exp-company').value.trim())) {
+        checkPageBreak(15);
+        doc.setFont("Helvetica", "bold");
+        doc.setFontSize(12);
+        doc.text("Expériences Professionnelles", margin, y);
+        y += 7;
+        doc.setFont("Helvetica", "normal");
+        doc.setFontSize(10);
+        experiences.forEach(expDiv => {
+          const job = expDiv.querySelector('.exp-job').value.trim();
+          const company = expDiv.querySelector('.exp-company').value.trim();
+          const dates = expDiv.querySelector('.exp-dates').value.trim();
+          const desc = expDiv.querySelector('.exp-desc').value.trim();
+          if (job || company || dates) {
+            let expText = `${job || 'Poste non précisé'}`;
+            if (company) expText += ` chez ${company}`;
+            if (dates) expText += ` (${dates})`;
+
+            checkPageBreak(8);
+            doc.setFont("Helvetica", "bold");
+            doc.text(`• ${expText}`, margin, y);
+            y += 5;
+
+            if (desc) {
+                doc.setFont("Helvetica", "normal");
+                const descLines = doc.splitTextToSize(desc, usableWidth - 5); // Légère indentation
+                descLines.forEach(line => {
+                    checkPageBreak(5);
+                    doc.text(line, margin + 5, y);
+                    y += 5;
                 });
-            });
-
-            recognition.onstart = () => {
-                isRecognizing = true;
-                if (currentTargetInput) {
-                    const micButton = document.querySelector(`.mic-btn[data-target-input="${currentTargetInput.id}"]`);
-                    if (micButton) {
-                        micButton.innerHTML = '<i class="fas fa-microphone-slash"></i>';
-                        micButton.disabled = true; // Désactiver pendant l'écoute
-                    }
-                }
-            };
-
-            recognition.onresult = (event) => {
-                const transcript = event.results[0][0].transcript;
-                if (currentTargetInput) {
-                    currentTargetInput.value = transcript;
-                    // Déclencher l'événement 'input' pour que updatePreview soit appelé
-                    currentTargetInput.dispatchEvent(new Event('input', { bubbles: true }));
-                }
-            };
-
-            // onspeechend est déclenché quand l'utilisateur arrête de parler
-            recognition.onspeechend = () => {
-                recognition.stop(); // Arrêter explicitement
-            };
-
-            // onend est toujours déclenché, que ce soit par un arrêt normal ou une erreur
-            recognition.onend = () => {
-                if (currentTargetInput) {
-                    const micButton = document.querySelector(`.mic-btn[data-target-input="${currentTargetInput.id}"]`);
-                    if (micButton) {
-                        micButton.innerHTML = '<i class="fas fa-microphone"></i>';
-                        micButton.disabled = false;
-                    }
-                }
-                currentTargetInput = null;
-                isRecognizing = false;
-            };
-
-            recognition.onerror = (event) => {
-                console.error('Erreur SpeechRecognition:', event.error);
-                // Pas de toast ici car App n'est pas défini dans ce scope autonome
-                // alert(`Erreur de reconnaissance vocale : ${event.error}`);
-                 if (currentTargetInput) { // Réinitialiser le bouton même en cas d'erreur
-                    const micButton = document.querySelector(`.mic-btn[data-target-input="${currentTargetInput.id}"]`);
-                    if(micButton) {
-                        micButton.innerHTML = '<i class="fas fa-microphone"></i>';
-                        micButton.disabled = false;
-                    }
-                }
-                isRecognizing = false;
-            };
+            }
+            y += 3; // Espace après une expérience
+          }
         });
+        y += 5;
+      }
 
-        // --- SCRIPT PRINCIPAL DU GÉNÉRATEUR DE CV ---
-        document.addEventListener('DOMContentLoaded', function () {
-            const form = document.getElementById('cvForm');
-            const cvPreview = document.getElementById('cvPreview');
-            const downloadPdfBtn = document.getElementById('downloadPdfBtn');
-            const experiencesContainer = document.getElementById('experiencesContainer');
-            const addExperienceBtn = document.getElementById('addExperienceBtn');
-            let experienceIdCounter = 0;
-            const educationContainer = document.getElementById('educationContainer');
-            const addEducationBtn = document.getElementById('addEducationBtn');
-            let educationIdCounter = 0;
-            const suggestedSkillsContainer = document.getElementById('suggestedSkills');
-            const skillsInput = document.getElementById('skills');
-            const predefinedSkills = [
-                "Ponctualité", "Travail d'équipe", "Adaptabilité", "Communication", "Organisation",
-                "Rigueur", "Autonomie", "Prise d'initiative", "Apprentissage rapide", "Polyvalence",
-                "Respect des consignes", "Bon relationnel", "Motivation", "Sérieux(se)", "Dynamisme",
-                "Sens du service client", "Gestion du stress", "Créativité", "Persévérance"
-            ];
-
-            function escapeHTML(str) {
-                if (typeof str !== 'string') return '';
-                const div = document.createElement('div');
-                div.appendChild(document.createTextNode(str));
-                return div.innerHTML.replace(/\n/g, '<br>');
-            }
-
-            function updatePreview() {
-                const formData = new FormData(form);
-                let previewHTML = `
-                    <h3 style="font-family: 'Inter', sans-serif !important;">${escapeHTML(formData.get('fullName')) || 'Prénom NOM'}</h3>
-                    <div class="contact-info-preview">`;
-
-                const contactParts = [];
-                if (formData.get('email')?.trim()) contactParts.push(`<span>${escapeHTML(formData.get('email'))}</span>`);
-                if (formData.get('phone')?.trim()) contactParts.push(`<span>${escapeHTML(formData.get('phone'))}</span>`);
-                if (formData.get('address')?.trim()) contactParts.push(`<span>${escapeHTML(formData.get('address'))}</span>`);
-
-                if (contactParts.length > 0) {
-                    previewHTML += contactParts.join(' <span class="separator-desktop-only">|</span> ');
-                } else {
-                    previewHTML += `<span>email@example.com</span><span class="separator-desktop-only">|</span><span>0102030405</span><span class="separator-desktop-only">|</span><span>Ville</span>`;
-                }
-                previewHTML += `</div>`;
-                previewHTML += formData.get('jobTitle') ? `<p class="job-title-preview">${escapeHTML(formData.get('jobTitle'))}</p>` : '<p class="job-title-preview">Titre du Poste Visé</p>';
-
-                if (formData.get('summary')?.trim() || !isFormEffectivelyEmpty(formData)) {
-                    previewHTML += `<h4>Résumé</h4><p>${escapeHTML(formData.get('summary')) || (isFormEffectivelyEmpty(formData) ? '' : '<em>Complétez votre résumé...</em>')}</p>`;
-                }
-
-                let experiencesHTML = '';
-                experiencesContainer.querySelectorAll('.dynamic-section').forEach(section => {
-                    const title = section.querySelector(`input[name^="expTitle_"]`)?.value.trim();
-                    if (title) {
-                        experiencesHTML += `
-                            <div class="experience-item">
-                                <strong>${escapeHTML(title)}</strong>
-                                <span class="dates">
-                                    ${escapeHTML(section.querySelector(`input[name^="expCompany_"]`)?.value)}
-                                    ${section.querySelector(`input[name^="expLocation_"]`)?.value ? ` - ${escapeHTML(section.querySelector(`input[name^="expLocation_"]`)?.value)}` : ''}
-                                    (${escapeHTML(section.querySelector(`input[name^="expStartDate_"]`)?.value)} - ${escapeHTML(section.querySelector(`input[name^="expEndDate_"]`)?.value || 'Présent')})
-                                </span>
-                                ${section.querySelector(`textarea[name^="expDesc_"]`)?.value ? `<ul>${section.querySelector(`textarea[name^="expDesc_"]`).value.split('\n').filter(line => line.trim() !== '').map(line => `<li>${escapeHTML(line.trim())}</li>`).join('')}</ul>` : ''}
-                            </div>`;
-                    }
-                });
-                 if (experiencesHTML || (!isFormEffectivelyEmpty(formData) && experiencesContainer.children.length > 0)) {
-                    previewHTML += `<h4>Expériences Professionnelles</h4>${experiencesHTML || (experiencesContainer.children.length > 0 ? '<p><em>Complétez ou ajoutez vos expériences...</em></p>' : '')}`;
-                }
-
-                let educationHTML = '';
-                educationContainer.querySelectorAll('.dynamic-section').forEach(section => {
-                    const degree = section.querySelector(`input[name^="eduDegree_"]`)?.value.trim();
-                     if (degree) {
-                        educationHTML += `
-                            <div class="education-item">
-                                <strong>${escapeHTML(degree)}</strong>
-                                <span class="dates">
-                                    ${escapeHTML(section.querySelector(`input[name^="eduSchool_"]`)?.value)}
-                                    ${section.querySelector(`input[name^="eduSchoolLocation_"]`)?.value ? ` - ${escapeHTML(section.querySelector(`input[name^="eduSchoolLocation_"]`)?.value)}` : ''}
-                                    (${escapeHTML(section.querySelector(`input[name^="eduGradYear_"]`)?.value || 'En cours')})
-                                </span>
-                                ${section.querySelector(`textarea[name^="eduDesc_"]`)?.value ? `<p>${escapeHTML(section.querySelector(`textarea[name^="eduDesc_"]`)?.value)}</p>` : ''}
-                            </div>`;
-                    }
-                });
-                 if (educationHTML || (!isFormEffectivelyEmpty(formData) && educationContainer.children.length > 0) ) {
-                    previewHTML += `<h4>Formations</h4>${educationHTML || (educationContainer.children.length > 0 ? '<p><em>Complétez ou ajoutez vos formations...</em></p>' : '')}`;
-                }
-
-                const currentSkills = skillsInput.value.trim();
-                if (currentSkills || !isFormEffectivelyEmpty(formData)) {
-                    previewHTML += `<h4>Compétences</h4><p>${escapeHTML(currentSkills) || 'Listez vos compétences ou sélectionnez des suggestions...'}</p>`;
-                }
-                cvPreview.innerHTML = previewHTML;
-            }
-
-            function isFormEffectivelyEmpty(formData) {
-                let empty = true;
-                ['fullName', 'email', 'phone', 'address', 'jobTitle', 'summary', 'skills'].forEach(fieldName => {
-                    if (formData.get(fieldName)?.trim()) empty = false;
-                });
-                if (!empty) return false;
-
-                if (Array.from(experiencesContainer.children).some(section => section.querySelector(`input[name^="expTitle_"]`)?.value.trim())) return false;
-                if (Array.from(educationContainer.children).some(section => section.querySelector(`input[name^="eduDegree_"]`)?.value.trim())) return false;
-
-                return true;
-            }
-
-            function createDynamicSection(type) {
-                const sectionDiv = document.createElement('div');
-                sectionDiv.className = 'dynamic-section';
-                let currentIdUniqueSuffix, sectionHTML;
-
-                if (type === 'experience') {
-                    currentIdUniqueSuffix = experienceIdCounter++;
-                    sectionHTML = `
-                        <h3>Expérience</h3>
-                        <button type="button" class="remove-btn" aria-label="Supprimer cette expérience"><i class="fas fa-trash-alt"></i></button>
-                        <div class="form-group"><label for="expTitle_${currentIdUniqueSuffix}">Titre du poste:</label><input type="text" id="expTitle_${currentIdUniqueSuffix}" name="expTitle_${currentIdUniqueSuffix}" placeholder="Ex: Vendeur"></div>
-                        <div class="form-group"><label for="expCompany_${currentIdUniqueSuffix}">Entreprise:</label><input type="text" id="expCompany_${currentIdUniqueSuffix}" name="expCompany_${currentIdUniqueSuffix}" placeholder="Ex: Magasin XYZ"></div>
-                        <div class="form-group"><label for="expLocation_${currentIdUniqueSuffix}">Lieu:</label><input type="text" id="expLocation_${currentIdUniqueSuffix}" name="expLocation_${currentIdUniqueSuffix}" placeholder="Ex: Lyon"></div>
-                        <div class="form-group"><label for="expStartDate_${currentIdUniqueSuffix}">Date de début:</label><input type="text" id="expStartDate_${currentIdUniqueSuffix}" name="expStartDate_${currentIdUniqueSuffix}" placeholder="Ex: Mars 2021"></div>
-                        <div class="form-group"><label for="expEndDate_${currentIdUniqueSuffix}">Date de fin (laisser vide si actuel):</label><input type="text" id="expEndDate_${currentIdUniqueSuffix}" name="expEndDate_${currentIdUniqueSuffix}" placeholder="Ex: Juin 2022"></div>
-                        <div class="form-group"><label for="expDesc_${currentIdUniqueSuffix}">Description (une tâche par ligne):</label><textarea id="expDesc_${currentIdUniqueSuffix}" name="expDesc_${currentIdUniqueSuffix}" placeholder="Accueil clients\n- Gestion de la caisse..."></textarea></div>`;
-                    experiencesContainer.appendChild(sectionDiv);
-                } else if (type === 'education') {
-                    currentIdUniqueSuffix = educationIdCounter++;
-                    sectionHTML = `
-                        <h3>Formation</h3>
-                        <button type="button" class="remove-btn" aria-label="Supprimer cette formation"><i class="fas fa-trash-alt"></i></button>
-                        <div class="form-group"><label for="eduDegree_${currentIdUniqueSuffix}">Diplôme / Titre:</label><input type="text" id="eduDegree_${currentIdUniqueSuffix}" name="eduDegree_${currentIdUniqueSuffix}" placeholder="Ex: CAP Vente"></div>
-                        <div class="form-group"><label for="eduSchool_${currentIdUniqueSuffix}">École / Organisme:</label><input type="text" id="eduSchool_${currentIdUniqueSuffix}" name="eduSchool_${currentIdUniqueSuffix}" placeholder="Ex: Lycée Pro Dupont"></div>
-                        <div class="form-group"><label for="eduSchoolLocation_${currentIdUniqueSuffix}">Lieu:</label><input type="text" id="eduSchoolLocation_${currentIdUniqueSuffix}" name="eduSchoolLocation_${currentIdUniqueSuffix}" placeholder="Ex: Lyon"></div>
-                        <div class="form-group"><label for="eduGradYear_${currentIdUniqueSuffix}">Année d'obtention / Fin prévue:</label><input type="text" id="eduGradYear_${currentIdUniqueSuffix}" name="eduGradYear_${currentIdUniqueSuffix}" placeholder="Ex: 2020"></div>
-                        <div class="form-group"><label for="eduDesc_${currentIdUniqueSuffix}">Description (optionnel):</label><textarea id="eduDesc_${currentIdUniqueSuffix}" name="eduDesc_${currentIdUniqueSuffix}" placeholder="Ex: Apprentissage des techniques de vente..."></textarea></div>`;
-                    educationContainer.appendChild(sectionDiv);
-                }
-
-                sectionDiv.innerHTML = sectionHTML;
-                sectionDiv.querySelector('.remove-btn').addEventListener('click', function() {
-                    sectionDiv.remove();
-                    updatePreview();
-                });
-
-                sectionDiv.querySelectorAll('input, textarea').forEach(input => {
-                    input.addEventListener('input', updatePreview);
-                });
-                updatePreview(); // Mettre à jour l'aperçu après l'ajout
-            }
-
-            addExperienceBtn.addEventListener('click', () => createDynamicSection('experience'));
-            addEducationBtn.addEventListener('click', () => createDynamicSection('education'));
-
-            predefinedSkills.forEach(skill => {
-                const skillId = `skill-${skill.toLowerCase().replace(/[^a-z0-9]/g, '-')}`;
-                const label = document.createElement('label');
-                label.htmlFor = skillId;
-                const checkbox = document.createElement('input');
-                checkbox.type = 'checkbox';
-                checkbox.value = skill;
-                checkbox.id = skillId;
-                checkbox.addEventListener('change', updateSkillsFromCheckboxes);
-
-                label.appendChild(checkbox);
-                label.appendChild(document.createTextNode(" " + skill));
-                suggestedSkillsContainer.appendChild(label);
-            });
-
-            function updateSkillsFromCheckboxes() {
-                const selectedSkills = [];
-                suggestedSkillsContainer.querySelectorAll('input[type="checkbox"]:checked').forEach(checkbox => {
-                    selectedSkills.push(checkbox.value);
-                });
-                skillsInput.value = selectedSkills.join(', ');
-                updatePreview();
-            }
-
-            skillsInput.addEventListener('input', () => {
-                const manualSkillsArray = skillsInput.value.split(',').map(s => s.trim().toLowerCase());
-                suggestedSkillsContainer.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
-                    checkbox.checked = manualSkillsArray.includes(checkbox.value.toLowerCase());
-                });
-                // Ne pas appeler updatePreview() ici directement pour éviter une boucle si l'utilisateur tape vite,
-                // l'event 'input' sur le formulaire global s'en chargera.
-            });
-
-            form.addEventListener('input', updatePreview); // Écouteur global pour tous les champs du formulaire
-
-            downloadPdfBtn.addEventListener('click', async function () {
-                downloadPdfBtn.textContent = 'Génération du PDF...';
-                downloadPdfBtn.disabled = true;
-                try {
-                    await document.fonts.ready; // Attendre que les polices personnalisées soient chargées
-                } catch (e) {
-                    console.warn("Erreur d'attente des polices (document.fonts.ready):", e);
-                }
-
-                const fullName = form.elements.fullName.value.trim();
-                const defaultFilename = 'Mon-CV-EmploiAvenir.pdf';
-                const userFilename = fullName ? `${fullName.replace(/\s+/g, '_')}-CV.pdf` : defaultFilename;
-                const cleanFilename = userFilename.replace(/[^a-zA-Z0-9\.\-\_]/g, '_');
-
-                const elementToPrint = document.getElementById('cvPreview');
-                const opt = {
-                    margin:       [10, 8, 10, 8], filename: cleanFilename,
-                    image:        { type: 'jpeg', quality: 0.98 },
-                    html2canvas:  { scale: 2.5, logging: false, useCORS: true, dpi: 192, letterRendering: true, backgroundColor: '#ffffff' },
-                    jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
-                };
-
-                html2pdf().from(elementToPrint).set(opt).save().then(function() {
-                    downloadPdfBtn.textContent = 'Télécharger en PDF';
-                    downloadPdfBtn.disabled = false;
-                }).catch(function(error) {
-                    console.error("Erreur PDF:", error);
-                    downloadPdfBtn.textContent = 'Erreur PDF - Réessayer';
-                    downloadPdfBtn.disabled = false;
-                    alert("Erreur lors de la génération du PDF. Le texte pourrait être manquant. Vérifiez la console.");
-                });
-            });
-
-            updatePreview(); // Appel initial pour l'aperçu
+      // Formations
+      const educations = Array.from(document.querySelectorAll('#educationsContainer .dynamic-item-container'));
+      if (educations.some(eduDiv => eduDiv.querySelector('.edu-degree').value.trim() || eduDiv.querySelector('.edu-school').value.trim())) {
+        checkPageBreak(15);
+        doc.setFont("Helvetica", "bold");
+        doc.setFontSize(12);
+        doc.text("Formations", margin, y);
+        y += 7;
+        doc.setFont("Helvetica", "normal");
+        doc.setFontSize(10);
+        educations.forEach(eduDiv => {
+          const degree = eduDiv.querySelector('.edu-degree').value.trim();
+          const school = eduDiv.querySelector('.edu-school').value.trim();
+          const dates = eduDiv.querySelector('.edu-dates').value.trim();
+          if (degree || school || dates) {
+            let eduText = `• ${degree || 'Formation non précisée'}`;
+            if (school) eduText += ` - ${school}`;
+            if (dates) eduText += ` (${dates})`;
+            checkPageBreak(5);
+            doc.text(eduText, margin, y);
+            y += 5;
+          }
         });
-    </script>
-    <script src="./backend-openai/chatbot.js"></script>
+        y += 5;
+      }
 
+      // Compétences
+      const skillsText = document.getElementById('skills').value.trim();
+      if (skillsText) {
+        checkPageBreak(15);
+        doc.setFont("Helvetica", "bold");
+        doc.setFontSize(12);
+        doc.text("Compétences", margin, y);
+        y += 7;
+        doc.setFont("Helvetica", "normal");
+        doc.setFontSize(10);
+        const skillList = skillsText.split(',').map(s => s.trim()).filter(Boolean);
+        skillList.forEach(skill => {
+          checkPageBreak(5);
+          doc.text(`• ${skill}`, margin, y);
+          y += 5;
+        });
+      }
+
+      doc.save((name.replace(/\s+/g, '_') || "Mon-CV") + "-EmploiAvenir.pdf");
+
+      downloadBtn.innerHTML = originalBtnText;
+      downloadBtn.disabled = false;
+    }
+  </script>
 </body>
 </html>

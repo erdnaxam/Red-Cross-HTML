@@ -1,9 +1,38 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+
   <meta charset="UTF-8">
-  <title>Amélioration de CV</title>
+  <title>Amélioration de CV</title>`
+      <link rel="stylesheet" href="style.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+   <!-- HEADER -->
+  <header class="header" id="header">
+    <div class="container flex justify-between items-center">
+      <a href="index.html" class="logo" aria-label="Accueil EmploiAvenir"><span>Emploi</span>Avenir</a>
+      <nav aria-label="Navigation principale">
+        <ul class="nav-links" id="mainNavLinks">
+          <li><a href="index.html"data-i18n="Home">Accueil</a></li>
+          <li><a href="MonParcours.html" data-i18n="Parcours">Mon Parcours</a></li>
+          <li><a href="MesCandidature.html" data-i18n="Candidatures">Mes Candidatures</a></li>
+          <li><a href="Partenaires.html" data-i18n="Partenaires">Nos partenaires</a></li>
+          <li><a href="Documents.html" data-i18n="Documents">Mes documents</a></li>
+          <li><a href="formation.html" data-i18n="Se former">Se former</a></li>
+          <li><a href="Profil.html" data-i18n="Profil">Profil</a></li>
+        </ul>
+      </nav>
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Ouvrir le menu de navigation" aria-expanded="false" aria-controls="mainNavLinks">☰</button>
+      <link rel="stylesheet" href="style.css">
+    </div>
+  </header>
+<select id="langSwitcher" aria-label="Choisir la langue">
+  <option value="fr">🇫🇷 Français</option>
+  <option value="en">🇬🇧 English</option>
+  <option value="ar">🇸🇦 العربية</option>
+  <option value="uk">🇺🇦  українська мова</option>
+</select>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -98,5 +127,48 @@
       doc.save('cv_ameliore.pdf');
     });
   </script>
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-column">
+        <h3 data-i18n="footerBrand">EmploiAvenir</h3>
+        <p data-i18n="footerDescription">Votre guide personnalisé pour atteindre vos objectifs professionnels.</p>
+      </div>
+      <div class="footer-column">
+        <h3 data-i18n="quickLinksTitle">Liens rapides</h3>
+        <ul class="footer-links">
+          <li><a href="index.html" data-i18n="linkHome">Accueil</a></li>
+          <li><a href="MonParcours.html" data-i18n="linkParcours">Mon Parcours</a></li>
+          <li><a href="MesCandidature.html" data-i18n="linkCandidatures">Mes Candidatures</a></li>
+          <li><a href="Partenaires.html" data-i18n="linkPartenaires">Nos partenaires</a></li>
+          <li><a href="Documents.html" data-i18n="linkDocuments">Mes documents</a></li>
+          <li><a href="Profil.html" data-i18n="linkProfil">Profil</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3 data-i18n="servicesTitle">Services</h3>
+        <ul class="footer-links">
+          <li><a href="#" data-i18n="linkCv">Création de CV</a></li>
+          <li><a href="#" data-i18n="linkLettres">Lettres de motivation</a></li>
+          <li><a href="#" data-i18n="linkCoaching">Coaching</a></li>
+          <li><a href="#" data-i18n="linkEntretien">Préparation aux entretiens</a></li>
+          <li><a href="#" data-i18n="linkPartenaireEntreprise">Partenaires entreprises</a></li>
+        </ul>
+      </div>
+      <div class="footer-column">
+        <h3 data-i18n="contactTitle">Contact</h3>
+        <ul class="footer-links">
+          <li><a href="tel:+33123456789" data-i18n="phone">+33 1 23 45 67 89</a></li>
+          <li><a href="mailto:contact@emploiavenir.fr" data-i18n="email">contact@emploiavenir.fr</a></li>
+          <li data-i18n="address">12 rue de l'Emploi, 75001 Paris</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p data-i18n="footerRights">© 2024 EmploiAvenir. Tous droits réservés.</p>
+    </div>
+  </div>
+</footer>
 </body>
 </html>
