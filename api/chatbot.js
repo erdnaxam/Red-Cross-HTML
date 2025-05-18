@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
     chat.scrollTop = chat.scrollHeight;
 
     try {
-      const response = await fetch("http://localhost:3001/api/chat", {
+      const response = await fetch("http://127.0.0.1:5501/api/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

@@ -4,7 +4,7 @@ const pdfParse = require('pdf-parse');
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const { OpenAI } = require('openai');
+const { OpenAI } = require('openai/index.mjs');
 
 const app = express();
 const openai = new OpenAI({

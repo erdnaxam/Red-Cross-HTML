@@ -175,6 +175,7 @@
   document.querySelectorAll('.mic-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const inputId = btn.dataset.targetInput;
+      
       const input = document.getElementById(inputId);
 
       if (!input) {

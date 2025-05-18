@@ -1,5 +1,5 @@
 // test-chat.js
-const { OpenAI } = require('openai');
+const { OpenAI } = require('openai/index.mjs');
 require('dotenv').config(); // Charge ta clé API depuis .env
 
 // Initialisation de l'API OpenAI avec ta clé
