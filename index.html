@@ -4,14 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Accueil – EmploiAvenir</title>
-  <!-- <base href="/Red-Cross-HTML/">    Maybe to delet -->
   <meta name="description" content="EmploiAvenir : Suivi personnalisé de votre parcours vers l'emploi. Visualisez votre progression et accédez à tous vos outils en un clic.">
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Assurez-vous d'avoir FontAwesome si vous utilisez des classes fas/far -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="stylesheet" href="style.css">
   <link rel="icon" href="favicon.ico" type="image/x-icon">
-  <!-- SEO & réseaux sociaux -->
   <meta property="og:title" content="EmploiAvenir - Votre parcours vers l'emploi">
   <meta property="og:description" content="Suivi personnalisé et outils pour booster votre insertion professionnelle.">
   <meta property="og:type" content="website">
@@ -33,65 +33,89 @@
           <li><a href="Profil.html" data-i18n="Profil">Profil</a></li>
         </ul>
       </nav>
-      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Ouvrir le menu de navigation" aria-expanded="false" aria-controls="mainNavLinks">☰</button>
+      <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Ouvrir le menu de navigation" aria-expanded="false" aria-controls="mainNavLinks"><i class="fas fa-bars"></i></button>
     </div>
   </header>
-<select id="langSwitcher" aria-label="Choisir la langue">
-  <option value="fr">🇫🇷 Français</option>
-  <option value="en">🇬🇧 English</option>
-  <option value="ar">🇸🇦 العربية</option>
-  <option value="uk">🇺🇦  українська мова</option>
-</select>
+
   <!-- MAIN DASHBOARD -->
 <main>
   <section class="dashboard-accueil" aria-labelledby="dashboardTitle">
     <div class="container text-center">
       <h1 id="dashboardTitle" data-i18n="dashboardGreeting">Bonjour <span id="userNamePlaceholder">Utilisateur</span> !</h1>
-      <p class="intro-text" data-i18n="dashboardIntro">Voici où vous en êtes dans votre parcours vers l'emploi.</p>
+      <p class="intro-text mb-4" data-i18n="dashboardIntro">Prêt à avancer dans votre parcours vers l'emploi ? Voici votre progression :</p>
 
-      <!-- Progression -->
-      <div class="parcours-progression-accueil mt-4 mb-4" aria-label="Progression du parcours">
-        <h2 class="sr-only" data-i18n="progressionTitle">Votre progression</h2>
-        <p class="etape-actuelle-text" data-i18n="currentStepText">
-          Étape <span id="currentStepNumber">1</span> sur <span id="totalStepsNumber">7</span>
-        </p>
-        <div class="progress-bar-visual" aria-hidden="true">
-          <div class="progress-fill-visual" style="width: 0%;"></div>
-        </div>
-        <p class="etape-description-text mt-2" id="currentStepDescription" data-i18n="currentStepDescription">
-          Démarrez votre parcours en évaluant votre situation.
-        </p>
+      <!-- NOUVEAU : Sélecteur de Langue (peut être positionné ici ou via JS dans le header/footer mobile) -->
+      <div class="lang-switcher-container mb-4">
+        <label for="langSwitcher" class="sr-only" data-i18n="chooseLanguage">Choisir la langue</label>
+        <select id="langSwitcher" aria-label="Choisir la langue">
+          <option value="fr">🇫🇷 Français</option>
+          <option value="en">🇬🇧 English</option>
+          <option value="ar">🇸🇦 العربية</option>
+          <option value="uk">🇺🇦 українська мова</option>
+        </select>
       </div>
 
-      <!-- Continuer le parcours -->
-      <a href="MonParcours.html" class="btn btn-accent btn-large mt-4">
-        <span id="mainButtonActionText" data-i18n="mainButtonAction">Démarrer</span> mon parcours <span id="mainButtonStepText" style="display:none;" data-i18n="mainButtonStep">à l'étape <span id="nextStepNumber">1</span></span>
+      <!-- Progression Améliorée -->
+      <div class="parcours-progression-accueil mt-2 mb-6" aria-label="Progression du parcours">
+        <h2 class="sr-only" data-i18n="progressionTitle">Votre progression</h2>
+        <div class="etape-visuelle-container mb-2">
+            <span id="etapeIcon" class="etape-icon-accueil" aria-hidden="true">
+                <i class="fas fa-shoe-prints"></i> <!-- Icône par défaut ou pour la première étape -->
+            </span>
+            <p class="etape-actuelle-text" data-i18n="currentStepText">
+              Étape <span id="currentStepNumber">1</span> sur <span id="totalStepsNumber">7</span>
+            </p>
+        </div>
+        <div class="progress-bar-visual" aria-hidden="true">
+          <div class="progress-fill-visual" id="progressFill" style="width: 0%;">
+            <span class="progress-percentage" id="progressPercentage">0%</span>
+          </div>
+        </div>
+        <p class="etape-description-text mt-3" id="currentStepDescription" data-i18n="currentStepDescription">
+          Commencez par évaluer où vous en êtes. C'est le premier pas !
+        </p>
+        <div id="etapeCompletionMessage" class="etape-completion-message mt-2">
+            <!-- Message de complétion d'étape (ex: "Bravo, étape X terminée !") -->
+        </div>
+      </div>
+
+      <!-- Continuer le parcours - Bouton plus engageant -->
+      <a href="MonParcours.html" class="btn btn-accent btn-large btn-pulse mt-4 mb-6">
+        <i class="fas fa-arrow-right mr-2"></i>
+        <span id="mainButtonActionText" data-i18n="mainButtonAction">Démarrer</span> mon parcours
+        <span id="mainButtonStepText" style="display:none;" data-i18n="mainButtonStep">à l'étape <span id="nextStepNumber">1</span></span>
       </a>
 
-      <!-- Accès rapides -->
-      <nav class="acces-rapides-accueil mt-8" aria-label="Accès rapides">
-        <h3 data-i18n="quickAccessTitle">Accès rapides</h3>
+      <!-- Accès rapides avec icônes -->
+      <nav class="acces-rapides-accueil mt-6" aria-label="Accès rapides">
+        <h3 data-i18n="quickAccessTitle">Vos outils à portée de main</h3>
         <div class="quick-links-grid">
           <a href="Documents.html" class="quick-link-card" aria-label="Accéder à mes documents">
+            <div class="quick-link-card-icon" aria-hidden="true"><i class="fas fa-folder-open"></i></div>
             <h4 data-i18n="quickLinkDocuments">Mes Documents</h4>
             <p data-i18n="quickLinkDocumentsDesc">CVs, lettres, guides...</p>
           </a>
           <a href="MesCandidature.html" class="quick-link-card" aria-label="Accéder à mes candidatures">
+            <div class="quick-link-card-icon" aria-hidden="true"><i class="fas fa-file-signature"></i></div>
             <h4 data-i18n="quickLinkCandidatures">Mes Candidatures</h4>
             <p data-i18n="quickLinkCandidaturesDesc">Suivez vos postulations.</p>
           </a>
           <a href="Partenaires.html" class="quick-link-card" aria-label="Contacter un conseiller">
+            <div class="quick-link-card-icon" aria-hidden="true"><i class="fas fa-headset"></i></div>
             <h4 data-i18n="quickLinkConseiller">Contacter un conseiller</h4>
             <p data-i18n="quickLinkConseillerDesc">Obtenez de l'aide personnalisée.</p>
           </a>
         </div>
       </nav>
 
-      <!-- Encouragement -->
+      <!-- Encouragement / Prochaines étapes suggérées -->
       <section class="encouragement-section mt-8" aria-labelledby="encouragementTitle">
-        <h2 id="encouragementTitle" data-i18n="encouragementTitle">Besoin d'un coup de pouce ?</h2>
-        <p data-i18n="encouragementText">
-          Explorez les <a href="Documents.html">ressources utiles</a> ou <a href="Partenaires.html">contactez-nous</a>.
+        <h2 id="encouragementTitle" data-i18n="encouragementTitle">Un pas après l'autre !</h2>
+        <p class="mb-2" data-i18n="encouragementText">
+          Chaque étape complétée vous rapproche de votre objectif.
+        </p>
+        <p>
+          <i class="fas fa-lightbulb mr-1" style="color: var(--color-warning);"></i> Astuce : Consultez nos <a href="Documents.html">guides et modèles</a> pour vous aider.
         </p>
       </section>
     </div>
@@ -120,8 +144,8 @@
       <div class="footer-column">
         <h3 data-i18n="servicesTitle">Services</h3>
         <ul class="footer-links">
-          <li><a href="#" data-i18n="linkCv">Création de CV</a></li>
-          <li><a href="#" data-i18n="linkLettres">Lettres de motivation</a></li>
+          <li><a href="cv-generator.html" data-i18n="linkCv">Création de CV Facile</a></li>
+          <li><a href="choix-lm.html" data-i18n="linkLettres">Lettres de motivation</a></li>
           <li><a href="#" data-i18n="linkCoaching">Coaching</a></li>
           <li><a href="#" data-i18n="linkEntretien">Préparation aux entretiens</a></li>
           <li><a href="#" data-i18n="linkPartenaireEntreprise">Partenaires entreprises</a></li>
@@ -130,34 +154,35 @@
       <div class="footer-column">
         <h3 data-i18n="contactTitle">Contact</h3>
         <ul class="footer-links">
-          <li><a href="tel:+33123456789" data-i18n="phone">+33 1 23 45 67 89</a></li>
-          <li><a href="mailto:contact@emploiavenir.fr" data-i18n="email">contact@emploiavenir.fr</a></li>
-          <li data-i18n="address">12 rue de l'Emploi, 75001 Paris</li>
+          <li><a href="tel:+33123456789" data-i18n="phone"><i class="fas fa-phone-alt mr-2"></i>+33 1 23 45 67 89</a></li>
+          <li><a href="mailto:contact@emploiavenir.fr" data-i18n="email"><i class="fas fa-envelope mr-2"></i>contact@emploiavenir.fr</a></li>
+          <li><i class="fas fa-map-marker-alt mr-2"></i><span data-i18n="address">12 rue de l'Emploi, 75001 Paris</span></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <p data-i18n="footerRights">© 2024 EmploiAvenir. Tous droits réservés.</p>
+      <p data-i18n="footerRights">© <span id="currentYear">2024</span> EmploiAvenir. Tous droits réservés.</p>
+      <p><a href="politique-confidentialite.html" data-i18n="privacyPolicy">Politique de confidentialité</a></p>
     </div>
   </div>
 </footer>
 
 
-  <!-- MODALE DE CONNEXION -->
+  <!-- MODALE DE CONNEXION (inchangée, sauf ajout d'icônes optionnelles) -->
 <div id="loginModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="loginModalTitle" tabindex="-1" hidden>
   <div class="modal-content">
-    <button type="button" class="close-modal" aria-label="Fermer la fenêtre de connexion">×</button>
-    <h2 id="loginModalTitle" data-i18n="loginTitle">Connexion</h2>
+    <button type="button" class="close-modal" aria-label="Fermer la fenêtre de connexion" id="closeLoginModalBtn"><i class="fas fa-times"></i></button>
+    <h2 id="loginModalTitle" data-i18n="loginTitle"><i class="fas fa-sign-in-alt mr-2"></i>Connexion</h2>
     <form id="loginForm" autocomplete="on">
       <div class="form-group">
-        <label for="email" data-i18n="labelEmail">Email</label>
-        <input type="email" id="email" name="email" required autocomplete="email">
+        <label for="loginEmail" data-i18n="labelEmail">Email</label>
+        <input type="email" id="loginEmail" name="email" required autocomplete="email">
       </div>
       <div class="form-group">
-        <label for="password" data-i18n="labelPassword">Mot de passe</label>
-        <input type="password" id="password" name="password" required autocomplete="current-password">
+        <label for="loginPassword" data-i18n="labelPassword">Mot de passe</label>
+        <input type="password" id="loginPassword" name="password" required autocomplete="current-password">
       </div>
-      <button type="submit" class="btn" style="width: 100%;" data-i18n="loginBtn">Se connecter</button>
+      <button type="submit" class="btn btn-primary btn-full" data-i18n="loginBtn">Se connecter</button>
       <div class="text-center mt-2">
         <a href="#" class="modal-link" data-i18n="forgotPassword">Mot de passe oublié ?</a>
       </div>
@@ -168,21 +193,30 @@
   </div>
 </div>
 
-<!-- === Début du Chatbot === -->
-  <div id="chatbot-box" style="position: fixed; bottom: 20px; right: 20px; width: 300px; font-family: sans-serif;">
-    <div id="chat-container" style="background: white; border: 1px solid #ccc; border-radius: 10px; padding: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); display: none;">
-        <div id="chat-messages" style="height: 200px; overflow-y: auto; font-size: 0.9rem; margin-bottom: 10px;"></div>
-        <input type="text" id="chat-input" placeholder="Posez votre question..." style="width: 75%;" />
-        <button id="send-button" style="width: 23%;">Envoyer</button>
-        <button id="reset-chat" style="margin-top: 5px; width: 100%; background-color: #F87171; color: white; border: none; border-radius: 5px; padding: 5px;">🗑️ Réinitialiser le chat</button>
-
+<!-- Chatbot (mis à jour avec un bouton de fermeture dans le header du chat) -->
+<button id="toggleChatbotBtn" class="chatbot-btn" aria-label="Ouvrir l'assistant virtuel" aria-expanded="false">
+    <i class="fas fa-comments"></i>
+    <i class="fas fa-times" style="display:none;"></i> <!-- Pour l'état ouvert -->
+</button>
+<div id="chatbotContainer" class="chatbot-container" role="complementary" aria-hidden="true">
+    <div class="chatbot-header">
+        <h3 data-i18n="chatbotTitle">Assistant Virtuel</h3>
+        <button id="closeChatbotBtn" class="chatbot-close-btn" aria-label="Fermer l'assistant virtuel"><i class="fas fa-times"></i></button>
     </div>
-    <button id="toggle-chat" style="background: #8B5CF6; color: white; padding: 10px 20px; border: none; border-radius: 50px;">💬</button>
-    
-  </div>
-  <!-- === Fin du Chatbot === -->
+    <div id="chatMessages" class="chatbot-messages">
+        <!-- Messages du chat ici -->
+    </div>
+    <div class="chatbot-input">
+        <input type="text" id="chatInput" placeholder="Posez votre question..." aria-label="Votre message pour l'assistant">
+        <button id="sendChatBtn" aria-label="Envoyer le message"><i class="fas fa-paper-plane"></i></button>
+    </div>
+     <button id="resetChatBtn" class="btn btn-small btn-outline" style="margin: 0.5rem auto; display: block;" data-i18n="resetChat">
+        <i class="fas fa-trash-alt mr-1"></i>Réinitialiser
+    </button>
+</div>
 
-<!-- NOUVEAU : BANNIÈRE RGPD & IA -->
+
+<!-- BANNIÈRE RGPD & IA (inchangée) -->
 <div id="rgpdAiBanner" class="rgpd-banner" role="dialog" aria-modal="true" aria-labelledby="rgpdBannerTitle" aria-describedby="rgpdBannerDescription" hidden>
   <div class="rgpd-banner-content">
     <div class="rgpd-banner-text">
@@ -199,9 +233,8 @@
   </div>
 </div>
 
-<script src="./backend-openai/chatbot.js"></script>
-
-  <script src="Script.js" defer></script>
-  <script src="langue.js"></script>
+<script src="./api/chatbot.js" defer></script>
+<script src="Script.js" defer></script>
+<script src="langue.js" defer></script>
 </body>
 </html>

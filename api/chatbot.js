@@ -8,14 +8,19 @@ document.addEventListener("DOMContentLoaded", () => {
   // 🔹 1. CHARGEMENT DE L’HISTORIQUE AU DÉMARRAGE
   const history = loadChatHistory();
   const currentPage = window.location.pathname;
+
+if(chat){
   chat.innerHTML += `<div style="font-style: italic; color: #555;">🔎 Vous êtes sur la page : <strong>${currentPage}</strong></div>`;
+}
 
   history.forEach(entry => {
     if (entry && entry.sender && entry.message) {
       chat.innerHTML += `<div><strong>${entry.sender}:</strong> ${entry.message}</div>`;
     }
   });
+  if(chat){
   chat.scrollTop = chat.scrollHeight;
+  }
 
   // 🔹 Bouton de réinitialisation du chat
   document.getElementById('reset-chat').addEventListener('click', () => {
@@ -51,7 +56,7 @@ document.addEventListener("DOMContentLoaded", () => {
     chat.scrollTop = chat.scrollHeight;
 
     try {
-      const response = await fetch("http://127.0.0.1:5501/api/chat", {
+      const response = await fetch("https://red-cross-html-ipjz0lcxd-erdnaxams-projects.vercel.app/api/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

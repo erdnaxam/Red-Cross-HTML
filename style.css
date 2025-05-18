@@ -28,6 +28,7 @@
   --color-secondary: #22C55E;         /* Vert - Succès, complétion, actions positives */
   --color-secondary-darker: #16a34a;   /* Vert foncé - Hover succès */
   --color-secondary-light: #DCFCE7;    /* Vert très clair - Fonds complétés */
+  
 
   /* --- Couleurs Neutres et Texte --- */
   --color-dark: #1A1F2C;              /* Texte principal sombre */
@@ -186,6 +187,8 @@
         white-space: nowrap;
         /* Utilise les styles .btn, .btn-primary, .btn-outline de votre style.css */
     }
+
+
     /* Exemple si vous voulez forcer un style spécifique pour les boutons de la bannière */
     /*
     .rgpd-banner .btn-primary.btn-rgpd { background-color: var(--color-primary); }
